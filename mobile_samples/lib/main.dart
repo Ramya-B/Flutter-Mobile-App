@@ -13,30 +13,7 @@ void main() => runApp(MaterialApp(
 class Sample extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              child: Image.asset(
-                'assets/tl.png',
-                fit: BoxFit.contain,
-                height: 25,
-              ),
-              backgroundColor: Colors.white,
-              radius: 15,
-            ),
-            Container(
-                padding: const EdgeInsets.all(8.0), child: Text('TRADELEAVES'))
-          ],
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.green,
-        actions: <Widget>[
-          new IconButton(icon: Icon(Icons.search), onPressed: () {}),
-          new IconButton(icon: Icon(Icons.person), onPressed: () {})
-        ],
-      ),
+      appBar: CustomToolBar(),
       drawer: new Drawer(
         child: new ListView(
           children: <Widget>[
@@ -46,7 +23,6 @@ class Sample extends StatelessWidget {
                 accountEmail: Text('manohar.nettem@gmail.com'),
                 currentAccountPicture: GestureDetector(
                   child: new CircleAvatar(child: Icon(Icons.person)
-//                   Image(image: AssetImage('assets/manohar.jpg')) ,
                       ),
                 ),
                 decoration: BoxDecoration(
@@ -71,6 +47,7 @@ class Sample extends StatelessWidget {
                       firstName: 'Manohar',
                       lastName: 'Nettem'
                   ))),
+
 
               child: new ListTile(
                 title: Text('Profile'),
