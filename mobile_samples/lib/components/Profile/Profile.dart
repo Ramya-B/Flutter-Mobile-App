@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
+import 'package:tradeleaves/components/CustomDrawer.dart';
+
 
 class Profile extends StatefulWidget {
   final userId;
@@ -29,6 +31,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
         appBar: CustomToolBar(),
         body: Container(
           child: ListView(
@@ -144,6 +147,9 @@ class _ProfileState extends State<Profile> {
             ],
           ),
         ),
-        bottomNavigationBar: CustomNavBar());
+        drawer: CustomDrawer(),
+        bottomNavigationBar: CustomNavBar()
+    );
+
   }
 }
