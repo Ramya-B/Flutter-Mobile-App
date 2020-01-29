@@ -4,6 +4,7 @@ import 'package:mongo_dart/mongo_dart.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/Profile/Profile.dart';
+import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 
 void main() => runApp(MaterialApp(
       home: Sample(),
@@ -99,14 +100,7 @@ class Sample extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart), title: Text('Cart')),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), title: Text('Chat')),
-        ],
-      ),
+      bottomNavigationBar: CustomNavBar(),//
       body: ListView(
         children: <Widget>[
           Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
+import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 
 class ProductDetails extends StatelessWidget {
   final productName;
@@ -20,6 +21,7 @@ class ProductDetails extends StatelessWidget {
     return Scaffold(
       appBar: CustomToolBar(),
       body: Image.asset('assets/cars/$imageUrl'),
+      bottomNavigationBar: CustomNavBar(),
     );
   }
 }
