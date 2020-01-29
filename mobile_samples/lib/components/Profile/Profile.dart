@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/CustomAppBar.dart';
 
 class Profile extends StatefulWidget {
   final userId;
@@ -24,11 +25,8 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-
-
-      ),
+    return Scaffold(
+      appBar: CustomToolBar(),
     );
   }
 }
