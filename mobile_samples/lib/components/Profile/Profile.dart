@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
+import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 
 class Profile extends StatefulWidget {
   final userId;
@@ -23,10 +24,126 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final sample = "executed";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomToolBar(),
-    );
+        appBar: CustomToolBar(),
+        body: Container(
+          child: ListView(
+            children: <Widget>[
+              Container(
+                height: 200,
+                padding: EdgeInsets.all(40.0),
+                child: new CircleAvatar(
+                  child: Icon(Icons.person),
+                  radius: 48.0,
+                ),
+              ),
+              Container(
+                height: 50,
+                alignment: Alignment.topCenter,
+                child: Text(
+                  widget.firstName + ' ' + widget.lastName,
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+                ),
+              ),
+              Container(
+                height: 200,
+                child: ListView(
+                  children: <Widget>[
+                    Container(
+                      height: 30,
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            width: 150,
+                            child: Text(
+                              'User Id',
+                              style: TextStyle(fontSize: 15,color: Colors.black54),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            child: Text(widget.userId,
+                                style: TextStyle(
+                                    fontSize: 18,color: Colors.black)),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 30,
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            width: 150,
+                            child: Text(
+                              'Company Name',
+                              style: TextStyle(fontSize: 15,color: Colors.black54),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            child: Text(widget.companyName,
+                                style: TextStyle(
+                                    fontSize: 18,color: Colors.black)),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 30,
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            width: 150,
+                            child: Text(
+                              'Email Id',
+                              style: TextStyle(fontSize: 15,color: Colors.black54),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            child: Text(widget.emailId,
+                                style: TextStyle(
+                                    fontSize: 18,color: Colors.black)),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 30,
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            width: 150,
+                            child: Text(
+                              'Phone No',
+                              style: TextStyle(fontSize: 15,color: Colors.black54),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                            child: Text(widget.phoneNo,
+                                style: TextStyle(
+                                    fontSize: 18,color: Colors.black)),
+                          )
+                        ],
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: CustomNavBar());
   }
 }

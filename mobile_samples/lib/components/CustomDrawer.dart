@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:tradeleaves/components/Profile/Profile.dart';
 class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -27,17 +27,15 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
             InkWell(
-//              onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-//                  builder: (context) => new Profile(
-//                      userId: 'manohar',
-//                      companyName:'my dream company',
-//                      emailId:'manohar.nettem@gmail.com',
-//                      phoneNo: 7799867839,
-//                      firstName: 'Manohar',
-//                      lastName: 'Nettem'
-//                  ))),
-
-
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (context) => new Profile(
+                      userId: 'manohar',
+                      companyName:'my dream company',
+                      emailId:'manohar.nettem@gmail.com',
+                      phoneNo: "7799867839",
+                      firstName: 'Manohar',
+                      lastName: 'Nettem'
+                  ))),
               child: new ListTile(
                 title: Text('Profile'),
                 leading: Icon(Icons.person),

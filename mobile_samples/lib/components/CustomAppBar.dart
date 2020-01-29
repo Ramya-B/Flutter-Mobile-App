@@ -25,7 +25,7 @@ class CustomToolBar extends StatelessWidget with PreferredSizeWidget {
       backgroundColor: Colors.green,
       actions: <Widget>[
         new IconButton(icon: Icon(Icons.search), onPressed: () {}),
-        new IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {})
+        new IconButton(icon: Icon(Icons.person), onPressed: () {})
       ],
     );
   }
