@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
+import 'package:tradeleaves/components/CustomDrawer.dart';
 
 class Profile extends StatefulWidget {
   final userId;
@@ -27,6 +28,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomToolBar(),
+        drawer: CustomDrawer()
     );
   }
 }
