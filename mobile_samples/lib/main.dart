@@ -12,30 +12,7 @@ void main() => runApp(MaterialApp(
 class Sample extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              child: Image.asset(
-                'assets/tl.png',
-                fit: BoxFit.contain,
-                height: 25,
-              ),
-              backgroundColor: Colors.white,
-              radius: 15,
-            ),
-            Container(
-                padding: const EdgeInsets.all(8.0), child: Text('TRADELEAVES'))
-          ],
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.green,
-        actions: <Widget>[
-          new IconButton(icon: Icon(Icons.search), onPressed: () {}),
-          new IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {})
-        ],
-      ),
+      appBar: CustomToolBar(),
       drawer: new Drawer(
         child: new ListView(
           children: <Widget>[
@@ -54,56 +31,56 @@ class Sample extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('Home Page'),
                 leading: Icon(Icons.home),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('Profile'),
                 leading: Icon(Icons.person),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('Categories'),
                 leading: Icon(Icons.dashboard),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('Favourites'),
                 leading: Icon(Icons.favorite),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('Orders'),
                 leading: Icon(Icons.shopping_basket),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('Notifications'),
                 leading: Icon(Icons.notifications),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('Settings'),
                 leading: Icon(Icons.settings),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('About'),
                 leading: Icon(Icons.info),
@@ -117,7 +94,6 @@ class Sample extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
           BottomNavigationBarItem(icon: Icon(Icons.add), title: Text('New')),
           BottomNavigationBarItem(icon: Icon(Icons.chat), title: Text('Chat')),
-
         ],
       ),
       body: ListView(

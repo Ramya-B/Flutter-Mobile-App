@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/CustomAppBar.dart';
 
 class ProductDetails extends StatelessWidget {
   final productName;
@@ -7,12 +8,19 @@ class ProductDetails extends StatelessWidget {
   final cost;
   final imageUrl;
 
-  ProductDetails({this.productName,this.productDescription,this.supplierName,this.cost,this.imageUrl});
+  ProductDetails(
+      {this.productName,
+      this.productDescription,
+      this.supplierName,
+      this.cost,
+      this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Image.asset('assets/cars/$imageUrl'),
+    return Scaffold(
+//      child: Image.asset('assets/cars/$imageUrl'),
+      appBar: CustomToolBar(),
+      body: Image.asset('assets/cars/$imageUrl'),
     );
   }
 }
