@@ -12,7 +12,9 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Image.asset('assets/cars/$imageUrl'),
+      child: Image.asset('assets/cars/$imageUrl'
+       ),
+
     );
   }
 }

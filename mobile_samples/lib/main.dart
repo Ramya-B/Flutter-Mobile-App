@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
+import 'package:tradeleaves/components/Profile/Profile.dart';
 
 void main() => runApp(MaterialApp(
       home: Sample(),
@@ -33,7 +34,7 @@ class Sample extends StatelessWidget {
         backgroundColor: Colors.green,
         actions: <Widget>[
           new IconButton(icon: Icon(Icons.search), onPressed: () {}),
-          new IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {})
+          new IconButton(icon: Icon(Icons.person), onPressed: () {})
         ],
       ),
       drawer: new Drawer(
@@ -54,56 +55,65 @@ class Sample extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('Home Page'),
                 leading: Icon(Icons.home),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (context) => new Profile(
+                      userId: 'manohar',
+                      companyName:'my dream company',
+                      emailId:'manohar.nettem@gmail.com',
+                      phoneNo: 7799867839,
+                      firstName: 'Manohar',
+                      lastName: 'Nettem'
+                  ))),
+
               child: new ListTile(
                 title: Text('Profile'),
                 leading: Icon(Icons.person),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('Categories'),
                 leading: Icon(Icons.dashboard),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('Favourites'),
                 leading: Icon(Icons.favorite),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('Orders'),
                 leading: Icon(Icons.shopping_basket),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('Notifications'),
                 leading: Icon(Icons.notifications),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('Settings'),
                 leading: Icon(Icons.settings),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () {},
               child: new ListTile(
                 title: Text('About'),
                 leading: Icon(Icons.info),
@@ -115,9 +125,9 @@ class Sample extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
-          BottomNavigationBarItem(icon: Icon(Icons.add), title: Text('New')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart), title: Text('Cart')),
           BottomNavigationBarItem(icon: Icon(Icons.chat), title: Text('Chat')),
-
         ],
       ),
       body: ListView(
@@ -128,11 +138,11 @@ class Sample extends StatelessWidget {
           ),
         ],
       ),
-//      floatingActionButton: FloatingActionButton(
-//        onPressed: () {},
-//        child: Text('chat'),
-//        backgroundColor: Colors.green,
-//      ),
+      //  floatingActionButton: FloatingActionButton(
+      //    onPressed: () {},
+      //    child: Text('chat'),
+      //    backgroundColor: Colors.green,
+      //  ),
     );
   }
 }

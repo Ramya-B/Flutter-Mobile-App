@@ -18,7 +18,8 @@ class _ProductsState extends State<Products> {
       "imageUrl": "pexels-photo-116675.jpeg"
     },
     {
-      "productName": "Porshe Car",
+      "productName":
+          "Porshe CarPorshe CarPorshe CarPorshe CarPorshe CarPorshe Car",
       "productDescription": "Porshecar description ",
       "supplierName": "Porshe Car showroom",
       "cost": 6800000,
@@ -37,7 +38,8 @@ class _ProductsState extends State<Products> {
       "supplierName": "BMW Car showroom",
       "cost": 9700000,
       "imageUrl": "pexels-photo-707046.jpeg"
-    }, {
+    },
+    {
       "productName": "Fortunure Car",
       "productDescription": "Fortunure car description",
       "supplierName": "My Dream Company",
@@ -64,7 +66,8 @@ class _ProductsState extends State<Products> {
       "supplierName": "BMW Car showroom",
       "cost": 9700000,
       "imageUrl": "pexels-photo-707046.jpeg"
-    }, {
+    },
+    {
       "productName": "Fortunure Car",
       "productDescription": "Fortunure car description",
       "supplierName": "My Dream Company",
@@ -93,9 +96,9 @@ class _ProductsState extends State<Products> {
       "imageUrl": "pexels-photo-707046.jpeg"
     }
   ];
+
   @override
   Widget build(BuildContext context) {
-   
     return GridView.builder(
         itemCount: prodList.length,
         gridDelegate:
@@ -129,24 +132,36 @@ class SingleProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-          child: InkWell(
-            onTap: () =>Navigator.of(context).push(new MaterialPageRoute(
-              builder: (context) => new ProductDetails(
-                 productName: productName,
-                productDescription: productDescription,
-                supplierName: supplierName,
-                cost: cost,
-                imageUrl: imageUrl,
-
-
-              )
-            )),
-            child: Container(
-                child:  Image.asset('assets/cars/$imageUrl',
-                    fit: BoxFit.contain),
-
-            ),
+      child: InkWell(
+        onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+            builder: (context) => new ProductDetails(
+                  productName: productName,
+                  productDescription: productDescription,
+                  supplierName: supplierName,
+                  cost: cost,
+                  imageUrl: imageUrl,
+                ))),
+        child: Container(
+          padding: EdgeInsets.all(4.0),
+          child: Column(
+            children: <Widget>[
+              Image.asset(
+                'assets/cars/$imageUrl',
+                height: 155,
+                width: 180,
+              ),
+              Container(
+                  padding: EdgeInsets.all(4.0),
+                  child: Text(
+                    productName,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 15),
+                  ))
+            ],
           ),
+        ),
+      ),
     );
   }
 }
