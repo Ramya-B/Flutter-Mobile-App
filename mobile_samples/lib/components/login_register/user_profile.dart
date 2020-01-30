@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/CustomAppBar.dart';
 
 class UserProfie extends StatefulWidget {
   @override
@@ -6,24 +7,22 @@ class UserProfie extends StatefulWidget {
 }
 
 class _UserProfieState extends State<UserProfie> {
+  String welcomeMessage = "Welome Mr. Venkat";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: Text('User Profile'),
-      ),
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.all(24),
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                Text('Welcome to Tradeleaves India Private Limited', style: TextStyle(color: Colors.green),),
-              ],
-            ),
+        appBar: CustomToolBar(),
+        body: Center(
+          child: Container(
+            child: Center(
+              child: SizedBox(
+                width: 150, 
+                height: 150, 
+                child: Image.asset('assets/tl.png')
+              ),
+            )
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

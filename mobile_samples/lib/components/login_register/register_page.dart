@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/CustomAppBar.dart';
+import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/login_register/login_page.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -10,9 +12,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: Text('Registration Page'),
-      ),
+      appBar: new CustomToolBar(),
       body: Center(
         child: SingleChildScrollView(
           child: Container(

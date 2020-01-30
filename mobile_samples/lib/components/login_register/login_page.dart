@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/CustomAppBar.dart';
+import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
+import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:tradeleaves/components/login_register/register_page.dart';
 import 'package:tradeleaves/components/login_register/user_profile.dart';
+
 
 class UserLogin extends StatefulWidget {
   @override
@@ -12,9 +16,7 @@ class _UserLoginState extends State<UserLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: Text('Login Page'),
-      ),
+      appBar: CustomToolBar(),
       body: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -98,6 +100,8 @@ class _UserLoginState extends State<UserLogin> {
           ),
         ),
       ),
+      bottomNavigationBar: CustomNavBar(),
+      // drawer: CustomDrawer(),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/About/about.dart';
 import 'package:tradeleaves/components/Profile/Profile.dart';
+import 'package:tradeleaves/components/Settings/setting.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -71,14 +73,14 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new SettingsPage())),
               child: new ListTile(
                 title: Text('Settings'),
                 leading: Icon(Icons.settings),
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new AboutPage())),
               child: new ListTile(
                 title: Text('About'),
                 leading: Icon(Icons.info),
