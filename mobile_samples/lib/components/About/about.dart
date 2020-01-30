@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:tradeleaves/components/CustomAppBar.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -9,8 +11,9 @@ class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(title: Text('About Us'),),
+      appBar: CustomToolBar(),
       body: Container(
+        padding: EdgeInsets.all(24),
         child: Column(
         children: <Widget>[
           SizedBox(
