@@ -111,13 +111,13 @@
     },
     {
       "name": "mongo_dart",
-      "rootUri": "file:///D:/Softwares/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/mongo_dart-0.4.0",
+      "rootUri": "file:///D:/Softwares/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/mongo_dart-0.3.6",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
     {
       "name": "mongo_dart_query",
-      "rootUri": "file:///D:/Softwares/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/mongo_dart_query-0.4.1",
+      "rootUri": "file:///D:/Softwares/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/mongo_dart_query-0.3.2",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -236,7 +236,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-01-29T13:03:23.361270Z",
+  "generated": "2020-01-30T06:20:24.725537Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }

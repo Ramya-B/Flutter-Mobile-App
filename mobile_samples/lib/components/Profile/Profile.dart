@@ -69,10 +69,10 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                           Container(
-                            alignment: Alignment.bottomCenter,
+                            alignment: Alignment.bottomLeft,
                             child: Text(widget.userId,
-                                style: TextStyle(
-                                    fontSize: 18,color: Colors.black)),
+                                style: TextStyle( fontSize: 18,color: Colors.black)),
+
                           )
                         ],
                       ),
@@ -90,7 +90,7 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                           Container(
-                            alignment: Alignment.bottomCenter,
+                            alignment: Alignment.bottomLeft,
                             child: Text(widget.companyName,
                                 style: TextStyle(
                                     fontSize: 18,color: Colors.black)),
@@ -111,7 +111,7 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                           Container(
-                            alignment: Alignment.bottomCenter,
+                            alignment: Alignment.bottomLeft,
                             child: Text(widget.emailId,
                                 style: TextStyle(
                                     fontSize: 18,color: Colors.black)),
@@ -132,7 +132,7 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                           Container(
-                            alignment: Alignment.bottomCenter,
+                            alignment: Alignment.bottomLeft,
                             child: Text(widget.phoneNo,
                                 style: TextStyle(
                                     fontSize: 18,color: Colors.black)),
@@ -147,7 +147,7 @@ class _ProfileState extends State<Profile> {
             ],
           ),
         ),
-        drawer: CustomDrawer(),
+//        drawer: CustomDrawer(),
         bottomNavigationBar: CustomNavBar()
     );
 
