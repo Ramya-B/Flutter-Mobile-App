@@ -1,15 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="79b56607-cb4d-4dce-b32e-a225f74a3c00" name="Default Changelist" comment="" />
+    <list default="true" id="79b56607-cb4d-4dce-b32e-a225f74a3c00" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/.filecache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/app.dill" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/debug_android_application.stamp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/flutter_assets.d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/kernel_snapshot.d" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/kernel_snapshot.stamp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_samples/lib/components/About/about.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_samples/lib/components/Settings/setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_samples/lib/components/login_register/login_page.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_samples/lib/components/login_register/register_page.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_samples/lib/components/login_register/user_profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/package_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/pub/bin/flutter_launcher_icons/main.dart.snapshot.dart2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/pub/bin/sdk-version" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/.packages" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/lib/components/CustomAppBar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/lib/components/CustomAppBar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/lib/components/CustomDrawer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/lib/components/CustomDrawer.dart" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileEditorManager">
+    <leaf />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/mobile_samples/.dart_tool/package_config.json" />
+        <option value="$PROJECT_DIR$/mobile_samples/.packages" />
+      </list>
+    </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="4" />
@@ -22,7 +51,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -30,10 +58,16 @@
               <item name="MobileSamples" type="b2602c69:ProjectViewProjectNode" />
               <item name="MobileSamples" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="MobileSamples" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MobileSamples" type="462c0819:PsiDirectoryNode" />
+              <item name="mobile_samples" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -71,7 +105,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.18710022" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.18923241" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
@@ -91,5 +125,21 @@
       <window_info anchor="right" id="Palette&#9;" order="4" />
       <window_info anchor="right" id="Flutter Performance" order="5" />
     </layout>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/mobile_samples/.packages">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1343">
+          <caret line="79" lean-forward="true" selection-start-line="79" selection-end-line="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mobile_samples/.dart_tool/package_config.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="671">
+          <caret line="236" column="5" lean-forward="true" selection-start-line="236" selection-start-column="5" selection-end-line="236" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>

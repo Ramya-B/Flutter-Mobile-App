@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/login_register/login_page.dart';
 
 class CustomToolBar extends StatelessWidget with PreferredSizeWidget {
   @override
@@ -25,7 +26,7 @@ class CustomToolBar extends StatelessWidget with PreferredSizeWidget {
       backgroundColor: Colors.green,
       actions: <Widget>[
         new IconButton(icon: Icon(Icons.search), onPressed: () {}),
-        new IconButton(icon: Icon(Icons.person), onPressed: () {})
+        new IconButton(icon: Icon(Icons.person), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => new UserLogin())))
       ],
     );
   }
