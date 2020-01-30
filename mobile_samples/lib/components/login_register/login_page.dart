@@ -3,7 +3,7 @@ import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:tradeleaves/components/login_register/register_page.dart';
-import 'package:tradeleaves/components/login_register/user_profile.dart';
+import 'package:tradeleaves/components/products/ProductsList.dart';
 
 
 class UserLogin extends StatefulWidget {
@@ -74,7 +74,14 @@ class _UserLoginState extends State<UserLogin> {
                   ButtonTheme(
                     minWidth: double.infinity,
                     child: MaterialButton(
-                      onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new UserProfie())),
+                      onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new Scaffold(
+                        appBar: CustomToolBar(),
+                        drawer: CustomDrawer(),
+                        body: Container(
+                          child: Products(),
+                        ),
+                        bottomNavigationBar: CustomNavBar(),
+                      ))),
                       textColor: Colors.white,
                       color: Colors.green,
                       height: 45,
