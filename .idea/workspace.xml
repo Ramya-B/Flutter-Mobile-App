@@ -2,29 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="79b56607-cb4d-4dce-b32e-a225f74a3c00" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/.filecache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/app.dill" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/debug_android_application.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/flutter_assets.d" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/kernel_snapshot.d" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/kernel_snapshot.stamp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile_samples/lib/components/About/about.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile_samples/lib/components/Settings/setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile_samples/lib/components/login_register/login_page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile_samples/lib/components/login_register/register_page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile_samples/lib/components/login_register/user_profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/3eebb112b5f7360aeae74c0d839e0adb/.filecache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/3eebb112b5f7360aeae74c0d839e0adb/app.dill" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/3eebb112b5f7360aeae74c0d839e0adb/debug_android_application.stamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/3eebb112b5f7360aeae74c0d839e0adb/flutter_assets.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/3eebb112b5f7360aeae74c0d839e0adb/kernel_snapshot.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/3eebb112b5f7360aeae74c0d839e0adb/kernel_snapshot.stamp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/.filecache" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/.filecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/app.dill" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/app.dill" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/debug_android_application.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/debug_android_application.stamp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/flutter_assets.d" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/flutter_assets.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/kernel_snapshot.d" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/kernel_snapshot.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/kernel_snapshot.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/flutter_build/f7ab287655a18c4d3a1829d7b91f556b/kernel_snapshot.stamp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/pub/bin/flutter_launcher_icons/main.dart.snapshot.dart2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile_samples/.dart_tool/pub/bin/sdk-version" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_samples/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/.packages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile_samples/lib/components/CustomAppBar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/lib/components/CustomAppBar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile_samples/lib/components/CustomDrawer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/lib/components/CustomDrawer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/lib/components/About/about.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/lib/components/About/about.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/lib/components/Settings/setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/lib/components/Settings/setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/lib/components/login_register/login_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_samples/lib/components/login_register/login_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_samples/lib/components/login_register/user_profile.dart" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="testRunner" value="GRADLE" />
+    <option name="delegatedBuild" value="true" />
   </component>
   <component name="FileEditorManager">
     <leaf />
@@ -50,7 +56,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -63,10 +68,17 @@
               <item name="MobileSamples" type="462c0819:PsiDirectoryNode" />
               <item name="mobile_samples" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="MobileSamples" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MobileSamples" type="462c0819:PsiDirectoryNode" />
+              <item name="mobile_samples" type="462c0819:PsiDirectoryNode" />
+              <item name=".dart_tool" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -105,7 +117,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.18923241" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.1913646" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
@@ -115,7 +127,7 @@
       <window_info anchor="bottom" id="Run" order="0" />
       <window_info anchor="bottom" id="TODO" order="1" />
       <window_info anchor="bottom" id="Debug" order="2" />
-      <window_info anchor="bottom" id="Terminal" order="3" />
+      <window_info anchor="bottom" id="Terminal" order="3" visible="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="5" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
@@ -127,17 +139,14 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/mobile_samples/.dart_tool/package_config.json" />
+    <entry file="file://$PROJECT_DIR$/mobile_samples/flutter_01.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/mobile_samples/.packages">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1343">
-          <caret line="79" lean-forward="true" selection-start-line="79" selection-end-line="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mobile_samples/.dart_tool/package_config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="671">
-          <caret line="236" column="5" lean-forward="true" selection-start-line="236" selection-start-column="5" selection-end-line="236" selection-end-column="5" />
+        <state relative-caret-position="663">
+          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
         </state>
       </provider>
     </entry>
