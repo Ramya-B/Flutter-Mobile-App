@@ -18,8 +18,11 @@ class CustomToolBar extends StatelessWidget with PreferredSizeWidget {
             backgroundColor: Colors.white,
             radius: 15,
           ),
-          Container(
-              padding: const EdgeInsets.all(8.0), child: Text('TRADELEAVES'))
+          Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: Text('TRADELEAVES'),
+              ))
         ],
       ),
       centerTitle: true,

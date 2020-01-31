@@ -29,7 +29,6 @@ class _AlertNotificationsState extends State<AlertNotifications> {
             ),
           ),
           Container(
-            height: 60,
             child: Card(
               color: Color.fromRGBO(224, 242, 241, 1),
               child: Row(
@@ -54,7 +53,7 @@ class _AlertNotificationsState extends State<AlertNotifications> {
             ),
           ),
           Container(
-            height: 60,
+
             child: Card(
               color: Color.fromRGBO(224, 242, 241, 1),
               child: Row(
@@ -76,7 +75,7 @@ class _AlertNotificationsState extends State<AlertNotifications> {
             ),
           ),
           Container(
-            height: 60,
+
             child: Card(
               color: Color.fromRGBO(224, 242, 241, 1),
               child: Row(
@@ -100,7 +99,7 @@ class _AlertNotificationsState extends State<AlertNotifications> {
             ),
           ),
           Container(
-            height: 60,
+
             child: Card(
               color: Color.fromRGBO(224, 242, 241, 1),
               child: Row(
@@ -146,7 +145,7 @@ class _AlertNotificationsState extends State<AlertNotifications> {
             ),
           ),
           Container(
-            height: 60,
+
             child: Card(
               color: Color.fromRGBO(224, 242, 241, 1),
               child: Row(
@@ -170,7 +169,7 @@ class _AlertNotificationsState extends State<AlertNotifications> {
             ),
           ),
           Container(
-            height: 60,
+
             child: Card(
               color: Color.fromRGBO(224, 242, 241, 1),
               child: Row(
@@ -195,7 +194,7 @@ class _AlertNotificationsState extends State<AlertNotifications> {
             ),
           ),
           Container(
-            height: 60,
+
             child: Card(
               color: Color.fromRGBO(224, 242, 241, 1),
               child: Row(
@@ -220,7 +219,6 @@ class _AlertNotificationsState extends State<AlertNotifications> {
             ),
           ),
           Container(
-            height: 60,
             child: Card(
               color: Color.fromRGBO(224, 242, 241, 1),
               child: Row(
@@ -245,7 +243,6 @@ class _AlertNotificationsState extends State<AlertNotifications> {
             ),
           ),
           Container(
-            height: 60,
             child: Card(
               color: Color.fromRGBO(224, 242, 241, 1),
               child: Row(

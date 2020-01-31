@@ -37,7 +37,7 @@ class _MyChatsState extends State<MyChats> {
                 Container(
                   padding: EdgeInsets.all(20),
                   alignment: Alignment.bottomCenter,
-                  width: 350,
+                  width: 300,
                   height: 400,
                   child: TextField(
                     autofocus: false,
