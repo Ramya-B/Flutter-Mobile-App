@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
-import 'package:tradeleaves/components/CustomDrawer.dart';
-import 'package:tradeleaves/components/CustomAppBar.dart';
 
 class MyChats extends StatefulWidget {
   @override
@@ -62,8 +59,8 @@ class _MyChatsState extends State<MyChats> {
                     width: 30,
                     height: 400,
                     padding: EdgeInsets.all(10),
-                    child: IconButton(icon: Icon(Icons.message), onPressed: () {}))
-
+                    child:
+                        IconButton(icon: Icon(Icons.message), onPressed: () {}))
               ],
             ),
           )

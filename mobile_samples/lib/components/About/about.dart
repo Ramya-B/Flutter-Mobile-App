@@ -16,8 +16,15 @@ class _AboutPageState extends State<AboutPage> {
         padding: EdgeInsets.all(24),
         child: Column(
         children: <Widget>[
+          Center(
+            child: SizedBox(
+              width: 80,
+              height: 80,
+              child: Image.asset('assets/tl.png'),
+            ),
+          ),
           SizedBox(
-            height: 40,
+            height: 20,
           ),
           Text('          TradeLeaves is a Silicon Valley startup founded by seasoned entrepreneurs and technologists who are passionate about making global commerce simple for businesses of all sizes and consumers, worldwide.',
           style: TextStyle(color: Colors.black87, fontSize: 16),
@@ -37,7 +44,6 @@ class _AboutPageState extends State<AboutPage> {
           style: TextStyle(color: Colors.black87, fontSize: 16),
           textAlign: TextAlign.justify
           ),
-          
         ],
         )
       ),

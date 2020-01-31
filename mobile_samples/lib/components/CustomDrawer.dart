@@ -8,7 +8,6 @@ import 'package:tradeleaves/components/notications/Notifications.dart';
 import 'package:tradeleaves/components/orders/orders.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
 import 'package:tradeleaves/components/About/about.dart';
-import 'package:tradeleaves/components/Profile/Profile.dart';
 import 'package:tradeleaves/components/Settings/setting.dart';
 
 

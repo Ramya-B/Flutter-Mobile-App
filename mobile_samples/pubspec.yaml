@@ -69,6 +69,15 @@ flutter:
     - assets/music/music5.jpeg
     - assets/music/music3.jpeg
     - assets/bikes/r11.jpeg
+    - assets/cars/pexels-photo-112460.jpeg
+    - assets/cars/pexels-photo-358070.jpeg
+    - assets/cars/pexels-photo-977003.jpeg
+    - assets/cars/pexels-photo-116675.jpeg
+    - assets/cars/pexels-photo-244206.jpeg
+    - assets/bikes/bulllet.jpeg
+    - assets/bikes/r11.jpeg
+    - assets/bikes/duke.jpeg
+    - assets/bikes/zmr.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

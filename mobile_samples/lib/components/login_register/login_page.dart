@@ -5,14 +5,12 @@ import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:tradeleaves/components/login_register/register_page.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
 
-
 class UserLogin extends StatefulWidget {
   @override
   _UserLoginState createState() => _UserLoginState();
 }
 
 class _UserLoginState extends State<UserLogin> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,47 +44,45 @@ class _UserLoginState extends State<UserLogin> {
                           fontSize: 15,
                         ),
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                        )
-                    ),
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        )),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   TextField(
-                    autofocus: false,
-                    obscureText: true,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                        labelText: "Password",
-                        labelStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                        ),
-                        border: OutlineInputBorder(
+                      autofocus: false,
+                      obscureText: true,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                          labelText: "Password",
+                          labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                          border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(5)),
-                        )
-                    )
-                  ),
+                          ))),
                   SizedBox(
                     height: 40,
                   ),
                   ButtonTheme(
                     minWidth: double.infinity,
                     child: MaterialButton(
-                      onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new Scaffold(
-                        appBar: CustomToolBar(),
-                        drawer: CustomDrawer(),
-                        body: Container(
-                          child: Products(),
-                        ),
-                        bottomNavigationBar: CustomNavBar(),
-                      ))),
-                      textColor: Colors.white,
-                      color: Colors.green,
-                      height: 45,
-                      child: Text("LOGIN")
-                    ),
+                        onPressed: () =>
+                            Navigator.of(context).push(new MaterialPageRoute(
+                                builder: (context) => new Scaffold(
+                                      appBar: CustomToolBar(),
+                                      drawer: CustomDrawer(),
+                                      body: Container(
+                                        child: Products(),
+                                      ),
+                                      bottomNavigationBar: CustomNavBar(),
+                                    ))),
+                        textColor: Colors.white,
+                        color: Colors.green,
+                        height: 45,
+                        child: Text("LOGIN")),
                   ),
                   SizedBox(
                     height: 25,
@@ -94,12 +90,13 @@ class _UserLoginState extends State<UserLogin> {
                   ButtonTheme(
                     minWidth: double.infinity,
                     child: MaterialButton(
-                      onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new RegistrationPage())),
-                      textColor: Colors.white,
-                      color: Colors.green,
-                      height: 45,
-                      child: Text("SIGN UP")
-                    ),
+                        onPressed: () => Navigator.of(context).push(
+                            new MaterialPageRoute(
+                                builder: (context) => new RegistrationPage())),
+                        textColor: Colors.white,
+                        color: Colors.green,
+                        height: 45,
+                        child: Text("SIGN UP")),
                   )
                 ],
               ),
@@ -108,7 +105,6 @@ class _UserLoginState extends State<UserLogin> {
         ),
       ),
       bottomNavigationBar: CustomNavBar(selectedIndex: 0),
-      // drawer: CustomDrawer(),
     );
   }
 }

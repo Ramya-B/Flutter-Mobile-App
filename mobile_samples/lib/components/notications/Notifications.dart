@@ -19,13 +19,15 @@ class _AlertNotificationsState extends State<AlertNotifications> {
       bottomNavigationBar: CustomNavBar(selectedIndex: 0),
       body: ListView(
         children: <Widget>[
-         Container(
-           padding: EdgeInsets.all(10.0),
-           alignment: Alignment.centerLeft,
-           height: 35,
-           child: Text('Notifications',
-           style: TextStyle(fontSize: 15,color: Colors.black87), ),
-         ),
+          Container(
+            padding: EdgeInsets.all(10.0),
+            alignment: Alignment.centerLeft,
+            height: 35,
+            child: Text(
+              'Notifications',
+              style: TextStyle(fontSize: 15, color: Colors.black87),
+            ),
+          ),
           Container(
             height: 60,
             child: Card(
@@ -59,17 +61,14 @@ class _AlertNotificationsState extends State<AlertNotifications> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Container(
-                    child: Icon(
-                      Icons.shopping_basket
-                    ),
+                    child: Icon(Icons.shopping_basket),
                     width: 50,
                     padding: EdgeInsets.all(10),
                   ),
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.all(15.0),
-                      child: Text(
-                          'Your order is accepted by the Tradeleaves.'),
+                      child: Text('Your order is accepted by the Tradeleaves.'),
                     ),
                   )
                 ],
@@ -93,8 +92,7 @@ class _AlertNotificationsState extends State<AlertNotifications> {
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.all(15.0),
-                      child: Text(
-                          'Venkat added your product as favourite.'),
+                      child: Text('Venkat added your product as favourite.'),
                     ),
                   )
                 ],
@@ -118,8 +116,7 @@ class _AlertNotificationsState extends State<AlertNotifications> {
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.all(15.0),
-                      child: Text(
-                          'You has received a message from sandeep.'),
+                      child: Text('You has received a message from sandeep.'),
                     ),
                   )
                 ],
@@ -127,17 +124,13 @@ class _AlertNotificationsState extends State<AlertNotifications> {
             ),
           ),
           Container(
-
-
             child: Card(
               color: Color.fromRGBO(224, 242, 241, 1),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Container(
-                    child: Icon(
-                        Icons.shopping_basket
-                    ),
+                    child: Icon(Icons.shopping_basket),
                     width: 50,
                     padding: EdgeInsets.all(10),
                   ),
@@ -169,8 +162,7 @@ class _AlertNotificationsState extends State<AlertNotifications> {
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.all(15.0),
-                      child: Text(
-                          'Yamaha R15 is added to cart'),
+                      child: Text('Yamaha R15 is added to cart'),
                     ),
                   )
                 ],
@@ -194,8 +186,8 @@ class _AlertNotificationsState extends State<AlertNotifications> {
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.all(15.0),
-                      child: Text(
-                          'Your Company is approved by the Tradeleaves.'),
+                      child:
+                          Text('Your Company is approved by the Tradeleaves.'),
                     ),
                   )
                 ],
@@ -211,7 +203,7 @@ class _AlertNotificationsState extends State<AlertNotifications> {
                 children: <Widget>[
                   Container(
                     child: Icon(
-                        Icons.verified_user,
+                      Icons.verified_user,
                     ),
                     width: 50,
                     padding: EdgeInsets.all(10),
@@ -219,8 +211,8 @@ class _AlertNotificationsState extends State<AlertNotifications> {
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.all(15.0),
-                      child: Text(
-                          'You has subscribed Tradeleaves Bonrze plan.'),
+                      child:
+                          Text('You has subscribed Tradeleaves Bonrze plan.'),
                     ),
                   )
                 ],
@@ -260,17 +252,14 @@ class _AlertNotificationsState extends State<AlertNotifications> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Container(
-                    child: Icon(
-                        Icons.shopping_basket
-                    ),
+                    child: Icon(Icons.shopping_basket),
                     width: 50,
                     padding: EdgeInsets.all(10),
                   ),
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.all(15.0),
-                      child: Text(
-                          'Your order is accepted by the Tradeleaves.'),
+                      child: Text('Your order is accepted by the Tradeleaves.'),
                     ),
                   )
                 ],

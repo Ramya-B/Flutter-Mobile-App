@@ -1,118 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
-import 'package:flutter/src/widgets/scroll_view.dart';
 import 'package:tradeleaves/components/products/ProductDetails.dart';
 
 class Products extends StatefulWidget {
   @override
   _ProductsState createState() => _ProductsState();
-}
-
-class _ProductsState extends State<Products> {
-  var prodList = [
-    {
-      "productName": "Fortunure Car",
-      "productDescription": "Fortunure car description",
-      "supplierName": "My Dream Company",
-      "cost": 8900000,
-      "imageUrl": "pexels-photo-116675.jpeg"
-    },
-    {
-      "productName":
-          "Porshe CarPorshe CarPorshe CarPorshe CarPorshe CarPorshe Car",
-      "productDescription": "Porshecar description ",
-      "supplierName": "Porshe Car showroom",
-      "cost": 6800000,
-      "imageUrl": "pexels-photo-977003.jpeg"
-    },
-    {
-      "productName": "Ferrari Car",
-      "productDescription": "Ferrari car description",
-      "supplierName": "Ferrari Car showroom",
-      "cost": 6900000,
-      "imageUrl": "pexels-photo-544542.jpeg"
-    },
-    {
-      "productName": "BMW Car",
-      "productDescription": "BMW car description",
-      "supplierName": "BMW Car showroom",
-      "cost": 9700000,
-      "imageUrl": "pexels-photo-707046.jpeg"
-    },
-    {
-      "productName": "Fortunure Car",
-      "productDescription": "Fortunure car description",
-      "supplierName": "My Dream Company",
-      "cost": 8900000,
-      "imageUrl": "pexels-photo-116675.jpeg"
-    },
-    {
-      "productName": "Porshe Car",
-      "productDescription": "Porshecar description ",
-      "supplierName": "Porshe Car showroom",
-      "cost": 6800000,
-      "imageUrl": "pexels-photo-977003.jpeg"
-    },
-    {
-      "productName": "Ferrari Car",
-      "productDescription": "Ferrari car description",
-      "supplierName": "Ferrari Car showroom",
-      "cost": 6900000,
-      "imageUrl": "pexels-photo-544542.jpeg"
-    },
-    {
-      "productName": "BMW Car",
-      "productDescription": "BMW car description",
-      "supplierName": "BMW Car showroom",
-      "cost": 9700000,
-      "imageUrl": "pexels-photo-707046.jpeg"
-    },
-    {
-      "productName": "Fortunure Car",
-      "productDescription": "Fortunure car description",
-      "supplierName": "My Dream Company",
-      "cost": 8900000,
-      "imageUrl": "pexels-photo-116675.jpeg"
-    },
-    {
-      "productName": "Porshe Car",
-      "productDescription": "Porshecar description ",
-      "supplierName": "Porshe Car showroom",
-      "cost": 6800000,
-      "imageUrl": "pexels-photo-977003.jpeg"
-    },
-    {
-      "productName": "Ferrari Car",
-      "productDescription": "Ferrari car description",
-      "supplierName": "Ferrari Car showroom",
-      "cost": 6900000,
-      "imageUrl": "pexels-photo-544542.jpeg"
-    },
-    {
-      "productName": "BMW Car",
-      "productDescription": "BMW car description",
-      "supplierName": "BMW Car showroom",
-      "cost": 9700000,
-      "imageUrl": "pexels-photo-707046.jpeg"
-    }
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-        itemCount: prodList.length,
-        gridDelegate:
-            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemBuilder: (BuildContext context, int index) {
-          return SingleProduct(
-            productName: prodList[index]['productName'],
-            productDescription: prodList[index]['productDescription'],
-            supplierName: prodList[index]['supplierName'],
-            cost: prodList[index]['cost'],
-            imageUrl: prodList[index]['imageUrl'],
-          );
-        });
-  }
 }
 
 class SingleProduct extends StatelessWidget {
@@ -146,7 +38,7 @@ class SingleProduct extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Image.asset(
-                'assets/cars/$imageUrl',
+                '$imageUrl',
                 height: 155,
                 width: 180,
               ),
@@ -166,38 +58,47 @@ class SingleProduct extends StatelessWidget {
   }
 }
 
-// class DBConnection {
-//   static DBConnection _instance;
+class _ProductsState extends State<Products> {
+  var prodList = [];
 
-//   final String _host = "10.0.2.2";
-//   final String _port = "27017";
-//   final String _dbName = "tlapp";
-//   Db _db;
+  getProdRecords() async {
+    Db db = new Db("mongodb://10.0.2.2:27017/tlapp");
+    DbCollection coll;
+    await db.open();
+    print('connection open mongo');
+    coll = db.collection("products");
 
-//   static getInstance() {
-//     if (_instance == null) {
-//       _instance = DBConnection();
-//     }
-//     return _instance;
-//   }
+    await coll.find().forEach((v) => prodList.add(v));
+    setState(() {
+      this.prodList = prodList;
+    });
+    print("after getting all records...");
+    print(prodList);
+    db.close();
+  }
 
-//   Future<Db> getConnection() async {
-//     if (_db == null) {
-//       try {
-//         _db = Db(_getConnectionString());
-//         await _db.open();
-//       } catch (e) {
-//         print(e);
-//       }
-//     }
-//     return _db;
-//   }
+  @override
+  void initState() {
+    // TODO: implement initState
 
-//   _getConnectionString() {
-//     return "mongodb://$_host:$_port/$_dbName";
-//   }
+    getProdRecords();
+    super.initState();
+  }
 
-//   closeConnection() {
-//     _db.close();
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+        itemCount: prodList.length,
+        gridDelegate:
+            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        itemBuilder: (BuildContext context, int index) {
+          return SingleProduct(
+            productName: prodList[index]['productName'],
+            productDescription: prodList[index]['productDescription'],
+            supplierName: prodList[index]['supplierName'],
+            cost: prodList[index]['cost'],
+            imageUrl: prodList[index]['imageUrl'],
+          );
+        });
+  }
+}

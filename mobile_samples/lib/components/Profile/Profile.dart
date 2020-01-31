@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
-import 'package:tradeleaves/components/CustomDrawer.dart';
-
 
 class Profile extends StatefulWidget {
   final userId;
@@ -31,7 +29,6 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
         appBar: CustomToolBar(),
         body: Container(
           child: ListView(
@@ -65,14 +62,15 @@ class _ProfileState extends State<Profile> {
                             width: 150,
                             child: Text(
                               'User Id',
-                              style: TextStyle(fontSize: 15,color: Colors.black54),
+                              style: TextStyle(
+                                  fontSize: 15, color: Colors.black54),
                             ),
                           ),
                           Container(
                             alignment: Alignment.bottomLeft,
                             child: Text(widget.userId,
-                                style: TextStyle( fontSize: 18,color: Colors.black)),
-
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black)),
                           )
                         ],
                       ),
@@ -86,14 +84,15 @@ class _ProfileState extends State<Profile> {
                             width: 150,
                             child: Text(
                               'Company Name',
-                              style: TextStyle(fontSize: 15,color: Colors.black54),
+                              style: TextStyle(
+                                  fontSize: 15, color: Colors.black54),
                             ),
                           ),
                           Container(
                             alignment: Alignment.bottomLeft,
                             child: Text(widget.companyName,
                                 style: TextStyle(
-                                    fontSize: 18,color: Colors.black)),
+                                    fontSize: 18, color: Colors.black)),
                           )
                         ],
                       ),
@@ -107,14 +106,15 @@ class _ProfileState extends State<Profile> {
                             width: 150,
                             child: Text(
                               'Email Id',
-                              style: TextStyle(fontSize: 15,color: Colors.black54),
+                              style: TextStyle(
+                                  fontSize: 15, color: Colors.black54),
                             ),
                           ),
                           Container(
                             alignment: Alignment.bottomLeft,
                             child: Text(widget.emailId,
                                 style: TextStyle(
-                                    fontSize: 18,color: Colors.black)),
+                                    fontSize: 18, color: Colors.black)),
                           )
                         ],
                       ),
@@ -128,19 +128,19 @@ class _ProfileState extends State<Profile> {
                             width: 150,
                             child: Text(
                               'Phone No',
-                              style: TextStyle(fontSize: 15,color: Colors.black54),
+                              style: TextStyle(
+                                  fontSize: 15, color: Colors.black54),
                             ),
                           ),
                           Container(
                             alignment: Alignment.bottomLeft,
                             child: Text(widget.phoneNo,
                                 style: TextStyle(
-                                    fontSize: 18,color: Colors.black)),
+                                    fontSize: 18, color: Colors.black)),
                           )
                         ],
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -148,8 +148,6 @@ class _ProfileState extends State<Profile> {
           ),
         ),
 //        drawer: CustomDrawer(),
-        bottomNavigationBar: CustomNavBar(selectedIndex: 0)
-    );
-
+        bottomNavigationBar: CustomNavBar(selectedIndex: 0));
   }
 }
