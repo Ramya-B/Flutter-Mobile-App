@@ -148,7 +148,7 @@ class _ProfileState extends State<Profile> {
           ),
         ),
 //        drawer: CustomDrawer(),
-        bottomNavigationBar: CustomNavBar()
+        bottomNavigationBar: CustomNavBar(selectedIndex: 0)
     );
 
   }

@@ -38,7 +38,7 @@ class CustomDrawer extends StatelessWidget {
                     body: Container(
                       child: Products() ,
                     ),
-                    bottomNavigationBar: CustomNavBar(),
+                    bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                     drawer: CustomDrawer(),
                   ))),
               child: new ListTile(

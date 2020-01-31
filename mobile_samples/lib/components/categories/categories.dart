@@ -16,7 +16,7 @@ class _CategoriesState extends State<Categories> {
     return Scaffold(
       appBar: CustomToolBar() ,
       drawer: CustomDrawer(),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: CustomNavBar(selectedIndex: 0),
       body: Container(
         height: 500.0,
         child: GridView.count(

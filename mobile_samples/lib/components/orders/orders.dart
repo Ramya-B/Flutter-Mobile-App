@@ -14,7 +14,7 @@ class _OrdersState extends State<Orders> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomToolBar(),
-        bottomNavigationBar: CustomNavBar(),
+        bottomNavigationBar: CustomNavBar(selectedIndex: 0),
         drawer: CustomDrawer(),
         body: ListView(
           children: <Widget>[

@@ -100,7 +100,7 @@ class _UserLoginState extends State<UserLogin> {
           ),
         ),
       ),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: CustomNavBar(selectedIndex: 0),
       // drawer: CustomDrawer(),
     );
   }

@@ -15,7 +15,7 @@ class _FavouriteState extends State<Favourite> {
     return Scaffold(
       appBar: CustomToolBar(),
       drawer: CustomDrawer(),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: CustomNavBar(selectedIndex: 0),
       body: ListView(
         children: <Widget>[
           Card(

@@ -115,7 +115,7 @@ class ProductDetails extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: CustomNavBar(),
+        bottomNavigationBar: CustomNavBar(selectedIndex: 0),
 //        drawer: CustomDrawer()
     );
   }
