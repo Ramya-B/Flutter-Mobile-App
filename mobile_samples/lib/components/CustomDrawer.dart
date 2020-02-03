@@ -1,5 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/CustomAppBar.dart';
+import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/Profile/Profile.dart';
+import 'package:tradeleaves/components/categories/categories.dart';
+import 'package:tradeleaves/components/favourites/favourite.dart';
+import 'package:tradeleaves/components/notications/Notifications.dart';
+import 'package:tradeleaves/components/orders/orders.dart';
+import 'package:tradeleaves/components/products/ProductsList.dart';
+import 'package:tradeleaves/components/About/about.dart';
+import 'package:tradeleaves/components/Settings/setting.dart';
+
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -21,7 +31,15 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (context) => new Scaffold(
+                    appBar: CustomToolBar(),
+                    body: Container(
+                      child: Products() ,
+                    ),
+                    bottomNavigationBar: CustomNavBar(selectedIndex: 0),
+                    drawer: CustomDrawer(),
+                  ))),
               child: new ListTile(
                 title: Text('Home Page'),
                 leading: Icon(Icons.home),
@@ -33,54 +51,56 @@ class CustomDrawer extends StatelessWidget {
                       userId: 'manohar',
                       companyName:'my dream company',
                       emailId:'manohar.nettem@gmail.com',
-                      phoneNo: 7799867839,
+                      phoneNo: "7799867839",
                       firstName: 'Manohar',
                       lastName: 'Nettem'
                   ))),
-
-
               child: new ListTile(
                 title: Text('Profile'),
                 leading: Icon(Icons.person),
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+              builder: (context) => new Categories())),
               child: new ListTile(
                 title: Text('Categories'),
                 leading: Icon(Icons.dashboard),
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (context) => new Favourite())),
               child: new ListTile(
                 title: Text('Favourites'),
                 leading: Icon(Icons.favorite),
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (context) => new Orders())),
               child: new ListTile(
                 title: Text('Orders'),
                 leading: Icon(Icons.shopping_basket),
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (context) => new AlertNotifications())),
               child: new ListTile(
                 title: Text('Notifications'),
                 leading: Icon(Icons.notifications),
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new SettingsPage())),
               child: new ListTile(
                 title: Text('Settings'),
                 leading: Icon(Icons.settings),
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new AboutPage())),
               child: new ListTile(
                 title: Text('About'),
                 leading: Icon(Icons.info),
