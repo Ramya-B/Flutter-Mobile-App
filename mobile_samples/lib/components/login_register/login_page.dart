@@ -77,7 +77,7 @@ class _UserLoginState extends State<UserLogin> {
                                       body: Container(
                                         child: Products(category: 'all'),
                                       ),
-                                      bottomNavigationBar: CustomNavBar(),
+                                      bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                                     ))),
                         textColor: Colors.white,
                         color: Colors.green,
