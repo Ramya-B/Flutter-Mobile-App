@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mongo_dart/mongo_dart.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
-import 'package:tradeleaves/components/Profile/Profile.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
 
@@ -17,12 +15,12 @@ class Sample extends StatelessWidget {
     return Scaffold(
       appBar: CustomToolBar(),
       drawer: CustomDrawer(),
-      bottomNavigationBar: CustomNavBar(selectedIndex: 0),//
+      bottomNavigationBar: CustomNavBar(selectedIndex: 0),
       body: ListView(
         children: <Widget>[
           Container(
             height: 600.0,
-            child: Products(),
+            child: Products(category: 'all',),
           ),
         ],
       ),

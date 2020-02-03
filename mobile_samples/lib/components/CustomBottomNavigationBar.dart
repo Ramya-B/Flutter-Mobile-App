@@ -34,7 +34,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
                 builder: (context) => new Scaffold(
                   appBar: CustomToolBar(),
                   body: Container(
-                    child: Products() ,
+                    child: Products(category: 'all') ,
                   ),
                   bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                   drawer: CustomDrawer(),
@@ -82,7 +82,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
               builder: (context) => new Scaffold(
                 appBar: CustomToolBar(),
                 body: Container(
-                  child: Products() ,
+                  child: Products(category: 'all') ,
                 ),
                 bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                 drawer: CustomDrawer(),

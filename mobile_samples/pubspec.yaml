@@ -61,13 +61,20 @@ flutter:
     - assets/categories/footwear.png
     - assets/categories/music.png
     - assets/cars/pexels-photo-707046.jpeg
-    - assets/music/music3.jpeg
     - assets/bikes/suzuki.jpeg
     - assets/bikes/bulllet.jpeg
-    - assets/footwear/footwear5.jpeg
+    - assets/footwear/footwear1.jpg
+    - assets/footwear/footwear2.jpeg
     - assets/footwear/footwear3.jpeg
-    - assets/music/music5.jpeg
+    - assets/footwear/footwear4.jpeg
+    - assets/footwear/footwear5.jpeg
+    - assets/footwear/footwear6.jpeg
+    - assets/music/music1.jpeg
+    - assets/music/music2.jpeg
     - assets/music/music3.jpeg
+    - assets/music/music4.jpeg
+    - assets/music/music5.jpeg
+    - assets/music/music6.jpeg
     - assets/bikes/r11.jpeg
     - assets/cars/pexels-photo-112460.jpeg
     - assets/cars/pexels-photo-358070.jpeg

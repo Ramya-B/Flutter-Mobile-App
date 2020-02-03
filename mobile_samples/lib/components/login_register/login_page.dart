@@ -75,7 +75,7 @@ class _UserLoginState extends State<UserLogin> {
                                       appBar: CustomToolBar(),
                                       drawer: CustomDrawer(),
                                       body: Container(
-                                        child: Products(),
+                                        child: Products(category: 'all'),
                                       ),
                                       bottomNavigationBar: CustomNavBar(),
                                     ))),

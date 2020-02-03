@@ -24,7 +24,9 @@ class ProductDetails extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Container(
-              child: Image.asset('assets/cars/$imageUrl'),
+              height: 250,
+              width: 250,
+              child: Image.asset('$imageUrl'),
             ),
             Container(
               child: Row(
