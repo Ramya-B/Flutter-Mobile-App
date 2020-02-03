@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
-import 'package:flutter/src/widgets/scroll_view.dart';
 import 'package:tradeleaves/components/products/ProductDetails.dart';
 
 class Products extends StatefulWidget {
