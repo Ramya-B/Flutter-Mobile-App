@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
+import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:tradeleaves/components/login_register/login_page.dart';
+import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -9,6 +11,12 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  var fullName;
+  var companyName;
+  var password;
+  var confirmPassword;
+  var emailId;
+  var phoneNo;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +32,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  TextField(
+                  TextFormField(
                     autofocus: true,
                     obscureText: false,
                     keyboardType: TextInputType.text,
@@ -39,11 +47,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                         )
                       ),
+                    onChanged: (String name){
+                      this.fullName = name;
+                    },
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  TextField(
+                  TextFormField(
                     autofocus: true,
                     obscureText: false,
                     keyboardType: TextInputType.emailAddress,
@@ -57,11 +68,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                         )
                     ),
+                    onChanged: (String email){
+                      this.emailId = email;
+                    },
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  TextField(
+                  TextFormField(
                     autofocus: true,
                     obscureText: false,
                     keyboardType: TextInputType.phone,
@@ -75,11 +89,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                         )
                     ),
+                    onChanged: (String phone){
+                      this.phoneNo = phone;
+                    },
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  TextField(
+                  TextFormField(
                     autofocus: true,
                     obscureText: false,
                     keyboardType: TextInputType.text,
@@ -97,7 +114,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  TextField(
+                  TextFormField(
                     autofocus: true,
                     obscureText: true,
                     keyboardType: TextInputType.text,
@@ -111,11 +128,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                         )
                     ),
+                    onChanged: (String password){
+                      this.password = password;
+                    },
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  TextField(
+                  TextFormField(
                     autofocus: true,
                     obscureText: false,
                     keyboardType: TextInputType.text,
@@ -129,11 +149,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                         )
                     ),
+                    onChanged: (String confirmPassword){
+                      this.confirmPassword = confirmPassword;
+                    },
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  TextField(
+                  TextFormField(
                     autofocus: true,
                     obscureText: false,
                     keyboardType: TextInputType.number,
@@ -154,7 +177,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ButtonTheme(
                     minWidth: double.infinity,
                     child: MaterialButton(
-                        onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new UserLogin())),
+                        onPressed: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new SaveUser(
+                          fullName: this.fullName,
+                          companyName: this.companyName,
+                          password: this.password,
+                          emailId: this.emailId,
+                          phoneNo: this.phoneNo,
+                        ))),
                         textColor: Colors.white,
                         color: Colors.green,
                         height: 50,
@@ -169,3 +198,56 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 }
+class SaveUser extends StatefulWidget {
+  final fullName;
+  final companyName;
+  final password;
+  final emailId;
+  final phoneNo;
+
+  SaveUser({this.fullName,this.companyName,this.password,this.emailId,this.phoneNo});
+  @override
+  _SaveUserState createState() => _SaveUserState();
+}
+
+class _SaveUserState extends State<SaveUser> {
+  saveUser() async {
+    Db db = new Db("mongodb://10.0.2.2:27017/tlapp");
+    DbCollection coll;
+    await db.open();
+    coll = db.collection("users");
+   coll.insert({
+     "emailId" : widget.emailId,
+     "password" : widget.password,
+     "companyName" :widget.companyName,
+     "fullName" : widget.fullName,
+     "phoneNo" : widget.phoneNo
+   });
+    setState(() {
+      print("set state called");
+    });
+    print("after getting all users...");
+    db.close();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    saveUser();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+//      appBar: CustomToolBar(),
+//      bottomNavigationBar: CustomNavBar(selectedIndex: 0,),
+//      drawer: CustomDrawer(),
+      body: Container(
+        child: UserLogin(),
+      ),
+
+    );
+  }
+}
+
