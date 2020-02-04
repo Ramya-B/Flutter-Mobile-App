@@ -74,6 +74,14 @@ class _LoginState extends State<Login> {
                 style: style.copyWith(
                     color: Colors.white, fontWeight: FontWeight.bold))));
 
+    final accountChecking = TextField(
+      decoration: InputDecoration(
+        hintText: "If you don't have account ?",
+        border: InputBorder.none,
+      ),
+      textAlign: TextAlign.center,
+    );
+
     return Scaffold(
         appBar: CustomToolBar(),
         body: Center(
@@ -97,7 +105,8 @@ class _LoginState extends State<Login> {
                               passwordField,
                               SizedBox(height: 30),
                               loginButton,
-                              SizedBox(height: 20),
+                              // SizedBox(height: 20),
+                              accountChecking,
                               registerButton
                             ]))))));
   }
