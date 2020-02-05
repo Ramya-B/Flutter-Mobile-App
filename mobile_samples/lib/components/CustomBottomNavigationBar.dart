@@ -106,7 +106,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
         BottomNavigationBarItem(icon: Icon(Icons.chat), title: Text('Chat')),
       ],
       currentIndex: selectedIndex,
-      selectedItemColor: Colors.amber[800],
+      selectedItemColor: Colors.green,
       onTap: _onItemTapped,
     );
   }

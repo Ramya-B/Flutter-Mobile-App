@@ -152,7 +152,7 @@ packages:
     source: hosted
     version: "0.3.6"
   mongo_dart_query:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: mongo_dart_query
       url: "https://pub.dartlang.org"
