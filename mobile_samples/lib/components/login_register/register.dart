@@ -182,7 +182,7 @@ class SaveUser extends StatefulWidget {
 
 class _SaveUserState extends State<SaveUser> {
   saveUser() async {
-    Db db = new Db("mongodb://10.0.2.2:27017/tlapp");
+    Db db = new Db("mongodb://192.168.241.214:27017/tlapp");
     DbCollection coll;
     await db.open();
     coll = db.collection("users");

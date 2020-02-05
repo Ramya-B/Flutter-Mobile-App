@@ -12,7 +12,7 @@ class _MyCartState extends State<MyCart> {
   var cartItems = [];
 
   getCartItems() async {
-    Db db = new Db("mongodb://10.0.2.2:27017/tlapp");
+    Db db = new Db("mongodb://192.168.241.214:27017/tlapp");
     DbCollection coll;
     await db.open();
     print('fav records called..');
@@ -96,7 +96,7 @@ class _SingleCartItemState extends State<SingleCartItem> {
   }
 
   void save(type, value) async {
-    Db db = new Db("mongodb://10.0.2.2:27017/tlapp");
+    Db db = new Db("mongodb://192.168.241.214:27017/tlapp");
     DbCollection coll;
     await db.open();
     print('save called');

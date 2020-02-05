@@ -105,6 +105,13 @@ class CustomDrawer extends StatelessWidget {
                 title: Text('About'),
                 leading: Icon(Icons.info),
               ),
+            ),
+            InkWell(
+              onTap: () => {},
+              child: new ListTile(
+                title: Text('Logout'),
+                leading: Icon(Icons.exit_to_app),
+              )
             )
           ],
         ),

@@ -17,7 +17,8 @@ class _ProductsState extends State<Products> {
   var prodList = [];
 
   getProdRecords() async {
-    Db db = new Db("mongodb://10.0.2.2:27017/tlapp");
+    // Db db = new Db("mongodb://192.168.241.214:27017/tlapp");
+    Db db = new Db("mongodb://192.168.241.214:27017/tlapp");
     DbCollection coll;
     await db.open();
     print('connection open mongo latest' + widget.category);
@@ -111,7 +112,7 @@ class _SingleProductState extends State<SingleProduct> {
   }
 
    void save(type,value) async{
-       Db db = new Db("mongodb://10.0.2.2:27017/tlapp");
+       Db db = new Db("mongodb://192.168.241.214:27017/tlapp");
        DbCollection coll;
        await db.open();
        print('save called');
