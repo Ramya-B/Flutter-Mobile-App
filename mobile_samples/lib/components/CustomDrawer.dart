@@ -4,6 +4,7 @@ import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/Profile/Profile.dart';
 import 'package:tradeleaves/components/categories/categories.dart';
 import 'package:tradeleaves/components/favourites/favourite.dart';
+import 'package:tradeleaves/components/login_register/login.dart';
 import 'package:tradeleaves/components/notications/Notifications.dart';
 import 'package:tradeleaves/components/orders/orders.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
@@ -107,7 +108,7 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: () => {},
+              onTap: () => Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new Login())),
               child: new ListTile(
                 title: Text('Logout'),
                 leading: Icon(Icons.exit_to_app),
