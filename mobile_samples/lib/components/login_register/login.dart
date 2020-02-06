@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/login_register/register.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
@@ -16,7 +17,20 @@ class _LoginState extends State<Login> {
 
   String emailId;
   String password;
-
+  removeValues() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      //Remove String
+      prefs.remove("fullName");
+      //Remove bool
+      prefs.remove("emailId");
+    });
+  }
+  @override
+  void initState() {
+    removeValues();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final emailField = TextField(
@@ -74,16 +88,17 @@ class _LoginState extends State<Login> {
                 style: style.copyWith(
                     color: Colors.white, fontWeight: FontWeight.bold))));
 
-    final accountChecking = TextField(
-      decoration: InputDecoration(
-        hintText: "If you don't have account ?",
-        border: InputBorder.none,
+    final accountChecking = Container(
+      alignment: Alignment.center,
+      height: 50,
+      child: Text(
+          'If you don \'t have account ?'
       ),
-      textAlign: TextAlign.center,
     );
 
     return Scaffold(
         appBar: CustomToolBar(),
+        drawer: CustomDrawer(),
         body: Center(
             child: SingleChildScrollView(
                 child: Container(
@@ -142,6 +157,17 @@ class _CheckLogInState extends State<CheckLogIn> {
     } else {
       print("category is undefined mr.....!");
     }
+    if(usersStatus.length > 0 ){
+      print("setting  cookies..");
+      print(usersStatus.first);
+      var userData= usersStatus.first;
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('fullName', userData['fullName']);
+      prefs.setString('emailId', userData['emailId']);
+      prefs.setString('companyName', userData['companyName']);
+      prefs.setString('phoneNo', userData['companyName']);
+      prefs.setString('userId', userData['_id'].toString().substring(10,25));
+    }
     setState(() {
       this.usersStatus = usersStatus;
       print("set state called");
@@ -160,7 +186,7 @@ class _CheckLogInState extends State<CheckLogIn> {
 
   @override
   Widget build(BuildContext context) {
-    return (usersStatus.length > 0)
+    return (this.usersStatus.length > 0)
         ? new Scaffold(
             appBar: CustomToolBar(),
             bottomNavigationBar: CustomNavBar(

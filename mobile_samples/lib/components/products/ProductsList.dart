@@ -1,6 +1,9 @@
+import 'package:client_cookie/client_cookie.dart';
 import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/products/ProductDetails.dart';
+import 'dart:io';
 
 class Products extends StatefulWidget {
   final String category;
@@ -37,6 +40,12 @@ class _ProductsState extends State<Products> {
     print("after getting all records...");
     print(prodList);
     db.close();
+  }
+  void setData() async{
+      print("set data called in product list...!");
+       SharedPreferences sample =  await SharedPreferences.getInstance();
+       print(sample.getString('emailId'));
+       print(sample.getString('fullName')); 
   }
 
   @override

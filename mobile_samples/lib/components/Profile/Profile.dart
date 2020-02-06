@@ -1,34 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
+import 'package:tradeleaves/components/login_register/login.dart';
 
 class Profile extends StatefulWidget {
-  final userId;
-  final companyName;
-  final emailId;
-  final phoneNo;
-  final firstName;
-  final lastName;
-
-  Profile({
-    this.userId,
-    this.companyName,
-    this.emailId,
-    this.phoneNo,
-    this.firstName,
-    this.lastName,
-  });
-
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
   final sample = "executed";
+  var emailId;
+  var fullName;
+  var companyName;
+  var phoneNo;
+  var userData;
+  var userId;
+
+  @override
+  void initState() {
+    setData();
+    super.initState();
+  }
+
+  void setData() async {
+    print("set data called...in profile!");
+    SharedPreferences sample = await SharedPreferences.getInstance();
+    print(sample.getString('emailId'));
+    print(sample.getString('fullName'));
+    this.emailId = sample.getString('emailId') != null
+        ? sample.getString('emailId')
+        : null;
+    this.fullName = sample.getString('fullName') != null
+        ? sample.getString('fullName')
+        : null;
+    this.companyName = sample.getString('companyName') != null
+        ? sample.getString('companyName')
+        : null;
+    this.phoneNo = sample.getString('phoneNo') != null
+        ? sample.getString('phoneNo')
+        : null;
+    this.userId = sample.getString('userId') != null
+        ? sample.getString('userId')
+        : null;
+    print(this.emailId);
+    print(this.fullName);
+    print(this.emailId);
+    print(this.companyName);
+    print(this.phoneNo);
+    print(this.phoneNo);
+    setState(() {
+      print("set state called.....");
+      print(this.emailId);
+      print(this.fullName);
+      print(this.emailId);
+      print(this.phoneNo);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
         appBar: CustomToolBar(),
         body: Container(
           child: ListView(
@@ -45,7 +78,7 @@ class _ProfileState extends State<Profile> {
                 height: 50,
                 alignment: Alignment.topCenter,
                 child: Text(
-                  widget.firstName + ' ' + widget.lastName,
+                  this.fullName,
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
                 ),
               ),
@@ -68,7 +101,7 @@ class _ProfileState extends State<Profile> {
                           ),
                           Container(
                             alignment: Alignment.bottomLeft,
-                            child: Text(widget.userId,
+                            child: Text(this.userId,
                                 style: TextStyle(
                                     fontSize: 18, color: Colors.black)),
                           )
@@ -90,7 +123,7 @@ class _ProfileState extends State<Profile> {
                           ),
                           Container(
                             alignment: Alignment.bottomLeft,
-                            child: Text(widget.companyName,
+                            child: Text(this.companyName,
                                 style: TextStyle(
                                     fontSize: 18, color: Colors.black)),
                           )
@@ -112,7 +145,7 @@ class _ProfileState extends State<Profile> {
                           ),
                           Container(
                             alignment: Alignment.bottomLeft,
-                            child: Text(widget.emailId,
+                            child: Text(this.emailId,
                                 style: TextStyle(
                                     fontSize: 18, color: Colors.black)),
                           )
@@ -134,7 +167,7 @@ class _ProfileState extends State<Profile> {
                           ),
                           Container(
                             alignment: Alignment.bottomLeft,
-                            child: Text(widget.phoneNo,
+                            child: Text(this.phoneNo,
                                 style: TextStyle(
                                     fontSize: 18, color: Colors.black)),
                           )
@@ -147,7 +180,6 @@ class _ProfileState extends State<Profile> {
             ],
           ),
         ),
-//        drawer: CustomDrawer(),
         bottomNavigationBar: CustomNavBar(selectedIndex: 0));
   }
 }
