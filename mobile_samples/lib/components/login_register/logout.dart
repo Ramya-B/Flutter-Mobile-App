@@ -1,42 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tradeleaves/components/CustomAppBar.dart';
-import 'package:tradeleaves/components/products/ProductsList.dart';
-import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
-import 'package:tradeleaves/components/CustomDrawer.dart';
+import 'package:tradeleaves/components/login_register/login.dart';
 
-class Logout extends StatefulWidget {
+
+class LogOut extends StatefulWidget {
   @override
-  _LogoutState createState() => _LogoutState();
+  _LogOutState createState() => _LogOutState();
 }
 
-class _LogoutState extends State<Logout> {
-  removeValues() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+class _LogOutState extends State<LogOut> {
+
+  void clearInfo() async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      //Remove String
-      prefs.remove("fullName");
-      //Remove bool
-      prefs.remove("emailId");
+      print("set state called in logout");
+      preferences.clear();
     });
   }
-
   @override
   void initState() {
-    removeValues();
+    print("init called in logout");
+    clearInfo();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: CustomToolBar(),
-      bottomNavigationBar: CustomNavBar(),
-      drawer: CustomDrawer(),
-      body: Container(
-        child: Products(),
-      ),
-
-    );
+    return new Login();
   }
 }
+

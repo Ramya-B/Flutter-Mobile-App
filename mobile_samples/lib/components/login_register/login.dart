@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
+import 'package:tradeleaves/components/Profile/Profile.dart';
 import 'package:tradeleaves/components/login_register/register.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
@@ -17,20 +18,34 @@ class _LoginState extends State<Login> {
 
   String emailId;
   String password;
-  removeValues() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      //Remove String
-      prefs.remove("fullName");
-      //Remove bool
-      prefs.remove("emailId");
-    });
-  }
+  var fullName;
+
   @override
   void initState() {
-    removeValues();
+    setData();
     super.initState();
   }
+
+  void setData() async {
+    print("set data called...in profile!");
+    SharedPreferences sample = await SharedPreferences.getInstance();
+    print(sample.getString('emailId'));
+    print(sample.getString('fullName'));
+    this.emailId = sample.getString('emailId') != null
+        ? sample.getString('emailId')
+        : null;
+    this.fullName = sample.getString('fullName') != null
+        ? sample.getString('fullName')
+        : null;
+    print(this.emailId);
+    print(this.fullName);
+    setState(() {
+      print("set state called.....");
+      print(this.emailId);
+      print(this.fullName);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final emailField = TextField(
@@ -96,7 +111,7 @@ class _LoginState extends State<Login> {
       ),
     );
 
-    return Scaffold(
+    return (this.fullName != null) ? Container(child: Profile(),):Scaffold(
         appBar: CustomToolBar(),
         drawer: CustomDrawer(),
         body: Center(
@@ -123,7 +138,9 @@ class _LoginState extends State<Login> {
                               // SizedBox(height: 20),
                               accountChecking,
                               registerButton
-                            ]))))));
+                            ]))))
+        ),
+    );
   }
 }
 

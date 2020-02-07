@@ -29,7 +29,6 @@ class _CustomNavBarState extends State<CustomNavBar> {
     switch (index) {
       case 0:
         {
-          if(selectedIndex != index){
             Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => new Scaffold(
                   appBar: CustomToolBar(),
@@ -39,12 +38,11 @@ class _CustomNavBarState extends State<CustomNavBar> {
                   bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                   drawer: CustomDrawer(),
                 )));
-          }
+
         }
         break;
       case 1:
         {
-          if(selectedIndex != index){
             Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => new Scaffold(
                   appBar: CustomToolBar(),
@@ -56,12 +54,10 @@ class _CustomNavBarState extends State<CustomNavBar> {
                   ),
                   drawer: CustomDrawer(),
                 )));
-          }
         }
         break;
       case 2:
         {
-          if(selectedIndex != index){
             Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => new Scaffold(
                   appBar: CustomToolBar(),
@@ -73,7 +69,6 @@ class _CustomNavBarState extends State<CustomNavBar> {
                   ),
                   drawer: CustomDrawer(),
                 )));
-          }
         }
         break;
       default:

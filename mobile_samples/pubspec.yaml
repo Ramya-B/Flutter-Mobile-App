@@ -23,8 +23,9 @@ dependencies:
   flutter_launcher_icons: ^0.7.2+1
   client_cookie: ^2.2.1
   http: ^0.12.0+4
-  mongo_dart_query: '0.3.2'
+  mongo_dart_query: ^0.4.1
   shared_preferences: ^0.5.6+1
+  flappy_search_bar: 1.4.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -34,7 +35,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mongo_dart: ^0.3.4
+  mongo_dart: ^0.4.0
 
 flutter_icons:
   android: "launcher_icon"

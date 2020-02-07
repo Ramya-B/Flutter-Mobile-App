@@ -6,6 +6,7 @@ import 'package:tradeleaves/components/Profile/Profile.dart';
 import 'package:tradeleaves/components/categories/categories.dart';
 import 'package:tradeleaves/components/favourites/favourite.dart';
 import 'package:tradeleaves/components/login_register/login.dart';
+import 'package:tradeleaves/components/login_register/logout.dart';
 import 'package:tradeleaves/components/notications/Notifications.dart';
 import 'package:tradeleaves/components/orders/orders.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
@@ -151,7 +152,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
           (this.emailId != null && this.fullName != null)
               ? InkWell(
               onTap: () => Navigator.of(context).push(
-                  new MaterialPageRoute(builder: (context) => new Login())),
+                  new MaterialPageRoute(builder: (context) => new LogOut())),
               child: new ListTile(
                 title: Text('Logout'),
                 leading: Icon(Icons.exit_to_app),
