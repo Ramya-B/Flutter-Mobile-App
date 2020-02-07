@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
+import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
 
@@ -42,6 +43,7 @@ class _SearchItemsState extends State<SearchItems> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      appBar: CustomToolBar(),
       body: ListView(
         children: <Widget>[
           Container(),
