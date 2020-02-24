@@ -12,6 +12,7 @@ import 'package:tradeleaves/components/orders/orders.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
 import 'package:tradeleaves/components/About/about.dart';
 import 'package:tradeleaves/components/Settings/setting.dart';
+import 'package:tradeleaves/components/webpage/mywebview.dart';
 
 class CustomDrawer extends StatefulWidget {
   @override
@@ -103,6 +104,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ):Container(),
           InkWell(
             onTap: () => Navigator.of(context).push(
+                new MaterialPageRoute(builder: (BuildContext context) => new MyWebView(selectedUrl: "https://www.tradeleaves.com/"))),
+            child: new ListTile(
+              title: Text('BLISS'),
+              leading: Icon(Icons.table_chart),
+            ),
+          ),
+          InkWell(
+            onTap: () => Navigator.of(context).push(
                 new MaterialPageRoute(builder: (context) => new Categories())),
             child: new ListTile(
               title: Text('Categories'),
@@ -150,7 +159,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
           ),
           (this.emailId != null && this.fullName != null)
-              ? InkWell(
+              ? InkWell(  
               onTap: () => Navigator.of(context).push(
                   new MaterialPageRoute(builder: (context) => new LogOut())),
               child: new ListTile(
