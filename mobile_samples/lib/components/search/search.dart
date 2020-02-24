@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
+import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection, where;
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
@@ -23,7 +23,8 @@ class _SearchItemsState extends State<SearchItems> {
     await db.open();
     print('keyword is' + this.keyword);
     coll = db.collection("products");
-   await coll.find({"productName" : this.keyword }).forEach((v) => prodList.add(v));
+  //   await coll.find({"productName" : this.keyword }).forEach((v) => prodList.add(v));
+    await coll.find(where.match('productName',this.keyword )).forEach((v) => prodList.add(v));
     setState(() {
       this.prodList = prodList;
       this.showList = true;
