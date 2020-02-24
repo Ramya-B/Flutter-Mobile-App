@@ -1,9 +1,8 @@
-import 'package:client_cookie/client_cookie.dart';
 import 'package:flutter/material.dart';
-import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
+import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection, where;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/products/ProductDetails.dart';
-import 'dart:io';
+
 
 class Products extends StatefulWidget {
   final String category;
@@ -18,7 +17,30 @@ class Products extends StatefulWidget {
 
 class _ProductsState extends State<Products> {
   var prodList = [];
-
+  ScrollController _controller;
+  var message;
+  var length =12;
+  _scrollListener() {
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {if(this.length < 23){
+         this.length =this.length+4;
+        if(widget.category == 'all'){
+          getProdRecords();
+        }
+        message = "reach the bottom";
+        print(message);
+      }
+      });
+    }
+    if (_controller.offset <= _controller.position.minScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {
+        message = "reach the top";
+        print(message);
+      });
+    }
+  }
   getProdRecords() async {
     // Db db = new Db("mongodb://192.168.241.214:27017/tlapp");
     Db db = new Db("mongodb://192.168.241.214:27017/tlapp");
@@ -26,13 +48,21 @@ class _ProductsState extends State<Products> {
     await db.open();
     print('connection open mongo latest' + widget.category);
     coll = db.collection("products");
-    if (widget.category != null && widget.category == 'all') {
-      await coll.find().forEach((v) => prodList.add(v));
+   if (widget.category != null && widget.category == 'all') {
+      await coll.find(where.limit(this.length)
+      ).forEach(
+              (v) =>
+              prodList.add(
+                  v));
     } else if (widget.category != null) {
       await coll
-          .find({'category': widget.category}).forEach((v) => prodList.add(v));
+          .find({'category' : widget.category}).forEach(
+              (v) =>
+              prodList.add(
+                  v));
     } else {
-      print("category is undefined mr.....!");
+      print(
+          "category is undefined mr.....!");
     }
     setState(() {
       this.prodList = prodList;
@@ -50,7 +80,8 @@ class _ProductsState extends State<Products> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
     getProdRecords();
     super.initState();
   }
@@ -58,7 +89,8 @@ class _ProductsState extends State<Products> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        itemCount: prodList.length,
+        itemCount: this.length,
+        controller: _controller,
         gridDelegate:
             new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
