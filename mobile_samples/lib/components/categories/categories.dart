@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http ;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
@@ -13,6 +16,7 @@ class Categories extends StatefulWidget {
 
 class _CategoriesState extends State<Categories> {
   var categoryList = [];
+  var cats = [];
   getCategoryRecords()async{
     Db db = new Db("mongodb://192.168.241.214:27017/tlapp");
     DbCollection coll;
@@ -29,10 +33,21 @@ class _CategoriesState extends State<Categories> {
     db.close();
 
   }
+ 
+  getCategories() async{
+     print("getCategories called...");
+    http.Response response = await http.get("http://uat.tradeleaves.internal:9800/catalog/api/categories/rootCategories/withimages");
+    var data = json.decode(response.body);
+    setState(() {
+      print("Categories from node...");
+      print(data);
+      this.cats = data;
+    });
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
+    getCategories();
     getCategoryRecords();
     super.initState();
 

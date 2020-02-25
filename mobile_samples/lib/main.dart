@@ -19,7 +19,7 @@ class Sample extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           Container(
-            height: 600.0,
+            height: 590.0,
             child: Products(category: 'all',),
           ),
         ],

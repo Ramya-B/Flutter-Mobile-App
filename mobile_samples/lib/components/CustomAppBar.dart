@@ -1,13 +1,36 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/search/search.dart';
-
 import 'login_register/login.dart';
 
-class CustomToolBar extends StatelessWidget with PreferredSizeWidget {
+
+class CustomToolBar extends StatefulWidget  with PreferredSizeWidget  {
+  @override
+  _CustomToolBarState createState() => _CustomToolBarState();
+
+ @override
+   Size get preferredSize => const Size.fromHeight(55.0);
+}
+
+class _CustomToolBarState extends State<CustomToolBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
+      leading: Container(
+        width: 50,
+        child: Row(
+        children: <Widget>[
+           Expanded(
+             child:  new IconButton(icon: Icon(Icons.menu), onPressed: () => Scaffold.of(context).openDrawer()),
+           ),
+            Expanded(
+             child:   new IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.of(context).maybePop())
+           )
+          
+        ],
+      ),
+      ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -20,7 +43,7 @@ class CustomToolBar extends StatelessWidget with PreferredSizeWidget {
             backgroundColor: Colors.white,
             radius: 15,
           ),
-          Expanded(
+          Container(
               child: Container(
                 alignment: Alignment.center,
                 child: Text('TRADELEAVES'),
@@ -35,7 +58,4 @@ class CustomToolBar extends StatelessWidget with PreferredSizeWidget {
       ],
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(55.0);
 }

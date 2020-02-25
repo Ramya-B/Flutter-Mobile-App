@@ -25,11 +25,13 @@ class _ProductsState extends State<Products> {
         !_controller.position.outOfRange) {
       setState(() {if(this.length < 23){
          this.length =this.length+4;
-        if(widget.category == 'all'){
-          getProdRecords();
-        }
+       
         message = "reach the bottom";
         print(message);
+         if(widget.category == 'all'){
+           print("calling get Records again...");
+          getProdRecords();
+        }
       }
       });
     }
@@ -48,24 +50,25 @@ class _ProductsState extends State<Products> {
     await db.open();
     print('connection open mongo latest' + widget.category);
     coll = db.collection("products");
+   var  prods = [];
    if (widget.category != null && widget.category == 'all') {
       await coll.find(where.limit(this.length)
-      ).forEach(
-              (v) =>
-              prodList.add(
-                  v));
+      ).forEach( (v) =>prods.add(v));
+
+
+
     } else if (widget.category != null) {
       await coll
-          .find({'category' : widget.category}).forEach(
+          .find(where.match('category' , widget.category)).forEach(
               (v) =>
-              prodList.add(
+              prods.add(
                   v));
     } else {
       print(
           "category is undefined mr.....!");
     }
     setState(() {
-      this.prodList = prodList;
+      this.prodList = prods;
     });
     print("after getting all records...");
     print(prodList);
@@ -89,7 +92,7 @@ class _ProductsState extends State<Products> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        itemCount: this.length,
+        itemCount: this.prodList.length,
         controller: _controller,
         gridDelegate:
             new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
