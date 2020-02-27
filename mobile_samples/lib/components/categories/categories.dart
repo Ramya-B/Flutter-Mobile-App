@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:http/http.dart' as http ;
+import 'dart:ui';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
@@ -16,8 +16,8 @@ class Categories extends StatefulWidget {
 
 class _CategoriesState extends State<Categories> {
   var categoryList = [];
-  var cats = [];
-  getCategoryRecords()async{
+  // var cats = [];
+  getCategoryRecords() async {
     Db db = new Db("mongodb://192.168.241.214:27017/tlapp");
     DbCollection coll;
     await db.open();
@@ -31,43 +31,58 @@ class _CategoriesState extends State<Categories> {
     print("after getting all records...");
     print(categoryList);
     db.close();
-
   }
- 
-  getCategories() async{
-     print("getCategories called...");
-    http.Response response = await http.get("http://uat.tradeleaves.internal:9800/catalog/api/categories/rootCategories/withimages");
-    var data = json.decode(response.body);
+
+  getCategories() async {
+    print("getCategories called...");
+    http.Response response = await http.get(
+        "http://uat.tradeleaves.internal/catalog/api/categories/rootCategories/withimages");
+
+    var data = await json.decode(response.body);
     setState(() {
       print("Categories from node...");
       print(data);
-      this.cats = data;
+      var dup = [];
+      for (var cat in data) {
+
+        List items = cat["categoryAttribute"] as List;
+        for (int i = 0; i < items.length; i++) {
+          if (items[i]["attributeName"] == "ThumbnailImageAttribute" &&
+              items[i]["attributeValue"] != null) {
+            print("image found...");
+            print(items[i]["attributeValue"]);
+            dup.add({'id': cat["id"], 'name': cat["name"], 'categoryImage':"http://uat.tradeleaves.internal/tl/public/assest/get/${items[i]['attributeValue']}"});
+          }
+        }
+      }
+      print("after filtering obj");
+      print(dup);
+      this.categoryList = dup;
     });
+    
   }
 
   @override
   void initState() {
     getCategories();
-    getCategoryRecords();
+    // getCategoryRecords();
     super.initState();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomToolBar() ,
+      appBar: CustomToolBar(),
       drawer: CustomDrawer(),
       bottomNavigationBar: CustomNavBar(selectedIndex: 0),
-      body:  GridView.builder(
-          itemCount: categoryList.length,
+      body: GridView.builder(
+          itemCount: this.categoryList.length,
           gridDelegate:
-          new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
           itemBuilder: (BuildContext context, int index) {
             return SingleCategory(
-              categoryName: categoryList[index]['categoryName'],
-              categoryImage: categoryList[index]['categoryImage'],
+              categoryName: this.categoryList[index]['name'],
+              categoryImage : this.categoryList[index]['categoryImage'],
             );
           }),
     );
@@ -75,33 +90,34 @@ class _CategoriesState extends State<Categories> {
 }
 
 class SingleCategory extends StatelessWidget {
-  final categoryName ;
-  final categoryImage;
-  SingleCategory({this.categoryName,this.categoryImage});
+  final String categoryName;
+  final String categoryImage;
+  SingleCategory({this.categoryName, this.categoryImage});
   @override
   Widget build(BuildContext context) {
     return Card(
         child: InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => CategoryProducts(
-                  categoryName : categoryName,
-                  categoryImage : categoryImage
-                ))),
+                    categoryName: categoryName, categoryImage: categoryImage))),
             child: Column(
               children: <Widget>[
-                Image.asset('$categoryImage', height: 130,
-                  width: 130,),
+              Image.network(
+                  this.categoryImage,
+                  height: 130,
+                  width: 130,
+                ),         
                 Expanded(
                   child: Container(
                     alignment: Alignment.center,
-                    child: Text('$categoryName',
+                    child: Text(
+                      '${this.categoryName}',
                       style: TextStyle(fontSize: 20, color: Colors.black45),
                     ),
                   ),
                 )
               ],
-            )
-        )
-    );
+            ))        
+            );
   }
 }
