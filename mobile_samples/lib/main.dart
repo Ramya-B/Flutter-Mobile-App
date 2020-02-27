@@ -27,7 +27,3 @@ class Sample extends StatelessWidget {
     );
   }
 }
-
-
-
-
