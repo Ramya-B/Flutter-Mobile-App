@@ -192,11 +192,7 @@ class _SingleProductState extends State<SingleProduct> {
           padding: EdgeInsets.all(4.0),
           child: Column(
             children: <Widget>[
-              Image.asset(
-                widget.imageUrl,
-                height: 100,
-                width: 150,
-              ),
+              Image.network(widget.imageUrl,width: 150,height: 100,) ,
               Expanded(
                   child: Text(
                 widget.productName,
