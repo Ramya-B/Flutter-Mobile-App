@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
@@ -20,6 +19,7 @@ class _SearchItemsState extends State<SearchItems> {
   List<SearchResults> res = [];
   String selectedLob;
   String countryId;
+  List<String> countries = <String>["IN","US"];
   // List<Lob> lobs = <Lob>[
   //   Lob(
   //       lobId: "34343e34-7601-40de-878d-01b3bd1f0641",
@@ -32,28 +32,11 @@ class _SearchItemsState extends State<SearchItems> {
   //       lobId: "34343e34-7601-40de-878d-01b3bd1f0644",
   //       lobName: "Marketplace-Domestic")
   // ];
-  var obj = {
-    "pagination": {"start": 0, "limit": "10"},
-    "productPrimarySearchCondition": {"condition": "music"},
-    // "productFilters": {"keyValueFacets": []},
-    "sortBy": "relevance",
-    //  "lobSelection": null,
-    "countryId": "IN",
-    "channel": "B2BInternational",
-    "region": "IN",
-    "siteCriteria": {
-      "channel": "B2BInternational",
-      "site": "1152f6df-91cf-4fc2-afa7-2baa63ef5429",
-      "status": "Approved"
-    },
-  };
+
 
   searchProducts() async {
-    ProductSearchCriteriaDTO productSearchCriteriaDTO =
-        new ProductSearchCriteriaDTO();
-    Pagination pagination = new Pagination();
-    pagination.start = 1;
-    pagination.limit = 10;
+    ProductSearchCriteriaDTO productSearchCriteriaDTO = new ProductSearchCriteriaDTO();
+    Pagination pagination = new Pagination(start: 0,limit: 10);
     productSearchCriteriaDTO.pagination = pagination;
     productSearchCriteriaDTO.sortBy = "relevance";
     productSearchCriteriaDTO.countryId = "IN";
@@ -67,9 +50,8 @@ class _SearchItemsState extends State<SearchItems> {
     siteCriteria.site = "1152f6df-91cf-4fc2-afa7-2baa63ef5429";
     siteCriteria.status = "Approved";
     productSearchCriteriaDTO.siteCriteria = siteCriteria;
-    print("productSearchCriteriaDTO");
-    print(productSearchCriteriaDTO);
-
+    print("productSearchCriteriaDTO1");
+    print(productSearchCriteriaDTO); 
     final http.Response response = await http.post(
       'http://uat.tradeleaves.internal/catalog/api/products/activeProductSearch/criteria',
       headers: <String, String>{
@@ -79,6 +61,8 @@ class _SearchItemsState extends State<SearchItems> {
         'productCriteria': productSearchCriteriaDTO.toJson(),
       }),
     );
+    print("response.........");
+    print(response.body);
     var data = await json.decode(response.body);
     if (response.statusCode == 200) {
       print("fetched success.....");
@@ -107,6 +91,7 @@ class _SearchItemsState extends State<SearchItems> {
     this.prodList = [];
     print("init calling....searchProducts");
     // searchProducts();
+    // print(fetchPhotos());
     super.initState();
   }
 
@@ -177,7 +162,7 @@ class _SearchItemsState extends State<SearchItems> {
                 child: new DropdownButton<String>(
                   value: this.countryId,
                   hint: Text('Select Country'),
-                  items: <String>['IN', 'US'].map((String value) {
+                  items: this.countries.map((String value) {
                     return new DropdownMenuItem<String>(
                       value: value,
                       child: new Text(value),
@@ -267,18 +252,21 @@ class ProductSearchCriteriaDTO {
 
   factory ProductSearchCriteriaDTO.fromJson(Map<String, dynamic> json) {
     return ProductSearchCriteriaDTO(
-      pagination: json['pagination'],
-      productPrimarySearchCondition: json['productPrimarySearchCondition'],
-      productFilters: json['productFilters'],
+      pagination: Pagination.fromJson(json['pagination']),
+      productPrimarySearchCondition: ProductPrimarySearchCondition.fromJson(json['productPrimarySearchCondition']),
+      productFilters: ProductFilters.fromJson(json['productFilters']),
       sortBy: json['sortBy'],
       lobSelection: json['lobSelection'],
       countryId: json['countryId'],
       channel: json['channel'],
       region: json['region'],
-      siteCriteria: json['siteCriteria'],
+      siteCriteria:SiteCriteria.fromJson( json['siteCriteria']),
     );
   }
-  Map<String, dynamic> toJson() {
+  Map toJson() {
+    Map pagination = this.pagination != null ? this.pagination.toJson() : null;
+    Map productPrimarySearchCondition = this.productPrimarySearchCondition != null ? this.productPrimarySearchCondition.toJson() : null;
+    Map siteCriteria = this.siteCriteria != null ? this.siteCriteria.toJson() : null;  
     return {
       'pagination': pagination,
       'productPrimarySearchCondition': productPrimarySearchCondition,
@@ -305,10 +293,11 @@ class SiteCriteria {
       status: json['status'],
     );
   }
-  Map<String, dynamic> toJson() {
+  Map toJson() {
     return {"channel": channel, "site": site, "status": status};
   }
 }
+
 
 class ProductFilters {
   var keyValueFacets = [];
@@ -318,10 +307,11 @@ class ProductFilters {
       keyValueFacets: json['keyValueFacets'],
     );
   }
-  Map<String, dynamic> toJson() {
+  Map toJson() {
     return {"keyValueFacets": keyValueFacets};
   }
 }
+
 
 class ProductPrimarySearchCondition {
   var condition;
@@ -331,14 +321,14 @@ class ProductPrimarySearchCondition {
       condition: json['condition'] as String,
     );
   }
-  Map<String, dynamic> toJson() {
+  Map toJson() {
     return {"condition": condition};
   }
 }
 
 class Pagination {
-  var start;
-  var limit;
+  int start;
+  int limit;
   Pagination({this.start, this.limit});
   factory Pagination.fromJson(Map<String, dynamic> json) {
     return Pagination(
@@ -347,7 +337,7 @@ class Pagination {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map toJson() {
     return {"start": start, "limit": limit};
   }
 }
