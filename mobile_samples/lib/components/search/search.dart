@@ -49,30 +49,34 @@ class _SearchItemsState extends State<SearchItems> {
   };
 
   searchProducts() async {
-    // ProductSearchCriteriaDTO productSearchCriteriaDTO =
-    //     new ProductSearchCriteriaDTO();
-    // productSearchCriteriaDTO.pagination.start = 1;
-    // productSearchCriteriaDTO.pagination.limit = 10;
-    // productSearchCriteriaDTO.sortBy = "relevance";
-    // productSearchCriteriaDTO.countryId = "IN";
-    // productSearchCriteriaDTO.region = "IN";
-    // productSearchCriteriaDTO.channel = "B2BInternational";
-    // productSearchCriteriaDTO.productPrimarySearchCondition.condition =
-    //     this.keyword;
-    // productSearchCriteriaDTO.siteCriteria.channel = "B2BInternational";
-    // productSearchCriteriaDTO.siteCriteria.site =
-    //     "1152f6df-91cf-4fc2-afa7-2baa63ef5429";
-    // productSearchCriteriaDTO.siteCriteria.status = "Approved";
-    // print("productSearchCriteriaDTO");
-    // productSearchCriteriaDTO.toJson();
-  
+    ProductSearchCriteriaDTO productSearchCriteriaDTO =
+        new ProductSearchCriteriaDTO();
+    Pagination pagination = new Pagination();
+    pagination.start = 1;
+    pagination.limit = 10;
+    productSearchCriteriaDTO.pagination = pagination;
+    productSearchCriteriaDTO.sortBy = "relevance";
+    productSearchCriteriaDTO.countryId = "IN";
+    productSearchCriteriaDTO.region = "IN";
+    productSearchCriteriaDTO.channel = "B2BInternational";
+    ProductPrimarySearchCondition productPrimarySearchCondition = new ProductPrimarySearchCondition();  
+    productPrimarySearchCondition.condition = this.keyword;
+    productSearchCriteriaDTO.productPrimarySearchCondition =  productPrimarySearchCondition;    
+    SiteCriteria siteCriteria = new SiteCriteria();
+    siteCriteria.channel = "B2BInternational";
+    siteCriteria.site = "1152f6df-91cf-4fc2-afa7-2baa63ef5429";
+    siteCriteria.status = "Approved";
+    productSearchCriteriaDTO.siteCriteria = siteCriteria;
+    print("productSearchCriteriaDTO");
+    print(productSearchCriteriaDTO);
+
     final http.Response response = await http.post(
       'http://uat.tradeleaves.internal/catalog/api/products/activeProductSearch/criteria',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, Object>{
-        'productCriteria': this.obj,
+        'productCriteria': productSearchCriteriaDTO.toJson(),
       }),
     );
     var data = await json.decode(response.body);
@@ -263,28 +267,28 @@ class ProductSearchCriteriaDTO {
 
   factory ProductSearchCriteriaDTO.fromJson(Map<String, dynamic> json) {
     return ProductSearchCriteriaDTO(
-    pagination :json['pagination'] ,
-    productPrimarySearchCondition :json['productPrimarySearchCondition'],
-    productFilters :json['productFilters'],
-    sortBy:json['sortBy'] ,
-    lobSelection :json['lobSelection'] ,
-    countryId :json['countryId'] ,
-    channel :json['channel'] ,
-    region :json['region'] ,
-     siteCriteria:json['siteCriteria'] ,
+      pagination: json['pagination'],
+      productPrimarySearchCondition: json['productPrimarySearchCondition'],
+      productFilters: json['productFilters'],
+      sortBy: json['sortBy'],
+      lobSelection: json['lobSelection'],
+      countryId: json['countryId'],
+      channel: json['channel'],
+      region: json['region'],
+      siteCriteria: json['siteCriteria'],
     );
   }
-   Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
-      'pagination':pagination,
-      'productPrimarySearchCondition':productPrimarySearchCondition,
-      'productFilters':productFilters,
-      'sortBy':sortBy,
-      'lobSelection':lobSelection,
-      'countryId':countryId,
-      'channel':channel,
-      'region':region,
-      'siteCriteria':siteCriteria,
+      'pagination': pagination,
+      'productPrimarySearchCondition': productPrimarySearchCondition,
+      'productFilters': productFilters,
+      'sortBy': sortBy,
+      'lobSelection': lobSelection,
+      'countryId': countryId,
+      'channel': channel,
+      'region': region,
+      'siteCriteria': siteCriteria,
     };
   }
 }
@@ -314,7 +318,7 @@ class ProductFilters {
       keyValueFacets: json['keyValueFacets'],
     );
   }
-   Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {"keyValueFacets": keyValueFacets};
   }
 }
