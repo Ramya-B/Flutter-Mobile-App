@@ -20,7 +20,7 @@ class Sample extends StatelessWidget {
         children: <Widget>[
           Container(
             height: 590.0,
-            child: Products(category: 'all',),
+            // child: Products(category: 'all',),
           ),
         ],
       ),
