@@ -83,7 +83,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 builder: (context) => new Scaffold(
                       appBar: CustomToolBar(),
                       body: Container(
-                        child: Products(category: 'all'),
+                        // child: Products(category: 'all'),
                       ),
                       bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                       drawer: CustomDrawer(),

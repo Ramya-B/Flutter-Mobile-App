@@ -93,25 +93,15 @@ class _SearchItemsState extends State<SearchItems> {
       body: ListView(
         children: <Widget>[
           Container(
-            height: 500,
+             height: 600,
             child: GridView.builder(
                 itemCount: this.prodList.length,
                 gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2),
                 itemBuilder: (BuildContext context, int index) {
                   return SingleProduct(
-                    id: this.prodList[index].productDTO.productId,
-                    productName: this.prodList[index].productDTO.productName,
-                    productDescription: null,
-                    supplierName:
-                        this.prodList[index].supplierSearchDTO.supplierName,
-                    cost: null,
-                    imageUrl:
-                        'http://uat.tradeleaves.internal/tl/public/assest/get/${this.prodList[index].productDTO.primaryImageUrl}',
-                    isFavourited: false,
-                    isCarted: false,
-                    isOrdered: false,
-                    category: this.prodList[index].productDTO.categoryId,
+                    productDTO: this.prodList[index].productDTO,
+                    supplierDTO: this.prodList[index].supplierSearchDTO,
                   );
                 }),
           )

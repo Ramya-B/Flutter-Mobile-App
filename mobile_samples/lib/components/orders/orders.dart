@@ -92,14 +92,14 @@ class _SingleOrderState extends State<SingleOrder> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-          builder: (context) => new ProductDetails(
-              productName: widget.productName,
-              productDescription: widget.productDescription,
-              supplierName: widget.supplierName,
-              cost: widget.cost,
-              imageUrl: widget.imageUrl,
-              category: widget.category))),
+      // onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+      //     builder: (context) => new ProductDetails(
+      //         productName: widget.productName,
+      //         productDescription: widget.productDescription,
+      //         supplierName: widget.supplierName,
+      //         cost: widget.cost,
+      //         imageUrl: widget.imageUrl,
+      //         category: widget.category))),
       child: Container(
         alignment: Alignment.topCenter,
         child: Card(

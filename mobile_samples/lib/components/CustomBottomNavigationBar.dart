@@ -56,7 +56,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
               builder: (context) => new Scaffold(
                     appBar: CustomToolBar(),
                     body: Container(
-                      child: Products(category: 'all'),
+                      // child: Products(category: 'all'),
                     ),
                     bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                     drawer: CustomDrawer(),
@@ -99,7 +99,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
               builder: (context) => new Scaffold(
                     appBar: CustomToolBar(),
                     body: Container(
-                      child: Products(category: 'all'),
+                      // child: Products(category: 'all'),
                     ),
                     bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                     drawer: CustomDrawer(),
@@ -123,33 +123,32 @@ class _CustomNavBarState extends State<CustomNavBar> {
           icon: new Stack(children: <Widget>[
             new Container(
               child:  new Icon(Icons.shopping_cart),
-              height: 40,
-              width: 40,
+             
             ),
-            new Positioned(
-              // draw a red marble
-              top: 0.0,
-              right: 0.0,
-              child: new Container(
-//                padding: EdgeInsets.all(2),
-                decoration: new BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                constraints: BoxConstraints(
-                  minWidth: 14,
-                  minHeight: 14,
-                ),
-                child: Text(
-                  this.items.toString(),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            )
+//             new Positioned(
+//               // draw a red marble
+//               top: 0.0,
+//               right: 0.0,
+//               child: new Container(
+// //                padding: EdgeInsets.all(2),
+//                 decoration: new BoxDecoration(
+//                   color: Colors.blue,
+//                   borderRadius: BorderRadius.circular(6),
+//                 ),
+//                 constraints: BoxConstraints(
+//                   minWidth: 14,
+//                   minHeight: 14,
+//                 ),
+//                 child: Text(
+//                   this.items.toString(),
+//                   style: TextStyle(
+//                     color: Colors.white,
+//                     fontSize: 14,
+//                   ),
+//                   textAlign: TextAlign.center,
+//                 ),
+//               ),
+//             )
           ]),
         ),
         BottomNavigationBarItem(icon: Icon(Icons.chat), title: Text('Chat')),

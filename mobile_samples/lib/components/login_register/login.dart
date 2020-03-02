@@ -211,9 +211,9 @@ class _CheckLogInState extends State<CheckLogIn> {
             ),
             drawer: CustomDrawer(),
             body: Container(
-              child: Products(
-                category: 'all',
-              ),
+              // child: Products(
+              //   category: 'all',
+              // ),
             ),
           )
         : Container(

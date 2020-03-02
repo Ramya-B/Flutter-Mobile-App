@@ -19,7 +19,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
       appBar: CustomToolBar(),
       body:  Container(
         height: 600.0,
-        child: Products(category:widget.categoryName),
+        // child: Products(category:widget.categoryName),
       ),
       bottomNavigationBar: CustomNavBar(selectedIndex: 0,),
       drawer: CustomDrawer(),

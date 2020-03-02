@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection, where;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/products/ProductDetails.dart';
+import 'package:tradeleaves/podos/suppliers/supplier.dart';
 
-
+/*
 class Products extends StatefulWidget {
   final String category;
 
@@ -269,6 +270,81 @@ class _SingleProductState extends State<SingleProduct> {
                   ),
                 ),
               )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+*/
+
+class Products extends StatefulWidget {
+  @override
+  _ProductsState createState() => _ProductsState();
+}
+
+class _ProductsState extends State<Products> {
+  var prodList;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+        itemCount: this.prodList.length,
+        gridDelegate:
+            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        itemBuilder: (BuildContext context, int index) {
+          return SingleProduct(
+            productDTO: prodList[index]['productDTO'],
+            supplierDTO: prodList[index]['supplierSearchDTO'],
+          );
+        });
+  }
+}
+
+class SingleProduct extends StatefulWidget {
+  final productDTO;
+  final supplierDTO;
+
+  SingleProduct({
+    this.productDTO,
+    this.supplierDTO,
+  });
+
+  @override
+  _SingleProductState createState() => _SingleProductState();
+}
+
+class _SingleProductState extends State<SingleProduct> {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: InkWell(
+        onTap:() => Navigator.of(context).push(new MaterialPageRoute(
+            builder: (context) => new ProductDetails(
+                  productDTO: widget.productDTO,
+            supplierDTO: widget.supplierDTO,
+                ))),
+        child: Container(
+          padding: EdgeInsets.all(4.0),
+          child: Column(
+            children: <Widget>[
+              Image.network(
+                'http://uat.tradeleaves.internal/tl/public/assest/get/${widget.productDTO.primaryImageUrl}',
+                width: 150,
+                height: 150,
+              ),
+              Expanded(
+                child: Container(
+                    padding: EdgeInsets.all(2.0),
+                    child: Text(
+                      widget.productDTO.productName,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 16),
+                    )),
+              ),
+//
             ],
           ),
         ),

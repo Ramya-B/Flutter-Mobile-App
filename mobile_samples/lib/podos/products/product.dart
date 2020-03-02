@@ -1,5 +1,4 @@
 class ProductDTO {
-
   String productId;
   String productUniqueId;
   String productName;
@@ -7,19 +6,33 @@ class ProductDTO {
   String supplierId;
   String categoryId;
 
-  ProductDTO({this.productId, this.productUniqueId, this.productName,  this.primaryImageUrl,  this.supplierId,  this.categoryId });
+  ProductDTO(
+      {this.productId,
+      this.productUniqueId,
+      this.productName,
+      this.primaryImageUrl,
+      this.supplierId,
+      this.categoryId});
 
   factory ProductDTO.fromJson(Map<String, dynamic> json) {
     return ProductDTO(
-      productId: json['productId'] as String,
-      productUniqueId: json['productUniqueId'] as String,
-      productName: json['productName'] as String,
-      primaryImageUrl: json['primaryImageUrl'] as String,
-      supplierId: json['supplierId'] as String,
-      categoryId: json['categoryId'] as String
-    );
+        productId: json['productId'] as String,
+        productUniqueId: json['productUniqueId'] as String,
+        productName: json['productName'] as String,
+        primaryImageUrl: json['primaryImageUrl'] as String,
+        supplierId: json['supplierId'] as String,
+        categoryId: json['categoryId'] as String);
   }
-
+  Map<String,dynamic> toJson() {
+    return {
+      'productId': productId,
+      'productUniqueId': productUniqueId,
+      'productName': productName,
+      'primaryImageUrl': primaryImageUrl,
+      'supplierId': supplierId,
+      'categoryId': categoryId,
+    };
+  }
 }
 
 class ProductSearchCriteriaDTO {
@@ -47,20 +60,25 @@ class ProductSearchCriteriaDTO {
   factory ProductSearchCriteriaDTO.fromJson(Map<String, dynamic> json) {
     return ProductSearchCriteriaDTO(
       pagination: Pagination.fromJson(json['pagination']),
-      productPrimarySearchCondition: ProductPrimarySearchCondition.fromJson(json['productPrimarySearchCondition']),
+      productPrimarySearchCondition: ProductPrimarySearchCondition.fromJson(
+          json['productPrimarySearchCondition']),
       productFilters: ProductFilters.fromJson(json['productFilters']),
       sortBy: json['sortBy'],
       lobSelection: json['lobSelection'],
       countryId: json['countryId'],
       channel: json['channel'],
       region: json['region'],
-      siteCriteria:SiteCriteria.fromJson( json['siteCriteria']),
+      siteCriteria: SiteCriteria.fromJson(json['siteCriteria']),
     );
   }
   Map toJson() {
     Map pagination = this.pagination != null ? this.pagination.toJson() : null;
-    Map productPrimarySearchCondition = this.productPrimarySearchCondition != null ? this.productPrimarySearchCondition.toJson() : null;
-    Map siteCriteria = this.siteCriteria != null ? this.siteCriteria.toJson() : null;  
+    Map productPrimarySearchCondition =
+        this.productPrimarySearchCondition != null
+            ? this.productPrimarySearchCondition.toJson()
+            : null;
+    Map siteCriteria =
+        this.siteCriteria != null ? this.siteCriteria.toJson() : null;
     return {
       'pagination': pagination,
       'productPrimarySearchCondition': productPrimarySearchCondition,
@@ -92,7 +110,6 @@ class SiteCriteria {
   }
 }
 
-
 class ProductFilters {
   var keyValueFacets = [];
   ProductFilters({this.keyValueFacets});
@@ -105,7 +122,6 @@ class ProductFilters {
     return {"keyValueFacets": keyValueFacets};
   }
 }
-
 
 class ProductPrimarySearchCondition {
   var condition;
