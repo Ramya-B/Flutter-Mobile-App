@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
@@ -5,7 +6,6 @@ import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/Profile/Profile.dart';
 import 'package:tradeleaves/components/categories/categories.dart';
 import 'package:tradeleaves/components/favourites/favourite.dart';
-import 'package:tradeleaves/components/login_register/login.dart';
 import 'package:tradeleaves/components/login_register/logout.dart';
 import 'package:tradeleaves/components/notications/Notifications.dart';
 import 'package:tradeleaves/components/orders/orders.dart';
@@ -20,6 +20,7 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
+
   var sample;
   var emailId;
   var fullName;
@@ -69,16 +70,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                 )
               : Container(
-            color: Colors.green,
                   height: 100,
-                  alignment: Alignment.center,
-                  child: InkWell(
-
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => new Login())),
-                    child: Text('LogIn/Register',style: TextStyle(fontSize: 20,color: Colors.tealAccent),),
+                  child: FlatButton.icon(
+                    color: Colors.green,
+                    icon: Icon(Icons.person_pin, size: 60.0, color: Colors.white),
+                    label: Text('Guest', style: TextStyle(color: Colors.white, fontSize: 20)),
+                    onPressed: () {},
                   ),
                 ),
-
           InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => new Scaffold(
@@ -94,17 +93,20 @@ class _CustomDrawerState extends State<CustomDrawer> {
               leading: Icon(Icons.home),
             ),
           ),
-          (this.emailId != null && this.fullName != null) ? InkWell(
-            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                builder: (context) => new Profile( ))),
-            child: new ListTile(
-              title: Text('Profile'),
-              leading: Icon(Icons.person),
-            ),
-          ):Container(),
+          (this.emailId != null && this.fullName != null)
+              ? InkWell(
+                  onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (context) => new Profile())),
+                  child: new ListTile(
+                    title: Text('Profile'),
+                    leading: Icon(Icons.person),
+                  ),
+                )
+              : Container(),
           InkWell(
-            onTap: () => Navigator.of(context).push(
-                new MaterialPageRoute(builder: (BuildContext context) => new MyWebView(selectedUrl: "https://www.tradeleaves.com/"))),
+            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                builder: (BuildContext context) => new MyWebView(
+                    selectedUrl: "https://www.tradeleaves.com/"))),
             child: new ListTile(
               title: Text('BLISS'),
               leading: Icon(Icons.table_chart),
@@ -159,13 +161,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
           ),
           (this.emailId != null && this.fullName != null)
-              ? InkWell(  
-              onTap: () => Navigator.of(context).push(
-                  new MaterialPageRoute(builder: (context) => new LogOut())),
-              child: new ListTile(
-                title: Text('Logout'),
-                leading: Icon(Icons.exit_to_app),
-              )):Container(),
+              ? InkWell(
+                  onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (context) => new LogOut())),
+                  child: new ListTile(
+                    title: Text('Logout'),
+                    leading: Icon(Icons.exit_to_app),
+                  ))
+              : Container(),
         ],
       ),
     );
