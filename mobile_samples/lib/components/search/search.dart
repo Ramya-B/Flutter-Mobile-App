@@ -1,12 +1,11 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
-import 'package:http/http.dart' as http;
 import 'package:tradeleaves/podos/products/product.dart';
-import 'package:tradeleaves/podos/suppliers/supplier.dart';
+import 'package:tradeleaves/podos/search/search.dart';
+import 'package:tradeleaves/service_locator.dart';
+import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 
 class SearchItems extends StatefulWidget {
   @override
@@ -14,24 +13,13 @@ class SearchItems extends StatefulWidget {
 }
 
 class _SearchItemsState extends State<SearchItems> {
+  CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
+
   var keyword;
-  List<SearchResults> prodList = [];
-  List<SearchResults> res = [];
+  List prodList = [];
+  List res = [];
   String selectedLob;
   String countryId;
-  List<String> countries = <String>["IN", "US"];
-  // List<Lob> lobs = <Lob>[
-  //   Lob(
-  //       lobId: "34343e34-7601-40de-878d-01b3bd1f0641",
-  //       lobName: "Marketplace-Global"),
-  //   Lob(
-  //       lobId: "34343e34-7601-40de-878d-01b3bd1f0642",
-  //       lobName: "Bliss-Domestic"),
-  //   Lob(lobId: "34343e34-7601-40de-878d-01b3bd1f0643", lobName: "Bliss-Global"),
-  //   Lob(
-  //       lobId: "34343e34-7601-40de-878d-01b3bd1f0644",
-  //       lobName: "Marketplace-Domestic")
-  // ];
 
   searchProducts() async {
     ProductSearchCriteriaDTO productSearchCriteriaDTO =
@@ -54,38 +42,16 @@ class _SearchItemsState extends State<SearchItems> {
     productSearchCriteriaDTO.siteCriteria = siteCriteria;
     print("productSearchCriteriaDTO1");
     print(productSearchCriteriaDTO);
-    final http.Response response = await http.post(
-      'http://uat.tradeleaves.internal/catalog/api/products/activeProductSearch/criteria',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, Object>{
-        'productCriteria': productSearchCriteriaDTO.toJson(),
-      }),
-    );
-    print("response.........");
-    print(response.body);
-    var data = await json.decode(response.body);
-    if (response.statusCode == 200) {
-      print("fetched success.....");
-      this.res = [];
-      print(data["productDTO"]["getAllActiveProductsSupplierResponseDTO"]);
+    this.res = await catalogService.search(productSearchCriteriaDTO);
+    print("result is...");
+    print(this.res);
+    if (this.res.length > 0) {
       setState(() {
-        for (var i = 0;
-            i <
-                data["productDTO"]["getAllActiveProductsSupplierResponseDTO"]
-                    .length;
-            i++) {
-          this.res.add(new SearchResults.fromJson(data["productDTO"]
-              ["getAllActiveProductsSupplierResponseDTO"][i]));
-        }
-        print("fetched filter...");
-        print(this.res);
         this.prodList = [];
-        this.prodList = this.res;
+        for (var item = 0; item < this.res.length; item++) {
+          this.prodList.add(SearchResults.fromJson(this.res[item]));
+        }
       });
-    } else {
-      throw Exception('Failed to create album.');
     }
   }
 
@@ -109,12 +75,7 @@ class _SearchItemsState extends State<SearchItems> {
                     decoration: InputDecoration(
                         // contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                         hintText: "Search...",
-                        enabledBorder:  UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder:  UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
+                        border: InputBorder.none,
                         hintStyle: TextStyle(color: Colors.white)),
                     onChanged: (String userName) {
                       this.keyword = userName;
@@ -162,18 +123,3 @@ class _SearchItemsState extends State<SearchItems> {
     );
   }
 }
-
-class SearchResults {
-  SupplierDTO supplierSearchDTO;
-  ProductDTO productDTO;
-  SearchResults({this.supplierSearchDTO, this.productDTO});
-
-  factory SearchResults.fromJson(Map<String, dynamic> json) {
-    return SearchResults(
-        supplierSearchDTO: SupplierDTO.fromJson(json['supplierSearchDTO']),
-        productDTO: ProductDTO.fromJson(json['productDTO']));
-  }
-}
-
-
-

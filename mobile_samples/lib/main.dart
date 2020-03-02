@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tradeleaves/components/products/ProductsList.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
+import 'service_locator.dart';
 
-void main() => runApp(MaterialApp(
+void main() {
+  setupServiceLocator();
+  runApp(MaterialApp(
       home: Sample(),
       debugShowCheckedModeBanner: false,
     ));
+}
+
 
 class Sample extends StatelessWidget {
   Widget build(BuildContext context) {

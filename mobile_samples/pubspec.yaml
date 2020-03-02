@@ -30,6 +30,7 @@ dependencies:
   mongo_dart: ^0.4.0
   mongo_dart_query: ^0.4.1
   bson: ^0.3.2
+  get_it: ^4.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -60,39 +61,6 @@ flutter:
     # To add assets to your application, add an assets section, like this:
   assets:
     - assets/tl.png
-    - assets/cars/pexels-photo-116675.jpeg
-    - assets/cars/pexels-photo-977003.jpeg
-    - assets/cars/pexels-photo-544542.jpeg
-    - assets/cars/pexels-photo-707046.jpeg
-    - assets/categories/bikes.png
-    - assets/categories/cars.png
-    - assets/categories/footwear.png
-    - assets/categories/music.png
-    - assets/cars/pexels-photo-707046.jpeg
-    - assets/bikes/suzuki.jpeg
-    - assets/bikes/bulllet.jpeg
-    - assets/footwear/footwear1.jpg
-    - assets/footwear/footwear2.jpeg
-    - assets/footwear/footwear3.jpeg
-    - assets/footwear/footwear4.jpeg
-    - assets/footwear/footwear5.jpeg
-    - assets/footwear/footwear6.jpeg
-    - assets/music/music1.jpeg
-    - assets/music/music2.jpeg
-    - assets/music/music3.jpeg
-    - assets/music/music4.jpeg
-    - assets/music/music5.jpeg
-    - assets/music/music6.jpeg
-    - assets/bikes/r11.jpeg
-    - assets/cars/pexels-photo-112460.jpeg
-    - assets/cars/pexels-photo-358070.jpeg
-    - assets/cars/pexels-photo-977003.jpeg
-    - assets/cars/pexels-photo-116675.jpeg
-    - assets/cars/pexels-photo-244206.jpeg
-    - assets/bikes/bulllet.jpeg
-    - assets/bikes/r11.jpeg
-    - assets/bikes/duke.jpeg
-    - assets/bikes/zmr.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
