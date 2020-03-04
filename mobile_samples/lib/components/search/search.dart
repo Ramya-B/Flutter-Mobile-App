@@ -93,7 +93,7 @@ class _SearchItemsState extends State<SearchItems> {
       body: ListView(
         children: <Widget>[
           Container(
-             height: 600,
+            height: 600,
             child: GridView.builder(
                 itemCount: this.prodList.length,
                 gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(

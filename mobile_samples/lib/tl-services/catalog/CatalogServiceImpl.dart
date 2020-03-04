@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:tradeleaves/podos/categories/categories.dart';
 import 'dart:convert';
 import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServices.dart';
@@ -14,7 +15,7 @@ class CatalogServiceImpl extends CatalogServices {
   Future<List> search(ProductSearchCriteriaDTO productSearchCriteriaDTO) async {
     return await http
         .post(
-      '${Constants.envUrl}${apiUrl}products/activeProductSearch/criteria', 
+      '${Constants.envUrl}${apiUrl}products/activeProductSearch/criteria',
       headers: headers,
       body: jsonEncode(<String, Object>{
         'productCriteria': productSearchCriteriaDTO.toJson(),
@@ -44,6 +45,29 @@ class CatalogServiceImpl extends CatalogServices {
         return res;
       } else {
         return throw Exception('falied to fetch the categories....');
+      }
+    });
+  }
+
+  @override
+  Future<List> getCategoryDetailsByLoB(
+      CategoryDetailsLobDTO categoryDetailsLobDTO) async {
+    return await http
+        .post(
+      "${Constants.envUrl}${apiUrl}categories/categoryDetails/lob",
+      headers: headers,
+      body: jsonEncode(<String, Object>{
+        'categoryDetailsLobDTO': categoryDetailsLobDTO.toJson()
+      }),
+    )
+        .then((data) {
+      if (data.statusCode == 200) {
+        var response = json.decode(data.body);
+        print('getCategoryDetailsByLoB called.........');
+        print(response);
+        return response["categoryDetailsDTO"];
+      } else {
+        return throw Exception('GetCategoryDetailsByLoB failed..........');
       }
     });
   }

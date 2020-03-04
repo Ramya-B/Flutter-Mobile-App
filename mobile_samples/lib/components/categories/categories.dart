@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
-import 'package:tradeleaves/components/products/CategoryProductDetails.dart';
+import 'package:tradeleaves/components/categories/sub_categories.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import '../../service_locator.dart';
 
@@ -32,7 +32,7 @@ class _CategoriesState extends State<Categories> {
             print("image found...");
             print(items[i]["attributeValue"]);
             dup.add({
-              'id': cat["id"],
+              'id': cat["id"].toString(),
               'name': cat["name"],
               'categoryImage':
                   "http://uat.tradeleaves.internal/tl/public/assest/get/${items[i]['attributeValue']}"
@@ -66,29 +66,38 @@ class _CategoriesState extends State<Categories> {
             return SingleCategory(
               categoryName: this.categoryList[index]['name'],
               categoryImage: this.categoryList[index]['categoryImage'],
+              categoryId: this.categoryList[index]['id'],
             );
           }),
     );
   }
 }
 
-class SingleCategory extends StatelessWidget {
+class SingleCategory extends StatefulWidget {
   final String categoryName;
   final String categoryImage;
+  final String categoryId;
 
-  SingleCategory({this.categoryName, this.categoryImage});
+  SingleCategory({this.categoryName, this.categoryImage, this.categoryId});
 
+  @override
+  _SingleCategoryState createState() => _SingleCategoryState();
+}
+
+class _SingleCategoryState extends State<SingleCategory> {
   @override
   Widget build(BuildContext context) {
     return Card(
         child: InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                builder: (context) => CategoryProducts(
-                    categoryName: categoryName, categoryImage: categoryImage))),
+                builder: (context) => SubCategoryDeatils(
+                      categoryName: widget.categoryName,
+                      categoryId: widget.categoryId,
+                    ))),
             child: Column(
               children: <Widget>[
                 Image.network(
-                  this.categoryImage,
+                  widget.categoryImage,
                   height: 130,
                   width: 130,
                 ),
@@ -96,7 +105,7 @@ class SingleCategory extends StatelessWidget {
                   child: Container(
                     alignment: Alignment.center,
                     child: Text(
-                      '${this.categoryName}',
+                      '${widget.categoryName}',
                       style: TextStyle(fontSize: 20, color: Colors.black45),
                     ),
                   ),
