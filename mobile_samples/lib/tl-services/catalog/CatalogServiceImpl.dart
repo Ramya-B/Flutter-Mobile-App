@@ -12,7 +12,7 @@ class CatalogServiceImpl extends CatalogServices {
   };
 
   @override
-  Future<List> search(ProductSearchCriteriaDTO productSearchCriteriaDTO) async {
+  Future search(ProductSearchCriteriaDTO productSearchCriteriaDTO) async {
     return await http
         .post(
       '${Constants.envUrl}${apiUrl}products/activeProductSearch/criteria',
@@ -26,7 +26,7 @@ class CatalogServiceImpl extends CatalogServices {
         var res = json.decode(data.body);
         print("search results came....");
         print(res);
-        return res["productDTO"]["getAllActiveProductsSupplierResponseDTO"];
+        return res;
       } else {
         return throw Exception('falied to fetch the search results....');
       }
@@ -36,7 +36,7 @@ class CatalogServiceImpl extends CatalogServices {
   @override
   Future<List> getCategories() async {
     return await http
-        .get("${Constants.envUrl}${apiUrl}categories/rootCategories/withimages")
+        .get("${Constants.envUrl}${apiUrl}categories/rootCategories/withimages") 
         .then((data) {
       if (data.statusCode == 200) {
         var res = json.decode(data.body);

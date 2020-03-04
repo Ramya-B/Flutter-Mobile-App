@@ -1,36 +1,108 @@
 class ProductDTO {
-  String productId;
-  String productUniqueId;
-  String productName;
+  bool active;
+  bool adminFlag;
+  bool allowTrading;
+  String catalogs;
+  String categoryDTO;
+  List<String> categoryIds;
+  String displayTemplate;
+  List<HsCodes> hsCodes = [];
+  String lobcountryDTO;
+  List priceList;
   String primaryImageUrl;
+  List<ProductAttributeDetailDTO> productAttributeDetailDTO = [];
+  String productId;
+  List<ProductLobCountryStatusDTO> productLobCountryStatusDTO = [];
+  String productName;
+  List<ProductOptionDTO> productOptionDTO = [];
+  String productUniqueId;
+  String promotionPlansDTO;
+  String rating;
+  String serviceProviderId;
   String supplierId;
-  String categoryId;
+  String tlPreferredRating;
+  String type;
+  String userPreferredRating;
 
-  ProductDTO(
-      {this.productId,
-      this.productUniqueId,
-      this.productName,
-      this.primaryImageUrl,
-      this.supplierId,
-      this.categoryId});
+  ProductDTO({
+    this.catalogs,
+    this.categoryDTO,
+    this.categoryIds,
+    this.displayTemplate,
+    this.hsCodes,
+    this.lobcountryDTO,
+    this.priceList,
+    this.primaryImageUrl,
+    this.productAttributeDetailDTO,
+    this.productId,
+    this.productLobCountryStatusDTO,
+    this.productName,
+    this.productOptionDTO,
+    this.productUniqueId,
+    this.promotionPlansDTO,
+    this.rating,
+    this.serviceProviderId,
+    this.supplierId,
+    this.tlPreferredRating,
+    this.type,
+    this.userPreferredRating,
+  });
 
   factory ProductDTO.fromJson(Map<String, dynamic> json) {
+    var tagObjsJson = json['hsCodes'] as List;
+    List<HsCodes> _hsCodes =
+        tagObjsJson.map((tagJson) => HsCodes.fromJson(tagJson)).toList();
+    var prodJson = json['productAttributeDetailDTO'] as List;
+    List<ProductAttributeDetailDTO> _productAttributeDetailDTO = prodJson
+        .map((tagJson) => ProductAttributeDetailDTO.fromJson(tagJson))
+        .toList();
+
+    var lobCountryStatusDTO = json['productLobCountryStatusDTO'] as List;
+    List<ProductLobCountryStatusDTO> _productLobCountryStatusDTO =
+        lobCountryStatusDTO
+            .map((tagJson) => ProductLobCountryStatusDTO.fromJson(tagJson))
+            .toList();
+
+    var productOptionDTODup = json['productOptionDTO'] as List;
+    List<ProductOptionDTO> _productOptionDTO = productOptionDTODup
+        .map((tagJson) => ProductOptionDTO.fromJson(tagJson))
+        .toList();
+
+    var cat = json['categoryIds'] as List;
+    List<String> _categoryIds =
+        cat.map((tagJson) => tagJson.toString()).toList();
+
     return ProductDTO(
-        productId: json['productId'] as String,
-        productUniqueId: json['productUniqueId'] as String,
-        productName: json['productName'] as String,
-        primaryImageUrl: json['primaryImageUrl'] as String,
-        supplierId: json['supplierId'] as String,
-        categoryId: json['categoryId'] as String);
+        catalogs: json['catalogs'],
+        categoryDTO: json['categoryDTO'],
+        categoryIds: _categoryIds,
+        displayTemplate: json['displayTemplate'],
+        hsCodes: _hsCodes,
+        lobcountryDTO: json['lobcountryDTO'],
+        priceList: json['priceList'] as List,
+        primaryImageUrl: json['primaryImageUrl'],
+        productAttributeDetailDTO: _productAttributeDetailDTO,
+        productId: json['productId'],
+        productLobCountryStatusDTO: _productLobCountryStatusDTO,
+        productName: json['productName'],
+        productOptionDTO: _productOptionDTO,
+        productUniqueId: json['productUniqueId'],
+        promotionPlansDTO: json['promotionPlansDTO'],
+        rating: json['rating'],
+        serviceProviderId: json['serviceProviderId'],
+        supplierId: json['supplierId'],
+        tlPreferredRating: json['tlPreferredRating'],
+        type: json['type'],
+        userPreferredRating: json['userPreferredRating']);
   }
-  Map<String,dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'productId': productId,
       'productUniqueId': productUniqueId,
       'productName': productName,
       'primaryImageUrl': primaryImageUrl,
       'supplierId': supplierId,
-      'categoryId': categoryId,
+      'categoryIds': categoryIds,
     };
   }
 }
@@ -149,5 +221,303 @@ class Pagination {
 
   Map toJson() {
     return {"start": start, "limit": limit};
+  }
+}
+
+class ProductAttributeDetailDTO {
+  String valueId;
+  String attributeName;
+  String valueType;
+  String value;
+  String priority;
+  String lobId;
+  String lobName;
+  String prodAttrId;
+  bool facet;
+  bool searchable;
+  bool variant;
+
+  ProductAttributeDetailDTO({
+    this.valueId,
+    this.attributeName,
+    this.valueType,
+    this.value,
+    this.priority,
+    this.lobId,
+    this.lobName,
+    this.prodAttrId,
+    this.facet,
+    this.searchable,
+    this.variant,
+  });
+  factory ProductAttributeDetailDTO.fromJson(Map<String, dynamic> json) {
+    return ProductAttributeDetailDTO(
+      valueId: json['valueId'],
+      attributeName: json['attributeName '],
+      valueType: json['valueType '],
+      value: json['value '],
+      priority: json['priority'],
+      lobId: json['lobId '],
+      lobName: json['lobName'],
+      prodAttrId: json['prodAttrId '],
+      facet: json['facet'],
+      searchable: json['searchable'],
+      variant: json['variant'],
+    );
+  }
+
+  Map toJson() {
+    return {
+      "valueId": valueId,
+      'attributeName': attributeName,
+      'valueType': valueType,
+      'value': value,
+      'priority': priority,
+      'lobId': lobId,
+      'lobName': lobName,
+      'prodAttrId': prodAttrId,
+      'facet': facet,
+      'searchable': searchable,
+      'variant': variant,
+    };
+  }
+}
+
+class ImageDTO {
+  String id;
+  String imageType;
+  String imageUrl;
+  String lobId;
+  String name;
+  ImageDTO({
+    this.id,
+    this.imageType,
+    this.imageUrl,
+    this.lobId,
+    this.name,
+  });
+  factory ImageDTO.fromJson(Map<String, dynamic> json) {
+    return ImageDTO(
+      id: json['id'],
+      imageType: json['imageType '],
+      imageUrl: json['imageUrl '],
+      lobId: json['lobId '],
+      name: json['name'],
+    );
+  }
+
+  Map toJson() {
+    return {
+      "id": id,
+      'imageType': imageType,
+      'imageUrl': imageUrl,
+      'lobId': lobId,
+      'name': name,
+    };
+  }
+}
+
+class ProductOptionDTO {
+  List deliveryScheduleDTO;
+  String displayTemplate;
+  String end;
+  List<ImageDTO> imageDTO;
+  List<PriceList> priceList;
+  String primaryImageUrl;
+  String productAttributeDetailDTO;
+  String productOptionId;
+  String productOptionName;
+  String start;
+  String supplierSKUId;
+
+  ProductOptionDTO({
+     this.deliveryScheduleDTO,
+    this.displayTemplate,
+    this.end,
+    this.imageDTO,
+    this.priceList,
+    this.primaryImageUrl,
+    this.productAttributeDetailDTO,
+    this.productOptionId,
+    this.start,
+    this.supplierSKUId,
+    this.productOptionName,
+  });
+  factory ProductOptionDTO.fromJson(Map<String, dynamic> json) {
+    var prices = json['priceList'] != null ? json['priceList'] as List : null;
+    List<PriceList> _priceList = prices!= null ? prices.map((res) => PriceList.fromJson(res)).toList():null;
+    var images = json['imageDTO'] as List;
+    List<ImageDTO> _imageDTO = images.map((res) => ImageDTO.fromJson(res)).toList();
+    return ProductOptionDTO(
+      deliveryScheduleDTO: json['deliveryScheduleDTO'] as List,
+      displayTemplate: json['displayTemplate'],
+      end: json['end'],
+      imageDTO: _imageDTO,
+      priceList: _priceList,
+      primaryImageUrl: json['primaryImageUrl'],
+      productAttributeDetailDTO: json['productAttributeDetailDTO'],
+      productOptionId: json['productOptionId'],
+      productOptionName: json['productOptionName'],
+      start: json['start'],
+      supplierSKUId: json['supplierSKUId'],
+    );
+  }
+
+  Map toJson() {
+    return {
+      'deliveryScheduleDTO': deliveryScheduleDTO,
+      'displayTemplate': displayTemplate,
+      'end': end,
+      'imageDTO': imageDTO,
+      'priceList': priceList,
+      'primaryImageUrl': primaryImageUrl,
+      'productAttributeDetailDTO': productAttributeDetailDTO,
+      'productOptionId': productOptionId,
+      'productOptionName': productOptionName,
+      'start': start,
+      'supplierSKUId': supplierSKUId,
+    };
+  }
+}
+
+class PriceList {
+  String priceId ;
+  double mfgPrice ;
+  double sellablePrice ;
+  String unitType ;
+  String currency;
+  String priceType ;
+  List<ProductPriceSlabs> productPriceSlabs;
+  String lobId ;
+
+PriceList({
+this.priceId ,
+this.mfgPrice ,
+this.sellablePrice ,
+this.unitType ,
+this.currency,
+this.priceType ,
+this.productPriceSlabs,
+this.lobId ,
+});
+  factory PriceList.fromJson(Map<String, dynamic> json) {
+    var productPriceSlab = json['productPriceSlabs'] as List;
+   List<ProductPriceSlabs> _productPriceSlabs = productPriceSlab.map((res) => ProductPriceSlabs.fromJson(res)).toList();
+    return PriceList(
+      priceId: json['priceId'],
+      mfgPrice: json['mfgPrice'],
+      sellablePrice: json['sellablePrice'],
+      unitType: json['unitType'],
+      currency: json['currency'],
+      priceType: json['priceType'],
+      productPriceSlabs: _productPriceSlabs,
+      lobId: json['lobId'],
+    );
+  }
+
+  Map toJson() {
+    return {
+      'priceId': priceId,
+      'mfgPrice': mfgPrice,
+      'sellablePrice': sellablePrice,
+      'unitType': unitType,
+      'currency': currency,
+      'priceType': priceType,
+      'productPriceSlabs': productPriceSlabs,
+      'lobId': lobId,
+    };
+  }
+}
+  
+class ProductPriceSlabs {
+  int rangeStart ;
+  String price;
+  ProductPriceSlabs({this.price,this.rangeStart});
+   factory ProductPriceSlabs.fromJson(Map<String, dynamic> json) {
+    return ProductPriceSlabs(
+      rangeStart: json['rangeStart'],
+      price: json['price'],
+    );
+  }
+
+  Map toJson() {
+    return {
+      'rangeStart': rangeStart,
+      'price': price,
+    };
+  }
+
+}
+
+class HsCodes {
+  String countryCode;
+  String direction;
+  String hscode;
+  String lobId;
+  HsCodes({
+    this.countryCode,
+    this.direction,
+    this.hscode,
+    this.lobId,
+  });
+  factory HsCodes.fromJson(Map<String, dynamic> json) {
+    return HsCodes(
+      countryCode: json['countryCode'],
+      direction: json['direction '],
+      hscode: json['hscode '],
+      lobId: json['lobId '],
+    );
+  }
+
+  Map toJson() {
+    return {
+      "countryCode": countryCode,
+      'direction': direction,
+      'hscode': hscode,
+      'lobId': lobId,
+    };
+  }
+}
+
+class ProductLobCountryStatusDTO {
+  String countryId;
+  String lobId;
+  String productId;
+  String productLobCountryStatusId;
+  String reason;
+  String regionId;
+  String statusId;
+
+  ProductLobCountryStatusDTO({
+    this.countryId,
+    this.lobId,
+    this.productId,
+    this.productLobCountryStatusId,
+    this.reason,
+    this.regionId,
+    this.statusId,
+  });
+  factory ProductLobCountryStatusDTO.fromJson(Map<String, dynamic> json) {
+    return ProductLobCountryStatusDTO(
+      countryId: json['countryId'],
+      lobId: json['lobId '],
+      productId: json['productId '],
+      productLobCountryStatusId: json['productLobCountryStatusId '],
+      reason: json['reason'],
+      regionId: json['regionId'],
+      statusId: json['statusId'],
+    );
+  }
+
+  Map toJson() {
+    return {
+      "countryId": countryId,
+      'lobId': lobId,
+      'productId': productId,
+      'productLobCountryStatusId': productLobCountryStatusId,
+      'reason': reason,
+      'regionId': regionId,
+      'statusId': statusId,
+    };
   }
 }

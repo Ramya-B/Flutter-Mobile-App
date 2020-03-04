@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/products/ProductDetails.dart';
 import 'package:tradeleaves/podos/suppliers/supplier.dart';
 
+
 /*
 class Products extends StatefulWidget {
   final String category;
@@ -344,7 +345,6 @@ class _SingleProductState extends State<SingleProduct> {
                       style: TextStyle(fontSize: 16),
                     )),
               ),
-//
             ],
           ),
         ),
