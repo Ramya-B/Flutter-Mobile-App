@@ -100,6 +100,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
               builder: (context) => new Scaffold(
                     appBar: CustomToolBar(),
                     body: Container(
+                     
                       child:HomeProducts(),
                     ),
                     bottomNavigationBar: CustomNavBar(selectedIndex: 0),
