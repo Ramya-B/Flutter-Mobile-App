@@ -4,6 +4,7 @@ import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
 import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/podos/search/search.dart';
+import 'package:tradeleaves/podos/suppliers/supplier.dart';
 import 'package:tradeleaves/service_locator.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 
@@ -135,7 +136,7 @@ class _SearchItemsState extends State<SearchItems> {
                     crossAxisCount: 2),
                 itemBuilder: (BuildContext context, int index) {
                   return SingleProduct(
-                    productDTO: this.prodList[index].productDTO,
+                    productDTO:this.prodList[index].productDTO   ,
                     supplierDTO: this.prodList[index].supplierSearchDTO,
                   );
                 }),

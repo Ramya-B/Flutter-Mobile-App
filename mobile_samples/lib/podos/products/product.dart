@@ -49,26 +49,26 @@ class ProductDTO {
   });
 
   factory ProductDTO.fromJson(Map<String, dynamic> json) {
-    var tagObjsJson = json['hsCodes'] as List;
+    var tagObjsJson =(json['hsCodes'] != null) ? json['hsCodes'] as List:[];
     List<HsCodes> _hsCodes =
         tagObjsJson.map((tagJson) => HsCodes.fromJson(tagJson)).toList();
-    var prodJson = json['productAttributeDetailDTO'] as List;
+    var prodJson = (json['productAttributeDetailDTO'] != null) ? json['productAttributeDetailDTO'] as List:[];
     List<ProductAttributeDetailDTO> _productAttributeDetailDTO = prodJson
         .map((tagJson) => ProductAttributeDetailDTO.fromJson(tagJson))
         .toList();
 
-    var lobCountryStatusDTO = json['productLobCountryStatusDTO'] as List;
+    var lobCountryStatusDTO =  (json['productLobCountryStatusDTO'] != null) ? json['productLobCountryStatusDTO'] as List : [];
     List<ProductLobCountryStatusDTO> _productLobCountryStatusDTO =
         lobCountryStatusDTO
             .map((tagJson) => ProductLobCountryStatusDTO.fromJson(tagJson))
             .toList();
 
-    var productOptionDTODup = json['productOptionDTO'] as List;
+    var productOptionDTODup = (json['productOptionDTO'] != null) ?json['productOptionDTO'] as List:[];
     List<ProductOptionDTO> _productOptionDTO = productOptionDTODup
         .map((tagJson) => ProductOptionDTO.fromJson(tagJson))
         .toList();
 
-    var cat = json['categoryIds'] as List;
+    var cat = (json['categoryIds'] != null)?json['categoryIds'] as List:[];
     List<String> _categoryIds =
         cat.map((tagJson) => tagJson.toString()).toList();
 
@@ -270,6 +270,7 @@ class CategoryCriteria{
   Map toJson() {
     return {"categoryId": categoryId};
   }
+}
 
 class ProductAttributeDetailDTO {
   String valueId;

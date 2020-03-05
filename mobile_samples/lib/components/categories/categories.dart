@@ -96,11 +96,11 @@ class _SingleCategoryState extends State<SingleCategory> {
                     ))),
             child: Column(
               children: <Widget>[
-                Image.network(
+               this.categoryImage!=null ? Image.network(
                   this.categoryImage,
                   height: 130,
                   width: 130,
-                ),
+                ):Container(),
                 Expanded(
                   child: Container(
                     alignment: Alignment.center,
