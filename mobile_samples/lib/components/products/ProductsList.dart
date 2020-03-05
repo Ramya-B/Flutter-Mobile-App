@@ -23,7 +23,7 @@ class _FetchPromotedProductsState extends State<FetchPromotedProducts> {
   List res = [];
   getPromotedProducts() async {
     PromoProductCriteria promoProductCriteria = new PromoProductCriteria();
-    Pagination pagination = new Pagination(start: 0, limit: 8);
+    Pagination pagination = new Pagination(start: 0, limit: 10);
     promoProductCriteria.pagination = pagination;
     SiteCriteria siteCriteria =  new SiteCriteria();
     siteCriteria.channel = "B2BInternational";
@@ -386,44 +386,15 @@ class _ProductsState extends State<Products> {
   var promotedProducts = [];
   List res = [];
    CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
-  getPromotedProducts() async {
-    PromoProductCriteria promoProductCriteria = new PromoProductCriteria();
-    Pagination pagination = new Pagination(start: 0, limit: 2);
-    promoProductCriteria.pagination = pagination;
-    SiteCriteria siteCriteria =  new SiteCriteria();
-    siteCriteria.channel = "B2BInternational";
-    siteCriteria.region = "IN";
-    promoProductCriteria.siteCriteria = siteCriteria;
-    // CategoryCriteria categoryCriteria = new CategoryCriteria();
-    // categoryCriteria.categoryId = [];
-    // promoProductCriteria.categoryCriteria= categoryCriteria;
-    promoProductCriteria.promotionID = 'SponsoredAds';
-    print("PromoProductCriteria");
-    print(promoProductCriteria.toJson());
-
-    this.res = await catalogService.getPromotedProducts(promoProductCriteria);
-    print("result of promoted products are..");
-    print(this.res);
-    if (this.res.length > 0) {
-      setState(() {
-        this.promotedProducts = [];
-        for (var item = 0; item < this.res.length; item++) {
-          this.promotedProducts.add(SearchResults.fromJson(this.res[item]));
-        }
-      });
-    }
-  }
+  
 
   @override
   void initState() {
-   if(  widget.prodList == null || widget.prodList.length ==0){
-     this.promotedProducts = [];
-    print("init calling....searchProducts");
-    getPromotedProducts();
-
-   }else if(widget.prodList.length > 0){
+    if(widget.prodList.length > 0){
      this.promotedProducts = widget.prodList;
-   }
+    }else{
+      this.promotedProducts=[];
+    }
     super.initState();
   }
 

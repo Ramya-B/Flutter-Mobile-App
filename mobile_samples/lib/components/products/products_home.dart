@@ -149,10 +149,10 @@ class _CategoryCardState extends State<CategoryCard> {
       padding: EdgeInsets.all(5.0),
       height: 50,
       child:  Card(
-            child: Image.network(
+            child: this.categoryImage!=null ? Image.network(
                 '${this.categoryImage}',
     
-              )
+              ):Container()
           ),
     );
   }
