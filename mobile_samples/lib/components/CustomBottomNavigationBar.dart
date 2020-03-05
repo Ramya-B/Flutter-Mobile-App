@@ -6,6 +6,7 @@ import 'package:tradeleaves/components/products/ProductsList.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
+import 'package:tradeleaves/components/products/products_home.dart';
 
 class CustomNavBar extends StatefulWidget {
   final selectedIndex;
@@ -56,7 +57,9 @@ class _CustomNavBarState extends State<CustomNavBar> {
               builder: (context) => new Scaffold(
                     appBar: CustomToolBar(),
                     body: Container(
-                      // child: Products(category: 'all'),
+                      //  child: Products(prodList: [],),
+                      //  child: FetchPromotedProducts(promoType: "SponsoredAds",),
+                      child:HomeProducts(),
                     ),
                     bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                     drawer: CustomDrawer(),

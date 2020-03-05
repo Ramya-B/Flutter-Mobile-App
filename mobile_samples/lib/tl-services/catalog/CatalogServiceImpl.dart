@@ -15,7 +15,7 @@ class CatalogServiceImpl extends CatalogServices {
   Future search(ProductSearchCriteriaDTO productSearchCriteriaDTO) async {
     return await http
         .post(
-      '${Constants.envUrl}${apiUrl}products/activeProductSearch/criteria', 
+      '${Constants.envUrl}${apiUrl}products/activeProductSearch/criteria',
       headers: headers,
       body: jsonEncode(<String, Object>{
         'productCriteria': productSearchCriteriaDTO.toJson(),
@@ -33,8 +33,9 @@ class CatalogServiceImpl extends CatalogServices {
     });
   }
 
- @override
-  Future<List> getCategories(CategoryDetailsLobDTO categoryDetailsLobDTO) async {
+  @override
+  Future<List> getCategories(
+      CategoryDetailsLobDTO categoryDetailsLobDTO) async {
     return await http
         .post(
       "${Constants.envUrl}${apiUrl}categories/rootCategories/withimagesByLob",
@@ -42,8 +43,9 @@ class CatalogServiceImpl extends CatalogServices {
       body: jsonEncode(<String, Object>{
         'categoryDetailsLobDTO': categoryDetailsLobDTO.toJson()
       }),
-    ).then((data) {
-     if (data.statusCode == 200) {
+    )
+        .then((data) {
+      if (data.statusCode == 200) {
         var res = json.decode(data.body);
         print("categories came....");
         print(res);
@@ -55,6 +57,30 @@ class CatalogServiceImpl extends CatalogServices {
   }
 
   @override
+  Future<List> getPromotedProducts(
+      PromoProductCriteria promoProductCriteria) async {
+    return await http
+        .post(
+      '${Constants.envUrl}${apiUrl}products/getProducts/ByPromotionPlan',
+      headers: headers,
+      body: jsonEncode(<String, Object>{
+        'PromotionCriteria': promoProductCriteria.toJson(),
+      }),
+    )
+        .then((data) {
+      print("promotional plan data");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("promoted products response....");
+        print(res);
+        return res["productsPromotionsResponseDTO"];
+      } else {
+        return throw Exception('falied to fetch the promoted products....');
+      }
+    });
+  }
+
   Future<List> getCategoryDetailsByLoB(
       CategoryDetailsLobDTO categoryDetailsLobDTO) async {
     return await http

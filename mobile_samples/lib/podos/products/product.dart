@@ -49,26 +49,26 @@ class ProductDTO {
   });
 
   factory ProductDTO.fromJson(Map<String, dynamic> json) {
-    var tagObjsJson = json['hsCodes'] as List;
+    var tagObjsJson =(json['hsCodes'] != null) ? json['hsCodes'] as List:[];
     List<HsCodes> _hsCodes =
         tagObjsJson.map((tagJson) => HsCodes.fromJson(tagJson)).toList();
-    var prodJson = json['productAttributeDetailDTO'] as List;
+    var prodJson = (json['productAttributeDetailDTO'] != null) ? json['productAttributeDetailDTO'] as List:[];
     List<ProductAttributeDetailDTO> _productAttributeDetailDTO = prodJson
         .map((tagJson) => ProductAttributeDetailDTO.fromJson(tagJson))
         .toList();
 
-    var lobCountryStatusDTO = json['productLobCountryStatusDTO'] as List;
+    var lobCountryStatusDTO =  (json['productLobCountryStatusDTO'] != null) ? json['productLobCountryStatusDTO'] as List : [];
     List<ProductLobCountryStatusDTO> _productLobCountryStatusDTO =
         lobCountryStatusDTO
             .map((tagJson) => ProductLobCountryStatusDTO.fromJson(tagJson))
             .toList();
 
-    var productOptionDTODup = json['productOptionDTO'] as List;
+    var productOptionDTODup = (json['productOptionDTO'] != null) ?json['productOptionDTO'] as List:[];
     List<ProductOptionDTO> _productOptionDTO = productOptionDTODup
         .map((tagJson) => ProductOptionDTO.fromJson(tagJson))
         .toList();
 
-    var cat = json['categoryIds'] as List;
+    var cat = (json['categoryIds'] != null)?json['categoryIds'] as List:[];
     List<String> _categoryIds =
         cat.map((tagJson) => tagJson.toString()).toList();
 
@@ -169,7 +169,8 @@ class SiteCriteria {
   var channel;
   var site;
   var status;
-  SiteCriteria({this.channel, this.site, this.status});
+  var region;
+  SiteCriteria({this.channel, this.site, this.status, this.region});
   factory SiteCriteria.fromJson(Map<String, dynamic> json) {
     return SiteCriteria(
       channel: json['channel'] as String,
@@ -178,7 +179,7 @@ class SiteCriteria {
     );
   }
   Map toJson() {
-    return {"channel": channel, "site": site, "status": status};
+    return {"channel": channel, "site": site, "status": status, "region": region};
   }
 }
 
@@ -214,13 +215,60 @@ class Pagination {
   Pagination({this.start, this.limit});
   factory Pagination.fromJson(Map<String, dynamic> json) {
     return Pagination(
-      start: json['channel'] as int,
-      limit: json['site'] as int,
+      start: json['start'] as int,
+      limit: json['limit'] as int,
     );
   }
 
   Map toJson() {
     return {"start": start, "limit": limit};
+  }
+}
+
+class PromoProductCriteria {
+   Pagination pagination;
+   SiteCriteria siteCriteria;
+   CategoryCriteria categoryCriteria;
+   String promotionID;
+   PromoProductCriteria({
+    this.pagination,
+    this.siteCriteria,
+    this.promotionID,
+    this.categoryCriteria
+   });
+     factory PromoProductCriteria.fromJson(Map<String, dynamic> json) {
+    return PromoProductCriteria(
+      pagination: Pagination.fromJson(json['pagination']),
+       siteCriteria: SiteCriteria.fromJson(json['siteCriteria']),
+        categoryCriteria: CategoryCriteria.fromJson(json['categoryCriteria']),
+         promotionID: json['promotionID'] as String,
+
+    );
+  }
+  Map toJson() {
+    Map pagination = this.pagination != null ? this.pagination.toJson() : null;
+    Map categoryCriteria =
+        this.categoryCriteria != null
+            ? this.categoryCriteria.toJson()
+            : null;
+    Map siteCriteria =
+        this.siteCriteria != null ? this.siteCriteria.toJson() : null;
+    return {"pagination": pagination, "siteCriteria": siteCriteria, 
+    "categoryCriteria": categoryCriteria, "promotionID": promotionID};
+  }
+}
+class CategoryCriteria{
+  List<String> categoryId;
+  CategoryCriteria({
+    this.categoryId
+  });
+  factory CategoryCriteria.fromJson(Map<String, dynamic> json) {
+    return CategoryCriteria(
+      categoryId: json['categoryId'] as List<String>
+    );
+  }
+  Map toJson() {
+    return {"categoryId": categoryId};
   }
 }
 
