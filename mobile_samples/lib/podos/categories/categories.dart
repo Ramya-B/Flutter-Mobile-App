@@ -2,21 +2,24 @@ class CategoryDetailsLobDTO {
   List<String> lobId;
   bool systemRootCategoryFlag;
   String categoryId;
+  bool restrictFetchImage;
 
   CategoryDetailsLobDTO(
-      {this.lobId, this.systemRootCategoryFlag, this.categoryId});
+      {this.lobId, this.systemRootCategoryFlag, this.categoryId,this.restrictFetchImage});
 
   factory CategoryDetailsLobDTO.fromJson(Map<String, dynamic> json) {
     return CategoryDetailsLobDTO(
         lobId: json['lobId'],
         systemRootCategoryFlag: json['systemRootCategoryFlag'],
+        restrictFetchImage: json['restrictFetchImage'],
         categoryId: json['categoryId']);
   }
   Map<String, dynamic> toJson() {
     return {
       'lobId': lobId,
       'systemRootCategoryFlag': systemRootCategoryFlag,
-      'categoryId': categoryId
+      'categoryId': categoryId,
+      'restrictFetchImage': restrictFetchImage
     };
   }
 }
@@ -82,6 +85,7 @@ class CategoryDTO {
   int priority;
   List<CategoryAttributeDTO> categoryAttribute;
   List<CategoryLobDTO> categoryLobDtoList;
+  String categoryImage;
 
   CategoryDTO(
       {this.id,
@@ -97,7 +101,8 @@ class CategoryDTO {
       this.hasCategoryAttributes,
       this.priority,
       this.categoryAttribute,
-      this.categoryLobDtoList});
+      this.categoryLobDtoList,
+      this.categoryImage});
 
   factory CategoryDTO.fromJson(Map<String, dynamic> json) {
     return CategoryDTO(
@@ -114,7 +119,8 @@ class CategoryDTO {
         hasCategoryAttributes: json['hasCategoryAttributes'],
         priority: json['priority'],
         categoryAttribute: json['categoryAttribute'],
-        categoryLobDtoList: json['categoryLobDtoList']);
+        categoryLobDtoList: json['categoryLobDtoList'],
+        categoryImage: json['categoryLobDtoList']);
   }
   Map<String, dynamic> toJson() {
     return {

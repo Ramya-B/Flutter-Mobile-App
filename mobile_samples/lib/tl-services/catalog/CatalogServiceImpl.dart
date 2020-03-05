@@ -15,7 +15,7 @@ class CatalogServiceImpl extends CatalogServices {
   Future search(ProductSearchCriteriaDTO productSearchCriteriaDTO) async {
     return await http
         .post(
-      '${Constants.envUrl}${apiUrl}products/activeProductSearch/criteria',
+      '${Constants.envUrl}${apiUrl}products/activeProductSearch/criteria', 
       headers: headers,
       body: jsonEncode(<String, Object>{
         'productCriteria': productSearchCriteriaDTO.toJson(),
@@ -33,12 +33,17 @@ class CatalogServiceImpl extends CatalogServices {
     });
   }
 
-  @override
-  Future<List> getCategories() async {
+ @override
+  Future<List> getCategories(CategoryDetailsLobDTO categoryDetailsLobDTO) async {
     return await http
-        .get("${Constants.envUrl}${apiUrl}categories/rootCategories/withimages") 
-        .then((data) {
-      if (data.statusCode == 200) {
+        .post(
+      "${Constants.envUrl}${apiUrl}categories/rootCategories/withimagesByLob",
+      headers: headers,
+      body: jsonEncode(<String, Object>{
+        'categoryDetailsLobDTO': categoryDetailsLobDTO.toJson()
+      }),
+    ).then((data) {
+     if (data.statusCode == 200) {
         var res = json.decode(data.body);
         print("categories came....");
         print(res);

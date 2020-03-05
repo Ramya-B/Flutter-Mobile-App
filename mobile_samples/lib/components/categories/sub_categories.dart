@@ -7,12 +7,11 @@ import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import '../../service_locator.dart';
 
 class SubCategoryDeatils extends StatefulWidget {
-  final CategoryDetailsLobDTO categoryDetailsLobDTO;
-  final categoryName;
-  final categoryId;
+  final CategoryDTO categoryDTO;
+  final categoryImage;
 
   SubCategoryDeatils(
-      {Key key, this.categoryDetailsLobDTO, this.categoryName, this.categoryId})
+      {Key key, this.categoryDTO,this.categoryImage})
       : super(key: key);
 
   @override
@@ -28,7 +27,7 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
 
   getCategoryDetailsByLoB() async {
     CategoryDetailsLobDTO categoryDetailsLobDTO = new CategoryDetailsLobDTO();
-    categoryDetailsLobDTO.categoryId = widget.categoryId;
+    categoryDetailsLobDTO.categoryId = widget.categoryDTO.id.toString();
     categoryDetailsLobDTO.lobId = ["34343e34-7601-40de-878d-01b3bd1f0641"];
     categoryDetailsLobDTO.systemRootCategoryFlag = false;
     print("getCategoryDetailsByLoB request object {}...........");
@@ -65,7 +64,7 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                 width: 420,
                 color: Colors.blueGrey,
                 child: Center(
-                  child: Text('${widget.categoryName}',
+                  child: Text('${widget.categoryDTO.name}',
                       // '${this.categoryDetails[0].categoryAndAttributesDTO.categoryDTO.name}'
                       style: TextStyle(
                           color: Colors.white,

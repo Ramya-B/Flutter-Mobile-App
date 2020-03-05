@@ -5,6 +5,7 @@ import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:tradeleaves/components/categories/sub_categories.dart';
+import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import '../../service_locator.dart';
 
@@ -19,27 +20,21 @@ class _CategoriesState extends State<Categories> {
 
   getCategories() async {
     print("getCategories called...");
-    var data = await catalogService.getCategories();
+     CategoryDetailsLobDTO categoryDetailsLobDTO = new CategoryDetailsLobDTO();
+    categoryDetailsLobDTO.lobId = ["34343e34-7601-40de-878d-01b3bd1f0641"];
+    categoryDetailsLobDTO.systemRootCategoryFlag = false;
+    categoryDetailsLobDTO.restrictFetchImage = false;
+
+    var data = await catalogService.getCategories(categoryDetailsLobDTO);
     setState(() {
       print("Categories from node...");
       print(data);
       var dup = [];
       for (var cat in data) {
-        List items = cat["categoryAttribute"] as List;
-        for (int i = 0; i < items.length; i++) {
-          if (items[i]["attributeName"] == "ThumbnailImageAttribute" &&
-              items[i]["attributeValue"] != null) {
-            print("image found...");
-            print(items[i]["attributeValue"]);
-            dup.add({
-              'id': cat["id"].toString(),
-              'name': cat["name"],
-              'categoryImage':
-                  "http://uat.tradeleaves.internal/tl/public/assest/get/${items[i]['attributeValue']}"
-            });
-          }
+         dup.add(CategoryDTO.fromJson(cat));
         }
-      }
+
+      
       print("after filtering obj");
       print(dup);
       this.categoryList = dup;
@@ -63,41 +58,46 @@ class _CategoriesState extends State<Categories> {
           gridDelegate:
               new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
           itemBuilder: (BuildContext context, int index) {
-            return SingleCategory(
-              categoryName: this.categoryList[index]['name'],
-              categoryImage: this.categoryList[index]['categoryImage'],
-              categoryId: this.categoryList[index]['id'],
-            );
+            return SingleCategory(    categoryDTO: this.categoryList[index],        );
           }),
     );
   }
 }
 
 class SingleCategory extends StatefulWidget {
-  final String categoryName;
-  final String categoryImage;
-  final String categoryId;
-
-  SingleCategory({this.categoryName, this.categoryImage, this.categoryId});
+  final CategoryDTO categoryDTO;
+  SingleCategory({this.categoryDTO});
 
   @override
   _SingleCategoryState createState() => _SingleCategoryState();
 }
 
 class _SingleCategoryState extends State<SingleCategory> {
+   List<CategoryAttributeDTO> categoryAttributeDTO;
+   String categoryImage ;
+   @override
+  void initState() {
+    for (var item in widget.categoryDTO.categoryAttribute) {
+      if(item.attributeName == 'ThumbnailImageAttribute'){
+        this.categoryImage = item.attributeValue;
+      }
+    } 
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
         child: InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => SubCategoryDeatils(
-                      categoryName: widget.categoryName,
-                      categoryId: widget.categoryId,
+                     categoryDTO : widget.categoryDTO
                     ))),
             child: Column(
               children: <Widget>[
                 Image.network(
-                  widget.categoryImage,
+                  this.categoryImage,
                   height: 130,
                   width: 130,
                 ),
@@ -105,7 +105,7 @@ class _SingleCategoryState extends State<SingleCategory> {
                   child: Container(
                     alignment: Alignment.center,
                     child: Text(
-                      '${widget.categoryName}',
+                      '${widget.categoryDTO.name}',
                       style: TextStyle(fontSize: 20, color: Colors.black45),
                     ),
                   ),
