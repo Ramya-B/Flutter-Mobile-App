@@ -25,7 +25,8 @@ class Sample extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           Container(
-            constraints: BoxConstraints(minHeight: 700),
+            height: 700,
+            // constraints: BoxConstraints(minHeight: 700),
             child: HomeProducts(),
           ),
         ],
