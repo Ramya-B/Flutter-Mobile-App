@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
+import 'package:tradeleaves/components/products/products_home.dart';
 import 'service_locator.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
 
@@ -25,7 +26,7 @@ class Sample extends StatelessWidget {
         children: <Widget>[
           Container(
             height: 590.0,
-            child: FetchPromotedProducts(),
+            child: HomeProducts(),
           ),
         ],
       ),
