@@ -92,7 +92,8 @@ class _SingleCategoryState extends State<SingleCategory> {
         child: InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => SubCategoryDeatils(
-                     categoryDTO : widget.categoryDTO
+                     categoryDTO : widget.categoryDTO,
+                     categoryImage:this.categoryImage 
                     ))),
             child: Column(
               children: <Widget>[

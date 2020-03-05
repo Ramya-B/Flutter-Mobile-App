@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/login_register/register.dart';
@@ -10,8 +12,7 @@ class SubCategoryDeatils extends StatefulWidget {
   final CategoryDTO categoryDTO;
   final categoryImage;
 
-  SubCategoryDeatils(
-      {Key key, this.categoryDTO,this.categoryImage})
+  SubCategoryDeatils({Key key, this.categoryDTO, this.categoryImage})
       : super(key: key);
 
   @override
@@ -24,6 +25,8 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
   var response = [];
   List<CategoryDetailsDTO> categoryDetails = [];
   List subCategoriesList = [];
+  String categoryImage;
+  
 
   getCategoryDetailsByLoB() async {
     CategoryDetailsLobDTO categoryDetailsLobDTO = new CategoryDetailsLobDTO();
@@ -59,18 +62,21 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
         child: ListView(
           scrollDirection: Axis.vertical,
           children: <Widget>[
+            // Container(
+            //   child: Image.network('${widget.categoryImage}'),
+            // ),
             Container(
-                height: 300,
-                width: 420,
-                color: Colors.blueGrey,
-                child: Center(
-                  child: Text('${widget.categoryDTO.name}',
-                      // '${this.categoryDetails[0].categoryAndAttributesDTO.categoryDTO.name}'
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold)),
-                )),
+              height: 300,
+              width: 420,
+              color: Colors.blueGrey[800],
+              child: Center(
+                child: Text('${widget.categoryDTO.name}',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold)),
+              ),
+            ),
             Container(
               padding: EdgeInsets.all(25),
               child: Text(
@@ -111,7 +117,6 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                 minHeight: 200.0,
               ),
               child: ListView.builder(
-                  // scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: this.categoryDetails.length,
@@ -141,25 +146,28 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                                   .subCategoryAndAttributesDTO
                                   .length,
                               itemBuilder: (context, int index2) {
-                                return Center(
-                                    child: Container(
-                                  constraints: new BoxConstraints(
-                                    minHeight: 200.0,
-                                  ),
-                                  height: 150,
-                                  width: 150,
-                                  child: Center(
-                                    child : Text('${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryDTO.name}'),
-                                  )
-                                  // decoration: BoxDecoration(
-                                  //   shape: BoxShape.circle,
-                                  //   image: DecorationImage(
-                                  //     fit: BoxFit.cover,
-                                  //     image: NetworkImage('${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryDTO.}'
-                                  //         'https://dbtagriculture.bihar.gov.in/MediaGallery/undercon.jpg'),
-                                  //   ),
-                                  // )
-                                ));
+                                return Column(
+                                  children: <Widget>[
+                                    Center(
+                                        child: Container(
+                                            height: 120,
+                                            width: 120,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: NetworkImage(
+                                                    'https://akm-img-a-in.tosshub.com/indiatoday/images/story/201907/AP19182354055777-770x433.jpeg?Jk5EtkseJE96HYcQJZDWl5XotIooh8_L'),
+                                              ),
+                                            ))),
+                                    Container(
+                                      padding: EdgeInsets.all(5.0),
+                                      // heightFactor: 100,
+                                      child: Text(
+                                          '${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryDTO.name}',style: TextStyle(fontSize: 16, color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
+                                    ),
+                                  ],
+                                );
                               }),
                         )
                       ],
