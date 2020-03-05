@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
-import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
-import 'package:tradeleaves/components/products/ProductsList.dart';
-import 'package:tradeleaves/podos/products/product.dart';
 
 class ProductDetails extends StatefulWidget {
   final productDTO;

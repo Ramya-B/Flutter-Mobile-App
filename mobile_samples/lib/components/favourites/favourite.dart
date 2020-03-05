@@ -4,7 +4,6 @@ import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
-import 'package:tradeleaves/components/products/ProductDetails.dart';
 
 class Favourite extends StatefulWidget {
   @override

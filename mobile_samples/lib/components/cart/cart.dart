@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
-import 'package:tradeleaves/components/products/ProductDetails.dart';
 
 class MyCart extends StatefulWidget {
   @override

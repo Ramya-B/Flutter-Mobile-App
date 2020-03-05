@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/cart/cart.dart';
 import 'package:tradeleaves/components/chat/chat.dart';
-import 'package:tradeleaves/components/products/ProductsList.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;

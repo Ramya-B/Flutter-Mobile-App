@@ -4,7 +4,6 @@ import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
 import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/podos/search/search.dart';
-import 'package:tradeleaves/podos/suppliers/supplier.dart';
 import 'package:tradeleaves/service_locator.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 
@@ -22,14 +21,13 @@ class _SearchItemsState extends State<SearchItems> {
   String selectedLob;
   String countryId;
   ScrollController _controller;
-  var totalProducts ;
-  var counter= 1;
+  var totalProducts;
+  var counter = 1;
   var productSearchCriteriaDTODup;
   var pageStart = 0;
   var key;
 
   searchProducts() async {
-   
     ProductSearchCriteriaDTO productSearchCriteriaDTO =
         new ProductSearchCriteriaDTO();
     Pagination pagination = new Pagination(start: this.pageStart, limit: 10);
@@ -50,15 +48,15 @@ class _SearchItemsState extends State<SearchItems> {
     productSearchCriteriaDTO.siteCriteria = siteCriteria;
     print("productSearchCriteriaDTO1");
     print(productSearchCriteriaDTO);
-    
+
     var data = await catalogService.search(productSearchCriteriaDTO);
     this.totalProducts = data["productDTO"]["totalProducts"];
     this.res = data["productDTO"]["getAllActiveProductsSupplierResponseDTO"];
     print("result is...");
     print(this.res);
     if (this.res.length > 0) {
-      setState(() {  
-        if(this.key != this.keyword) {
+      setState(() {
+        if (this.key != this.keyword) {
           this.prodList = [];
         }
         for (var item = 0; item < this.res.length; item++) {
@@ -66,28 +64,30 @@ class _SearchItemsState extends State<SearchItems> {
           this.counter++;
           this.prodList.add(SearchResults.fromJson(this.res[item]));
         }
-         this.key = this.keyword;
+        this.key = this.keyword;
       });
     }
   }
-      
- _scrollListener() {
+
+  _scrollListener() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      setState(() {if(this.totalProducts > this.counter){
-         this.pageStart++;
-         print("scrolling is over.so fetching --${this.pageStart}");
-         searchProducts();
-      }
+      setState(() {
+        if (this.totalProducts > this.counter) {
+          this.pageStart++;
+          print("scrolling is over.so fetching --${this.pageStart}");
+          searchProducts();
+        }
       });
     }
     if (_controller.offset <= _controller.position.minScrollExtent &&
         !_controller.position.outOfRange) {
       setState(() {
-       print("scroll reached the top...!");
+        print("scroll reached the top...!");
       });
     }
   }
+
   @override
   void initState() {
     _controller = ScrollController();
@@ -122,7 +122,9 @@ class _SearchItemsState extends State<SearchItems> {
         backgroundColor: Colors.green,
         actions: <Widget>[
           new IconButton(
-              icon: Icon(Icons.search), onPressed: () =>(this.key != this.keyword) ? searchProducts(): {}),
+              icon: Icon(Icons.search),
+              onPressed: () =>
+                  (this.key != this.keyword) ? searchProducts() : {}),
         ],
       ),
       body: ListView(
@@ -130,13 +132,13 @@ class _SearchItemsState extends State<SearchItems> {
           Container(
             height: 600,
             child: GridView.builder(
-              controller: _controller,
+                controller: _controller,
                 itemCount: this.prodList.length,
                 gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2),
                 itemBuilder: (BuildContext context, int index) {
                   return SingleProduct(
-                    productDTO:this.prodList[index].productDTO   ,
+                    productDTO: this.prodList[index].productDTO,
                     supplierDTO: this.prodList[index].supplierSearchDTO,
                   );
                 }),

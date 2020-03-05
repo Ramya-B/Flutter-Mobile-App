@@ -5,7 +5,6 @@ import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:tradeleaves/components/products/products_home.dart';
 import 'service_locator.dart';
-import 'package:tradeleaves/components/products/ProductsList.dart';
 
 void main() {
   setupServiceLocator();

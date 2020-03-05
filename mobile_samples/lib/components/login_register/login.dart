@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/Profile/Profile.dart';
 import 'package:tradeleaves/components/login_register/register.dart';
-import 'package:tradeleaves/components/products/ProductsList.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
 import '../CustomBottomNavigationBar.dart';
 import '../CustomDrawer.dart';

@@ -1,11 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection, where;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/products/ProductDetails.dart';
 import 'package:tradeleaves/podos/search/search.dart';
-import 'package:tradeleaves/podos/suppliers/supplier.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/service_locator.dart';
@@ -244,7 +239,6 @@ class _SingleProductState extends State<SingleProduct> {
   bool isCarted;
   @override
   void initState() {
-    // TODO: implement initState
    this.isFavourited = widget.isFavourited;
    this.isOrdered = widget.isOrdered;
    this.isCarted = widget.isCarted;
