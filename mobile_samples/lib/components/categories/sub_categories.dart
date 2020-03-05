@@ -26,7 +26,6 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
   List<CategoryDetailsDTO> categoryDetails = [];
   List subCategoriesList = [];
   String categoryImage;
-  
 
   getCategoryDetailsByLoB() async {
     CategoryDetailsLobDTO categoryDetailsLobDTO = new CategoryDetailsLobDTO();
@@ -62,19 +61,24 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
         child: ListView(
           scrollDirection: Axis.vertical,
           children: <Widget>[
-            // Container(
-            //   child: Image.network('${widget.categoryImage}'),
-            // ),
             Container(
-              height: 300,
-              width: 420,
-              color: Colors.blueGrey[800],
-              child: Center(
-                child: Text('${widget.categoryDTO.name}',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold)),
+              constraints: new BoxConstraints.expand(
+                height: 200.0,
+              ),
+              alignment: Alignment.center,
+              padding: new EdgeInsets.only(left: 16.0, bottom: 8.0),
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  image: new NetworkImage("${widget.categoryImage}"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: new Text(
+                '${widget.categoryDTO.name}',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             Container(
@@ -157,14 +161,19 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                                               image: DecorationImage(
                                                 fit: BoxFit.cover,
                                                 image: NetworkImage(
-                                                    'https://akm-img-a-in.tosshub.com/indiatoday/images/story/201907/AP19182354055777-770x433.jpeg?Jk5EtkseJE96HYcQJZDWl5XotIooh8_L'),
+                                                    '${widget.categoryImage}'),
                                               ),
                                             ))),
                                     Container(
                                       padding: EdgeInsets.all(5.0),
                                       // heightFactor: 100,
                                       child: Text(
-                                          '${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryDTO.name}',style: TextStyle(fontSize: 16, color: Colors.blueGrey[600], fontWeight: FontWeight.bold),),
+                                        '${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryDTO.name}',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.blueGrey[600],
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ],
                                 );
