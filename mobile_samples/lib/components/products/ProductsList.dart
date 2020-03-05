@@ -60,6 +60,7 @@ class _FetchPromotedProductsState extends State<FetchPromotedProducts> {
   }
 }
 
+
 /*
 class Products extends StatefulWidget {
   final String category;
@@ -400,7 +401,6 @@ class _SingleProductState extends State<SingleProduct> {
                       style: TextStyle(fontSize: 16),
                     )),
               ),
-//
             ],
           ),
         ),

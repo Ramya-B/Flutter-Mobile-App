@@ -20,11 +20,18 @@ class _SearchItemsState extends State<SearchItems> {
   List res = [];
   String selectedLob;
   String countryId;
+  ScrollController _controller;
+  var totalProducts ;
+  var counter= 1;
+  var productSearchCriteriaDTODup;
+  var pageStart = 0;
+  var key;
 
   searchProducts() async {
+   
     ProductSearchCriteriaDTO productSearchCriteriaDTO =
         new ProductSearchCriteriaDTO();
-    Pagination pagination = new Pagination(start: 0, limit: 10);
+    Pagination pagination = new Pagination(start: this.pageStart, limit: 10);
     productSearchCriteriaDTO.pagination = pagination;
     productSearchCriteriaDTO.sortBy = "relevance";
     productSearchCriteriaDTO.countryId = "IN";
@@ -42,21 +49,48 @@ class _SearchItemsState extends State<SearchItems> {
     productSearchCriteriaDTO.siteCriteria = siteCriteria;
     print("productSearchCriteriaDTO1");
     print(productSearchCriteriaDTO);
-    this.res = await catalogService.search(productSearchCriteriaDTO);
+    
+    var data = await catalogService.search(productSearchCriteriaDTO);
+    this.totalProducts = data["productDTO"]["totalProducts"];
+    this.res = data["productDTO"]["getAllActiveProductsSupplierResponseDTO"];
     print("result is...");
     print(this.res);
     if (this.res.length > 0) {
-      setState(() {
-        this.prodList = [];
+      setState(() {  
+        if(this.key != this.keyword) {
+          this.prodList = [];
+        }
         for (var item = 0; item < this.res.length; item++) {
+          print(SearchResults.fromJson(this.res[item]));
+          this.counter++;
           this.prodList.add(SearchResults.fromJson(this.res[item]));
         }
+         this.key = this.keyword;
       });
     }
   }
-
+      
+ _scrollListener() {
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {if(this.totalProducts > this.counter){
+         this.pageStart++;
+         print("scrolling is over.so fetching --${this.pageStart}");
+         searchProducts();
+      }
+      });
+    }
+    if (_controller.offset <= _controller.position.minScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {
+       print("scroll reached the top...!");
+      });
+    }
+  }
   @override
   void initState() {
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
     this.prodList = [];
     print("init calling....searchProducts");
     super.initState();
@@ -87,14 +121,15 @@ class _SearchItemsState extends State<SearchItems> {
         backgroundColor: Colors.green,
         actions: <Widget>[
           new IconButton(
-              icon: Icon(Icons.search), onPressed: () => searchProducts()),
+              icon: Icon(Icons.search), onPressed: () =>(this.key != this.keyword) ? searchProducts(): {}),
         ],
       ),
       body: ListView(
         children: <Widget>[
           Container(
-             height: 600,
+            height: 600,
             child: GridView.builder(
+              controller: _controller,
                 itemCount: this.prodList.length,
                 gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2),
