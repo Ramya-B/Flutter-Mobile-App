@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection, where;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/products/ProductDetails.dart';
+import 'package:tradeleaves/podos/search/search.dart';
 import 'package:tradeleaves/podos/suppliers/supplier.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/service_locator.dart';
 
 class FetchPromotedProducts extends StatefulWidget {
+  final String promoType;
+  FetchPromotedProducts({this.promoType});
   @override
   _FetchPromotedProductsState createState() => _FetchPromotedProductsState();
 }
@@ -20,7 +23,7 @@ class _FetchPromotedProductsState extends State<FetchPromotedProducts> {
   List res = [];
   getPromotedProducts() async {
     PromoProductCriteria promoProductCriteria = new PromoProductCriteria();
-    Pagination pagination = new Pagination(start: 0, limit: 2);
+    Pagination pagination = new Pagination(start: 0, limit: 8);
     promoProductCriteria.pagination = pagination;
     SiteCriteria siteCriteria =  new SiteCriteria();
     siteCriteria.channel = "B2BInternational";
@@ -29,20 +32,20 @@ class _FetchPromotedProductsState extends State<FetchPromotedProducts> {
     // CategoryCriteria categoryCriteria = new CategoryCriteria();
     // categoryCriteria.categoryId = [];
     // promoProductCriteria.categoryCriteria= categoryCriteria;
-    promoProductCriteria.promotionID = 'SponsoredAds';
+    promoProductCriteria.promotionID = widget.promoType;
     print("PromoProductCriteria");
     print(promoProductCriteria.toJson());
-
+ 
     this.res = await catalogService.getPromotedProducts(promoProductCriteria);
     print("result of promoted products are..");
     print(this.res);
     if (this.res.length > 0) {
-      // setState(() {
-      //   this.promotedProducts = [];
-      //   for (var item = 0; item < this.res.length; item++) {
-      //     this.promotedProducts.add(SearchResults.fromJson(this.res[item]));
-      //   }
-      // });
+      setState(() {
+        this.promotedProducts = [];
+        for (var item = 0; item < this.res.length; item++) {
+          this.promotedProducts.add(SearchResults.fromJson(this.res[item]));
+        }
+      });
     }
   }
 
@@ -56,8 +59,43 @@ class _FetchPromotedProductsState extends State<FetchPromotedProducts> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      // width: 400,
+      height: 200,
+     child: GridView.builder(
+      scrollDirection: Axis.horizontal,
+        itemCount: this.promotedProducts.length,
+        gridDelegate:
+            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
+        itemBuilder: (BuildContext context, int index) {
+          return SingleProduct(
+            productDTO: this.promotedProducts[index].productDTO,
+            supplierDTO: this.promotedProducts[index].supplierSearchDTO,
+          );
+        })
+    );
   }
+  
+  // Widget build(BuildContext context) {
+  //   return Container(
+  //      constraints: BoxConstraints(minHeight: 650),
+  //      height: 600,
+  //     child: Column(
+  //       children: <Widget>[
+  //         Container(
+  //           padding: EdgeInsets.all(10),
+  //           alignment: Alignment.topLeft,
+  //           child: Text('Promoted Ads',style: TextStyle(fontSize: 20),),
+  //         ),
+  //         Container(
+  //            padding: EdgeInsets.all(10),
+  //           child: Products(prodList: [],),
+  //           height: 300,
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 }
 
 
@@ -337,23 +375,69 @@ class _SingleProductState extends State<SingleProduct> {
 */
 
 class Products extends StatefulWidget {
+  final List<SearchResults> prodList;
+  Products({this.prodList});
   @override
   _ProductsState createState() => _ProductsState();
 }
 
 class _ProductsState extends State<Products> {
-  var prodList;
+  List<SearchResults> products;
+  var promotedProducts = [];
+  List res = [];
+   CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
+  getPromotedProducts() async {
+    PromoProductCriteria promoProductCriteria = new PromoProductCriteria();
+    Pagination pagination = new Pagination(start: 0, limit: 2);
+    promoProductCriteria.pagination = pagination;
+    SiteCriteria siteCriteria =  new SiteCriteria();
+    siteCriteria.channel = "B2BInternational";
+    siteCriteria.region = "IN";
+    promoProductCriteria.siteCriteria = siteCriteria;
+    // CategoryCriteria categoryCriteria = new CategoryCriteria();
+    // categoryCriteria.categoryId = [];
+    // promoProductCriteria.categoryCriteria= categoryCriteria;
+    promoProductCriteria.promotionID = 'SponsoredAds';
+    print("PromoProductCriteria");
+    print(promoProductCriteria.toJson());
+
+    this.res = await catalogService.getPromotedProducts(promoProductCriteria);
+    print("result of promoted products are..");
+    print(this.res);
+    if (this.res.length > 0) {
+      setState(() {
+        this.promotedProducts = [];
+        for (var item = 0; item < this.res.length; item++) {
+          this.promotedProducts.add(SearchResults.fromJson(this.res[item]));
+        }
+      });
+    }
+  }
+
+  @override
+  void initState() {
+   if(  widget.prodList == null || widget.prodList.length ==0){
+     this.promotedProducts = [];
+    print("init calling....searchProducts");
+    getPromotedProducts();
+
+   }else if(widget.prodList.length > 0){
+     this.promotedProducts = widget.prodList;
+   }
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        itemCount: this.prodList.length,
+        itemCount: this.promotedProducts.length,
         gridDelegate:
             new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
           return SingleProduct(
-            productDTO: prodList[index]['productDTO'],
-            supplierDTO: prodList[index]['supplierSearchDTO'],
+            productDTO: this.promotedProducts[index].productDTO,
+            supplierDTO: this.promotedProducts[index].supplierSearchDTO,
           );
         });
   }

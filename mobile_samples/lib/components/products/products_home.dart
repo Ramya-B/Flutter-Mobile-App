@@ -1,0 +1,159 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/products/ProductsList.dart';
+import 'package:tradeleaves/podos/categories/categories.dart';
+import 'package:tradeleaves/service_locator.dart';
+import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
+
+class HomeProducts extends StatefulWidget {
+  @override
+  _HomeProductsState createState() => _HomeProductsState();
+}
+
+class _HomeProductsState extends State<HomeProducts> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        Container(
+          child: Text(
+            'Top Categories',
+            style: TextStyle(fontSize: 18),
+          ),
+          padding: EdgeInsets.all(10),
+          alignment: Alignment.topLeft,
+        ),
+        Container(
+          height: 200,
+          child: HomePageCategories(),
+        ),
+         Container(
+          child: Text(
+            'Sponsored Ads',
+            style: TextStyle(fontSize: 18),
+          ),
+          padding: EdgeInsets.all(10),
+          alignment: Alignment.topLeft,
+        ),
+        Container(
+          child: FetchPromotedProducts(
+            promoType: 'SponsoredAds',
+          ),
+        ),
+        Container(
+          child: Text(
+            'Highlights',
+            style: TextStyle(fontSize: 18),
+          ),
+          padding: EdgeInsets.all(10),
+          alignment: Alignment.topLeft,
+        ),
+        Container(
+          child: FetchPromotedProducts(
+            promoType: 'TopList',
+          ),
+        ),
+       
+      ],
+    );
+  }
+}
+
+class HomePageCategories extends StatefulWidget {
+  @override
+  _HomePageCategoriesState createState() => _HomePageCategoriesState();
+}
+
+class _HomePageCategoriesState extends State<HomePageCategories> {
+  CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
+  var categoryList = [];
+
+  getCategories() async {
+    print("getCategories called...");
+    CategoryDetailsLobDTO categoryDetailsLobDTO = new CategoryDetailsLobDTO();
+    categoryDetailsLobDTO.lobId = ["34343e34-7601-40de-878d-01b3bd1f0641"];
+    categoryDetailsLobDTO.systemRootCategoryFlag = false;
+    categoryDetailsLobDTO.restrictFetchImage = false;
+
+    var data = await catalogService.getCategories(categoryDetailsLobDTO);
+    setState(() {
+      print("Categories from node...");
+      print(data);
+      var dup = [];
+      for (var cat in data) {
+        dup.add(CategoryDTO.fromJson(cat));
+      }
+
+      print("after filtering obj");
+      print(dup);
+      this.categoryList = dup;
+    });
+  }
+
+  @override
+  void initState() {
+    getCategories();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+        itemCount: this.categoryList.length,
+        scrollDirection: Axis.horizontal,
+        gridDelegate:
+            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        itemBuilder: (BuildContext context, int index) {
+          return  CategoryCard(    categoryDTO: this.categoryList[index],);
+          //   return  new Container(
+          //    width: 50,
+          //    height: 50,
+          //    decoration: new BoxDecoration(
+          //      color: const Color(0xff7c94b6),
+          //      image: new DecorationImage(
+          //        image: new NetworkImage('http://i.imgur.com/QSev0hg.jpg',),
+          //        fit: BoxFit.cover,
+          //      ),
+          //      borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
+          //    ),
+          //  );
+        });
+  }
+}
+
+class CategoryCard extends StatefulWidget {
+    final CategoryDTO categoryDTO;
+  CategoryCard({this.categoryDTO});
+  @override
+  _CategoryCardState createState() => _CategoryCardState();
+}
+
+class _CategoryCardState extends State<CategoryCard> {
+   List<CategoryAttributeDTO> categoryAttributeDTO;
+   String categoryImage ;
+   @override
+  void initState() {
+    for (var item in widget.categoryDTO.categoryAttribute) {
+      if(item.attributeName == 'ThumbnailImageAttribute'){
+        this.categoryImage = 'http://uat.tradeleaves.internal/tl/public/assest/get/${item.attributeValue}';
+      }
+    } 
+
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(5.0),
+      height: 50,
+      child:  Card(
+            child: Image.network(
+                '${this.categoryImage}',
+    
+              )
+          ),
+    );
+  }
+}
