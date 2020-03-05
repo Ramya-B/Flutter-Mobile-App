@@ -57,6 +57,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
                     appBar: CustomToolBar(),
                     body: Container(
                       // child: Products(category: 'all'),
+                      child: FetchPromotedProducts(),
                     ),
                     bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                     drawer: CustomDrawer(),

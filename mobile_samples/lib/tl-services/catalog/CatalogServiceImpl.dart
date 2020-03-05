@@ -47,4 +47,27 @@ class CatalogServiceImpl extends CatalogServices {
       }
     });
   }
+
+  @override
+  Future<List> getPromotedProducts(PromoProductCriteria promoProductCriteria) async {
+    return await http
+    .post(
+      '${Constants.envUrl}${apiUrl}products/getProducts/ByPromotionPlan', 
+      headers: headers,
+      body: jsonEncode(<String, Object>{
+        'PromotionCriteria': promoProductCriteria.toJson(),
+      }),
+    ).then((data) {
+      print("promotional plan data");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("promoted products response....");
+        print(res);
+        return res["productsPromotionsResponseDTO"];
+      } else {
+        return throw Exception('falied to fetch the promoted products....');
+      }
+    });
+  }
 }

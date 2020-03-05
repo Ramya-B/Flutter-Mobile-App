@@ -97,7 +97,8 @@ class SiteCriteria {
   var channel;
   var site;
   var status;
-  SiteCriteria({this.channel, this.site, this.status});
+  var region;
+  SiteCriteria({this.channel, this.site, this.status, this.region});
   factory SiteCriteria.fromJson(Map<String, dynamic> json) {
     return SiteCriteria(
       channel: json['channel'] as String,
@@ -106,7 +107,7 @@ class SiteCriteria {
     );
   }
   Map toJson() {
-    return {"channel": channel, "site": site, "status": status};
+    return {"channel": channel, "site": site, "status": status, "region": region};
   }
 }
 
@@ -142,12 +143,59 @@ class Pagination {
   Pagination({this.start, this.limit});
   factory Pagination.fromJson(Map<String, dynamic> json) {
     return Pagination(
-      start: json['channel'] as int,
-      limit: json['site'] as int,
+      start: json['start'] as int,
+      limit: json['limit'] as int,
     );
   }
 
   Map toJson() {
     return {"start": start, "limit": limit};
+  }
+}
+
+class PromoProductCriteria {
+   Pagination pagination;
+   SiteCriteria siteCriteria;
+   CategoryCriteria categoryCriteria;
+   String promotionID;
+   PromoProductCriteria({
+    this.pagination,
+    this.siteCriteria,
+    this.promotionID,
+    this.categoryCriteria
+   });
+     factory PromoProductCriteria.fromJson(Map<String, dynamic> json) {
+    return PromoProductCriteria(
+      pagination: Pagination.fromJson(json['pagination']),
+       siteCriteria: SiteCriteria.fromJson(json['siteCriteria']),
+        categoryCriteria: CategoryCriteria.fromJson(json['categoryCriteria']),
+         promotionID: json['promotionID'] as String,
+
+    );
+  }
+  Map toJson() {
+    Map pagination = this.pagination != null ? this.pagination.toJson() : null;
+    Map categoryCriteria =
+        this.categoryCriteria != null
+            ? this.categoryCriteria.toJson()
+            : null;
+    Map siteCriteria =
+        this.siteCriteria != null ? this.siteCriteria.toJson() : null;
+    return {"pagination": pagination, "siteCriteria": siteCriteria, 
+    "categoryCriteria": categoryCriteria, "promotionID": promotionID};
+  }
+}
+class CategoryCriteria{
+  List<String> categoryId;
+  CategoryCriteria({
+    this.categoryId
+  });
+  factory CategoryCriteria.fromJson(Map<String, dynamic> json) {
+    return CategoryCriteria(
+      categoryId: json['categoryId'] as List<String>
+    );
+  }
+  Map toJson() {
+    return {"categoryId": categoryId};
   }
 }

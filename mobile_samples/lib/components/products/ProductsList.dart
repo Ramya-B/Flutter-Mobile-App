@@ -1,8 +1,64 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection, where;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/products/ProductDetails.dart';
 import 'package:tradeleaves/podos/suppliers/supplier.dart';
+import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
+import 'package:tradeleaves/podos/products/product.dart';
+import 'package:tradeleaves/service_locator.dart';
+
+class FetchPromotedProducts extends StatefulWidget {
+  @override
+  _FetchPromotedProductsState createState() => _FetchPromotedProductsState();
+}
+
+class _FetchPromotedProductsState extends State<FetchPromotedProducts> {
+  CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
+  var promotedProducts = [];
+  List res = [];
+  getPromotedProducts() async {
+    PromoProductCriteria promoProductCriteria = new PromoProductCriteria();
+    Pagination pagination = new Pagination(start: 0, limit: 2);
+    promoProductCriteria.pagination = pagination;
+    SiteCriteria siteCriteria =  new SiteCriteria();
+    siteCriteria.channel = "B2BInternational";
+    siteCriteria.region = "IN";
+    promoProductCriteria.siteCriteria = siteCriteria;
+    // CategoryCriteria categoryCriteria = new CategoryCriteria();
+    // categoryCriteria.categoryId = [];
+    // promoProductCriteria.categoryCriteria= categoryCriteria;
+    promoProductCriteria.promotionID = 'SponsoredAds';
+    print("PromoProductCriteria");
+    print(promoProductCriteria.toJson());
+
+    this.res = await catalogService.getPromotedProducts(promoProductCriteria);
+    print("result of promoted products are..");
+    print(this.res);
+    if (this.res.length > 0) {
+      // setState(() {
+      //   this.promotedProducts = [];
+      //   for (var item = 0; item < this.res.length; item++) {
+      //     this.promotedProducts.add(SearchResults.fromJson(this.res[item]));
+      //   }
+      // });
+    }
+  }
+
+  @override
+  void initState() { 
+    this.promotedProducts = [];
+    print("init calling....searchProducts");
+    getPromotedProducts();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
 
 /*
 class Products extends StatefulWidget {
@@ -320,10 +376,10 @@ class _SingleProductState extends State<SingleProduct> {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        onTap:() => Navigator.of(context).push(new MaterialPageRoute(
+        onTap: () => Navigator.of(context).push(new MaterialPageRoute(
             builder: (context) => new ProductDetails(
                   productDTO: widget.productDTO,
-            supplierDTO: widget.supplierDTO,
+                  supplierDTO: widget.supplierDTO,
                 ))),
         child: Container(
           padding: EdgeInsets.all(4.0),
