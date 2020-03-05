@@ -79,7 +79,7 @@ class _SingleCategoryState extends State<SingleCategory> {
   void initState() {
     for (var item in widget.categoryDTO.categoryAttribute) {
       if(item.attributeName == 'ThumbnailImageAttribute'){
-        this.categoryImage = item.attributeValue;
+        this.categoryImage = 'http://uat.tradeleaves.internal/tl/public/assest/get/${item.attributeValue}';
       }
     } 
 

@@ -148,8 +148,9 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                                   ),
                                   height: 150,
                                   width: 150,
-                                  child: Text(
-                                      '${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryDTO.name}'),
+                                  child: Center(
+                                    child : Text('${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryDTO.name}'),
+                                  )
                                   // decoration: BoxDecoration(
                                   //   shape: BoxShape.circle,
                                   //   image: DecorationImage(

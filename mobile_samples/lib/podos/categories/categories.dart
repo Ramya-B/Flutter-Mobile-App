@@ -105,6 +105,10 @@ class CategoryDTO {
       this.categoryImage});
 
   factory CategoryDTO.fromJson(Map<String, dynamic> json) {
+        var catAttr =  json['categoryAttribute'] != null ? json['categoryAttribute'] as List :[];
+       List<CategoryAttributeDTO> _categoryAttribute =  catAttr.map((data)=>CategoryAttributeDTO.fromJson(data)).toList();
+         var catLob =   json['categoryLobDtoList'] != null ? json['categoryLobDtoList'] as List:[];
+          List<CategoryLobDTO> _categoryLobDtoList  =  catLob.map((data)=>CategoryLobDTO.fromJson(data)).toList();
     return CategoryDTO(
         id: json['id'],
         name: json['name'],
@@ -118,9 +122,9 @@ class CategoryDTO {
         hasParentCategories: json['hasParentCategories'],
         hasCategoryAttributes: json['hasCategoryAttributes'],
         priority: json['priority'],
-        categoryAttribute: json['categoryAttribute'],
-        categoryLobDtoList: json['categoryLobDtoList'],
-        categoryImage: json['categoryLobDtoList']);
+        categoryAttribute: _categoryAttribute,
+        categoryLobDtoList: _categoryLobDtoList,
+        categoryImage: json['categoryImage']);
   }
   Map<String, dynamic> toJson() {
     return {
