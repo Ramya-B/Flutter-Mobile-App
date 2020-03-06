@@ -119,22 +119,22 @@ class _CustomDrawerState extends State<CustomDrawer> {
               leading: Icon(Icons.dashboard),
             ),
           ),
-          InkWell(
-            onTap: () => Navigator.of(context).push(
-                new MaterialPageRoute(builder: (context) => new Favourite())),
-            child: new ListTile(
-              title: Text('Favourites'),
-              leading: Icon(Icons.favorite),
-            ),
-          ),
-          InkWell(
-            onTap: () => Navigator.of(context).push(
-                new MaterialPageRoute(builder: (context) => new Orders())),
-            child: new ListTile(
-              title: Text('Orders'),
-              leading: Icon(Icons.shopping_basket),
-            ),
-          ),
+          // InkWell(
+          //   onTap: () => Navigator.of(context).push(
+          //       new MaterialPageRoute(builder: (context) => new Favourite())),
+          //   child: new ListTile(
+          //     title: Text('Favourites'),
+          //     leading: Icon(Icons.favorite),
+          //   ),
+          // ),
+          // InkWell(
+          //   onTap: () => Navigator.of(context).push(
+          //       new MaterialPageRoute(builder: (context) => new Orders())),
+          //   child: new ListTile(
+          //     title: Text('Orders'),
+          //     leading: Icon(Icons.shopping_basket),
+          //   ),
+          // ),
           InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => new AlertNotifications())),
