@@ -6,6 +6,7 @@ import 'package:tradeleaves/tl-services/catalog/CatalogServices.dart';
 import 'package:tradeleaves/constants.dart';
 
 class CatalogServiceImpl extends CatalogServices {
+  
   static const String apiUrl = "catalog/api/";
   Map<String, String> headers = {
     'Content-type': 'application/json; charset=UTF-8'

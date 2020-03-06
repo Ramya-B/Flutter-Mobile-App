@@ -8,6 +8,8 @@ import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/service_locator.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 
+import '../../constants.dart';
+
 class HomeProducts extends StatefulWidget {
   @override
   _HomeProductsState createState() => _HomeProductsState();
@@ -126,7 +128,7 @@ class _CategoryCardState extends State<CategoryCard> {
   void initState() {
     for (var item in widget.categoryDTO.categoryAttribute) {
       if(item.attributeName == 'ThumbnailImageAttribute'){
-        this.categoryImage = 'http://uat.tradeleaves.internal/tl/public/assest/get/${item.attributeValue}';
+        this.categoryImage = '${Constants.envUrl}${Constants.mongoImageUrl}${item.attributeValue}';
       }
     } 
 

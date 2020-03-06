@@ -8,6 +8,7 @@ import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/podos/search/search.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import 'package:tradeleaves/podos/products/product.dart';
+import '../../constants.dart';
 import '../../service_locator.dart';
 
 class SubCategoryDeatils extends StatefulWidget {
@@ -278,7 +279,7 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                                                                   fit: BoxFit
                                                                       .cover,
                                                                   image: NetworkImage(
-                                                                      'http://uat.tradeleaves.internal/tl/public/assest/get/${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttribute[index3].attributeValue}'),
+                                                                      '${Constants.envUrl}${Constants.mongoImageUrl}${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttribute[index3].attributeValue}'),
                                                                 ),
                                                               ))
                                                           : Container();

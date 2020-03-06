@@ -5,6 +5,8 @@ import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/service_locator.dart';
 
+import '../../constants.dart';
+
 class FetchPromotedProducts extends StatefulWidget {
   final String promoType;
   FetchPromotedProducts({this.promoType});
@@ -137,7 +139,7 @@ class _SingleProductState extends State<SingleProduct> {
           child: Column(
             children: <Widget>[
               Image.network(
-                'http://uat.tradeleaves.internal/tl/public/assest/get/${widget.productDTO.primaryImageUrl}',
+                (widget.productDTO.primaryImageUrl.toString().contains('http') )? ('${widget.productDTO.primaryImageUrl}'):('${Constants.envUrl}${Constants.mongoImageUrl}${widget.productDTO.primaryImageUrl}'),
                 width: 150,
                 height: 150,
               ),

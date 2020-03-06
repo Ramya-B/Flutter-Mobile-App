@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 
+import '../../constants.dart';
+
 class ProductDetails extends StatefulWidget {
   final productDTO;
   final supplierDTO;
@@ -43,7 +45,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               height: 250,
               width: 250,
               child: Image.network(
-                  'http://uat.tradeleaves.internal/tl/public/assest/get/${widget.productDTO.primaryImageUrl}'),
+                  '${Constants.envUrl}${Constants.mongoImageUrl}${widget.productDTO.primaryImageUrl}'),
             ),
           ),
 

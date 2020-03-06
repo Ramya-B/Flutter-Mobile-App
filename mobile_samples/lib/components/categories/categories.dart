@@ -7,6 +7,7 @@ import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:tradeleaves/components/categories/sub_categories.dart';
 import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
+import '../../constants.dart';
 import '../../service_locator.dart';
 
 class Categories extends StatefulWidget {
@@ -79,7 +80,7 @@ class _SingleCategoryState extends State<SingleCategory> {
   void initState() {
     for (var item in widget.categoryDTO.categoryAttribute) {
       if(item.attributeName == 'ThumbnailImageAttribute'){
-        this.categoryImage = 'http://uat.tradeleaves.internal/tl/public/assest/get/${item.attributeValue}';
+        this.categoryImage = '${Constants.envUrl}${Constants.mongoImageUrl}${item.attributeValue}';
       }
     } 
 

@@ -1,10 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
-
-
-
-// part 'TlCriteriaWeights.g.dart';
-// part 'Filters.g.dart';
-// part 'ProductInfo.g.dart';
 
 
 class ProductDTO {
@@ -458,7 +451,7 @@ this.productPriceSlabs,
 this.lobId ,
 });
   factory PriceList.fromJson(Map<String, dynamic> json) {
-    var productPriceSlab = json['productPriceSlabs'] as List;
+    var productPriceSlab = json['productPriceSlabs'] !=null ? json['productPriceSlabs']  as List:[];
    List<ProductPriceSlabs> _productPriceSlabs = productPriceSlab.map((res) => ProductPriceSlabs.fromJson(res)).toList();
     return PriceList(
       priceId: json['priceId'],
