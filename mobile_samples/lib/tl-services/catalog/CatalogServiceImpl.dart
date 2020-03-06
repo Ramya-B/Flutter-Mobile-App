@@ -102,4 +102,25 @@ class CatalogServiceImpl extends CatalogServices {
       }
     });
   }
+
+  @override
+  Future getProductsByCategoryId(ProductInfo productInfo) async {
+    return await http
+        .post(
+      '${Constants.envUrl}${apiUrl}products/categoryId/getProductInfoByCriteria',
+      headers: headers,
+      body: jsonEncode(<String, Object>{
+        'productInfo': productInfo.toJson(),
+      }),
+    ).then((data) {
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("products by category id....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to fetch products by category id....');
+      }
+    });
+  }
 }

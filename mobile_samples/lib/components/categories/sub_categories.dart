@@ -2,9 +2,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/login_register/register.dart';
+import 'package:tradeleaves/components/products/ProductsList.dart';
+import 'package:tradeleaves/components/search/search.dart';
 import 'package:tradeleaves/podos/categories/categories.dart';
+import 'package:tradeleaves/podos/search/search.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
-
+import 'package:tradeleaves/podos/products/product.dart';
 import '../../service_locator.dart';
 
 class SubCategoryDeatils extends StatefulWidget {
@@ -25,7 +28,8 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
   List<CategoryDetailsDTO> categoryDetails = [];
   List subCategoriesList = [];
   String categoryImage;
-
+  List res;
+  List<SearchResults> prodList;
   getCategoryDetailsByLoB() async {
     CategoryDetailsLobDTO categoryDetailsLobDTO = new CategoryDetailsLobDTO();
     categoryDetailsLobDTO.categoryId = widget.categoryDTO.id.toString();
@@ -44,8 +48,52 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
     });
   }
 
+  getProductsByCategory(int categoryId) async {
+      ProductInfo productInfo =  new ProductInfo();
+      productInfo.categoryId = categoryId.toString();
+      productInfo.isService = false;
+      productInfo.countryId = 'IN';
+      productInfo.channel = "B2BInternational";
+      productInfo.region = "IN";
+      productInfo.lobSelection = null;
+      productInfo.location = null;
+      Filters filters = new Filters();
+      filters.tlcriteriaWeights = [];
+      filters.suppliertlcriteriaWeights = [];
+      filters.sortBy = "relevance";
+      Pagination pagination = new Pagination(start: 0,limit: 10);
+      filters.pagination = pagination;
+      productInfo.countryId = 'IN';
+      productInfo.filters = filters;
+      print("category products req....");
+      print(productInfo.toJson());
+      this.prodList = [];
+       var data =  await catalogService.getProductsByCategoryId(productInfo);
+       print(data);
+     var results = data["activeProduct"]["getAllActiveProductsSupplierResponseDTO"];
+      print("result is...");
+      print(results);
+      if (results.length > 0) {
+        setState(() {
+          for (var item = 0; item < results.length; item++) {
+            print(results[item]);
+            print(SearchResults.fromJson(results[item]));
+            // this.prodList.add(results[item]);
+                 this.prodList.add(SearchResults.fromJson(results[item]));
+           
+           
+          }
+             Navigator.push(context, MaterialPageRoute(builder: (context) => Products(prodList: this.prodList)));
+        });
+      }
+     
+
+
+  }
+
   @override
   void initState() {
+    List<SearchResults> prodList = [];
     print("Before Calling getCategoryDetailsByLoB.................");
     getCategoryDetailsByLoB();
     print("After Calling getCategoryDetailsByLoB.................");
@@ -126,7 +174,9 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                   itemBuilder: (BuildContext context, int index) {
                     return Column(
                       children: <Widget>[
-                        Container(
+                       InkWell(
+                        onTap: (){print("tapped");Navigator.push(context, MaterialPageRoute(builder: (context) => SearchItems(categoryId: this.categoryDetails[index].categoryAndAttributesDTO.categoryDTO.id, isCategoryBasedSearch: true,)));}, 
+                         child:  Container(
                           color: Colors.green,
                           height: 50,
                           child: Center(
@@ -137,6 +187,7 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold))),
                         ),
+                       ),
                         SizedBox(
                           height: 30,
                         ),
