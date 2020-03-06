@@ -53,19 +53,22 @@ class CategoryDetailsDTO {
 
 class CategoryAndAttributesDTO {
   CategoryDTO categoryDTO;
-  List<CategoryAttributeDTO> categoryAttributeDTO;
+  List<CategoryAttributeDTO> categoryAttribute;
 
-  CategoryAndAttributesDTO({this.categoryDTO, this.categoryAttributeDTO});
+  CategoryAndAttributesDTO({this.categoryDTO, this.categoryAttribute});
 
-  factory CategoryAndAttributesDTO.fromJson(Map<String, dynamic> json) {
+  factory CategoryAndAttributesDTO.fromJson(Map<String, dynamic> json) { 
+    var catAttr = json['categoryAttribute']!=null ? json['categoryAttribute'] as List: [];
+    List<CategoryAttributeDTO> _categoryAttributeDTO =  catAttr.map((data)=>CategoryAttributeDTO.fromJson(data)).toList();
     return CategoryAndAttributesDTO(
         categoryDTO: CategoryDTO.fromJson(json['categoryDTO']),
-        categoryAttributeDTO: json['categoryAttributeDTO']);
+        categoryAttribute: _categoryAttributeDTO
+        );
   }
   Map<String, dynamic> toJson() {
     return {
       'categoryDTO': categoryDTO,
-      'categoryAttributeDTO': categoryAttributeDTO
+      'categoryAttribute': categoryAttribute
     };
   }
 }

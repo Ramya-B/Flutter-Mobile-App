@@ -49,46 +49,45 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
   }
 
   getProductsByCategory(int categoryId) async {
-      ProductInfo productInfo =  new ProductInfo();
-      productInfo.categoryId = categoryId.toString();
-      productInfo.isService = false;
-      productInfo.countryId = 'IN';
-      productInfo.channel = "B2BInternational";
-      productInfo.region = "IN";
-      productInfo.lobSelection = null;
-      productInfo.location = null;
-      Filters filters = new Filters();
-      filters.tlcriteriaWeights = [];
-      filters.suppliertlcriteriaWeights = [];
-      filters.sortBy = "relevance";
-      Pagination pagination = new Pagination(start: 0,limit: 10);
-      filters.pagination = pagination;
-      productInfo.countryId = 'IN';
-      productInfo.filters = filters;
-      print("category products req....");
-      print(productInfo.toJson());
-      this.prodList = [];
-       var data =  await catalogService.getProductsByCategoryId(productInfo);
-       print(data);
-     var results = data["activeProduct"]["getAllActiveProductsSupplierResponseDTO"];
-      print("result is...");
-      print(results);
-      if (results.length > 0) {
-        setState(() {
-          for (var item = 0; item < results.length; item++) {
-            print(results[item]);
-            print(SearchResults.fromJson(results[item]));
-            // this.prodList.add(results[item]);
-                 this.prodList.add(SearchResults.fromJson(results[item]));
-           
-           
-          }
-             Navigator.push(context, MaterialPageRoute(builder: (context) => Products(prodList: this.prodList)));
-        });
-      }
-     
-
-
+    ProductInfo productInfo = new ProductInfo();
+    productInfo.categoryId = categoryId.toString();
+    productInfo.isService = false;
+    productInfo.countryId = 'IN';
+    productInfo.channel = "B2BInternational";
+    productInfo.region = "IN";
+    productInfo.lobSelection = null;
+    productInfo.location = null;
+    Filters filters = new Filters();
+    filters.tlcriteriaWeights = [];
+    filters.suppliertlcriteriaWeights = [];
+    filters.sortBy = "relevance";
+    Pagination pagination = new Pagination(start: 0, limit: 10);
+    filters.pagination = pagination;
+    productInfo.countryId = 'IN';
+    productInfo.filters = filters;
+    print("category products req....");
+    print(productInfo.toJson());
+    this.prodList = [];
+    var data = await catalogService.getProductsByCategoryId(productInfo);
+    print(data);
+    var results =
+        data["activeProduct"]["getAllActiveProductsSupplierResponseDTO"];
+    print("result is...");
+    print(results);
+    if (results.length > 0) {
+      setState(() {
+        for (var item = 0; item < results.length; item++) {
+          print(results[item]);
+          print(SearchResults.fromJson(results[item]));
+          // this.prodList.add(results[item]);
+          this.prodList.add(SearchResults.fromJson(results[item]));
+        }
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Products(prodList: this.prodList)));
+      });
+    }
   }
 
   @override
@@ -174,20 +173,33 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                   itemBuilder: (BuildContext context, int index) {
                     return Column(
                       children: <Widget>[
-                       InkWell(
-                        onTap: (){print("tapped");Navigator.push(context, MaterialPageRoute(builder: (context) => SearchItems(categoryId: this.categoryDetails[index].categoryAndAttributesDTO.categoryDTO.id, isCategoryBasedSearch: true,)));}, 
-                         child:  Container(
-                          color: Colors.green,
-                          height: 50,
-                          child: Center(
-                              child: Text(
-                                  '${this.categoryDetails[index].categoryAndAttributesDTO.categoryDTO.name}',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold))),
+                        InkWell(
+                          onTap: () {
+                            print("tapped");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SearchItems(
+                                          categoryId: this
+                                              .categoryDetails[index]
+                                              .categoryAndAttributesDTO
+                                              .categoryDTO
+                                              .id,
+                                          isCategoryBasedSearch: true,
+                                        )));
+                          },
+                          child: Container(
+                            color: Colors.green,
+                            height: 50,
+                            child: Center(
+                                child: Text(
+                                    '${this.categoryDetails[index].categoryAndAttributesDTO.categoryDTO.name}',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold))),
+                          ),
                         ),
-                       ),
                         SizedBox(
                           height: 30,
                         ),
@@ -200,38 +212,84 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                                   .subCategoryAndAttributesDTO
                                   .length,
                               itemBuilder: (context, int index2) {
-                                return Column(
+                                return InkWell(
+                                onTap: () {
+                                    print("tapped");
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => SearchItems(
+                                                  categoryId: this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryDTO.id,
+                                                  isCategoryBasedSearch: true,
+                                                )));
+                                  },
+                                  child:Column(
                                   children: <Widget>[
                                     Center(
-                                        child: (this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttributeDTO != null ) ?ListView.builder(
-                                           itemCount: this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttributeDTO.length,
-                                          itemBuilder: (BuildContext context,int index3){
-                                          return  (this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttributeDTO[index3].attributeName  != null &&
-                                          this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttributeDTO[index3].attributeName == 'ThumbnailImageAttribute') ? Container(
+                                        child: Container(
                                             height: 120,
                                             width: 120,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: NetworkImage(
-                                                    'http://uat.tradeleaves.internal/tl/public/assest/get/${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttributeDTO[index3].attributeValue}'),
-                                              ),
-                                            )):Container();
-                                        }):   Container(
-                                            height: 120,
-                                            width: 120,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.pink[50],
-                                              // image: DecorationImage(
-                                              //   fit: BoxFit.cover,
-                                              //   image: NetworkImage(
-                                              //       '${widget.categoryImage}'),
-                                              // ),
-                                            ))
-                                       
-                                            ),
+                                            child: (this
+                                                        .categoryDetails[index]
+                                                        .subCategoryAndAttributesDTO[
+                                                            index2]
+                                                        .categoryAttribute !=
+                                                    null)
+                                                ? ListView.builder(
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        const NeverScrollableScrollPhysics(),
+                                                    itemCount: this
+                                                        .categoryDetails[index]
+                                                        .subCategoryAndAttributesDTO[
+                                                            index2]
+                                                        .categoryAttribute
+                                                        .length,
+                                                    itemBuilder:
+                                                        (BuildContext context,
+                                                            int index3) {
+                                                      return (this
+                                                                      .categoryDetails[
+                                                                          index]
+                                                                      .subCategoryAndAttributesDTO[
+                                                                          index2]
+                                                                      .categoryAttribute[
+                                                                          index3]
+                                                                      .attributeName !=
+                                                                  null &&
+                                                              this
+                                                                      .categoryDetails[
+                                                                          index]
+                                                                      .subCategoryAndAttributesDTO[
+                                                                          index2]
+                                                                      .categoryAttribute[
+                                                                          index3]
+                                                                      .attributeName ==
+                                                                  'ThumbnailImageAttribute')
+                                                          ? Container(
+                                                              height: 120,
+                                                              width: 120,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                image:
+                                                                    DecorationImage(
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                  image: NetworkImage(
+                                                                      'http://uat.tradeleaves.internal/tl/public/assest/get/${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttribute[index3].attributeValue}'),
+                                                                ),
+                                                              ))
+                                                          : Container();
+                                                    })
+                                                : Container(
+                                                    height: 120,
+                                                    width: 120,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: Colors.pink[50],
+                                                    )))),
                                     Container(
                                       padding: EdgeInsets.all(5.0),
                                       // heightFactor: 100,
@@ -244,7 +302,7 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                                       ),
                                     ),
                                   ],
-                                );
+                                ));
                               }),
                         )
                       ],
