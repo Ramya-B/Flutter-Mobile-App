@@ -157,11 +157,11 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                                             width: 120,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
+                                              border: Border.all(color: Colors.grey),
                                               image: DecorationImage(
                                                 fit: BoxFit.cover,
-                                                image: NetworkImage(
-                                                    '${widget.categoryImage}'),
-                                              ),
+                                                image: NetworkImage(''),
+                                              )
                                             ))),
                                     Container(
                                       padding: EdgeInsets.all(5.0),
