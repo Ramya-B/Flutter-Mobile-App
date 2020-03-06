@@ -203,7 +203,11 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                                 return Column(
                                   children: <Widget>[
                                     Center(
-                                        child: Container(
+                                        child: (this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttributeDTO != null ) ?ListView.builder(
+                                           itemCount: this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttributeDTO.length,
+                                          itemBuilder: (BuildContext context,int index3){
+                                          return  (this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttributeDTO[index3].attributeName  != null &&
+                                          this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttributeDTO[index3].attributeName == 'ThumbnailImageAttribute') ? Container(
                                             height: 120,
                                             width: 120,
                                             decoration: BoxDecoration(
@@ -211,9 +215,23 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                                               image: DecorationImage(
                                                 fit: BoxFit.cover,
                                                 image: NetworkImage(
-                                                    '${widget.categoryImage}'),
+                                                    'http://uat.tradeleaves.internal/tl/public/assest/get/${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttributeDTO[index3].attributeValue}'),
                                               ),
-                                            ))),
+                                            )):Container();
+                                        }):   Container(
+                                            height: 120,
+                                            width: 120,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.pink[50],
+                                              // image: DecorationImage(
+                                              //   fit: BoxFit.cover,
+                                              //   image: NetworkImage(
+                                              //       '${widget.categoryImage}'),
+                                              // ),
+                                            ))
+                                       
+                                            ),
                                     Container(
                                       padding: EdgeInsets.all(5.0),
                                       // heightFactor: 100,
