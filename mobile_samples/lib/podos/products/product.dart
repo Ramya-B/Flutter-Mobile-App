@@ -1,3 +1,12 @@
+import 'package:json_annotation/json_annotation.dart';
+
+
+
+// part 'TlCriteriaWeights.g.dart';
+// part 'Filters.g.dart';
+// part 'ProductInfo.g.dart';
+
+
 class ProductDTO {
   bool active;
   bool adminFlag;
@@ -569,3 +578,108 @@ class ProductLobCountryStatusDTO {
     };
   }
 }
+
+class ProductInfo {
+  String categoryId;
+  bool isService;
+  Filters filters;
+  String countryId;
+  String channel;
+  String region;
+  String lobSelection;
+  String location;
+  ProductInfo({this.categoryId,this.isService,this.filters,this.countryId,this.channel,this.region,this.lobSelection,this.location});
+   factory ProductInfo.fromJson(Map<String, dynamic> json) {
+    return ProductInfo(
+      categoryId: json['categoryId'],
+      isService: json['isService'],
+      filters: Filters.fromJson(json['filters ']),
+      countryId: json['countryId'],
+      channel: json['channel'],
+      region: json['region'],
+      lobSelection: json['lobSelection'],
+      location: json['location'],
+    );
+  }
+
+  Map toJson() {
+    return {
+      "categoryId": categoryId,
+      'isService': isService,
+      'filters': filters,
+      'countryId': countryId,
+      'channel': channel,
+      'region': region,
+      'lobSelection': lobSelection,
+      'location': location
+    };
+  }
+
+}
+
+
+class Filters{
+  Pagination pagination;
+  List<TlCriteriaWeights> tlcriteriaWeights;
+  List<TlCriteriaWeights> suppliertlcriteriaWeights;
+  CategoryCriteria categoryCriteria;
+  String sortBy;
+  Filters({this.pagination,this.tlcriteriaWeights,this.suppliertlcriteriaWeights,this.categoryCriteria,this.sortBy});
+   factory Filters.fromJson(Map<String, dynamic> json) {
+     var tlcriteria = json['tlcriteriaWeights'] != null ? json['tlcriteriaWeights']: [];
+     List<TlCriteriaWeights>  _tlcriteriaWeights = tlcriteria.map((data)=>TlCriteriaWeights.fromJson(data)).toList();
+      var tlSupplireCriteria = json['suppliertlcriteriaWeights'] != null ? json['suppliertlcriteriaWeights']: [];
+     List<TlCriteriaWeights>  _suppliertlcriteriaWeights = tlSupplireCriteria.map((data)=>TlCriteriaWeights.fromJson(data)).toList();
+    return Filters(
+      pagination: Pagination.fromJson(json['pagination']),
+      tlcriteriaWeights: _tlcriteriaWeights,
+      suppliertlcriteriaWeights: _suppliertlcriteriaWeights,
+      categoryCriteria: CategoryCriteria.fromJson(json['categoryCriteria']),
+      sortBy: json['sortBy'],
+    );
+  }
+
+  Map toJson() {
+    return {
+      "pagination": pagination,
+      'tlcriteriaWeights': tlcriteriaWeights,
+      'suppliertlcriteriaWeights': suppliertlcriteriaWeights,
+      'categoryCriteria': categoryCriteria,
+      'sortBy': sortBy,
+    };
+  }
+
+}
+
+class TlCriteriaWeights{
+   String criteriaId;
+   String criteriaUniqueName;
+   String criteriaName;
+   String weightPercentage;
+   String functionName;
+   String functionPercentage;
+   TlCriteriaWeights({this.criteriaId,this.criteriaName,this.criteriaUniqueName,this.functionName,this.functionPercentage,this.weightPercentage});
+    factory TlCriteriaWeights.fromJson(Map<String, dynamic> json) {
+    return TlCriteriaWeights(
+      criteriaId: json['criteriaId'],
+      criteriaName: json['criteriaName '],
+      criteriaUniqueName: json['criteriaUniqueName'],
+      functionName: json['functionName'],
+      functionPercentage: json['functionPercentage'],
+      weightPercentage: json['weightPercentage'],
+    );
+  }
+
+  Map toJson() {
+    return {
+      "criteriaId": criteriaId,
+      'criteriaName': criteriaName,
+      'criteriaUniqueName': criteriaUniqueName,
+      'functionName': functionName,
+      'functionPercentage': functionPercentage,
+      'weightPercentage': weightPercentage,
+    };
+  }
+
+}
+

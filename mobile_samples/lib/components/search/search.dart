@@ -8,6 +8,9 @@ import 'package:tradeleaves/service_locator.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 
 class SearchItems extends StatefulWidget {
+  final int categoryId;
+  final bool isCategoryBasedSearch;
+  SearchItems({this.categoryId,this.isCategoryBasedSearch});
   @override
   _SearchItemsState createState() => _SearchItemsState();
 }
@@ -88,8 +91,55 @@ class _SearchItemsState extends State<SearchItems> {
     }
   }
 
+  getProductsByCategory(int categoryId) async {
+      ProductInfo productInfo =  new ProductInfo();
+      productInfo.categoryId = categoryId.toString();
+      productInfo.isService = false;
+      productInfo.countryId = 'IN';
+      productInfo.channel = "B2BInternational";
+      productInfo.region = "IN";
+      productInfo.lobSelection = null;
+      productInfo.location = null;
+      Filters filters = new Filters();
+      filters.tlcriteriaWeights = [];
+      filters.suppliertlcriteriaWeights = [];
+      filters.sortBy = "relevance";
+      Pagination pagination = new Pagination(start: 0,limit: 10);
+      filters.pagination = pagination;
+      productInfo.countryId = 'IN';
+      productInfo.filters = filters;
+      print("category products req....");
+      print(productInfo.toJson());
+      this.prodList = [];
+       var data =  await catalogService.getProductsByCategoryId(productInfo);
+       print(data);
+     var results = data["activeProduct"]["getAllActiveProductsSupplierResponseDTO"];
+      print("result is...");
+      print(results);
+      if (results.length > 0) {
+        setState(() {
+          for (var item = 0; item < results.length; item++) {
+            print(results[item]);
+            print(SearchResults.fromJson(results[item]));
+            // this.prodList.add(results[item]);
+                 this.prodList.add(SearchResults.fromJson(results[item]));
+           
+           
+          }
+            //  Navigator.push(context, MaterialPageRoute(builder: (context) => Products(prodList: this.prodList)));
+        });
+      }
+     
+
+
+  }
+
   @override
   void initState() {
+    if(widget.isCategoryBasedSearch !=null && widget.isCategoryBasedSearch == true && widget.categoryId != null){
+      getProductsByCategory(widget.categoryId);
+    }
+   
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
     this.prodList = [];

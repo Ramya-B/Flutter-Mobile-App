@@ -22,9 +22,10 @@ class Sample extends StatelessWidget {
       drawer: CustomDrawer(),
       bottomNavigationBar: CustomNavBar(selectedIndex: 0),
       body: ListView(
+        scrollDirection: Axis.vertical,
         children: <Widget>[
           Container(
-            height: 700,
+            height: 600,
             // constraints: BoxConstraints(minHeight: 700),
             child: HomeProducts(),
           ),

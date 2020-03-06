@@ -15,8 +15,8 @@ class SupplierDTO{
   String companyType;              
   String industryType;             
   String searchable;               
-  String yearsInBusiness; 
-  String noOfEmployees; 
+  int  yearsInBusiness; 
+  int noOfEmployees; 
   String userPreferredRating; 
   String tlPreferredRating; 
   var rating;
@@ -41,8 +41,8 @@ class SupplierDTO{
       companyType :json['companyType'] as String,
       industryType :json['industryType'] as String,
       searchable:json['searchable'] as String,
-      yearsInBusiness:json['yearsInBusiness'] as String,
-      noOfEmployees:json['noOfEmployees'] as String,
+      yearsInBusiness:json['yearsInBusiness'] as int,
+      noOfEmployees:json['noOfEmployees'] as int,
       userPreferredRating:json['userPreferredRating'] as String,
       tlPreferredRating:json['tlPreferredRating'] as String,
       rating:json['rating'],

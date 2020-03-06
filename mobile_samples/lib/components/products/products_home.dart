@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/categories/sub_categories.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
 import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/service_locator.dart';
@@ -107,18 +108,6 @@ class _HomePageCategoriesState extends State<HomePageCategories> {
             new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
           return  CategoryCard(    categoryDTO: this.categoryList[index],);
-          //   return  new Container(
-          //    width: 50,
-          //    height: 50,
-          //    decoration: new BoxDecoration(
-          //      color: const Color(0xff7c94b6),
-          //      image: new DecorationImage(
-          //        image: new NetworkImage('http://i.imgur.com/QSev0hg.jpg',),
-          //        fit: BoxFit.cover,
-          //      ),
-          //      borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
-          //    ),
-          //  );
         });
   }
 }
@@ -148,12 +137,19 @@ class _CategoryCardState extends State<CategoryCard> {
     return Container(
       padding: EdgeInsets.all(5.0),
       height: 50,
-      child:  Card(
-            child: this.categoryImage!=null ? Image.network(
-                '${this.categoryImage}',
+      child:  InkWell(
+          onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                builder: (context) => SubCategoryDeatils(
+                     categoryDTO : widget.categoryDTO,
+                     categoryImage:this.categoryImage 
+                    ))),
+              child: Card(
+              child: this.categoryImage!=null ? Image.network(
+                  '${this.categoryImage}',
     
-              ):Container()
-          ),
+                ):Container()
+            ),
+      ),
     );
   }
 }
