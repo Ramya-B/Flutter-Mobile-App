@@ -283,8 +283,9 @@ class _RegisterDetailsState extends State<RegisterDetails> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Center(
-        child: Container(
+      child: Scaffold(
+        appBar: CustomToolBar(),
+        body: Container(
           padding: EdgeInsets.all(50),
           child: TextField(
             decoration: InputDecoration(
