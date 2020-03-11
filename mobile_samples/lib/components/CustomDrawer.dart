@@ -6,7 +6,9 @@ import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/Profile/Profile.dart';
 import 'package:tradeleaves/components/categories/categories.dart';
 import 'package:tradeleaves/components/favourites/favourite.dart';
+import 'package:tradeleaves/components/login_register/login.dart';
 import 'package:tradeleaves/components/login_register/logout.dart';
+import 'package:tradeleaves/components/login_register/register.dart';
 import 'package:tradeleaves/components/notications/Notifications.dart';
 import 'package:tradeleaves/components/orders/orders.dart';
 import 'package:tradeleaves/components/About/about.dart';
@@ -19,7 +21,6 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
-
   var sample;
   var emailId;
   var fullName;
@@ -72,8 +73,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   height: 100,
                   child: FlatButton.icon(
                     color: Colors.green,
-                    icon: Icon(Icons.person_pin, size: 60.0, color: Colors.white),
-                    label: Text('Guest', style: TextStyle(color: Colors.white, fontSize: 20)),
+                    icon:
+                        Icon(Icons.person_pin, size: 60.0, color: Colors.white),
+                    label: Text('Guest',
+                        style: TextStyle(color: Colors.white, fontSize: 20)),
                     onPressed: () {},
                   ),
                 ),
@@ -82,8 +85,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 builder: (context) => new Scaffold(
                       appBar: CustomToolBar(),
                       body: Container(
-                        // child: Products(category: 'all'),
-                      ),
+                          // child: Products(category: 'all'),
+                          ),
                       bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                       drawer: CustomDrawer(),
                     ))),
@@ -103,6 +106,22 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 )
               : Container(),
           InkWell(
+            onTap: () => Navigator.of(context).push(
+                new MaterialPageRoute(builder: (context) => new Register())),
+            child: new ListTile(
+              title: Text('Register'),
+              leading: Icon(Icons.people),
+            ),
+          ),
+          InkWell(
+            onTap: () => Navigator.of(context)
+                .push(new MaterialPageRoute(builder: (context) => Login())),
+            child: new ListTile(
+              title: Text('Login'),
+              leading: Icon(Icons.person),
+            ),
+          ),
+          InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (BuildContext context) => new MyWebView(
                     selectedUrl: "https://www.tradeleaves.com/"))),
@@ -119,22 +138,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
               leading: Icon(Icons.dashboard),
             ),
           ),
-          // InkWell(
-          //   onTap: () => Navigator.of(context).push(
-          //       new MaterialPageRoute(builder: (context) => new Favourite())),
-          //   child: new ListTile(
-          //     title: Text('Favourites'),
-          //     leading: Icon(Icons.favorite),
-          //   ),
-          // ),
-          // InkWell(
-          //   onTap: () => Navigator.of(context).push(
-          //       new MaterialPageRoute(builder: (context) => new Orders())),
-          //   child: new ListTile(
-          //     title: Text('Orders'),
-          //     leading: Icon(Icons.shopping_basket),
-          //   ),
-          // ),
           InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => new AlertNotifications())),
