@@ -32,27 +32,27 @@ class _HomeProductsState extends State<HomeProducts> {
           height: 200,
           child: HomePageCategories(),
         ),
-         Container(
-          child: Text(
-            'Sponsored Ads',
-            style: TextStyle(fontSize: 18),
-          ),
-          padding: EdgeInsets.all(10),
-          alignment: Alignment.topLeft,
-        ),
+        //  Container(
+        //   child: Text(
+        //     'Sponsored Ads',
+        //     style: TextStyle(fontSize: 18),
+        //   ),
+        //   padding: EdgeInsets.all(10),
+        //   alignment: Alignment.topLeft,
+        // ),
         Container(
           child: FetchPromotedProducts(
             promoType: 'SponsoredAds',
           ),
         ),
-        Container(
-          child: Text(
-            'Highlights',
-            style: TextStyle(fontSize: 18),
-          ),
-          padding: EdgeInsets.all(10),
-          alignment: Alignment.topLeft,
-        ),
+        // Container(
+        //   child: Text(
+        //     'Highlights',
+        //     style: TextStyle(fontSize: 18),
+        //   ),
+        //   padding: EdgeInsets.all(10),
+        //   alignment: Alignment.topLeft,
+        // ),
         Container(
           child: FetchPromotedProducts(
             promoType: 'TopList',

@@ -56,7 +56,17 @@ class _FetchPromotedProductsState extends State<FetchPromotedProducts> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Column(
+      children: <Widget>[
+         (this.promotedProducts.length > 0 && (widget.promoType=='TopList' ||widget.promoType=='SponsoredAds' )) ? Container(
+          child: Text(
+            (widget.promoType=='TopList') ?'Highlights': (widget.promoType=='SponsoredAds') ?'Sponsored Ads':'',
+            style: TextStyle(fontSize: 18),
+          ),
+          padding: EdgeInsets.all(10),
+          alignment: Alignment.topLeft,
+        ):Container(),
+         Container(
         height: 200,
         child: GridView.builder(
             scrollDirection: Axis.horizontal,
@@ -68,7 +78,9 @@ class _FetchPromotedProductsState extends State<FetchPromotedProducts> {
                 productDTO: this.promotedProducts[index].productDTO,
                 supplierDTO: this.promotedProducts[index].supplierSearchDTO,
               );
-            }));
+            })),
+      ],
+    );
   }
 }
 
