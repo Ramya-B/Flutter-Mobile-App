@@ -21,7 +21,7 @@ class CrmServiceImpl extends CrmServices {
     )
         .then((data) {
       print("response rgister...!");
-      print(data.body);
+      print(data);
       if (data.statusCode == 200) {
         var res = json.decode(data.body);
         print("register successfully....");

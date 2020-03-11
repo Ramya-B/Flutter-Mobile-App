@@ -284,16 +284,84 @@ class _RegisterDetailsState extends State<RegisterDetails> {
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
+        backgroundColor: Colors.pink[50],
         appBar: CustomToolBar(),
-        body: Container(
-          padding: EdgeInsets.all(50),
-          child: TextField(
-            decoration: InputDecoration(
-                contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                hintText: "Enter OTP...",
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
-          ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Card(
+              color: Colors.white,
+              margin: EdgeInsets.all(15.0),
+              child: Container(
+                // height: 350,
+
+                margin: EdgeInsets.all(10.0),
+                child: Form(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      child: Text(
+                        '${widget.registerDTO.userLoginDTO.userLoginId}',
+                        style: TextStyle(fontSize: 22, color: Colors.black87),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      child: Text(
+                        '${widget.registerDTO.person.mobile.contactNumber.replaceRange(0, 6, '******')}',
+                        style: TextStyle(fontSize: 20, color: Colors.black87),
+                      ),
+                    ),
+                    Container(
+                      height: 20,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                hintText: "Enter OTP...",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8))),
+                          ),
+                        ),
+                        Container(
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.refresh,
+                              size: 30,
+                            ),
+                            onPressed: () {},
+                          ),
+                        )
+                      ],
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(20),
+                      child: RaisedButton(
+                        textColor: Colors.white,
+                        disabledColor: Colors.grey,
+                        disabledTextColor: Colors.black,
+                        padding: EdgeInsets.only(
+                            left: 25, right: 25, top: 10, bottom: 10),
+                        splashColor: Colors.lightGreen,
+                        onPressed: () {},
+                        child: Text(
+                          'Continue',
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        color: Colors.green,
+                      ),
+                    )
+                  ],
+                )),
+              ),
+            )
+          ],
         ),
       ),
     );
