@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
-import 'package:tradeleaves/components/Profile/Profile.dart';
 import 'package:tradeleaves/components/login_register/register.dart';
-import 'package:tradeleaves/components/products/products_home.dart';
 import '../CustomDrawer.dart';
 
 class Login extends StatefulWidget {
@@ -31,7 +29,12 @@ class _LoginState extends State<Login> {
           hintText: "Enter Your Email",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
       validator: (arg1) {
-        if (arg1.isEmpty || !arg1.contains('@')) {
+        Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+        RegExp _regExpEmail = new RegExp(pattern);
+        if(arg1.isEmpty || arg1 == ""){
+          return "Email Can't be empty";
+        }
+        else if (!_regExpEmail.hasMatch(arg1)) {
           return 'Please enter valid email';
         }
         return null;
@@ -49,8 +52,8 @@ class _LoginState extends State<Login> {
         Pattern pattern =
             r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
         RegExp _regExpPwd = new RegExp(pattern);
-        if (arg2.isEmpty) {
-          return "Please enter password";
+        if (arg2.isEmpty || arg2 == "") {
+          return "Password can't be empty";
         } else if (!_regExpPwd.hasMatch(arg2)) {
           return "Enter Valid Password";
         }

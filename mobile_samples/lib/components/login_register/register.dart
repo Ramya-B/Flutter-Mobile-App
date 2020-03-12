@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/podos/crm/register.dart';
 import 'package:tradeleaves/service_locator.dart';
@@ -12,7 +13,9 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
 
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _pass = TextEditingController();
+  final TextEditingController _confirmPass = TextEditingController();
 
   bool autoValidate = false;
 
@@ -69,8 +72,11 @@ class _RegisterState extends State<Register> {
           hintText: "Full Name",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
       validator: (arg1) {
-        if (arg1.isEmpty || arg1.length < 3) {
-          return 'Name must be more than 2 characters';
+        if (arg1.isEmpty || arg1 == "") {
+          return "Name can't be empty";
+        }
+        else if(arg1.length < 3){
+          return 'Name must be more than two characters';
         }
         return null;
       },
@@ -93,7 +99,12 @@ class _RegisterState extends State<Register> {
           hintText: "Email",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
       validator: (arg2) {
-        if (arg2.isEmpty || !arg2.contains('@')) {
+        Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+        RegExp _regExpEmail = new RegExp(pattern);
+        if (arg2.isEmpty || arg2 == "") {
+          return "Email can't be empty";
+        }
+        else if(!_regExpEmail.hasMatch(arg2)){
           return 'Please enter valid email';
         }
         return null;
@@ -110,6 +121,7 @@ class _RegisterState extends State<Register> {
     );
 
     final phoneField = TextFormField(
+      inputFormatters: [WhitelistingTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(10)],
       obscureText: false,
       style: style,
       decoration: InputDecoration(
@@ -117,9 +129,12 @@ class _RegisterState extends State<Register> {
           hintText: "Phone Number",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
       validator: (arg3) {
-        Pattern pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+        Pattern pattern = r'^[2-9][0-9]{9}$';
         RegExp _regExpPhn = new RegExp(pattern);
-        if (!_regExpPhn.hasMatch(arg3)) {
+        if(arg3.isEmpty || arg3 == ""){
+          return "Phone number can't be empty";
+        }
+        else if (!_regExpPhn.hasMatch(arg3)) {
           return 'Please enter valid phone number';
         }
         return null;
@@ -148,6 +163,7 @@ class _RegisterState extends State<Register> {
         });
 
     final passwordField = TextFormField(
+      controller: _pass,
       obscureText: true,
       style: style,
       decoration: InputDecoration(
@@ -158,8 +174,8 @@ class _RegisterState extends State<Register> {
         Pattern pattern =
             r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
         RegExp _regExpPwd = new RegExp(pattern);
-        if (arg5.isEmpty) {
-          return "Please enter password";
+        if (arg5.isEmpty || arg5 == "") {
+          return "Password can't be empty";
         } else if (!_regExpPwd.hasMatch(arg5)) {
           return "Enter Valid Password";
         }
@@ -176,6 +192,7 @@ class _RegisterState extends State<Register> {
     );
 
     final confirmPasswordField = TextFormField(
+      controller: _confirmPass,
       obscureText: false,
       style: style,
       decoration: InputDecoration(
@@ -183,12 +200,9 @@ class _RegisterState extends State<Register> {
           hintText: "Confirm Password",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
       validator: (arg6) {
-        if (arg6.isEmpty) {
-          return " Confirm Password should not be empty";
+        if (arg6 != _pass.text) {
+          return "Password not match";
         }
-        // else if(arg6 != registerDTO.userLoginDTO.password){
-        //     return "Password not match";
-        // }
         return null;
       },
     );
@@ -285,7 +299,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
     return Material(
       child: Scaffold(
         backgroundColor: Colors.pink[50],
-        appBar: CustomToolBar(),
+        appBar: AppBar(title: Text('OTP Page')),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
