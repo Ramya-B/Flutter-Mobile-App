@@ -1,0 +1,20 @@
+{
+    "isdefault" : true,
+    "expiryDateTime" : "2020-09-08T23:59:59.000Z",
+    "transactionId" : null,
+    "regionId" : "49bfd573-0ada-408d-b177-f98ad0f789ab",
+    "lobId" : "34343e34-7601-40de-878d-01b3bd1f0641",
+    "parentSubscriptionId" : null,
+    "subscriptionType" : "79a397b6-0ba8-4f51-b114-2256fad618d8",
+    "partySubscriptionId" : "dfb83cc8-477a-43b5-8570-741bed4f1031",
+    "reason" : "default subscription",
+    "status" : "ACTIVE",
+    "currency" : "INR",
+    "cost" : "0.00",
+    "invoiceId" : null,
+    "expiryDate" : "2020-09-08",
+    "activatedDate" : "2020-03-12T10:01:34.507Z",
+    "subscriptionplanName" : null,
+    "subscriptionplanId" : "49bfd573-0ada-408d-b177-f98ad0f7e9f9",
+    "partyId" : "b8a3e067-1ae1-4bac-ab3a-a347eb440b57"
+}

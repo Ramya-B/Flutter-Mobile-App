@@ -9,13 +9,20 @@ import 'service_locator.dart';
 void main() {
   setupServiceLocator();
   runApp(MaterialApp(
-      home: Sample(),
+      home: Home(),
       debugShowCheckedModeBanner: false,
     ));
 }
 
 
-class Sample extends StatelessWidget {
+
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomToolBar(),

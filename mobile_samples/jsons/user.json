@@ -1,0 +1,38 @@
+{
+	"_id" :"5e6a088f5bf25f15ecb0e18f",
+	"provider" : "local",
+	"name" : "ma.noh.ar.nettem@gmail.com",
+	"hashedPassword" : "eBrjuEKsK2Rhq6zJfoMyM39dUxBngCAiL2j+Lps3zfI6H+IR3TAsGHAD0L41ob2MmQW53z6vDEqrkiTqMZbDKA==",
+	"salt" : "wl/7sycMoaHGnGPbc5zM6g==",
+	"active" : true,
+	"emailVerified" : true,
+	"authToken" : "fab8ebf3-08e6-41c8-840f-949301ad5ef3",
+	"tenantId" : "fbb8a805-161a-42b9-9354-73aafea1aaf7",
+	"partyId" : "c6dc4225-782c-41fc-b2e4-3fad2934d623",
+	"companyId" : "b8a3e067-1ae1-4bac-ab3a-a347eb440b57",
+	"personalDetails" : "$personalDetails",
+	"securityGroups" : "$securityGroups",
+	"chatCredentials" : "$chatCredentials",
+	"ratingReviewCriterias" : "$ratingReviewCriterias",
+	"userLoggedInPortal" : "716340bb-3fb0-48a4-b639-95f280ddc243",
+	"portalType" : "34343e34-7601-40de-878d-01b3bd1f0641",
+	"appsite" : "IN",
+	"modified" : "2020-03-12T15:31:51.923+05:30",
+	"created" : "2020-03-12T15:31:51.923+05:30",
+	"allowedlob" : [
+		"34343e34-7601-40de-878d-01b3bd1f0641",
+		"34343e34-7601-40de-878d-01b3bd1f0642",
+		"34343e34-7601-40de-878d-01b3bd1f0643",
+		"34343e34-7601-40de-878d-01b3bd1f0644"
+	],
+	"hasOrderFeature" : true,
+	"consumedBulkUploadBucket" : 0,
+	"allotedBulkUploadBucketUnit" : "KB",
+	"allotedBulkUploadBucket" : 10240,
+	"bulkUploadKey" : "NOT_AVAILABLE",
+	"userDisabledReason" : "REASON_NOT_APPLICABLE",
+	"features" : [ ],
+	"role" : [
+		"user"
+	]
+}

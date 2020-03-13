@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
+import 'package:tradeleaves/main.dart';
 import 'package:tradeleaves/podos/crm/register.dart';
+import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/service_locator.dart';
+import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
+import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
+import 'package:tradeleaves/tl-services/login/LoginServiceImpl.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -22,8 +28,12 @@ class _RegisterState extends State<Register> {
   var companyName;
   var password;
   bool optIn = false;
-
   // bool checkBoxValue = false;
+ 
+  @override
+  void initState() {
+    super.initState();
+  }
 
   registerInfo() {
     RegisterDTO registerDTO = new RegisterDTO();
@@ -74,10 +84,6 @@ class _RegisterState extends State<Register> {
         }
         return null;
       },
-      // onSaved: (String name) {
-      //   this.name = name;
-
-      // }
       onChanged: (String name) {
         setState(() {
           this.name = name;
@@ -98,10 +104,6 @@ class _RegisterState extends State<Register> {
         }
         return null;
       },
-
-      // onSaved: (String email) {
-      //  this.email= email;
-      // },
       onChanged: (String email) {
         setState(() {
           this.email = email;
@@ -124,9 +126,6 @@ class _RegisterState extends State<Register> {
         }
         return null;
       },
-      // onSaved: (String mobile) {
-      //  this.mobile = mobile;
-      // }
       onChanged: (String mobile) {
         setState(() {
           this.mobile = mobile;
@@ -165,9 +164,6 @@ class _RegisterState extends State<Register> {
         }
         return null;
       },
-      // onSaved: (String password) {
-      //    this.password  = password;
-      // },
       onChanged: (String password) {
         setState(() {
           this.password = password;
@@ -186,9 +182,6 @@ class _RegisterState extends State<Register> {
         if (arg6.isEmpty) {
           return " Confirm Password should not be empty";
         }
-        // else if(arg6 != registerDTO.userLoginDTO.password){
-        //     return "Password not match";
-        // }
         return null;
       },
     );
@@ -204,7 +197,6 @@ class _RegisterState extends State<Register> {
         controlAffinity: ListTileControlAffinity.leading);
 
     final registerButton = Material(
-        // elevation: 100,
         borderRadius: BorderRadius.circular(10),
         color: Colors.green,
         child: MaterialButton(
@@ -264,7 +256,14 @@ class RegisterDetails extends StatefulWidget {
 }
 
 class _RegisterDetailsState extends State<RegisterDetails> {
+  String confirmationCode;
+  String error;
   CrmServiceImpl get crmService => locator<CrmServiceImpl>();
+  LogInServiceImpl get logInService => locator<LogInServiceImpl>();
+  UserServiceImpl get userService => locator<UserServiceImpl>();
+  CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
+  List<Sort> sorts = [];
+
   register() async {
     print("register called...");
     var data = await crmService.register(widget.registerDTO);
@@ -272,6 +271,53 @@ class _RegisterDetailsState extends State<RegisterDetails> {
       print("Reister details from node.........");
       print(data);
     });
+  }
+
+  verifyCurrentUser() async {
+    print("start verifying...");
+    UserCheck userInfo = UserCheck(
+        email: widget.registerDTO.userLoginDTO.userLoginId,
+        verificationCode: this.confirmationCode);
+    var data = await crmService.verifyUser(userInfo);
+    print(data);
+
+    if (data["status"] == "TL_EMAIL_CONF_CODE_VALID") {
+      AuthRequest authRequest = AuthRequest(
+          name: widget.registerDTO.userLoginDTO.userLoginId,
+          customerId: widget.registerDTO.userLoginDTO.userLoginId,
+          password: widget.registerDTO.userLoginDTO.password);
+      var authResp = await logInService.getAuthToken(authRequest);
+      print("Authentication response...");
+      print(authResp);
+      AuthToken authToken = AuthToken.fromJson(authResp);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('token', authToken.token.toString());
+       getUserProducts();
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Home()));
+    }
+  }
+  getUserProducts() async {
+    print("getUserProducts");
+    ProductCriteria productCriteria = new ProductCriteria();
+    Pagination pagination = new Pagination(start: 0, limit: 10);
+    Sort sort = new Sort();
+    sort.direction = 'desc';
+    sort.sort = 'createdTime';
+    this.sorts.add(sort);
+    productCriteria.pagination = pagination;
+    productCriteria.sort = this.sorts;
+    productCriteria.siteCriterias = [];
+    var getUserProducts = await catalogService.getUserProducts(productCriteria);
+    print("getUser response...!");
+    print(getUserProducts);
+  }
+
+  getCurrentUser() async {
+    print("getUser");
+    var user = await userService.getUser();
+    print("getUser response...!");
+    print(user);
   }
 
   @override
@@ -293,8 +339,6 @@ class _RegisterDetailsState extends State<RegisterDetails> {
               color: Colors.white,
               margin: EdgeInsets.all(15.0),
               child: Container(
-                // height: 350,
-
                 margin: EdgeInsets.all(10.0),
                 child: Form(
                     child: Column(
@@ -316,17 +360,31 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                     ),
                     Container(
                       height: 20,
+                      child: (this.error != null)
+                          ? (Text('${this.error}'))
+                          : Container(),
                     ),
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: TextField(
+                          child: TextFormField(
                             decoration: InputDecoration(
                                 contentPadding:
                                     EdgeInsets.fromLTRB(20, 15, 20, 15),
                                 hintText: "Enter OTP...",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8))),
+                            onChanged: (String code) {
+                              setState(() {
+                                this.confirmationCode = code;
+                              });
+                            },
+                            validator: (String code) {
+                              if (code.isEmpty) {
+                                return "Please enter Confirmation code";
+                              }
+                              return null;
+                            },
                           ),
                         ),
                         Container(
@@ -349,7 +407,9 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                         padding: EdgeInsets.only(
                             left: 25, right: 25, top: 10, bottom: 10),
                         splashColor: Colors.lightGreen,
-                        onPressed: () {},
+                        onPressed: () {
+                          verifyCurrentUser();
+                        },
                         child: Text(
                           'Continue',
                           style: TextStyle(color: Colors.white, fontSize: 20),

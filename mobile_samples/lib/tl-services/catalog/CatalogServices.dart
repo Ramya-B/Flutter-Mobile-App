@@ -7,5 +7,6 @@ abstract class CatalogServices {
   Future<List> getCategoryDetailsByLoB( CategoryDetailsLobDTO categoryDetailsLobDTO);
   Future<List> getPromotedProducts(PromoProductCriteria promoProductCriteria);  
   Future getProductsByCategoryId(ProductInfo productInfo);   
+  Future getUserProducts(ProductCriteria productCriteria);   
 }
 

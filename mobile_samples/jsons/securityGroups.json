@@ -1,0 +1,5 @@
+{
+    "securityAdmin" : "$SecurityAdmin",
+    "chatUser" : "$ChatUser" ,
+    "systemAdmin" : "$SystemAdmin"
+}

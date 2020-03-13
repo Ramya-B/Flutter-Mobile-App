@@ -1,0 +1,5 @@
+{
+    "description" : "System Admin group, has all system properties access.",
+    "groupId" : "SYSTEMADMIN",
+    "securityPermissionDTO" :  "$[]securityPermissionDTO"
+}

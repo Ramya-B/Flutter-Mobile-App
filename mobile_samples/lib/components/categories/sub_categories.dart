@@ -93,7 +93,6 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
 
   @override
   void initState() {
-    List<SearchResults> prodList = [];
     print("Before Calling getCategoryDetailsByLoB.................");
     getCategoryDetailsByLoB();
     print("After Calling getCategoryDetailsByLoB.................");
@@ -279,7 +278,7 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                                                                   fit: BoxFit
                                                                       .cover,
                                                                   image: NetworkImage(
-                                                                      '${Constants.envUrl}${Constants.mongoImageUrl}${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttribute[index3].attributeValue}'),
+                                                                      '${Constants.envUrl}${Constants.mongoImageUrl}/${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttribute[index3].attributeValue}'),
                                                                 ),
                                                               ))
                                                           : Container();

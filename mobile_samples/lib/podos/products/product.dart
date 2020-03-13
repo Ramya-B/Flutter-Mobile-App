@@ -1,5 +1,6 @@
 
 
+
 class ProductDTO {
   bool active;
   bool adminFlag;
@@ -676,3 +677,48 @@ class TlCriteriaWeights{
 
 }
 
+class ProductCriteria {
+  Pagination pagination;
+  List<Sort> sort;
+  var siteCriterias = [];
+
+  ProductCriteria({this.pagination,this.siteCriterias,this.sort});
+
+ factory ProductCriteria.fromJson(Map<String, dynamic> json) {
+   var sortList = json['sort'] != null ? json['sort'] : [];
+   List<Sort> _sort = sortList.map((data)=>(Sort.fromJson(data))).toList();
+    return ProductCriteria(
+      pagination: Pagination.fromJson(json['pagination']),
+      sort: _sort,
+      siteCriterias: json['siteCriterias'] as List,
+    );
+  }
+
+  Map toJson() {
+    return {
+      "pagination": pagination,
+      'sort': sort,
+      'siteCriterias': siteCriterias,
+    };
+  }
+}
+
+class Sort{
+String direction;
+ String sort;
+  Sort({this.direction,this.sort});
+    factory Sort.fromJson(Map<String, dynamic> json) {
+    return Sort(
+      direction: json['direction'],
+      sort: json['sort'],
+    );
+  }
+
+  Map toJson() {
+    return {
+      "direction": direction,
+      'sort': sort,
+    };
+  }
+
+}

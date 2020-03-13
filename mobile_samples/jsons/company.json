@@ -1,0 +1,19 @@
+{
+    "admin" : false,
+    "registeredEmailAddress" : null,
+    "classifiedsStatus" : "SELF_REGISTRATION",
+    "personPartyId" : null,
+    "partyContacts" : null,
+    "ownerAndRoleDTO" : null,
+    "partyIdentificationDTO" : null,
+    "profileAttribute" : null,
+    "accountStatus" : null,
+    "subscription" :  "$subscription",
+    "classifications" : null,
+    "identifications" : null,
+    "email" : null,
+    "address" : null,
+    "telephone" : null,
+    "status" : "IN_COMPLETE",
+    "details" : "$details"
+}

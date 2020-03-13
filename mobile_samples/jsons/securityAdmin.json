@@ -1,0 +1,5 @@
+{
+    "description" : "Security Admin group, has all permissions to modify security settings in party manager.",
+    "groupId" : "SECURITYADMIN",
+    "securityPermissionDTO" : "$[]securityPermissionDTO"
+}

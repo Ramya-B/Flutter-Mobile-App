@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/podos/categories/categories.dart';
 import 'dart:convert';
 import 'package:tradeleaves/podos/products/product.dart';
@@ -7,7 +9,7 @@ import 'package:tradeleaves/constants.dart';
 
 class CatalogServiceImpl extends CatalogServices {
   
-  static const String apiUrl = "catalog/api/";
+  static const String apiUrl = "/catalog/api";
   Map<String, String> headers = {
     'Content-type': 'application/json; charset=UTF-8'
   };
@@ -16,7 +18,7 @@ class CatalogServiceImpl extends CatalogServices {
   Future search(ProductSearchCriteriaDTO productSearchCriteriaDTO) async {
     return await http
         .post(
-      '${Constants.envUrl}${apiUrl}products/activeProductSearch/criteria',
+      '${Constants.envUrl}$apiUrl/products/activeProductSearch/criteria',
       headers: headers,
       body: jsonEncode(<String, Object>{
         'productCriteria': productSearchCriteriaDTO.toJson(),
@@ -39,7 +41,7 @@ class CatalogServiceImpl extends CatalogServices {
       CategoryDetailsLobDTO categoryDetailsLobDTO) async {
     return await http
         .post(
-      "${Constants.envUrl}${apiUrl}categories/rootCategories/withimagesByLob",
+      "${Constants.envUrl}$apiUrl/categories/rootCategories/withimagesByLob",
       headers: headers,
       body: jsonEncode(<String, Object>{
         'categoryDetailsLobDTO': categoryDetailsLobDTO.toJson()
@@ -62,7 +64,7 @@ class CatalogServiceImpl extends CatalogServices {
       PromoProductCriteria promoProductCriteria) async {
     return await http
         .post(
-      '${Constants.envUrl}${apiUrl}products/getProducts/ByPromotionPlan',
+      '${Constants.envUrl}$apiUrl/products/getProducts/ByPromotionPlan',
       headers: headers,
       body: jsonEncode(<String, Object>{
         'PromotionCriteria': promoProductCriteria.toJson(),
@@ -86,7 +88,7 @@ class CatalogServiceImpl extends CatalogServices {
       CategoryDetailsLobDTO categoryDetailsLobDTO) async {
     return await http
         .post(
-      "${Constants.envUrl}${apiUrl}categories/categoryDetails/lob",
+      "${Constants.envUrl}$apiUrl/categories/categoryDetails/lob",
       headers: headers,
       body: jsonEncode(<String, Object>{
         'categoryDetailsLobDTO': categoryDetailsLobDTO.toJson()
@@ -108,7 +110,7 @@ class CatalogServiceImpl extends CatalogServices {
   Future getProductsByCategoryId(ProductInfo productInfo) async {
     return await http
         .post(
-      '${Constants.envUrl}${apiUrl}products/categoryId/getProductInfoByCriteria',
+      '${Constants.envUrl}$apiUrl/products/categoryId/getProductInfoByCriteria',
       headers: headers,
       body: jsonEncode(<String, Object>{
         'productInfo': productInfo.toJson(),
@@ -121,6 +123,32 @@ class CatalogServiceImpl extends CatalogServices {
         return res;
       } else {
         return throw Exception('falied to fetch products by category id....');
+      }
+    });
+  }
+
+  @override
+  Future getUserProducts(ProductCriteria productCriteria) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      print("get user products service....!");
+      print(productCriteria.toJson());
+       print(productCriteria);
+    return await http
+        .post(
+      '${Constants.envUrl}$apiUrl/products/productSearch/criteria',
+      headers: {HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}" , 'Content-type': 'application/json; charset=UTF-8'},
+      body: jsonEncode(<String, Object>{
+        'productCriteria': productCriteria.toJson(),
+        
+      }),
+    ).then((data) {
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("products by getUserProducts....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to getUserProducts ....');
       }
     });
   }

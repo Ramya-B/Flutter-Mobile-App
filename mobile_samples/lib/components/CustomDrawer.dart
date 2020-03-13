@@ -5,12 +5,10 @@ import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/Profile/Profile.dart';
 import 'package:tradeleaves/components/categories/categories.dart';
-import 'package:tradeleaves/components/favourites/favourite.dart';
 import 'package:tradeleaves/components/login_register/login.dart';
 import 'package:tradeleaves/components/login_register/logout.dart';
 import 'package:tradeleaves/components/login_register/register.dart';
 import 'package:tradeleaves/components/notications/Notifications.dart';
-import 'package:tradeleaves/components/orders/orders.dart';
 import 'package:tradeleaves/components/About/about.dart';
 import 'package:tradeleaves/components/Settings/setting.dart';
 import 'package:tradeleaves/components/webpage/mywebview.dart';
@@ -24,6 +22,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
   var sample;
   var emailId;
   var fullName;
+  var authToken;
 
   @override
   void initState() {
@@ -34,6 +33,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
   void setData() async {
     print("set data called...!");
     SharedPreferences sample = await SharedPreferences.getInstance();
+    this.authToken = sample.getString('token');
     print(sample.getString('emailId'));
     print(sample.getString('fullName'));
     this.emailId = sample.getString('emailId') != null
@@ -56,7 +56,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
     return Drawer(
       child: new ListView(
         children: <Widget>[
-          (this.emailId != null && this.fullName != null)
+          (this.authToken != null && this.fullName != null)
               ? Container(
                   child: new UserAccountsDrawerHeader(
                     accountName: Text(this.fullName),
@@ -85,7 +85,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 builder: (context) => new Scaffold(
                       appBar: CustomToolBar(),
                       body: Container(
-                          // child: Products(category: 'all'),
                           ),
                       bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                       drawer: CustomDrawer(),
@@ -162,7 +161,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               leading: Icon(Icons.info),
             ),
           ),
-          (this.emailId != null && this.fullName != null)
+          (this.authToken != null )
               ? InkWell(
                   onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                       builder: (context) => new LogOut())),
