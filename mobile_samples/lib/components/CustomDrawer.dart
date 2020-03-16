@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
-import 'package:tradeleaves/components/Profile/Profile.dart';
 import 'package:tradeleaves/components/categories/categories.dart';
-import 'package:tradeleaves/components/favourites/favourite.dart';
 import 'package:tradeleaves/components/login_register/login.dart';
 import 'package:tradeleaves/components/login_register/logout.dart';
 import 'package:tradeleaves/components/login_register/register.dart';
 import 'package:tradeleaves/components/notications/Notifications.dart';
-import 'package:tradeleaves/components/orders/orders.dart';
 import 'package:tradeleaves/components/About/about.dart';
 import 'package:tradeleaves/components/Settings/setting.dart';
 import 'package:tradeleaves/components/webpage/mywebview.dart';
+
+import 'Profile/profile.dart';
+import 'company/company_registration.dart';
 
 class CustomDrawer extends StatefulWidget {
   @override
@@ -119,6 +119,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
             child: new ListTile(
               title: Text('Login'),
               leading: Icon(Icons.person),
+            ),
+          ),
+          InkWell(
+            onTap: () => Navigator.of(context)
+                .push(new MaterialPageRoute(builder: (context) => CompanyRegistration())),
+            child: new ListTile(
+              title: Text('Business Setup'),
+              leading: Icon(Icons.business),
             ),
           ),
           InkWell(

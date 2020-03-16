@@ -4,6 +4,7 @@ import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/podos/crm/register.dart';
 import 'package:tradeleaves/service_locator.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController _confirmPass = TextEditingController();
 
   bool autoValidate = false;
+  
 
   var name;
   var email;
@@ -73,11 +75,14 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
       validator: (arg1) {
         if (arg1.isEmpty || arg1 == "") {
+          autoValidate = false;
           return "Name can't be empty";
         }
         else if(arg1.length < 3){
+          autoValidate = false;
           return 'Name must be more than two characters';
         }
+         autoValidate = true;
         return null;
       },
       // onSaved: (String name) {
@@ -125,9 +130,13 @@ class _RegisterState extends State<Register> {
       obscureText: false,
       style: style,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          contentPadding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
           hintText: "Phone Number",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+          prefix: CountryCodePicker(
+            initialSelection: '+91',
+          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+          ),
       validator: (arg3) {
         Pattern pattern = r'^[2-9][0-9]{9}$';
         RegExp _regExpPhn = new RegExp(pattern);
