@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/main.dart';
+import 'package:tradeleaves/models/user.dart';
 import 'package:tradeleaves/podos/crm/register.dart';
 import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/service_locator.dart';
@@ -32,7 +33,7 @@ class _RegisterState extends State<Register> {
   var password;
   bool optIn = false;
   // bool checkBoxValue = false;
- 
+
   @override
   void initState() {
     super.initState();
@@ -84,8 +85,7 @@ class _RegisterState extends State<Register> {
       validator: (arg1) {
         if (arg1.isEmpty || arg1 == "") {
           return "Name can't be empty";
-        }
-        else if(arg1.length < 3){
+        } else if (arg1.length < 3) {
           return 'Name must be more than two characters';
         }
         return null;
@@ -105,12 +105,12 @@ class _RegisterState extends State<Register> {
           hintText: "Email",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
       validator: (arg2) {
-        Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+        Pattern pattern =
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
         RegExp _regExpEmail = new RegExp(pattern);
         if (arg2.isEmpty || arg2 == "") {
           return "Email can't be empty";
-        }
-        else if(!_regExpEmail.hasMatch(arg2)){
+        } else if (!_regExpEmail.hasMatch(arg2)) {
           return 'Please enter valid email';
         }
         return null;
@@ -123,7 +123,10 @@ class _RegisterState extends State<Register> {
     );
 
     final phoneField = TextFormField(
-      inputFormatters: [WhitelistingTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(10)],
+      inputFormatters: [
+        WhitelistingTextInputFormatter.digitsOnly,
+        LengthLimitingTextInputFormatter(10)
+      ],
       obscureText: false,
       style: style,
       decoration: InputDecoration(
@@ -133,10 +136,9 @@ class _RegisterState extends State<Register> {
       validator: (arg3) {
         Pattern pattern = r'^[2-9][0-9]{9}$';
         RegExp _regExpPhn = new RegExp(pattern);
-        if(arg3.isEmpty || arg3 == ""){
+        if (arg3.isEmpty || arg3 == "") {
           return "Phone number can't be empty";
-        }
-        else if (!_regExpPhn.hasMatch(arg3)) {
+        } else if (!_regExpPhn.hasMatch(arg3)) {
           return 'Please enter valid phone number';
         }
         return null;
@@ -280,7 +282,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
   UserServiceImpl get userService => locator<UserServiceImpl>();
   CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
   List<Sort> sorts = [];
-
+  User user;
   register() async {
     print("register called...");
     var data = await crmService.register(widget.registerDTO);
@@ -310,10 +312,12 @@ class _RegisterDetailsState extends State<RegisterDetails> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('token', authToken.token.toString());
       //  getUserProducts();
+      getUserInfo();
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => Home()));
     }
   }
+
   getUserProducts() async {
     print("getUserProducts");
     ProductCriteria productCriteria = new ProductCriteria();
@@ -330,11 +334,21 @@ class _RegisterDetailsState extends State<RegisterDetails> {
     print(getUserProducts);
   }
 
-  getCurrentUser() async {
-    print("getUser");
-    var user = await userService.getUser();
-    print("getUser response...!");
-    print(user);
+  getUserInfo() async {
+    var data = await userService.getUser();
+    print("user response...");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    this.user = User.fromJson(data);
+    setState(() {
+      this.user = User.fromJson(data);
+      print("user response set state...");
+      print(this.user);
+      print(this.user.name);
+      print(this.user.personalDetails.profile.person.firstName);
+      prefs.setString('name',
+          this.user.personalDetails.profile.person.firstName.toString());
+      prefs.setString('userId', this.user.name.toString());
+    });
   }
 
   @override

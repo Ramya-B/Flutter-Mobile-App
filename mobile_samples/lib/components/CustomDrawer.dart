@@ -11,11 +11,8 @@ import 'package:tradeleaves/components/login_register/register.dart';
 import 'package:tradeleaves/components/notications/Notifications.dart';
 import 'package:tradeleaves/components/About/about.dart';
 import 'package:tradeleaves/components/Settings/setting.dart';
+import 'package:tradeleaves/components/products/userproducts.dart';
 import 'package:tradeleaves/components/webpage/mywebview.dart';
-import 'package:tradeleaves/models/user.dart';
-import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
-
-import '../service_locator.dart';
 
 class CustomDrawer extends StatefulWidget {
   @override
@@ -39,13 +36,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
     print("set data called...!");
     SharedPreferences sample = await SharedPreferences.getInstance();
     this.authToken = sample.getString('token');
-    print(sample.getString('emailId'));
-    print(sample.getString('fullName'));
-    this.emailId = sample.getString('emailId') != null
-        ? sample.getString('emailId')
+    print(sample.getString('userId'));
+    print(sample.getString('name'));
+    this.emailId = sample.getString('userId') != null
+        ? sample.getString('userId')
         : null;
-    this.fullName = sample.getString('fullName') != null
-        ? sample.getString('fullName')
+    this.fullName = sample.getString('name') != null
+        ? sample.getString('name')
         : null;
     print(this.emailId);
     print(this.fullName);
@@ -109,22 +106,22 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                 )
               : Container(),
-          InkWell(
+        (this.authToken == null) ? InkWell(
             onTap: () => Navigator.of(context).push(
                 new MaterialPageRoute(builder: (context) => new Register())),
             child: new ListTile(
               title: Text('Register'),
               leading: Icon(Icons.people),
             ),
-          ),
-          InkWell(
+          ):Container(),
+          (this.authToken == null) ?  InkWell(
             onTap: () => Navigator.of(context)
                 .push(new MaterialPageRoute(builder: (context) => Login())),
             child: new ListTile(
               title: Text('Login'),
               leading: Icon(Icons.person),
             ),
-          ),
+          ):Container(),
           InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (BuildContext context) => new MyWebView(
@@ -140,6 +137,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
             child: new ListTile(
               title: Text('Categories'),
               leading: Icon(Icons.dashboard),
+            ),
+          ),
+           InkWell(
+            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                builder: (context) => new UserProducts())),
+            child: new ListTile(
+              title: Text('My Products'),
+              leading: Icon(Icons.notifications),
             ),
           ),
           InkWell(

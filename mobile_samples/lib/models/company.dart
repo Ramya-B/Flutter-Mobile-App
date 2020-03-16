@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import "accountStatus.dart";
 import "subscription.dart";
 import "details.dart";
 part 'company.g.dart';
@@ -15,7 +16,7 @@ class Company {
     String ownerAndRoleDTO;
     String partyIdentificationDTO;
     String profileAttribute;
-    String accountStatus;
+    AccountStatus accountStatus;
     Subscription subscription;
     String classifications;
     String identifications;

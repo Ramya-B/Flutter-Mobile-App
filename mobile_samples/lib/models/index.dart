@@ -1,3 +1,4 @@
+export 'accountStatus.dart' ; 
 export 'chatCredentials.dart' ; 
 export 'chatUser.dart' ; 
 export 'company.dart' ; 
@@ -6,6 +7,7 @@ export 'email.dart' ;
 export 'partyType.dart' ; 
 export 'person.dart' ; 
 export 'personalDetails.dart' ; 
+export 'productCriteria.dart' ; 
 export 'profile.dart' ; 
 export 'ratingReviewCriterias.dart' ; 
 export 'securityAdmin.dart' ; 

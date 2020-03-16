@@ -12,7 +12,9 @@ Company _$CompanyFromJson(Map<String, dynamic> json) {
     ..ownerAndRoleDTO = json['ownerAndRoleDTO'] as String
     ..partyIdentificationDTO = json['partyIdentificationDTO'] as String
     ..profileAttribute = json['profileAttribute'] as String
-    ..accountStatus = json['accountStatus'] as String
+    ..accountStatus = json['accountStatus'] == null
+        ? null
+        : AccountStatus.fromJson(json['accountStatus'] as Map<String, dynamic>)
     ..subscription = json['subscription'] == null
         ? null
         : Subscription.fromJson(json['subscription'] as Map<String, dynamic>)

@@ -7,7 +7,7 @@
     "ownerAndRoleDTO" : null,
     "partyIdentificationDTO" : null,
     "profileAttribute" : null,
-    "accountStatus" : null,
+    "accountStatus" : "$accountStatus",
     "subscription" :  "$subscription",
     "classifications" : null,
     "identifications" : null,

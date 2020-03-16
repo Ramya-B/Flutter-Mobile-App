@@ -8,7 +8,8 @@ class SearchResults {
 
   factory SearchResults.fromJson(Map<String, dynamic> json) {
     return SearchResults(
-        supplierSearchDTO: SupplierDTO.fromJson(json['supplierSearchDTO']),
-        productDTO: ProductDTO.fromJson(json['productDTO']));
+        supplierSearchDTO: SupplierDTO.fromJson(json['supplierSearchDTO']) == null ? null : SupplierDTO.fromJson(json['supplierSearchDTO']),
+        productDTO:  ProductDTO.fromJson(json['productDTO']) == null ? null :  ProductDTO.fromJson(json['productDTO'])
+        );
   }
 }

@@ -21,8 +21,8 @@ class _LoginState extends State<Login> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
   LogInServiceImpl get logInService => locator<LogInServiceImpl>();
   UserServiceImpl get userService => locator<UserServiceImpl>();
-  CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
-  List<Sort> sorts = [];
+
+  
   final _formKey = GlobalKey<FormState>();
   User user;
   bool autoValidate = false;
@@ -41,7 +41,7 @@ class _LoginState extends State<Login> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print(authToken);
     prefs.setString('token', authToken.token.toString());
-    // getUserProducts();
+  
     getUserInfo();
     Navigator.of(context)
         .push(new MaterialPageRoute(builder: (context) => Home()));
@@ -52,38 +52,20 @@ class _LoginState extends State<Login> {
     print("user response...");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     this.user = User.fromJson(data);
-      print("user set state...");
-      print(this.user);
-      print(this.user.name);
-      print(this.user.personalDetails.profile.person.firstName);
     setState(() {
-      // prefs.setString('name', authToken.token.toString());
-      // prefs.setString('userId', authToken.token.toString());
       this.user = User.fromJson(data);
       print("user response set state...");
       print(this.user);
       print(this.user.name);
       print(this.user.personalDetails.profile.person.firstName);
+      prefs.setString('name',
+          this.user.personalDetails.profile.person.firstName.toString());
+      prefs.setString('userId', this.user.name.toString());
+      print(prefs.getString('name'));
+      print(prefs.getString('userId'));
     });
   }
 
-  getUserProducts() async {
-    print("getUserProducts");
-    ProductCriteria productCriteria = new ProductCriteria();
-    Pagination pagination = new Pagination(start: 0, limit: 10);
-    Sort sort = new Sort();
-    sort.direction = 'desc';
-    sort.sort = 'createdTime';
-    this.sorts.add(sort);
-    productCriteria.pagination = pagination;
-    productCriteria.sort = null;
-    productCriteria.siteCriterias = null;
-    print("getUserProducts productCriteria");
-    print(productCriteria.toJson());
-    var getUserProducts = await catalogService.getUserProducts(productCriteria);
-    print("getUser response...!");
-    print(getUserProducts);
-  }
 
   @override
   Widget build(BuildContext context) {
