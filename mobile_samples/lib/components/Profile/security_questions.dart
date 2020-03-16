@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class Profile extends StatefulWidget {
+class SecurityQuestions extends StatefulWidget {
   @override
-  _ProfileState createState() => _ProfileState();
+  _SecurityQuestionsState createState() => _SecurityQuestionsState();
 }
 
-class _ProfileState extends State<Profile> {
+class _SecurityQuestionsState extends State<SecurityQuestions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(
-      //   title: Text('Profile Page'),
+      //   title: Text('Security Questions Page'),
       // ),
       body: ListView(
         children: <Widget>[
@@ -20,16 +20,21 @@ class _ProfileState extends State<Profile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Profile Settings',
+                  'Security Questions',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 20,
                 ),
+                Text(
+                    'We want to make sure that your account and the information in it stays safe, so make sure that the given security questions can be safe, easily memorable and simple.'),
+                SizedBox(
+                  height: 20,
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Text('First Name'),
+                    Text('Question No.1:'),
                     SizedBox(
                       height: 8,
                     ),
@@ -37,7 +42,28 @@ class _ProfileState extends State<Profile> {
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                        hintText: "Enter First Name",
+                        hintText: "Please select a question",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Text('Answer'),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+                        hintText: "Please enter the answer",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5)),
                       ),
@@ -50,7 +76,7 @@ class _ProfileState extends State<Profile> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Text('Middle Name'),
+                    Text('Question No.2:'),
                     SizedBox(
                       height: 8,
                     ),
@@ -58,7 +84,28 @@ class _ProfileState extends State<Profile> {
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                        hintText: "Enter Middle Name",
+                        hintText: "Please select a question",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Text('Answer'),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+                        hintText: "Please enter the answer",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5)),
                       ),
@@ -71,7 +118,7 @@ class _ProfileState extends State<Profile> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Text('Last Name'),
+                    Text('Question No.3:'),
                     SizedBox(
                       height: 8,
                     ),
@@ -79,7 +126,7 @@ class _ProfileState extends State<Profile> {
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                        hintText: "Enter Last Name",
+                        hintText: "Please select a question",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5)),
                       ),
@@ -87,12 +134,12 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Text('Phone Number'),
+                    Text('Answer'),
                     SizedBox(
                       height: 8,
                     ),
@@ -100,28 +147,7 @@ class _ProfileState extends State<Profile> {
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                        hintText: "Enter Phone Number",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Text('Email'),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                        hintText: "Enter Email Address",
+                        hintText: "Please enter the answer",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5)),
                       ),
@@ -135,16 +161,6 @@ class _ProfileState extends State<Profile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      InkWell(
-                        child: Text(
-                          'Cancel',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        onTap: () {},
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
                       RaisedButton(
                         color: Colors.lightGreen,
                         onPressed: () {},

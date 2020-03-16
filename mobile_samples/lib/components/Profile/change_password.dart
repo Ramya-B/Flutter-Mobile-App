@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class Profile extends StatefulWidget {
+class ChangePassword extends StatefulWidget {
   @override
-  _ProfileState createState() => _ProfileState();
+  _ChangePasswordState createState() => _ChangePasswordState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ChangePasswordState extends State<ChangePassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(
-      //   title: Text('Profile Page'),
+      //   title: Text('ChangePassword Page'),
       // ),
       body: ListView(
         children: <Widget>[
@@ -20,16 +20,21 @@ class _ProfileState extends State<Profile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Profile Settings',
+                  'Change Password',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 20,
                 ),
+                Text(
+                    'To keep your account safe, and for further security reasons create a strong password.'),
+                SizedBox(
+                  height: 20,
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Text('First Name'),
+                    Text('Current Password'),
                     SizedBox(
                       height: 8,
                     ),
@@ -37,7 +42,7 @@ class _ProfileState extends State<Profile> {
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                        hintText: "Enter First Name",
+                        hintText: "Enter Current Password",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5)),
                       ),
@@ -50,7 +55,7 @@ class _ProfileState extends State<Profile> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Text('Middle Name'),
+                    Text('New Password'),
                     SizedBox(
                       height: 8,
                     ),
@@ -58,7 +63,7 @@ class _ProfileState extends State<Profile> {
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                        hintText: "Enter Middle Name",
+                        hintText: "Enter New Password",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5)),
                       ),
@@ -71,7 +76,7 @@ class _ProfileState extends State<Profile> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Text('Last Name'),
+                    Text('Confirm Password'),
                     SizedBox(
                       height: 8,
                     ),
@@ -79,49 +84,7 @@ class _ProfileState extends State<Profile> {
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                        hintText: "Enter Last Name",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Text('Phone Number'),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                        hintText: "Enter Phone Number",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Text('Email'),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                        hintText: "Enter Email Address",
+                        hintText: "Enter Confirm Password",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5)),
                       ),
@@ -135,21 +98,11 @@ class _ProfileState extends State<Profile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      InkWell(
-                        child: Text(
-                          'Cancel',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        onTap: () {},
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
                       RaisedButton(
                         color: Colors.lightGreen,
                         onPressed: () {},
                         child: Text(
-                          'Save',
+                          'Update Password',
                           style: TextStyle(color: Colors.white),
                         ),
                         shape: RoundedRectangleBorder(
