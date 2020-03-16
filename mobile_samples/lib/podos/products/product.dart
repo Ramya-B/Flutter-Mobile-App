@@ -1,5 +1,8 @@
 
 
+
+import 'package:tradeleaves/podos/search/search.dart';
+
 class ProductDTO {
   bool active;
   bool adminFlag;
@@ -374,7 +377,7 @@ class ProductOptionDTO {
   List<ImageDTO> imageDTO;
   List<PriceList> priceList;
   String primaryImageUrl;
-  String productAttributeDetailDTO;
+  List<ProductAttributeDetailDTO> productAttributeDetailDTO;
   String productOptionId;
   String productOptionName;
   String start;
@@ -398,6 +401,8 @@ class ProductOptionDTO {
     List<PriceList> _priceList = prices!= null ? prices.map((res) => PriceList.fromJson(res)).toList():null;
     var images = json['imageDTO'] as List;
     List<ImageDTO> _imageDTO = images.map((res) => ImageDTO.fromJson(res)).toList();
+      var prodAttr =json['productAttributeDetailDTO'] != null ? json['productAttributeDetailDTO'] as List : [];
+    List<ProductAttributeDetailDTO> _productAttributeDetailDTO = prodAttr.map((res) => ProductAttributeDetailDTO.fromJson(res)).toList();
     return ProductOptionDTO(
       deliveryScheduleDTO: json['deliveryScheduleDTO'] as List,
       displayTemplate: json['displayTemplate'],
@@ -405,7 +410,7 @@ class ProductOptionDTO {
       imageDTO: _imageDTO,
       priceList: _priceList,
       primaryImageUrl: json['primaryImageUrl'],
-      productAttributeDetailDTO: json['productAttributeDetailDTO'],
+      productAttributeDetailDTO: _productAttributeDetailDTO,
       productOptionId: json['productOptionId'],
       productOptionName: json['productOptionName'],
       start: json['start'],
@@ -674,5 +679,80 @@ class TlCriteriaWeights{
     };
   }
 
+}
+
+class ProductCriteria {
+  Pagination pagination;
+  List<Sort> sort;
+  var siteCriterias = [];
+
+  ProductCriteria({this.pagination,this.siteCriterias,this.sort});
+
+ factory ProductCriteria.fromJson(Map<String, dynamic> json) {
+   var sortList = json['sort'] != null ? json['sort'] : [];
+   List<Sort> _sort = sortList.map((data)=>(Sort.fromJson(data))).toList();
+    return ProductCriteria(
+      pagination: Pagination.fromJson(json['pagination']),
+      sort: _sort,
+      siteCriterias: json['siteCriterias'] as List,
+    );
+  }
+
+  Map toJson() {
+    return {
+      "pagination": pagination,
+      'sort': sort,
+      'siteCriterias': siteCriterias,
+    };
+  }
+}
+
+class Sort{
+String direction;
+ String sort;
+  Sort({this.direction,this.sort});
+    factory Sort.fromJson(Map<String, dynamic> json) {
+    return Sort(
+      direction: json['direction'],
+      sort: json['sort'],
+    );
+  }
+
+  Map toJson() {
+    return {
+      "direction": direction,
+      'sort': sort,
+    };
+  }
+
+}
+
+class UserListedProducts{
+int numberOfProducts;
+int totalProducts; 
+int start;
+List<ProductDTO> productSearchDTO;
+
+ UserListedProducts({this.numberOfProducts,this.totalProducts,this.productSearchDTO,this.start});
+    factory UserListedProducts.fromJson(Map<String, dynamic> json) {
+     var prods = json['productSearchDTO'] != null ? json['productSearchDTO'] as List : [];
+    List<ProductDTO>  _productsPromotionsResponseDTO =  prods.map((data)=>ProductDTO.fromJson(data)).toList();
+    return UserListedProducts(
+      numberOfProducts: json['numberOfProducts'],
+      totalProducts: json['totalProducts'],
+       start: json['start'],
+      productSearchDTO: _productsPromotionsResponseDTO,
+      
+    );
+  }
+
+  Map toJson() {
+    return {
+      "numberOfProducts": numberOfProducts,
+      'totalProducts': totalProducts,
+       "start": start,
+      'productSearchDTO': productSearchDTO,
+    };
+  }
 }
 

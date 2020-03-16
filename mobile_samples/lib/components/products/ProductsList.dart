@@ -150,11 +150,12 @@ class _SingleProductState extends State<SingleProduct> {
           padding: EdgeInsets.all(4.0),
           child: Column(
             children: <Widget>[
-              Image.network(
-                (widget.productDTO.primaryImageUrl.toString().contains('http') )? ('${widget.productDTO.primaryImageUrl}'):('${Constants.envUrl}${Constants.mongoImageUrl}${widget.productDTO.primaryImageUrl}'),
+              (widget.productDTO.primaryImageUrl != null )? Image.network(
+                (widget.productDTO.primaryImageUrl.toString().contains('http') )? ('${widget.productDTO.primaryImageUrl}'):('${Constants.envUrl}${Constants.mongoImageUrl}/${widget.productDTO.primaryImageUrl}'),
                 width: 150,
                 height: 150,
-              ),
+              ):Container( width: 150,
+                height: 150,),
               Expanded(
                 child: Container(
                     padding: EdgeInsets.all(2.0),

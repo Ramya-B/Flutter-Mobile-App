@@ -128,7 +128,7 @@ class _CategoryCardState extends State<CategoryCard> {
   void initState() {
     for (var item in widget.categoryDTO.categoryAttribute) {
       if(item.attributeName == 'ThumbnailImageAttribute'){
-        this.categoryImage = '${Constants.envUrl}${Constants.mongoImageUrl}${item.attributeValue}';
+        this.categoryImage = '${Constants.envUrl}${Constants.mongoImageUrl}/${item.attributeValue}';
       }
     } 
 

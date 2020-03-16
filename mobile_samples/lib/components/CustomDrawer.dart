@@ -10,6 +10,7 @@ import 'package:tradeleaves/components/login_register/register.dart';
 import 'package:tradeleaves/components/notications/Notifications.dart';
 import 'package:tradeleaves/components/About/about.dart';
 import 'package:tradeleaves/components/Settings/setting.dart';
+import 'package:tradeleaves/components/products/userproducts.dart';
 import 'package:tradeleaves/components/webpage/mywebview.dart';
 
 import 'Profile/profile.dart';
@@ -24,6 +25,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
   var sample;
   var emailId;
   var fullName;
+  var authToken;
+
 
   @override
   void initState() {
@@ -34,13 +37,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
   void setData() async {
     print("set data called...!");
     SharedPreferences sample = await SharedPreferences.getInstance();
-    print(sample.getString('emailId'));
-    print(sample.getString('fullName'));
-    this.emailId = sample.getString('emailId') != null
-        ? sample.getString('emailId')
+    this.authToken = sample.getString('token');
+    print(sample.getString('userId'));
+    print(sample.getString('name'));
+    this.emailId = sample.getString('userId') != null
+        ? sample.getString('userId')
         : null;
-    this.fullName = sample.getString('fullName') != null
-        ? sample.getString('fullName')
+    this.fullName = sample.getString('name') != null
+        ? sample.getString('name')
         : null;
     print(this.emailId);
     print(this.fullName);
@@ -56,7 +60,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
     return Drawer(
       child: new ListView(
         children: <Widget>[
-          (this.emailId != null && this.fullName != null)
+          (this.authToken != null && this.fullName != null)
               ? Container(
                   child: new UserAccountsDrawerHeader(
                     accountName: Text(this.fullName),
@@ -85,7 +89,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 builder: (context) => new Scaffold(
                       appBar: CustomToolBar(),
                       body: Container(
-                          // child: Products(category: 'all'),
                           ),
                       bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                       drawer: CustomDrawer(),
@@ -105,22 +108,22 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                 )
               : Container(),
-          InkWell(
+        (this.authToken == null) ? InkWell(
             onTap: () => Navigator.of(context).push(
                 new MaterialPageRoute(builder: (context) => new Register())),
             child: new ListTile(
               title: Text('Register'),
               leading: Icon(Icons.people),
             ),
-          ),
-          InkWell(
+          ):Container(),
+          (this.authToken == null) ?  InkWell(
             onTap: () => Navigator.of(context)
                 .push(new MaterialPageRoute(builder: (context) => Login())),
             child: new ListTile(
               title: Text('Login'),
               leading: Icon(Icons.person),
             ),
-          ),
+          ):Container(),
           InkWell(
             onTap: () => Navigator.of(context)
                 .push(new MaterialPageRoute(builder: (context) => CompanyRegistration())),
@@ -144,6 +147,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
             child: new ListTile(
               title: Text('Categories'),
               leading: Icon(Icons.dashboard),
+            ),
+          ),
+           InkWell(
+            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                builder: (context) => new UserProducts())),
+            child: new ListTile(
+              title: Text('My Products'),
+              leading: Icon(Icons.notifications),
             ),
           ),
           InkWell(
@@ -170,7 +181,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               leading: Icon(Icons.info),
             ),
           ),
-          (this.emailId != null && this.fullName != null)
+          (this.authToken != null )
               ? InkWell(
                   onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                       builder: (context) => new LogOut())),

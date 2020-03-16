@@ -1,0 +1,5 @@
+{
+    "description" : "Chat Admin group, has all chat related permissions.",
+    "groupId" : "CHAT_USER",
+    "securityPermissionDTO" : "$[]securityPermissionDTO"
+}

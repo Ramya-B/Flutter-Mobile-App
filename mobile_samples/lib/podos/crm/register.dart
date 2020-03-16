@@ -180,3 +180,69 @@ class EmailContactDTO {
     };
   }
 }
+
+class UserCheck {
+   String email;
+  String verificationCode;
+
+  UserCheck({this.email,this.verificationCode});
+
+   factory UserCheck.fromJson(Map<String, dynamic> json) {
+    return UserCheck(
+      email: json['email'],
+      verificationCode: json['verificationCode']
+    );
+  }
+
+  Map toJson() {
+    return {
+      'email': email,
+      'verificationCode': verificationCode
+    };
+  }
+}
+
+
+class AuthRequest{
+  String  customerId;
+  String name;
+  String password;
+  AuthRequest({this.customerId,this.name,this.password});
+    factory AuthRequest.fromJson(Map<String, dynamic> json) {
+    return AuthRequest(
+      customerId: json['customerId'],
+      name: json['name'],
+      password: json['password']
+    );
+  }
+
+  Map toJson() {
+    return {
+      'customerId': customerId,
+      'name': name,
+      'password': password
+    };
+  }
+  
+}
+
+class AuthToken{
+  String token;
+  bool emailVerified;
+   AuthToken({this.token,this.emailVerified});
+    factory AuthToken.fromJson(Map<String, dynamic> json) {
+    return AuthToken(
+      token: json['token'],
+      emailVerified: json['emailVerified'],
+    );
+  }
+
+  Map toJson() {
+    return {
+      'token': token,
+      'emailVerified': emailVerified,
+    };
+  }
+
+
+}

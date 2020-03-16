@@ -1,0 +1,5 @@
+{
+    "pagination": "$pagination",
+    "sort":  "$[]sort",
+    "siteCriterias": []
+}

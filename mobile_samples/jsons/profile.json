@@ -1,0 +1,14 @@
+{
+    "unVerifiedSupplierFlag" : "N",
+    "disabledReason" : null,
+    "sentOtpFailedReason" : null,
+    "isOtpSent" : null,
+    "registeredDate" : null,
+    "partyType" : "$partyType",
+    "status" : null,
+    "address" : null,
+    "telephone" : "$[]telephone",
+    "email" : "$[]email",
+    "company" : "$company",
+    "person" : "$person"
+}

@@ -45,7 +45,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               height: 250,
               width: 250,
               child: Image.network(
-                  '${Constants.envUrl}${Constants.mongoImageUrl}${widget.productDTO.primaryImageUrl}'),
+                  '${Constants.envUrl}${Constants.mongoImageUrl}/${widget.productDTO.primaryImageUrl}'),
             ),
           ),
 

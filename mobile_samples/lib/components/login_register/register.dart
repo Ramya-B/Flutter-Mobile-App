@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
+import 'package:tradeleaves/main.dart';
+import 'package:tradeleaves/models/user.dart';
 import 'package:tradeleaves/podos/crm/register.dart';
+import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/service_locator.dart';
+import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
+import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:tradeleaves/tl-services/login/LoginServiceImpl.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -27,8 +34,12 @@ class _RegisterState extends State<Register> {
   var companyName;
   var password;
   bool optIn = false;
-
   // bool checkBoxValue = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   registerInfo() {
     RegisterDTO registerDTO = new RegisterDTO();
@@ -77,18 +88,12 @@ class _RegisterState extends State<Register> {
         if (arg1.isEmpty || arg1 == "") {
           autoValidate = false;
           return "Name can't be empty";
-        }
-        else if(arg1.length < 3){
-          autoValidate = false;
+        } else if (arg1.length < 3) {
           return 'Name must be more than two characters';
         }
          autoValidate = true;
         return null;
       },
-      // onSaved: (String name) {
-      //   this.name = name;
-
-      // }
       onChanged: (String name) {
         setState(() {
           this.name = name;
@@ -104,20 +109,16 @@ class _RegisterState extends State<Register> {
           hintText: "Email",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
       validator: (arg2) {
-        Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+        Pattern pattern =
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
         RegExp _regExpEmail = new RegExp(pattern);
         if (arg2.isEmpty || arg2 == "") {
           return "Email can't be empty";
-        }
-        else if(!_regExpEmail.hasMatch(arg2)){
+        } else if (!_regExpEmail.hasMatch(arg2)) {
           return 'Please enter valid email';
         }
         return null;
       },
-
-      // onSaved: (String email) {
-      //  this.email= email;
-      // },
       onChanged: (String email) {
         setState(() {
           this.email = email;
@@ -126,7 +127,10 @@ class _RegisterState extends State<Register> {
     );
 
     final phoneField = TextFormField(
-      inputFormatters: [WhitelistingTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(10)],
+      inputFormatters: [
+        WhitelistingTextInputFormatter.digitsOnly,
+        LengthLimitingTextInputFormatter(10)
+      ],
       obscureText: false,
       style: style,
       decoration: InputDecoration(
@@ -140,17 +144,13 @@ class _RegisterState extends State<Register> {
       validator: (arg3) {
         Pattern pattern = r'^[2-9][0-9]{9}$';
         RegExp _regExpPhn = new RegExp(pattern);
-        if(arg3.isEmpty || arg3 == ""){
+        if (arg3.isEmpty || arg3 == "") {
           return "Phone number can't be empty";
-        }
-        else if (!_regExpPhn.hasMatch(arg3)) {
+        } else if (!_regExpPhn.hasMatch(arg3)) {
           return 'Please enter valid phone number';
         }
         return null;
       },
-      // onSaved: (String mobile) {
-      //  this.mobile = mobile;
-      // }
       onChanged: (String mobile) {
         setState(() {
           this.mobile = mobile;
@@ -190,9 +190,6 @@ class _RegisterState extends State<Register> {
         }
         return null;
       },
-      // onSaved: (String password) {
-      //    this.password  = password;
-      // },
       onChanged: (String password) {
         setState(() {
           this.password = password;
@@ -227,7 +224,6 @@ class _RegisterState extends State<Register> {
         controlAffinity: ListTileControlAffinity.leading);
 
     final registerButton = Material(
-        // elevation: 100,
         borderRadius: BorderRadius.circular(10),
         color: Colors.green,
         child: MaterialButton(
@@ -287,13 +283,79 @@ class RegisterDetails extends StatefulWidget {
 }
 
 class _RegisterDetailsState extends State<RegisterDetails> {
+  String confirmationCode;
+  String error;
   CrmServiceImpl get crmService => locator<CrmServiceImpl>();
+  LogInServiceImpl get logInService => locator<LogInServiceImpl>();
+  UserServiceImpl get userService => locator<UserServiceImpl>();
+  CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
+  List<Sort> sorts = [];
+  User user;
   register() async {
     print("register called...");
     var data = await crmService.register(widget.registerDTO);
     setState(() {
       print("Reister details from node.........");
       print(data);
+    });
+  }
+
+  verifyCurrentUser() async {
+    print("start verifying...");
+    UserCheck userInfo = UserCheck(
+        email: widget.registerDTO.userLoginDTO.userLoginId,
+        verificationCode: this.confirmationCode);
+    var data = await crmService.verifyUser(userInfo);
+    print(data);
+
+    if (data["status"] == "TL_EMAIL_CONF_CODE_VALID") {
+      AuthRequest authRequest = AuthRequest(
+          name: widget.registerDTO.userLoginDTO.userLoginId,
+          customerId: widget.registerDTO.userLoginDTO.userLoginId,
+          password: widget.registerDTO.userLoginDTO.password);
+      var authResp = await logInService.getAuthToken(authRequest);
+      print("Authentication response...");
+      print(authResp);
+      AuthToken authToken = AuthToken.fromJson(authResp);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('token', authToken.token.toString());
+      //  getUserProducts();
+      getUserInfo();
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Home()));
+    }
+  }
+
+  getUserProducts() async {
+    print("getUserProducts");
+    ProductCriteria productCriteria = new ProductCriteria();
+    Pagination pagination = new Pagination(start: 0, limit: 10);
+    Sort sort = new Sort();
+    sort.direction = 'desc';
+    sort.sort = 'createdTime';
+    this.sorts.add(sort);
+    productCriteria.pagination = pagination;
+    productCriteria.sort = this.sorts;
+    productCriteria.siteCriterias = [];
+    var getUserProducts = await catalogService.getUserProducts(productCriteria);
+    print("getUser response...!");
+    print(getUserProducts);
+  }
+
+  getUserInfo() async {
+    var data = await userService.getUser();
+    print("user response...");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    this.user = User.fromJson(data);
+    setState(() {
+      this.user = User.fromJson(data);
+      print("user response set state...");
+      print(this.user);
+      print(this.user.name);
+      print(this.user.personalDetails.profile.person.firstName);
+      prefs.setString('name',
+          this.user.personalDetails.profile.person.firstName.toString());
+      prefs.setString('userId', this.user.name.toString());
     });
   }
 
@@ -316,8 +378,6 @@ class _RegisterDetailsState extends State<RegisterDetails> {
               color: Colors.white,
               margin: EdgeInsets.all(15.0),
               child: Container(
-                // height: 350,
-
                 margin: EdgeInsets.all(10.0),
                 child: Form(
                     child: Column(
@@ -339,17 +399,31 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                     ),
                     Container(
                       height: 20,
+                      child: (this.error != null)
+                          ? (Text('${this.error}'))
+                          : Container(),
                     ),
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: TextField(
+                          child: TextFormField(
                             decoration: InputDecoration(
                                 contentPadding:
                                     EdgeInsets.fromLTRB(20, 15, 20, 15),
                                 hintText: "Enter OTP...",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8))),
+                            onChanged: (String code) {
+                              setState(() {
+                                this.confirmationCode = code;
+                              });
+                            },
+                            validator: (String code) {
+                              if (code.isEmpty) {
+                                return "Please enter Confirmation code";
+                              }
+                              return null;
+                            },
                           ),
                         ),
                         Container(
@@ -372,7 +446,9 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                         padding: EdgeInsets.only(
                             left: 25, right: 25, top: 10, bottom: 10),
                         splashColor: Colors.lightGreen,
-                        onPressed: () {},
+                        onPressed: () {
+                          verifyCurrentUser();
+                        },
                         child: Text(
                           'Continue',
                           style: TextStyle(color: Colors.white, fontSize: 20),
