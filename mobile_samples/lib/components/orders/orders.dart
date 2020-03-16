@@ -39,7 +39,7 @@ class _OrdersState extends State<Orders> {
     return Scaffold(
         appBar: CustomToolBar(),
         bottomNavigationBar: CustomNavBar(selectedIndex: 0),
-        drawer: CustomDrawer(),
+        // drawer: CustomDrawer(),
         body: ListView.builder(
             itemCount: orderList.length,
             itemBuilder: (BuildContext context, int index) {

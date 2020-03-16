@@ -154,7 +154,7 @@ class _LoginState extends State<Login> {
 
     return Scaffold(
         appBar: CustomToolBar(),
-        drawer: CustomDrawer(),
+        // drawer: CustomDrawer(),
         body: Form(
           key: _formKey,
           child: Center(

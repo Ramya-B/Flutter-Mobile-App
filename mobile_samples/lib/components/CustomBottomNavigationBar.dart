@@ -74,7 +74,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
                     bottomNavigationBar: CustomNavBar(
                       selectedIndex: 1,
                     ),
-                    drawer: CustomDrawer(),
+                    // drawer: CustomDrawer(),
                   )));
         }
         break;
@@ -89,7 +89,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
                     bottomNavigationBar: CustomNavBar(
                       selectedIndex: 2,
                     ),
-                    drawer: CustomDrawer(),
+                    // drawer: CustomDrawer(),
                   )));
         }
         break;
@@ -103,7 +103,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
                       child:HomeProducts(),
                     ),
                     bottomNavigationBar: CustomNavBar(selectedIndex: 0),
-                    drawer: CustomDrawer(),
+                    // drawer: CustomDrawer(),
                   )));
         }
         break;

@@ -11,6 +11,7 @@ import 'package:tradeleaves/components/login_register/register.dart';
 import 'package:tradeleaves/components/notications/Notifications.dart';
 import 'package:tradeleaves/components/About/about.dart';
 import 'package:tradeleaves/components/Settings/setting.dart';
+import 'package:tradeleaves/components/products/products_home.dart';
 import 'package:tradeleaves/components/products/userproducts.dart';
 import 'package:tradeleaves/components/webpage/mywebview.dart';
 
@@ -87,6 +88,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 builder: (context) => new Scaffold(
                       appBar: CustomToolBar(),
                       body: Container(
+                        height: 600,
+                         child:HomeProducts(),
                           ),
                       bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                       drawer: CustomDrawer(),

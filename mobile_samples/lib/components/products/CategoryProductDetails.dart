@@ -21,7 +21,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
         // child: Products(category:widget.categoryName),
       ),
       bottomNavigationBar: CustomNavBar(selectedIndex: 0,),
-      drawer: CustomDrawer(),
+      // drawer: CustomDrawer(),
     );
   }
 }

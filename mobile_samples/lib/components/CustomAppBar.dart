@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/search/search.dart';
@@ -16,24 +18,27 @@ class _CustomToolBarState extends State<CustomToolBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,
-      leading: Container(
-        width: 50,
-        child: Row(
-        children: <Widget>[
-           Expanded(
-             child:  new IconButton(icon: Icon(Icons.menu), onPressed: () => Scaffold.of(context).openDrawer()),
-           ),
-            Expanded(
-             child:   new IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.of(context).maybePop())
-           )
+      // automaticallyImplyLeading: Platform.isIOS ? false : true,
+      // leading: Container(
+      //   width: 50,
+      //   child: Row(
+      //   children: <Widget>[
+      //      Expanded(
+      //        child:  new IconButton(icon: Icon(Icons.menu), onPressed: () => Scaffold.of(context).openDrawer()),
+      //      ),
+      //       Platform.isIOS ?  Expanded(
+      //        child:   new IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.of(context).maybePop())
+      //      ):Container()
           
-        ],
-      ),
-      ),
+      //   ],
+      // ),
+      // ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+        //  Navigator.of(context).canPop() ?  Expanded(
+        //      child:   new IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.of(context).maybePop())
+        //    ): Container(),
           CircleAvatar(
             child: Image.asset(
               'assets/tl.png',

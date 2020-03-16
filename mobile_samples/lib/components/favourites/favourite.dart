@@ -38,7 +38,7 @@ class _FavouriteState extends State<Favourite> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomToolBar(),
-        drawer: CustomDrawer(),
+        // drawer: CustomDrawer(),
         bottomNavigationBar: CustomNavBar(selectedIndex: 0),
         body: ListView.builder(
             itemCount: favList.length,
