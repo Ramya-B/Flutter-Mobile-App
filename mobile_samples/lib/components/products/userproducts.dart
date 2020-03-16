@@ -82,7 +82,7 @@ class _UserProductsState extends State<UserProducts> {
         gridDelegate:
             new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
-          return SingleProduct(
+          return SingleUserProduct(
             productDTO: this.userProductsList[index],
           );
         })

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:circular_check_box/circular_check_box.dart';
 
 class Preferences extends StatefulWidget {
   @override

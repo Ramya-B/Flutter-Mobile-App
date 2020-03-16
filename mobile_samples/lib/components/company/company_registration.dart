@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/company/person_profile.dart';
 import 'package:tradeleaves/components/products/products_home.dart';
 
+import '../CustomAppBar.dart';
+import '../CustomBottomNavigationBar.dart';
+import '../CustomDrawer.dart';
+
 class CompanyRegistration extends StatefulWidget {
   @override
   _CompanyRegistrationState createState() => _CompanyRegistrationState();
@@ -45,9 +49,15 @@ class _CompanyRegistrationState extends State<CompanyRegistration> {
                       alignment: Alignment.center,
                       child: RaisedButton(
                         shape: StadiumBorder(),
-                        onPressed: () => Navigator.of(context).push(
-                            new MaterialPageRoute(
-                                builder: (context) => HomeProducts())),
+                        onPressed: () => Navigator.of(context).push(new MaterialPageRoute(
+              builder: (context) => new Scaffold(
+                    appBar: CustomToolBar(),
+                    body: Container(
+                      child:HomeProducts(),
+                    ),
+                    bottomNavigationBar: CustomNavBar(selectedIndex: 0),
+                    drawer: CustomDrawer(),
+                  ))),
                         child: Text(
                           'Explore Marketplace',
                           style: TextStyle(color: Colors.white),

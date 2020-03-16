@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
+import 'package:tradeleaves/components/company/company_registration.dart';
 import 'package:tradeleaves/main.dart';
 import 'package:tradeleaves/models/user.dart';
 import 'package:tradeleaves/podos/crm/register.dart';
@@ -321,8 +322,8 @@ class _RegisterDetailsState extends State<RegisterDetails> {
       prefs.setString('token', authToken.token.toString());
       //  getUserProducts();
       getUserInfo();
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Home()));
+    Navigator.of(context)
+                .push(new MaterialPageRoute(builder: (context) => CompanyRegistration()));
     }
   }
 

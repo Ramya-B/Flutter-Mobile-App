@@ -16,6 +16,7 @@ import 'package:tradeleaves/components/webpage/mywebview.dart';
 
 import 'Profile/profile.dart';
 import 'company/company_registration.dart';
+import 'company/person_profile.dart';
 
 class CustomDrawer extends StatefulWidget {
   @override
@@ -103,8 +104,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           (this.emailId != null && this.fullName != null)
               ? InkWell(
-                  onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                      builder: (context) => new Profile())),
+                  onTap: () => Navigator.of(context).push(
+                            new MaterialPageRoute(
+                                builder: (context) => PersonalProfile())),
                   child: new ListTile(
                     title: Text('Profile'),
                     leading: Icon(Icons.person),
@@ -157,7 +159,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 builder: (context) => new UserProducts())),
             child: new ListTile(
               title: Text('My Products'),
-              leading: Icon(Icons.notifications),
+              leading: Icon(Icons.view_list),
             ),
           ),
           InkWell(
