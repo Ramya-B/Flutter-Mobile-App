@@ -12,6 +12,10 @@ import 'package:tradeleaves/components/notications/Notifications.dart';
 import 'package:tradeleaves/components/About/about.dart';
 import 'package:tradeleaves/components/Settings/setting.dart';
 import 'package:tradeleaves/components/webpage/mywebview.dart';
+import 'package:tradeleaves/models/user.dart';
+import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
+
+import '../service_locator.dart';
 
 class CustomDrawer extends StatefulWidget {
   @override
@@ -23,6 +27,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
   var emailId;
   var fullName;
   var authToken;
+
 
   @override
   void initState() {

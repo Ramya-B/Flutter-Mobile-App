@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/login_register/register.dart';
+import 'package:tradeleaves/models/user.dart';
 import 'package:tradeleaves/podos/crm/register.dart';
 import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
@@ -23,7 +24,7 @@ class _LoginState extends State<Login> {
   CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
   List<Sort> sorts = [];
   final _formKey = GlobalKey<FormState>();
-
+  User user;
   bool autoValidate = false;
 
   var email;
@@ -40,16 +41,33 @@ class _LoginState extends State<Login> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print(authToken);
     prefs.setString('token', authToken.token.toString());
-    var data = await userService.getUser();
-    print("user response...");
-    print(data);
-    getUserProducts();
+    // getUserProducts();
+    getUserInfo();
     Navigator.of(context)
         .push(new MaterialPageRoute(builder: (context) => Home()));
   }
-  
 
-   getUserProducts() async {
+  getUserInfo() async {
+    var data = await userService.getUser();
+    print("user response...");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    this.user = User.fromJson(data);
+      print("user set state...");
+      print(this.user);
+      print(this.user.name);
+      print(this.user.personalDetails.profile.person.firstName);
+    setState(() {
+      // prefs.setString('name', authToken.token.toString());
+      // prefs.setString('userId', authToken.token.toString());
+      this.user = User.fromJson(data);
+      print("user response set state...");
+      print(this.user);
+      print(this.user.name);
+      print(this.user.personalDetails.profile.person.firstName);
+    });
+  }
+
+  getUserProducts() async {
     print("getUserProducts");
     ProductCriteria productCriteria = new ProductCriteria();
     Pagination pagination = new Pagination(start: 0, limit: 10);
@@ -58,9 +76,9 @@ class _LoginState extends State<Login> {
     sort.sort = 'createdTime';
     this.sorts.add(sort);
     productCriteria.pagination = pagination;
-    productCriteria.sort =null;
+    productCriteria.sort = null;
     productCriteria.siteCriterias = null;
-     print("getUserProducts productCriteria");
+    print("getUserProducts productCriteria");
     print(productCriteria.toJson());
     var getUserProducts = await catalogService.getUserProducts(productCriteria);
     print("getUser response...!");
@@ -77,12 +95,12 @@ class _LoginState extends State<Login> {
           hintText: "Enter Your Email",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
       validator: (arg1) {
-        Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+        Pattern pattern =
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
         RegExp _regExpEmail = new RegExp(pattern);
-        if(arg1.isEmpty || arg1 == ""){
+        if (arg1.isEmpty || arg1 == "") {
           return "Email Can't be empty";
-        }
-        else if (!_regExpEmail.hasMatch(arg1)) {
+        } else if (!_regExpEmail.hasMatch(arg1)) {
           return 'Please enter valid email';
         }
         return null;

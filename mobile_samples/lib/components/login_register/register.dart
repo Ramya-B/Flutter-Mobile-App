@@ -309,7 +309,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
       AuthToken authToken = AuthToken.fromJson(authResp);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('token', authToken.token.toString());
-       getUserProducts();
+      //  getUserProducts();
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => Home()));
     }
