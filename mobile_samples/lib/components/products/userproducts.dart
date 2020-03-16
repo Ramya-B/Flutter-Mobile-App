@@ -72,7 +72,7 @@ class _UserProductsState extends State<UserProducts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('My products'),),
+      appBar: AppBar(title: Text('My products'),backgroundColor: Colors.green,),
       body: (this.userProducts != null ) ? Container(
         // height: 400,
        constraints: BoxConstraints(minHeight: 100, maxHeight: 800),
