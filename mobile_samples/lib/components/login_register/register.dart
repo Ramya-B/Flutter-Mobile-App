@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
-import 'package:tradeleaves/components/company/company_registration.dart';
-import 'package:tradeleaves/main.dart';
 import 'package:tradeleaves/models/user.dart';
 import 'package:tradeleaves/podos/crm/register.dart';
 import 'package:tradeleaves/podos/products/product.dart';
@@ -11,8 +9,9 @@ import 'package:tradeleaves/service_locator.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:tradeleaves/tl-services/login/LoginServiceImpl.dart';
+
+import 'landing_page.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -23,11 +22,10 @@ class _RegisterState extends State<Register> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _pass = TextEditingController();
-  final TextEditingController _confirmPass = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
+  final TextEditingController _confirmPassController = TextEditingController();
 
-  bool autoValidate = false;
-  
+  bool _autoValidate = false;
 
   var name;
   var email;
@@ -35,7 +33,6 @@ class _RegisterState extends State<Register> {
   var companyName;
   var password;
   bool optIn = false;
-  // bool checkBoxValue = false;
 
   @override
   void initState() {
@@ -79,7 +76,6 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     final nameField = TextFormField(
-      obscureText: false,
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
@@ -87,12 +83,12 @@ class _RegisterState extends State<Register> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
       validator: (arg1) {
         if (arg1.isEmpty || arg1 == "") {
-          autoValidate = false;
+          _autoValidate = false;
           return "Name can't be empty";
         } else if (arg1.length < 3) {
           return 'Name must be more than two characters';
         }
-         autoValidate = true;
+        _autoValidate = true;
         return null;
       },
       onChanged: (String name) {
@@ -103,7 +99,6 @@ class _RegisterState extends State<Register> {
     );
 
     final emailField = TextFormField(
-      obscureText: false,
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
@@ -132,16 +127,12 @@ class _RegisterState extends State<Register> {
         WhitelistingTextInputFormatter.digitsOnly,
         LengthLimitingTextInputFormatter(10)
       ],
-      obscureText: false,
       style: style,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
-          hintText: "Phone Number",
-          prefix: CountryCodePicker(
-            initialSelection: '+91',
-          ),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-          ),
+        contentPadding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
+        hintText: "Phone Number",
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+      ),
       validator: (arg3) {
         Pattern pattern = r'^[2-9][0-9]{9}$';
         RegExp _regExpPhn = new RegExp(pattern);
@@ -160,7 +151,6 @@ class _RegisterState extends State<Register> {
     );
 
     final companyField = TextFormField(
-        obscureText: false,
         style: style,
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
@@ -173,7 +163,7 @@ class _RegisterState extends State<Register> {
         });
 
     final passwordField = TextFormField(
-      controller: _pass,
+      controller: _passController,
       obscureText: true,
       style: style,
       decoration: InputDecoration(
@@ -199,15 +189,15 @@ class _RegisterState extends State<Register> {
     );
 
     final confirmPasswordField = TextFormField(
-      controller: _confirmPass,
-      obscureText: false,
+      controller: _confirmPassController,
+      obscureText: true,
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Confirm Password",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
       validator: (arg6) {
-        if (arg6 != _pass.text) {
+        if (arg6 != _passController.text) {
           return "Password not match";
         }
         return null;
@@ -251,6 +241,7 @@ class _RegisterState extends State<Register> {
                         padding: const EdgeInsets.all(30),
                         child: Form(
                           key: _formKey,
+                          autovalidate: _autoValidate,
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -322,8 +313,8 @@ class _RegisterDetailsState extends State<RegisterDetails> {
       prefs.setString('token', authToken.token.toString());
       //  getUserProducts();
       getUserInfo();
-    Navigator.of(context)
-                .push(new MaterialPageRoute(builder: (context) => CompanyRegistration()));
+      Navigator.of(context)
+          .push(new MaterialPageRoute(builder: (context) => LandingPage()));
     }
   }
 

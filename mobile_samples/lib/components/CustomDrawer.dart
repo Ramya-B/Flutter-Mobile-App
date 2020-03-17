@@ -13,10 +13,7 @@ import 'package:tradeleaves/components/Settings/setting.dart';
 import 'package:tradeleaves/components/products/products_home.dart';
 import 'package:tradeleaves/components/products/userproducts.dart';
 import 'package:tradeleaves/components/webpage/mywebview.dart';
-
-import 'Profile/profile.dart';
-import 'company/company_registration.dart';
-import 'company/person_profile.dart';
+import 'Profile/person_profile.dart';
 
 class CustomDrawer extends StatefulWidget {
   @override
@@ -130,8 +127,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
           ):Container(),
           InkWell(
-            onTap: () => Navigator.of(context)
-                .push(new MaterialPageRoute(builder: (context) => CompanyRegistration())),
+            // onTap: () => Navigator.of(context)
+            //     .push(new MaterialPageRoute(builder: (context) => Register())),
             child: new ListTile(
               title: Text('Business Setup'),
               leading: Icon(Icons.business),

@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tradeleaves/components/company/person_profile.dart';
+import 'package:tradeleaves/components/Profile/person_profile.dart';
 import 'package:tradeleaves/components/products/products_home.dart';
 
 import '../CustomAppBar.dart';
 import '../CustomBottomNavigationBar.dart';
 import '../CustomDrawer.dart';
 
-class CompanyRegistration extends StatefulWidget {
-  @override
-  _CompanyRegistrationState createState() => _CompanyRegistrationState();
-}
-
-class _CompanyRegistrationState extends State<CompanyRegistration> {
+class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,15 +44,17 @@ class _CompanyRegistrationState extends State<CompanyRegistration> {
                       alignment: Alignment.center,
                       child: RaisedButton(
                         shape: StadiumBorder(),
-                        onPressed: () => Navigator.of(context).push(new MaterialPageRoute(
-              builder: (context) => new Scaffold(
-                    appBar: CustomToolBar(),
-                    body: Container(
-                      child:HomeProducts(),
-                    ),
-                    bottomNavigationBar: CustomNavBar(selectedIndex: 0),
-                    drawer: CustomDrawer(),
-                  ))),
+                        onPressed: () =>
+                            Navigator.of(context).push(new MaterialPageRoute(
+                                builder: (context) => new Scaffold(
+                                      appBar: CustomToolBar(),
+                                      body: Container(
+                                        child: HomeProducts(),
+                                      ),
+                                      bottomNavigationBar:
+                                          CustomNavBar(selectedIndex: 0),
+                                      drawer: CustomDrawer(),
+                                    ))),
                         child: Text(
                           'Explore Marketplace',
                           style: TextStyle(color: Colors.white),
@@ -115,49 +112,49 @@ class _CompanyRegistrationState extends State<CompanyRegistration> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Card(
-              elevation: 3,
-              child: Container(
-                padding: EdgeInsets.all(10),
-                height: 200,
-                child: Column(
-                  children: <Widget>[
-                    Center(
-                      child: Text(
-                        'Become a member',
-                        style: TextStyle(fontSize: 22),
-                      ),
-                    ),
-                    Expanded(
-                      child: Center(
-                          child: Text(
-                        "Choose a membershipship plan that's right for you. Join our community of verified traders and business partners.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 17, color: Colors.grey),
-                      )),
-                    ),
-                    Center(
-                        child: Container(
-                      alignment: Alignment.center,
-                      child: RaisedButton(
-                        shape: StadiumBorder(
-                            side: BorderSide(color: Colors.green, width: 2)),
-                        onPressed: () {},
-                        child: Text(
-                          'Explore Subscription',
-                          style: TextStyle(color: Colors.green),
-                        ),
-                        color: Colors.white,
-                        padding: EdgeInsets.only(left: 30, right: 30),
-                      ),
-                    )),
-                  ],
-                ),
-              ),
-            ),
+            // SizedBox(
+            //   height: 10,
+            // ),
+            // Card(
+            //   elevation: 3,
+            //   child: Container(
+            //     padding: EdgeInsets.all(10),
+            //     height: 200,
+            //     child: Column(
+            //       children: <Widget>[
+            //         Center(
+            //           child: Text(
+            //             'Become a member',
+            //             style: TextStyle(fontSize: 22),
+            //           ),
+            //         ),
+            //         Expanded(
+            //           child: Center(
+            //               child: Text(
+            //             "Choose a membershipship plan that's right for you. Join our community of verified traders and business partners.",
+            //             textAlign: TextAlign.center,
+            //             style: TextStyle(fontSize: 17, color: Colors.grey),
+            //           )),
+            //         ),
+            //         Center(
+            //             child: Container(
+            //           alignment: Alignment.center,
+            //           child: RaisedButton(
+            //             shape: StadiumBorder(
+            //                 side: BorderSide(color: Colors.green, width: 2)),
+            //             onPressed: () {},
+            //             child: Text(
+            //               'Explore Subscription',
+            //               style: TextStyle(color: Colors.green),
+            //             ),
+            //             color: Colors.white,
+            //             padding: EdgeInsets.only(left: 30, right: 30),
+            //           ),
+            //         )),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: 10,
             ),
