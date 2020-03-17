@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/login_register/login.dart';
+import 'package:tradeleaves/components/products/products_home.dart';
 
+import '../CustomAppBar.dart';
+import '../CustomBottomNavigationBar.dart';
 
 class LogOut extends StatefulWidget {
   @override
@@ -9,23 +12,30 @@ class LogOut extends StatefulWidget {
 }
 
 class _LogOutState extends State<LogOut> {
-
-  void clearInfo() async{
+  void clearInfo() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       print("set state called in logout");
       preferences.clear();
     });
   }
+
   @override
   void initState() {
     print("init called in logout");
     clearInfo();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    return new Login();
+    return new Scaffold(
+      appBar: CustomToolBar(),
+      body: Container(
+        child: HomeProducts(),
+      ),
+      bottomNavigationBar: CustomNavBar(selectedIndex: 0),
+      // drawer: CustomDrawer(),
+    );
   }
 }
-
