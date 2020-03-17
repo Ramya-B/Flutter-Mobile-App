@@ -13,8 +13,6 @@ import 'package:tradeleaves/components/Settings/setting.dart';
 import 'package:tradeleaves/components/products/products_home.dart';
 import 'package:tradeleaves/components/products/userproducts.dart';
 import 'package:tradeleaves/components/webpage/mywebview.dart';
-
-import 'Profile/profile.dart';
 import 'company/company_registration.dart';
 import 'company/person_profile.dart';
 
@@ -154,14 +152,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
               leading: Icon(Icons.dashboard),
             ),
           ),
-           InkWell(
+           (this.authToken != null) ?  InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => new UserProducts())),
             child: new ListTile(
               title: Text('My Products'),
               leading: Icon(Icons.view_list),
             ),
-          ),
+          ):Container(),
           InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => new AlertNotifications())),

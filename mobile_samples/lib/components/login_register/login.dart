@@ -153,7 +153,7 @@ class _LoginState extends State<Login> {
     );
 
     return Scaffold(
-        appBar: CustomToolBar(),
+        appBar: AppBar(title: Text('Log In'),backgroundColor: Colors.green,),
         // drawer: CustomDrawer(),
         body: Form(
           key: _formKey,

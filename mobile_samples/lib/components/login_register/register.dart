@@ -242,7 +242,7 @@ class _RegisterState extends State<Register> {
                     color: Colors.white, fontWeight: FontWeight.bold))));
 
     return Scaffold(
-        appBar: CustomToolBar(),
+       appBar: AppBar(title: Text('Sign Up'),backgroundColor: Colors.green,),
         body: Center(
             child: SingleChildScrollView(
                 child: Container(
