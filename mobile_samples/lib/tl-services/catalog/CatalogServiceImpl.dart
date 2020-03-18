@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/podos/categories/categories.dart';
 import 'dart:convert';
 import 'package:tradeleaves/podos/products/product.dart';
@@ -149,6 +150,77 @@ class CatalogServiceImpl extends CatalogServices {
         return res;
       } else {
         return throw Exception('falied to getUserProducts ....');
+      }
+    });
+  }
+
+  @override 
+  Future getSavedCategories(String companyId) async{
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+      print("getSavedCategories service....!");
+      print(companyId);
+       print('${Constants.envUrl}$apiUrl/categories/$companyId/savedCategory');
+    return await http
+        .get(
+      '${Constants.envUrl}$apiUrl/categories/$companyId/savedCategory',
+      headers: {HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}" , 'Content-type': 'application/json; charset=UTF-8'},
+    ).then((data) {
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getSavedCategories resp....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to getSavedCategories ....');
+      }
+    });
+  }
+
+  @override
+  Future getLeafCategories(CategoryDetailsLobDTO categoryDetailsLobDTO) async{
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+      print("getLeafCategories service....!");
+      print(categoryDetailsLobDTO.toJson());
+      print('${Constants.envUrl}$apiUrl/categories/leafCategories/lob');
+    return await http
+        .post(
+      '${Constants.envUrl}$apiUrl/categories/leafCategories/lob',
+      headers: {HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}" , 'Content-type': 'application/json; charset=UTF-8'},
+      body: jsonEncode(<String, Object>{
+        'categoryDetailsLobDTO': categoryDetailsLobDTO.toJson(),
+      }),
+    ).then((data) {
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getLeafCategories resp....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to getLeafCategories ....');
+      }
+    });
+  }
+
+  @override
+  Future getProductAttributesByLob(ListCatProdAttrLoBDTO listCatProdAttrLoBDTO) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+      print("getProductAttributesByLob service....!");
+      print(listCatProdAttrLoBDTO.toJson());
+    return await http
+        .post(
+      '${Constants.envUrl}$apiUrl/categoryprodattr/fetchProdAttributes/byLob',
+      headers: {HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}" , 'Content-type': 'application/json; charset=UTF-8'},
+      body: jsonEncode(<String, Object>{
+        'listCatProdAttrLoBDTO': listCatProdAttrLoBDTO.toJson(),
+      }),
+    ).then((data) {
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getProductAttributesByLob resp....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to getProductAttributesByLob ....');
       }
     });
   }

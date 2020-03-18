@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/products/ProductDetails.dart';
+import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/podos/search/search.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import 'package:tradeleaves/podos/products/product.dart';
@@ -20,7 +21,9 @@ class _FetchPromotedProductsState extends State<FetchPromotedProducts> {
   List res = [];
   getPromotedProducts() async {
     PromoProductCriteria promoProductCriteria = new PromoProductCriteria();
-    Pagination pagination = new Pagination(start: 0, limit: 10);
+    Pagination pagination = new Pagination();
+    pagination.start = 0;
+    pagination.limit= 10;
     promoProductCriteria.pagination = pagination;
     SiteCriteria siteCriteria = new SiteCriteria();
     siteCriteria.channel = "B2BInternational";

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
-import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/company/company_registration.dart';
-import 'package:tradeleaves/main.dart';
+import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/models/user.dart';
 import 'package:tradeleaves/podos/crm/register.dart';
-import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/service_locator.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
@@ -330,7 +328,9 @@ class _RegisterDetailsState extends State<RegisterDetails> {
   getUserProducts() async {
     print("getUserProducts");
     ProductCriteria productCriteria = new ProductCriteria();
-    Pagination pagination = new Pagination(start: 0, limit: 10);
+    Pagination pagination = new Pagination();
+    pagination.start = 0;
+    pagination.limit= 10;
     Sort sort = new Sort();
     sort.direction = 'desc';
     sort.sort = 'createdTime';
@@ -371,7 +371,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
     return Material(
       child: Scaffold(
         backgroundColor: Colors.pink[50],
-        appBar: AppBar(title: Text('OTP Page')),
+        appBar: AppBar(title: Text('OTP Page'),backgroundColor: Colors.green,),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

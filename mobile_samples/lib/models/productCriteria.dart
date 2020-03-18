@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:tradeleaves/podos/products/product.dart';
+import "pagination.dart";
+import "sort.dart";
 part 'productCriteria.g.dart';
 
 @JsonSerializable()

@@ -1,25 +1,32 @@
+import 'package:tradeleaves/podos/products/product.dart';
+
 class CategoryDetailsLobDTO {
   List<String> lobId;
   bool systemRootCategoryFlag;
   String categoryId;
   bool restrictFetchImage;
+  bool active;
 
   CategoryDetailsLobDTO(
-      {this.lobId, this.systemRootCategoryFlag, this.categoryId,this.restrictFetchImage});
+      {this.lobId, this.systemRootCategoryFlag, this.categoryId,this.restrictFetchImage,this.active});
 
   factory CategoryDetailsLobDTO.fromJson(Map<String, dynamic> json) {
     return CategoryDetailsLobDTO(
         lobId: json['lobId'],
         systemRootCategoryFlag: json['systemRootCategoryFlag'],
         restrictFetchImage: json['restrictFetchImage'],
-        categoryId: json['categoryId']);
+        categoryId: json['categoryId'],
+        active: json['active']
+        );
+         
   }
   Map<String, dynamic> toJson() {
     return {
       'lobId': lobId,
       'systemRootCategoryFlag': systemRootCategoryFlag,
       'categoryId': categoryId,
-      'restrictFetchImage': restrictFetchImage
+      'active': active,
+      'active': active
     };
   }
 }
@@ -218,3 +225,21 @@ class CategoryAttributeDTO {
     };
   }
 }
+
+// class SavedCategories{
+//   List<CategoryDTO> savedCategories;
+//    SavedCategories({this.savedCategories,});
+//   factory SavedCategories.fromJson(Map<String, dynamic> json) {
+//      var saveCats = json['savedCategories'] != null ? json['savedCategories'] as List : [];
+//    List<CategoryDTO> _savedCategories = saveCats.map((data)=>CategoryDTO.fromJson(data));
+//     return SavedCategories(
+//         savedCategories: _savedCategories
+//     );
+//   }
+//   Map<String, dynamic> toJson() {
+//     return {
+//       'savedCategories': savedCategories,
+//     };
+//   }
+// }
+

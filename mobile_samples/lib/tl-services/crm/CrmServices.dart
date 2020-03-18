@@ -6,5 +6,6 @@ abstract class CrmServices {
   
    Future register(RegisterDTO registerDTO);
    Future verifyUser(UserCheck info);
+   Future companyRegions();
 
 }

@@ -8,8 +8,13 @@ part of 'productCriteria.dart';
 
 ProductCriteria _$ProductCriteriaFromJson(Map<String, dynamic> json) {
   return ProductCriteria()
-    ..pagination = json['pagination']
-    ..sort = json['sort'] as List
+    ..pagination = json['pagination'] == null
+        ? null
+        : Pagination.fromJson(json['pagination'] as Map<String, dynamic>)
+    ..sort = (json['sort'] as List)
+        ?.map(
+            (e) => e == null ? null : Sort.fromJson(e as Map<String, dynamic>))
+        ?.toList()
     ..siteCriterias = json['siteCriterias'] as List;
 }
 
