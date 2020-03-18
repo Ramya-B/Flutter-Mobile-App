@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/login_register/register.dart';
 import 'package:tradeleaves/models/user.dart';
 import 'package:tradeleaves/podos/crm/register.dart';
-import 'package:tradeleaves/podos/products/product.dart';
-import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/tl-services/login/LoginServiceImpl.dart';
 import '../../main.dart';
 import '../../service_locator.dart';
-import '../CustomDrawer.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -22,8 +18,11 @@ class _LoginState extends State<Login> {
   LogInServiceImpl get logInService => locator<LogInServiceImpl>();
   UserServiceImpl get userService => locator<UserServiceImpl>();
 
-  
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
+
   User user;
   bool autoValidate = false;
 
@@ -41,7 +40,7 @@ class _LoginState extends State<Login> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print(authToken);
     prefs.setString('token', authToken.token.toString());
-  
+
     getUserInfo();
     Navigator.of(context)
         .push(new MaterialPageRoute(builder: (context) => Home()));
@@ -66,10 +65,10 @@ class _LoginState extends State<Login> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     final emailField = TextFormField(
+      controller: _emailController,
       obscureText: false,
       style: style,
       decoration: InputDecoration(
@@ -87,12 +86,18 @@ class _LoginState extends State<Login> {
         }
         return null;
       },
+      // onChanged: (String userName) {
+      //   this.email = userName;
+      // },
       onChanged: (String userName) {
-        this.email = userName;
+        setState(() {
+          this.email = userName;
+        });
       },
     );
 
     final passwordField = TextFormField(
+      controller: _passController,
       obscureText: true,
       style: style,
       decoration: InputDecoration(
@@ -153,7 +158,10 @@ class _LoginState extends State<Login> {
     );
 
     return Scaffold(
-        appBar: AppBar(title: Text('Log In'),backgroundColor: Colors.green,),
+        appBar: AppBar(
+          title: Text('Log In'),
+          backgroundColor: Colors.green,
+        ),
         // drawer: CustomDrawer(),
         body: Form(
           key: _formKey,

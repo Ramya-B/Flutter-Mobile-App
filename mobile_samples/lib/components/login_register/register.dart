@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
-import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/models/user.dart';
 import 'package:tradeleaves/podos/crm/register.dart';
 import 'package:tradeleaves/podos/products/product.dart';

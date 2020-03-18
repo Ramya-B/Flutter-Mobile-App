@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/Profile/person_profile.dart';
+import 'package:tradeleaves/components/company_registration/register_business.dart';
 import 'package:tradeleaves/components/products/products_home.dart';
 
 import '../CustomAppBar.dart';
@@ -185,7 +186,9 @@ class LandingPage extends StatelessWidget {
                       child: RaisedButton(
                         shape: StadiumBorder(
                             side: BorderSide(color: Colors.green, width: 2)),
-                        onPressed: () {},
+                        onPressed: () => Navigator.of(context).push(
+                            new MaterialPageRoute(
+                                builder: (context) => CompanyRegistration())),
                         child: Text(
                           'Register Your Business',
                           style: TextStyle(color: Colors.green),
