@@ -1,0 +1,20 @@
+{
+    "categoryProductAttributeId": 18238,
+    "categoryId": 2504,
+    "productAttributeId": "68ccd738-6a15-4d31-a648-7056c4dbc9ea",
+    "required": true,
+    "variant": true,
+    "priority": 1,
+    "archived": false,
+    "deleted": false,
+    "dataType": "AlphaNumeric",
+    "displayType": "text",
+    "facet": false,
+    "sortable": false,
+    "searchable": true,
+    "inherited": true,
+    "lobId": "34343e34-7601-40de-878d-01b3bd1f0640",
+    "singleValue": true,
+    "validation": null,
+    "facetPriority": null
+}

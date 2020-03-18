@@ -79,6 +79,7 @@ class _HomePageCategoriesState extends State<HomePageCategories> {
     categoryDetailsLobDTO.lobId = ["34343e34-7601-40de-878d-01b3bd1f0641"];
     categoryDetailsLobDTO.systemRootCategoryFlag = false;
     categoryDetailsLobDTO.restrictFetchImage = false;
+    categoryDetailsLobDTO.active = true;
 
     var data = await catalogService.getCategories(categoryDetailsLobDTO);
     setState(() {

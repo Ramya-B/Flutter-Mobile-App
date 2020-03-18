@@ -1,0 +1,6 @@
+{
+    "productAttributeDTO": "$productAttributeDTO",
+    "catgryProductAttributeDTO":"$catgryProductAttributeDTO" ,
+    "catProdAttrValues": "$[]catProdAttrValues",
+    "catProdAttrRoles":  "$[]catProdAttrRoles"
+}

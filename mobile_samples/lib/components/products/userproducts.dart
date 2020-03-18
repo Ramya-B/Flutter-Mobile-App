@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/add_product/addproduct.dart';
+import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import '../../constants.dart';
@@ -12,7 +14,7 @@ class UserProducts extends StatefulWidget {
 }
 
 class _UserProductsState extends State<UserProducts> {
-   List<Sort> sorts = [];
+  List<Sort> sorts = [];
   CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
   UserListedProducts userProducts;
   List<ProductDTO> userProductsList = [];
@@ -21,16 +23,18 @@ class _UserProductsState extends State<UserProducts> {
   var pageStart = 0;
   @override
   void initState() {
-        _controller = ScrollController();
+    _controller = ScrollController();
     _controller.addListener(_scrollListener);
     getUserProducts();
     super.initState();
   }
-  
-    getUserProducts() async {
+
+  getUserProducts() async {
     print("getUserProducts");
     ProductCriteria productCriteria = new ProductCriteria();
-    Pagination pagination = new Pagination(start: this.pageStart, limit: 10);
+    Pagination pagination = new Pagination();
+    pagination.start = this.pageStart;
+    pagination.limit= 10;
     Sort sort = new Sort();
     sort.direction = 'desc';
     sort.sort = 'createdTime';
@@ -56,7 +60,7 @@ class _UserProductsState extends State<UserProducts> {
         if (this.userProductsList.length > this.counter) {
           this.pageStart++;
           print("scrolling is over.so fetching --${this.pageStart}");
-         getUserProducts();
+          getUserProducts();
         }
       });
     }
@@ -67,33 +71,41 @@ class _UserProductsState extends State<UserProducts> {
       });
     }
   }
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('My products'),backgroundColor: Colors.green,),
-      body: (this.userProducts != null ) ? Container(
-        // height: 400,
-       constraints: BoxConstraints(minHeight: 100, maxHeight: 800),
-         child: GridView.builder(
-        controller: _controller,
-        itemCount: this.userProductsList.length,
-        gridDelegate:
-            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemBuilder: (BuildContext context, int index) {
-          return SingleUserProduct(
-            productDTO: this.userProductsList[index],
-          );
-        })
-       
-      ):Container(),
+      appBar: AppBar(
+        title: Text('My products'),
+        backgroundColor: Colors.green,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {Navigator.of(context)
+                .push(new MaterialPageRoute(builder: (context) => SelectCategoryRegion()));},
+        child: Icon(Icons.add),
+        backgroundColor: Colors.green,
+      ),
+      body: (this.userProducts != null)
+          ? Container(
+              // height: 400,
+              constraints: BoxConstraints(minHeight: 100, maxHeight: 800),
+              child: GridView.builder(
+                  controller: _controller,
+                  itemCount: this.userProductsList.length,
+                  gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  itemBuilder: (BuildContext context, int index) {
+                    return SingleUserProduct(
+                      productDTO: this.userProductsList[index],
+                    );
+                  }))
+          : Container(),
     );
   }
 }
 
 class SingleUserProduct extends StatefulWidget {
-   final productDTO;
+  final productDTO;
 
   SingleUserProduct({
     this.productDTO,
@@ -111,12 +123,20 @@ class _SingleUserProductState extends State<SingleUserProduct> {
           padding: EdgeInsets.all(4.0),
           child: Column(
             children: <Widget>[
-              (widget.productDTO.primaryImageUrl != null )? Image.network(
-                (widget.productDTO.primaryImageUrl.toString().contains('http') )? ('${widget.productDTO.primaryImageUrl}'):('${Constants.envUrl}${Constants.mongoImageUrl}/${widget.productDTO.primaryImageUrl}'),
-                width: 150,
-                height: 150,
-              ):Container( width: 150,
-                height: 150,),
+              (widget.productDTO.primaryImageUrl != null)
+                  ? Image.network(
+                      (widget.productDTO.primaryImageUrl
+                              .toString()
+                              .contains('http'))
+                          ? ('${widget.productDTO.primaryImageUrl}')
+                          : ('${Constants.envUrl}${Constants.mongoImageUrl}/${widget.productDTO.primaryImageUrl}'),
+                      width: 150,
+                      height: 150,
+                    )
+                  : Container(
+                      width: 150,
+                      height: 150,
+                    ),
               Expanded(
                 child: Container(
                     padding: EdgeInsets.all(2.0),
@@ -134,4 +154,3 @@ class _SingleUserProductState extends State<SingleUserProduct> {
     );
   }
 }
-

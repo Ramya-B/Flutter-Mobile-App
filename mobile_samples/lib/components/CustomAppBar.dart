@@ -16,9 +16,14 @@ class CustomToolBar extends StatefulWidget  with PreferredSizeWidget  {
 
 class _CustomToolBarState extends State<CustomToolBar> {
 var  authToken;
-  getCookies()async{
+  getCookies() async{
      SharedPreferences sample = await SharedPreferences.getInstance();
     this.authToken = sample.getString('token');
+  }
+  @override
+  void initState() {
+    getCookies();
+    super.initState();
   }
   @override
   Widget build(BuildContext context) {

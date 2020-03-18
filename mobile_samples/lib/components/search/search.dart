@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
+import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/podos/search/search.dart';
 import 'package:tradeleaves/service_locator.dart';
@@ -33,7 +34,9 @@ class _SearchItemsState extends State<SearchItems> {
   searchProducts() async {
     ProductSearchCriteriaDTO productSearchCriteriaDTO =
         new ProductSearchCriteriaDTO();
-    Pagination pagination = new Pagination(start: this.pageStart, limit: 10);
+    Pagination pagination = new Pagination();
+    pagination.start =this.pageStart;
+    pagination.limit= 10;
     productSearchCriteriaDTO.pagination = pagination;
     productSearchCriteriaDTO.sortBy = "relevance";
     productSearchCriteriaDTO.countryId = "IN";
@@ -104,7 +107,9 @@ class _SearchItemsState extends State<SearchItems> {
       filters.tlcriteriaWeights = [];
       filters.suppliertlcriteriaWeights = [];
       filters.sortBy = "relevance";
-      Pagination pagination = new Pagination(start: 0,limit: 10);
+      Pagination pagination = new Pagination();
+          pagination.start =0;
+    pagination.limit= 10;
       filters.pagination = pagination;
       productInfo.countryId = 'IN';
       productInfo.filters = filters;

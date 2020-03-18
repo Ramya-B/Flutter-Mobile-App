@@ -4,6 +4,7 @@ import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/login_register/register.dart';
 import 'package:tradeleaves/components/products/ProductsList.dart';
 import 'package:tradeleaves/components/search/search.dart';
+import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/podos/search/search.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
@@ -36,6 +37,7 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
     categoryDetailsLobDTO.categoryId = widget.categoryDTO.id.toString();
     categoryDetailsLobDTO.lobId = ["34343e34-7601-40de-878d-01b3bd1f0641"];
     categoryDetailsLobDTO.systemRootCategoryFlag = false;
+    categoryDetailsLobDTO.active = true;
     print("getCategoryDetailsByLoB request object {}...........");
     print(categoryDetailsLobDTO.toJson());
     var response =
@@ -62,7 +64,9 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
     filters.tlcriteriaWeights = [];
     filters.suppliertlcriteriaWeights = [];
     filters.sortBy = "relevance";
-    Pagination pagination = new Pagination(start: 0, limit: 10);
+    Pagination pagination = new Pagination();
+    pagination.start = 0;
+    pagination.limit= 10;
     filters.pagination = pagination;
     productInfo.countryId = 'IN';
     productInfo.filters = filters;
