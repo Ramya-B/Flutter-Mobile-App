@@ -1,10 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/search/search.dart';
-import 'company/person_profile.dart';
+import 'Profile/person_profile.dart';
 import 'login_register/login.dart';
 
 
