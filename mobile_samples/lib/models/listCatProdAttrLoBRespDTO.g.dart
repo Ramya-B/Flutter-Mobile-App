@@ -9,12 +9,24 @@ part of 'listCatProdAttrLoBRespDTO.dart';
 ListCatProdAttrLoBRespDTO _$ListCatProdAttrLoBRespDTOFromJson(
     Map<String, dynamic> json) {
   return ListCatProdAttrLoBRespDTO()
-    ..listCatProdAttrLoBRespDTO =
-        json['listCatProdAttrLoBRespDTO'] as Map<String, dynamic>;
+    ..createCategoryProductAttributeDTO =
+        (json['createCategoryProductAttributeDTO'] as List)
+            ?.map((e) => e == null
+                ? null
+                : CreateCategoryProductAttributeDTO.fromJson(
+                    e as Map<String, dynamic>))
+            ?.toList()
+    ..catProdAttrLoBListDTO = (json['catProdAttrLoBListDTO'] as List)
+        ?.map((e) => e == null
+            ? null
+            : CatProdAttrLoBListDTO.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$ListCatProdAttrLoBRespDTOToJson(
         ListCatProdAttrLoBRespDTO instance) =>
     <String, dynamic>{
-      'listCatProdAttrLoBRespDTO': instance.listCatProdAttrLoBRespDTO
+      'createCategoryProductAttributeDTO':
+          instance.createCategoryProductAttributeDTO,
+      'catProdAttrLoBListDTO': instance.catProdAttrLoBListDTO
     };
