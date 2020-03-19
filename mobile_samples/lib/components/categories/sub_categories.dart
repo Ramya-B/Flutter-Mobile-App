@@ -66,7 +66,7 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
     filters.sortBy = "relevance";
     Pagination pagination = new Pagination();
     pagination.start = 0;
-    pagination.limit= 10;
+    pagination.limit = 10;
     filters.pagination = pagination;
     productInfo.countryId = 'IN';
     productInfo.filters = filters;
@@ -217,96 +217,107 @@ class _SubCategoriesState extends State<SubCategoryDeatils> {
                                   .length,
                               itemBuilder: (context, int index2) {
                                 return InkWell(
-                                onTap: () {
-                                    print("tapped");
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => SearchItems(
-                                                  categoryId: this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryDTO.id,
-                                                  isCategoryBasedSearch: true,
-                                                )));
-                                  },
-                                  child:Column(
-                                  children: <Widget>[
-                                    Center(
-                                        child: Container(
-                                            height: 120,
-                                            width: 120,
-                                            child: (this
+                                    onTap: () {
+                                      print("tapped");
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => SearchItems(
+                                                    categoryId: this
                                                         .categoryDetails[index]
                                                         .subCategoryAndAttributesDTO[
                                                             index2]
-                                                        .categoryAttribute !=
-                                                    null)
-                                                ? ListView.builder(
-                                                    shrinkWrap: true,
-                                                    physics:
-                                                        const NeverScrollableScrollPhysics(),
-                                                    itemCount: this
-                                                        .categoryDetails[index]
-                                                        .subCategoryAndAttributesDTO[
-                                                            index2]
-                                                        .categoryAttribute
-                                                        .length,
-                                                    itemBuilder:
-                                                        (BuildContext context,
-                                                            int index3) {
-                                                      return (this
-                                                                      .categoryDetails[
-                                                                          index]
-                                                                      .subCategoryAndAttributesDTO[
-                                                                          index2]
-                                                                      .categoryAttribute[
-                                                                          index3]
-                                                                      .attributeName !=
-                                                                  null &&
-                                                              this
-                                                                      .categoryDetails[
-                                                                          index]
-                                                                      .subCategoryAndAttributesDTO[
-                                                                          index2]
-                                                                      .categoryAttribute[
-                                                                          index3]
-                                                                      .attributeName ==
-                                                                  'ThumbnailImageAttribute')
-                                                          ? Container(
-                                                              height: 120,
-                                                              width: 120,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                                image:
-                                                                    DecorationImage(
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                  image: NetworkImage(
-                                                                      '${Constants.envUrl}${Constants.mongoImageUrl}/${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttribute[index3].attributeValue}'),
-                                                                ),
-                                                              ))
-                                                          : Container();
-                                                    })
-                                                : Container(
-                                                    height: 120,
-                                                    width: 120,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.pink[50],
-                                                    )))),
-                                    Container(
-                                      padding: EdgeInsets.all(5.0),
-                                      // heightFactor: 100,
-                                      child: Text(
-                                        '${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryDTO.name}',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.blueGrey[600],
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ));
+                                                        .categoryDTO
+                                                        .id,
+                                                    isCategoryBasedSearch: true,
+                                                  )));
+                                    },
+                                    child: Column(
+                                      children: <Widget>[
+                                        Center(
+                                            child: Container(
+                                                height: 120,
+                                                width: 120,
+                                                child: (this
+                                                            .categoryDetails[
+                                                                index]
+                                                            .subCategoryAndAttributesDTO[
+                                                                index2]
+                                                            .categoryAttribute !=
+                                                        null)
+                                                    ? ListView.builder(
+                                                        shrinkWrap: true,
+                                                        physics:
+                                                            const NeverScrollableScrollPhysics(),
+                                                        itemCount: this
+                                                            .categoryDetails[
+                                                                index]
+                                                            .subCategoryAndAttributesDTO[
+                                                                index2]
+                                                            .categoryAttribute
+                                                            .length,
+                                                        itemBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                int index3) {
+                                                          return (this
+                                                                          .categoryDetails[
+                                                                              index]
+                                                                          .subCategoryAndAttributesDTO[
+                                                                              index2]
+                                                                          .categoryAttribute[
+                                                                              index3]
+                                                                          .attributeName !=
+                                                                      null &&
+                                                                  this
+                                                                          .categoryDetails[
+                                                                              index]
+                                                                          .subCategoryAndAttributesDTO[
+                                                                              index2]
+                                                                          .categoryAttribute[
+                                                                              index3]
+                                                                          .attributeName ==
+                                                                      'ThumbnailImageAttribute')
+                                                              ? Container(
+                                                                  height: 120,
+                                                                  width: 120,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                    image:
+                                                                        DecorationImage(
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                      image: NetworkImage(
+                                                                          '${Constants.envUrl}${Constants.mongoImageUrl}/${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryAttribute[index3].attributeValue}'),
+                                                                    ),
+                                                                  ))
+                                                              : Container();
+                                                        })
+                                                    : Container(
+                                                        height: 120,
+                                                        width: 120,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color:
+                                                              Colors.pink[50],
+                                                        )))),
+                                        Container(
+                                          padding: EdgeInsets.all(5.0),
+                                          // heightFactor: 100,
+                                          child: Text(
+                                            '${this.categoryDetails[index].subCategoryAndAttributesDTO[index2].categoryDTO.name}',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.blueGrey[600],
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ));
                               }),
                         )
                       ],

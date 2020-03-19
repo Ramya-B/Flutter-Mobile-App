@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/models/companyType.dart';
+import 'package:tradeleaves/models/index.dart';
+import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
+import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
+import 'package:tradeleaves/tl-services/customs/customServiceImpl.dart';
+
+import '../../service_locator.dart';
 
 class CompanyDetails extends StatefulWidget {
   @override
@@ -7,12 +14,100 @@ class CompanyDetails extends StatefulWidget {
 
 class _CompanyDetailsState extends State<CompanyDetails> {
   bool isChecked = false;
-  // bool serviceC = false;
-  // bool isChecked = false;
-
-  String companyTye;
-
+  String companyType;
   String industryType;
+  String siteId = "1152f6df-91cf-4fc2-afa7-2baa63ef5429";
+
+  User user;
+
+  CrmServiceImpl get crmService => locator<CrmServiceImpl>();
+  CustomServiceImpl get customService => locator<CustomServiceImpl>();
+  UserServiceImpl get userService => locator<UserServiceImpl>();
+  ClassificationGroupAttributeDTOResp businessTypeList;
+  List<CompanyType> companyTypeList;
+  List<Country> countryList;
+  List<IndustryType> industryTypeList;
+
+  getUserInfo() async {
+    var data = await userService.getUser();
+    print("user response...");
+    setState(() {
+      this.user = User.fromJson(data);
+    });
+  }
+
+  defaultCountry() async {
+    print('defaultCountry called.....');
+    var res = await customService.countryCodes();
+    print("defaultCountry response object {}...........");
+    print(res);
+    setState(() {
+      this.countryList =
+          List<Country>.from(res.map((i) => Country.fromJson(i)));
+    });
+  }
+
+  getCompanyTypes(String siteId) async {
+    print('getCompanyTypes called.....');
+    var res = await crmService.companyTypes(siteId);
+    print("getCompanyTypes response object {}...........");
+    print(res);
+    setState(() {
+      this.companyTypeList =
+          List<CompanyType>.from(res.map((i) => CompanyType.fromJson(i)));
+    });
+  }
+
+  Map<String, bool> values = {
+    'Buying': false,
+    'Selling': false,
+    'Service Provider': false,
+  };
+
+  getBusinessTypes() async {
+    print('getBusinessTypes called.....');
+    var response = await crmService.businessType();
+    this.businessTypeList =
+        ClassificationGroupAttributeDTOResp.fromJson(response);
+    print("getBusinessTypes response object {}...........");
+    print(response);
+    setState(() {
+      this.businessTypeList =
+          ClassificationGroupAttributeDTOResp.fromJson(response);
+    });
+  }
+
+  getIndustryTypes(String siteId) async {
+    print('getIndustryTypes called.....');
+    var res = await crmService.industryType(siteId);
+    print("getIndustryTypes response object {}...........");
+    print(res);
+    setState(() {
+      this.industryTypeList =
+          List<IndustryType>.from(res.map((i) => IndustryType.fromJson(i)));
+    });
+  }
+
+  @override
+  void initState() {
+    getUserInfo();
+    print("Before Calling defaultCountry--**--**--**");
+    defaultCountry();
+    print("After Calling defaultCountry--**--**--**");
+    countryList = [];
+    companyTypeList = [];
+    industryTypeList = [];
+    print("Before Calling getCompanyTypes.................");
+    getCompanyTypes(siteId);
+    print("After Calling getCompanyTypes.................");
+    print("Before Calling getBusinessTypes *********");
+    getBusinessTypes();
+    print("After Calling getBusinessTypes ***********");
+    print("Before Calling getIndustryTypes =========");
+    getIndustryTypes(siteId);
+    print("After Calling getIndustryTypes ==========");
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,9 +198,9 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                     height: 5,
                   ),
                   TextFormField(
+                    initialValue: (this.user.appsite == 'IN') ? 'India' : 'USA',
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                      hintText: "Country",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5)),
                     ),
@@ -140,49 +235,49 @@ class _CompanyDetailsState extends State<CompanyDetails> {
         SizedBox(
           height: 20,
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text('Company Type'),
-            DropdownButton(
-              hint: companyTye == null
-                  ? Text('Choose Company Type')
-                  : Text(
-                      companyTye,
-                      style: TextStyle(fontSize: 14),
-                    ),
-              isExpanded: true,
-              iconSize: 30.0,
-              items: [
-                'One Person Company',
-                'Corporate',
-                'Private Limited Company'
-              ].map(
-                (val) {
-                  return DropdownMenuItem<String>(
-                    value: val,
-                    child: Text(val),
-                  );
-                },
-              ).toList(),
-              onChanged: (val) {
-                setState(
-                  () {
-                    companyTye = val;
-                  },
-                );
-              },
-            )
-            // TextFormField(
-            //   decoration: InputDecoration(
-            //     contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-            //     hintText: "Company Type",
-            //     border:
-            //         OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-            //   ),
-            // )
-          ],
-        ),
+        this.companyTypeList.length > 0
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Text('Company Type'),
+                  DropdownButton(
+                    hint: companyType == null
+                        ? Text('Company type')
+                        : Text(
+                            companyType,
+                            style: TextStyle(fontSize: 15),
+                          ),
+                    isExpanded: true,
+                    iconSize: 30.0,
+                    items: this.companyTypeList.map(
+                      (val) {
+                        return DropdownMenuItem<String>(
+                          value: val.name,
+                          child: Text(
+                            val.name,
+                          ),
+                        );
+                      },
+                    ).toList(),
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          this.companyType = val;
+                        },
+                      );
+                    },
+                  )
+                  // TextFormField(
+                  //   decoration: InputDecoration(
+                  //     contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+                  //     hintText: "Company Type",
+                  //     border:
+                  //         OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                  //   ),
+                  // )
+                ],
+              )
+            : Container(),
         SizedBox(
           height: 20,
         ),
@@ -195,30 +290,25 @@ class _CompanyDetailsState extends State<CompanyDetails> {
             ),
             DropdownButton(
               hint: industryType == null
-                  ? Text('Choose Primary Industry')
+                  ? Text('Primary industry')
                   : Text(
                       industryType,
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 15),
                     ),
               isExpanded: true,
               iconSize: 30.0,
-              items: [
-                'Business Services',
-                'Agriculture Products',
-                'Carpet',
-                'Electrical & Electronics'
-              ].map(
+              items: this.industryTypeList.map(
                 (val) {
                   return DropdownMenuItem<String>(
-                    value: val,
-                    child: Text(val),
+                    value: val.name,
+                    child: Text(val.name),
                   );
                 },
               ).toList(),
               onChanged: (val) {
                 setState(
                   () {
-                    industryType = val;
+                    this.industryType = val;
                   },
                 );
               },
@@ -236,61 +326,45 @@ class _CompanyDetailsState extends State<CompanyDetails> {
         SizedBox(
           height: 20,
         ),
-        // Column(
-        //   crossAxisAlignment: CrossAxisAlignment.stretch,
-        //   children: <Widget>[
-        //     Text("What's your primary business activity?"),
-        //     ListTileTheme(
-        //       contentPadding: EdgeInsets.zero,
-        //       child: CheckboxListTile(
-        //         activeColor: Colors.green,
-        //         dense: true,
-        //         title: Text("Buying"),
-        //         value: isChecked,
-        //         onChanged: (bool value) {
-        //           setState(() {
-        //             isChecked = value;
-        //           });
-        //         },
-        //         controlAffinity:
-        //             ListTileControlAffinity.leading, //  <-- leading Checkbox
-        //       ),
-        //     ),
-        //     ListTileTheme(
-        //       contentPadding: EdgeInsets.zero,
-        //       child: CheckboxListTile(
-        //         activeColor: Colors.green,
-        //         dense: true,
-        //         title: Text("Selling"),
-        //         value: isChecked,
-        //         onChanged: (bool value) {
-        //           setState(() {
-        //             isChecked = value;
-        //           });
-        //         },
-        //         controlAffinity:
-        //             ListTileControlAffinity.leading, //  <-- leading Checkbox
-        //       ),
-        //     ),
-        //     ListTileTheme(
-        //       contentPadding: EdgeInsets.zero,
-        //       child: CheckboxListTile(
-        //         activeColor: Colors.green,
-        //         dense: true,
-        //         title: Text("Service Provider"),
-        //         value: isChecked,
-        //         onChanged: (bool value) {
-        //           setState(() {
-        //             isChecked = value;
-        //           });
-        //         },
-        //         controlAffinity:
-        //             ListTileControlAffinity.leading, //  <-- leading Checkbox
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        CheckboxWidget(),
+        Container(
+          child: (this.businessTypeList != null &&
+                  this.businessTypeList.classificationGroupAttributeDTO.length >
+                      0)
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                      Text("What's your primary business activity?"),
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: this
+                            .businessTypeList
+                            .classificationGroupAttributeDTO
+                            .length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return new CheckboxListTile(
+                            title: new Text(businessTypeList
+                                .classificationGroupAttributeDTO[index]
+                                .attributeName),
+                            value: values[businessTypeList
+                                .classificationGroupAttributeDTO[index]
+                                .attributeName],
+                            activeColor: Colors.green,
+                            checkColor: Colors.white,
+                            onChanged: (bool value) {
+                              setState(() {
+                                values[businessTypeList
+                                    .classificationGroupAttributeDTO[index]
+                                    .attributeName] = value;
+                              });
+                            },
+                            controlAffinity: ListTileControlAffinity.leading,
+                          );
+                        },
+                      ),
+                    ])
+              : Container(),
+        ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -299,12 +373,26 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               height: 8,
             ),
             TextFormField(
+              initialValue: this
+                          .user
+                          .personalDetails
+                          .profile
+                          .telephone[0]
+                          .contactNumber !=
+                      null
+                  ? this.user.personalDetails.profile.telephone[0].contactNumber
+                  : 0,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                 hintText: "Enter Mobile Number",
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
               ),
+              onChanged: (value) {
+                setState(() {
+                  print(value);
+                });
+              },
             )
           ],
         ),
@@ -319,12 +407,22 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               height: 8,
             ),
             TextFormField(
+              initialValue:
+                  this.user.personalDetails.profile.email[0].emailAddress !=
+                          null
+                      ? this.user.personalDetails.profile.email[0].emailAddress
+                      : null,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                hintText: "email",
+                hintText: "Enter your email",
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
               ),
+              onChanged: (value) {
+                setState(() {
+                  print(value);
+                });
+              },
             )
           ],
         ),
@@ -348,6 +446,47 @@ class _CompanyDetailsState extends State<CompanyDetails> {
             )
           ],
         ),
+        SizedBox(
+          height: 20,
+        ),
+        (this.companyType != null && this.industryType != null)
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Text('Identity Number'),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      DropdownButton<String>(
+                        onChanged: (c) {},
+                        underline: Container(),
+                        items: [
+                          DropdownMenuItem<String>(
+                            child: Text(
+                              'PAN',
+                              style: TextStyle(fontSize: 14),
+                            ),
+                          )
+                        ],
+                      ),
+                      Flexible(
+                          child: TextFormField(
+                        decoration: InputDecoration(
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+                          hintText: "Enter PAN Number",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                      )),
+                    ],
+                  ),
+                ],
+              )
+            : Container(),
         SizedBox(
           height: 20,
         ),
@@ -385,60 +524,6 @@ class _CompanyDetailsState extends State<CompanyDetails> {
           ),
         )
       ],
-    );
-  }
-}
-
-class CheckboxWidget extends StatefulWidget {
-  @override
-  CheckboxWidgetState createState() => new CheckboxWidgetState();
-}
-
-class CheckboxWidgetState extends State {
-  Map<String, bool> values = {
-    'Buying': false,
-    'Selling': false,
-    'Service Provider': false,
-  };
-
-  var tmpArray = [];
-
-  getCheckboxItems() {
-    values.forEach((key, value) {
-      if (value == true) {
-        tmpArray.add(key);
-      }
-    });
-    print(tmpArray);
-    tmpArray.clear();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text("What's your primary business activity?"),
-            ListView(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              children: values.keys.map((String key) {
-                return new CheckboxListTile(
-                  title: new Text(key),
-                  value: values[key],
-                  activeColor: Colors.green,
-                  checkColor: Colors.white,
-                  onChanged: (bool value) {
-                    setState(() {
-                      values[key] = value;
-                    });
-                  },
-                  controlAffinity: ListTileControlAffinity.leading,
-                );
-              }).toList(),
-            ),
-          ]),
     );
   }
 }

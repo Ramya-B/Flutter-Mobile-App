@@ -1,0 +1,10 @@
+{
+    "code": "IN",
+    "isoAlpha3": "IND",
+    "country": "India",
+    "language": "EN",
+    "currency": "INR",
+    "callingCode": "+91",
+    "active": true,
+    "mobileOtpFlag": "Y"
+}
