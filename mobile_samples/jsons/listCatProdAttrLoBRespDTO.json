@@ -1,6 +1,4 @@
-{
-    "listCatProdAttrLoBRespDTO": {
+ {
       "createCategoryProductAttributeDTO": "$[]createCategoryProductAttributeDTO",
       "catProdAttrLoBListDTO": "$[]catProdAttrLoBListDTO"
   }
-}
