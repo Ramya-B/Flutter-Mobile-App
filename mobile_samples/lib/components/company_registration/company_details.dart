@@ -16,7 +16,11 @@ class _CompanyDetailsState extends State<CompanyDetails> {
   bool isChecked = false;
   String companyType;
   String industryType;
+  String state;
   String siteId = "1152f6df-91cf-4fc2-afa7-2baa63ef5429";
+  int groupId = 1;
+  String name = "India";
+  bool isActive = true;
 
   User user;
 
@@ -25,14 +29,37 @@ class _CompanyDetailsState extends State<CompanyDetails> {
   UserServiceImpl get userService => locator<UserServiceImpl>();
   ClassificationGroupAttributeDTOResp businessTypeList;
   List<CompanyType> companyTypeList;
+  List<IdentificationGroups> indentificationGroupList;
   List<Country> countryList;
   List<IndustryType> industryTypeList;
+  List<States> statesList;
 
   getUserInfo() async {
     var data = await userService.getUser();
     print("user response...");
     setState(() {
       this.user = User.fromJson(data);
+    });
+  }
+
+  getStates() async {
+    print('getStates called.....');
+    var res = await crmService.getStates(name, isActive);
+    print("getStates response object {}...........");
+    print(res);
+    setState(() {
+      this.statesList = List<States>.from(res.map((i) => States.fromJson(i)));
+    });
+  }
+
+  getIdentificationGroups(int groupId) async {
+    print('getIdentificationGroups called.....');
+    var res = await crmService.getIdentificationGroyp(groupId);
+    print("getIdentificationGroups response object {}...........");
+    print(res);
+    setState(() {
+      this.indentificationGroupList = List<IdentificationGroups>.from(
+          res.map((i) => IdentificationGroups.fromJson(i)));
     });
   }
 
@@ -90,13 +117,15 @@ class _CompanyDetailsState extends State<CompanyDetails> {
 
   @override
   void initState() {
+    statesList = [];
+    countryList = [];
+    indentificationGroupList = [];
+    companyTypeList = [];
+    industryTypeList = [];
     getUserInfo();
     print("Before Calling defaultCountry--**--**--**");
     defaultCountry();
     print("After Calling defaultCountry--**--**--**");
-    countryList = [];
-    companyTypeList = [];
-    industryTypeList = [];
     print("Before Calling getCompanyTypes.................");
     getCompanyTypes(siteId);
     print("After Calling getCompanyTypes.................");
@@ -106,6 +135,12 @@ class _CompanyDetailsState extends State<CompanyDetails> {
     print("Before Calling getIndustryTypes =========");
     getIndustryTypes(siteId);
     print("After Calling getIndustryTypes ==========");
+    print("Before Calling getIdentificationGroups ----------------");
+    getIdentificationGroups(groupId);
+    print("After Calling getIdentificationGroups ----------------");
+    print("Before Calling getStates ----------------");
+    getStates();
+    print("After Calling getStates ----------------");
     super.initState();
   }
 
@@ -198,7 +233,10 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                     height: 5,
                   ),
                   TextFormField(
-                    initialValue: (this.user.appsite == 'IN') ? 'India' : 'USA',
+                    initialValue:
+                        (this.user != null && this.user.appsite == 'IN')
+                            ? 'India'
+                            : 'USA',
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                       border: OutlineInputBorder(
@@ -208,14 +246,51 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                   SizedBox(
                     height: 5,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                      hintText: "State",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5)),
-                    ),
-                  ),
+                  this.statesList.length > 0
+                      ? Container(
+                          margin: EdgeInsets.only(left: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              DropdownButton(
+                                hint: state == null
+                                    ? Text('State')
+                                    : Text(
+                                        state,
+                                        style: TextStyle(fontSize: 15),
+                                      ),
+                                isExpanded: true,
+                                iconSize: 30.0,
+                                items: this.statesList.map(
+                                  (val) {
+                                    return DropdownMenuItem<String>(
+                                      value: val.name,
+                                      child: Text(
+                                        val.name,
+                                      ),
+                                    );
+                                  },
+                                ).toList(),
+                                onChanged: (val) {
+                                  setState(
+                                    () {
+                                      this.state = val;
+                                    },
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  // TextFormField(
+                  //   decoration: InputDecoration(
+                  //     contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+                  //     hintText: "State",
+                  //     border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(5)),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 5,
                   ),
@@ -466,7 +541,11 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                         items: [
                           DropdownMenuItem<String>(
                             child: Text(
-                              'PAN',
+                              this
+                                  .indentificationGroupList[1]
+                                  .identificationTypeDTOList[1]
+                                  .identificationFieldsList[0]
+                                  .name,
                               style: TextStyle(fontSize: 14),
                             ),
                           )

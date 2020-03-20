@@ -124,7 +124,7 @@ class CrmServiceImpl extends CrmServices {
   }
 
   @override
-  Future<List> industryType(String siteId) async{
+  Future<List> industryType(String siteId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("industryType service called......");
     return await http.get(
@@ -143,6 +143,57 @@ class CrmServiceImpl extends CrmServices {
         return res;
       } else {
         return throw Exception('falied to get industryType.........');
+      }
+    });
+  }
+
+  @override
+  Future<List> getIdentificationGroyp(int groupId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getIdentificationGroyp service called......");
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/profile/identificationgroups/$groupId',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      print("getIdentificationGroyp response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getIdentificationGroyp get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get getIdentificationGroyp.........');
+      }
+    });
+  }
+
+  @override
+  Future<List> getStates(String name, bool isActive) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getStates service called......");
+    return await http.post(
+      '${Constants.envUrl}/api/countries/states/by/country/code',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+      body: jsonEncode({
+        'countryInfoDto': {"name":"India" , "isActive": true}
+      })
+    ).then((data) {
+      print("getStates response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getStates get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get getStates.........');
       }
     });
   }
