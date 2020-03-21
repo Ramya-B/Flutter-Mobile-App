@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
+import 'package:tradeleaves/models/companyRegionsResp.dart';
 import 'package:tradeleaves/models/index.dart';
+import 'package:tradeleaves/models/productAttributesResp.dart';
 import 'package:tradeleaves/models/user.dart';
 import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';

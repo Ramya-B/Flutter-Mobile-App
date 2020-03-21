@@ -8,6 +8,8 @@ class CompanyRegistration extends StatefulWidget {
 }
 
 class _CompanyRegistrationState extends State<CompanyRegistration> {
+  
+
   List<MyItem> _items = <MyItem>[
     MyItem(header: "Company Details", body: "Company Details Page"),
     MyItem(header: "Verification", body: "Verification Page"),
@@ -33,16 +35,19 @@ class _CompanyRegistrationState extends State<CompanyRegistration> {
                     headerBuilder: (BuildContext context, bool isExpanded) {
                       return Padding(
                         padding: EdgeInsets.all(15),
-                        child: Text(item.header, style: TextStyle(fontSize: 20),),
+                        child: Text(
+                          item.header,
+                          style: TextStyle(fontSize: 20),
+                        ),
                       );
                     },
                     isExpanded: item.isExapanded,
                     body: Container(
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
-                        child : (item.header == 'Company Details') ? CompanyDetails() : VerficationPage()
-                      )
-                    ));
+                        child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: (item.header == 'Company Details')
+                                ? CompanyDetails()
+                                : VerficationPage())));
               }).toList(),
             )
           ],

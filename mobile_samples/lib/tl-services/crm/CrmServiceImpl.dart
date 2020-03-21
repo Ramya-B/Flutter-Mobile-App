@@ -34,12 +34,12 @@ class CrmServiceImpl extends CrmServices {
 
   @override
   Future verifyUser(UserCheck info) async {
-     print("verify user....");
-  var uri =  Uri.http('${Constants.envDomainUrl}', '$apiUrl/register/verification/verify', { 'login': false.toString() });
-   print(uri);
+    print("verify user....");
+    var uri = Uri.http('${Constants.envDomainUrl}',
+        '$apiUrl/register/verification/verify', {'login': false.toString()});
+    print(uri);
     return await http
-        .post(uri,
-            headers: headers, body: jsonEncode(info.toJson()))
+        .post(uri, headers: headers, body: jsonEncode(info.toJson()))
         .then((data) {
       if (data.statusCode == 200) {
         var res = json.decode(data.body);
@@ -53,13 +53,15 @@ class CrmServiceImpl extends CrmServices {
   }
 
   @override
-  Future companyRegions() async{
-     SharedPreferences prefs = await SharedPreferences.getInstance();
-      print("companyRegions service....!");
-    return await http
-        .get(
+  Future companyRegions() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("companyRegions service....!");
+    return await http.get(
       '${Constants.envUrl}$apiUrl/profile/companyregions/get',
-      headers: {HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}" , 'Content-type': 'application/json; charset=UTF-8'},
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
     ).then((data) {
       if (data.statusCode == 200) {
         var res = json.decode(data.body);
@@ -70,4 +72,129 @@ class CrmServiceImpl extends CrmServices {
         return throw Exception('falied to companyRegions ....');
       }
     });
-  }}
+  }
+
+  @override
+  Future<List> companyTypes(String siteId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("companyTypes service...");
+    print(siteId);
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/profile/companytypes/site/$siteId',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      print("companyType response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("companyTypes get successfully......");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get companyTypes..........');
+      }
+    });
+  }
+
+  @override
+  Future businessType() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("businessType service called......");
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/profile/classification/businesstype',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      print("businessType response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("businessTypes get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get businessTypes.........');
+      }
+    });
+  }
+
+  @override
+  Future<List> industryType(String siteId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("industryType service called......");
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/profile/primaryindustries/site/$siteId',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      print("industryType response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("industryType get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get industryType.........');
+      }
+    });
+  }
+
+  @override
+  Future<List> getIdentificationGroyp(int groupId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getIdentificationGroyp service called......");
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/profile/identificationgroups/$groupId',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      print("getIdentificationGroyp response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getIdentificationGroyp get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get getIdentificationGroyp.........');
+      }
+    });
+  }
+
+  @override
+  Future<List> getStates(String name, bool isActive) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getStates service called......");
+    return await http.post(
+      '${Constants.envUrl}/api/countries/states/by/country/code',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+      body: jsonEncode({
+        'countryInfoDto': {"name":"India" , "isActive": true}
+      })
+    ).then((data) {
+      print("getStates response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getStates get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get getStates.........');
+      }
+    });
+  }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Passport",
+    "validation": null,
+    "type": "Attachment",
+    "required": "Y",
+    "verificationLink": null
+  }
