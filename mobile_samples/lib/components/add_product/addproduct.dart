@@ -12,22 +12,101 @@ import '../../service_locator.dart';
 
 class AddProduct extends StatefulWidget {
   final ProductAttributesResp productAttributes;
-  AddProduct({this.productAttributes});
+  final ListCatProdAttrLoBDTO categoryRegionLob;
+  final List<String> regions;
+
+  AddProduct({this.productAttributes, this.categoryRegionLob, this.regions});
   @override
   _AddProductState createState() => _AddProductState();
 }
 
 class _AddProductState extends State<AddProduct> {
   List<CreateCategoryProductAttributeDTO> prodValues = [];
+  List<ProductAttributeDetailDTO> productAttributeDetailDTOList;
+  List<ProductLobCountryStatusDTO> productLobCountryStatusDTOList;
+   final formKey = new GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
+  }
+   _saveForm() async {
+    var form = formKey.currentState;
+    if (form.validate()) {
+      await saveProduct();
+
+      setState(() {
+      
+      });
+    }
+  }
+
+  saveProduct() {
+    ProductDTO productDTO = new ProductDTO();
+    for (var item in productAttributeDetailDTOList) {
+      switch (item.attributeName) {
+        case "Product Name":
+          {
+            productDTO.productName = item.value;
+          }
+          break;
+        default:
+          {
+            print("Invalid choice");
+          }
+          break;
+      }
+      // item.attributeName == ;
+
+    }
+
+    productDTO.primaryImageUrl =
+        "76f912dc-2271-437e-afce-7329f798658f/joker.jpg";
+    productDTO.type = "product";
+    productDTO.channel = "B2BInternational";
+    productDTO.region = "IN";
+    productDTO.hsCodes = [];
+    productDTO.status = "Created";
+    productDTO.categoryIds = [widget.categoryRegionLob.categoryId];
+    productDTO.selectedSites = [];
+    productDTO.supplierId = "bf22e74d-e21f-4549-a3ef-a52e22350ffc";
+    productDTO.productAttributeDetailDTO = productAttributeDetailDTOList;
+    productDTO.productOptionDTO = [];
+    productDTO.productLobCountryStatusDTO = [];
+    for (var item in widget.categoryRegionLob.lobId) {
+      for (var countries in widget.regions) {
+        ProductLobCountryStatusDTO productLobCountryStatusDTO = ProductLobCountryStatusDTO();
+        productLobCountryStatusDTO.productLobCountryStatusId = null;
+				productLobCountryStatusDTO.productId = null;
+				productLobCountryStatusDTO.lobId = item.toString();
+				productLobCountryStatusDTO.regionId ="ASIA";
+				productLobCountryStatusDTO.countryId = countries.toString();
+				productLobCountryStatusDTO.statusId = "Created";
+				productLobCountryStatusDTO.reason = null;
+        productDTO.productLobCountryStatusDTO.add(productLobCountryStatusDTO);
+      }
+    }
+    ProductOptionDTO productOptionDTO = ProductOptionDTO();
+    productOptionDTO.productOptionName =  productDTO.productName ;
+    productOptionDTO.productAttributeDetailDTO= [];
+    productOptionDTO.priceList= [];
+    productOptionDTO.deliveryScheduleDTO= [];
+    productOptionDTO.imageDTO = [];
+    ImageDTO imageDTO= ImageDTO();
+    imageDTO.imageUrl = "76f912dc-2271-437e-afce-7329f798658f/joker.jpg";
+    imageDTO.name = "76f912dc-2271-437e-afce-7329f798658f/joker.jpg";
+    imageDTO.isCoverPhoto = true;
+    imageDTO.isHide = true;
+    imageDTO.lobId = "34343e34-7601-40de-878d-01b3bd1f0640";
+    imageDTO.imageType = "JPG";
+    productOptionDTO.imageDTO.add(imageDTO);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Add Product'),backgroundColor: Colors.green),
+        appBar:
+            AppBar(title: Text('Add Product'), backgroundColor: Colors.green),
         body: ListView(
           children: <Widget>[
             Form(
@@ -73,12 +152,116 @@ class _AddProductState extends State<AddProduct> {
                               validator: (arg1) {
                                 return null;
                               },
-                              
-                              onChanged: (String name) {
+                              onSaved: (String value) {
                                 setState(() {
-                                  print("${widget.productAttributes.listCatProdAttrLoBRespDTO}");
-                                  print("$name");
-                                  prodValues.add(widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index]);
+                                  ProductAttributeDetailDTO
+                                      productAttributeDetailDTO =
+                                      ProductAttributeDetailDTO();
+                                  productAttributeDetailDTO.attributeName =
+                                      widget
+                                          .productAttributes
+                                          .listCatProdAttrLoBRespDTO
+                                          .createCategoryProductAttributeDTO[
+                                              index]
+                                          .productAttributeDTO
+                                          .name;
+                                  productAttributeDetailDTO.valueType =
+                                      "VARCHAR";
+                                  productAttributeDetailDTO.required = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .required;
+                                  productAttributeDetailDTO.displayType = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .displayType;
+                                  productAttributeDetailDTO
+                                          .categoryProductAttributeId =
+                                      widget
+                                          .productAttributes
+                                          .listCatProdAttrLoBRespDTO
+                                          .createCategoryProductAttributeDTO[
+                                              index]
+                                          .catgryProductAttributeDTO
+                                          .categoryProductAttributeId;
+                                  productAttributeDetailDTO.productAttributeId =
+                                      widget
+                                          .productAttributes
+                                          .listCatProdAttrLoBRespDTO
+                                          .createCategoryProductAttributeDTO[
+                                              index]
+                                          .catgryProductAttributeDTO
+                                          .productAttributeId;
+                                  productAttributeDetailDTO.facet = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .facet;
+                                  productAttributeDetailDTO.searchable = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .searchable;
+                                  productAttributeDetailDTO.variant = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .variant;
+                                  productAttributeDetailDTO.sortable = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .sortable;
+                                  productAttributeDetailDTO.value = value;
+                                  productAttributeDetailDTO.lobId = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .lobId;
+                                  productAttributeDetailDTO.prodAttrId = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .productAttributeId;
+                                  for (var item
+                                      in productAttributeDetailDTOList) {
+                                    if (item.attributeName ==
+                                        widget
+                                            .productAttributes
+                                            .listCatProdAttrLoBRespDTO
+                                            .createCategoryProductAttributeDTO[
+                                                index]
+                                            .productAttributeDTO
+                                            .name) {
+                                      productAttributeDetailDTOList
+                                          .remove(item);
+                                    }
+                                  }
+                                  productAttributeDetailDTOList
+                                      .add(productAttributeDetailDTO);
+                                  print(productAttributeDetailDTOList);
+                                });
+                              },
+                              onChanged: (String value) {
+                                setState(() {
+                                  print(
+                                      "${widget.productAttributes.listCatProdAttrLoBRespDTO}");
+                                  print("$value");
+                                  prodValues.add(widget
+                                          .productAttributes
+                                          .listCatProdAttrLoBRespDTO
+                                          .createCategoryProductAttributeDTO[
+                                      index]);
                                   print("$prodValues");
                                 });
                               },
@@ -96,6 +279,7 @@ class _AddProductState extends State<AddProduct> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
+                        _saveForm();
                         print("product saved....!");
                       }),
                 ),
@@ -128,7 +312,8 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
   List selectedRegions;
   final formKey = new GlobalKey<FormState>();
   ProductAttributesResp listCatProdAttrLoBRespDTO;
-  
+  ListCatProdAttrLoBDTO listCatProdAttrLoBDTO = new ListCatProdAttrLoBDTO();
+
   List lobs = [
     {
       "lobId": "34343e34-7601-40de-878d-01b3bd1f0641",
@@ -204,7 +389,6 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
   }
 
   getProductAttributes() async {
-    ListCatProdAttrLoBDTO listCatProdAttrLoBDTO = new ListCatProdAttrLoBDTO();
     listCatProdAttrLoBDTO.categoryId = this.selectedCategory;
     listCatProdAttrLoBDTO.lobId = this.selectedLobs;
     var prodAttr =
@@ -224,7 +408,9 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
             context,
             MaterialPageRoute(
                 builder: (context) => AddProduct(
-                    productAttributes: this.listCatProdAttrLoBRespDTO)));
+                    productAttributes: this.listCatProdAttrLoBRespDTO,
+                    categoryRegionLob: listCatProdAttrLoBDTO,
+                    regions: selectedRegions)));
       });
     }
   }

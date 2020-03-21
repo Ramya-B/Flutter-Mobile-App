@@ -1,0 +1,16 @@
+{
+    "attributeName": "Product Name",
+    "valueType": "VARCHAR",
+    "required": true,
+    "displayType": "text",
+    "categoryProductAttributeId": 649,
+    "productAttributeId": "68ccd738-6a15-4d31-a648-7056c4dbc9ea",
+    "facet": false,
+    "searchable": true,
+    "variant": true,
+    "sortable": false,
+    "fieldId": "Product_Name_14280681",
+    "value": "Product_Test1",
+    "lobId": "34343e34-7601-40de-878d-01b3bd1f0640",
+    "prodAttrId": "68ccd738-6a15-4d31-a648-7056c4dbc9ea"
+}

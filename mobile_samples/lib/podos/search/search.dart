@@ -1,4 +1,4 @@
-import 'package:tradeleaves/podos/products/product.dart';
+import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/podos/suppliers/supplier.dart';
 
 class SearchResults {
