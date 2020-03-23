@@ -1,4 +1,4 @@
- import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';

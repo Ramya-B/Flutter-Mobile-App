@@ -224,4 +224,28 @@ class CatalogServiceImpl extends CatalogServices {
       }
     });
   }
+
+  @override
+  Future saveProduct(ProductDTO productDTO) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+      print("saveProduct service....!");
+      print(productDTO.toJson());
+    return await http
+        .post(
+      '${Constants.envUrl}$apiUrl/products/saveProduct/byLob',
+      headers: {HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}" , 'Content-type': 'application/json; charset=UTF-8'},
+      body: jsonEncode(<String, Object>{
+        'productDTO': productDTO.toJson(),
+      }),
+    ).then((data) {
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("saveProduct resp....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to saveProduct ....');
+      }
+    });
+  }
 }

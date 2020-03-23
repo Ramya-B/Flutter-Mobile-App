@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
+import 'package:tradeleaves/main.dart';
 import 'package:tradeleaves/models/companyRegionsResp.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/models/productAttributesResp.dart';
@@ -9,13 +10,12 @@ import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
-
 import '../../service_locator.dart';
 
 class AddProduct extends StatefulWidget {
   final ProductAttributesResp productAttributes;
   final ListCatProdAttrLoBDTO categoryRegionLob;
-  final List<String> regions;
+  final List regions;
 
   AddProduct({this.productAttributes, this.categoryRegionLob, this.regions});
   @override
@@ -24,9 +24,11 @@ class AddProduct extends StatefulWidget {
 
 class _AddProductState extends State<AddProduct> {
   List<CreateCategoryProductAttributeDTO> prodValues = [];
-  List<ProductAttributeDetailDTO> productAttributeDetailDTOList;
+  List<ProductAttributeDetailDTO> productAttributeDetailDTOList=[];
   List<ProductLobCountryStatusDTO> productLobCountryStatusDTOList;
    final formKey = new GlobalKey<FormState>();
+    CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
+    ProductDTO productDTO = new ProductDTO();
 
   @override
   void initState() {
@@ -35,17 +37,23 @@ class _AddProductState extends State<AddProduct> {
    _saveForm() async {
     var form = formKey.currentState;
     if (form.validate()) {
+       form.save();
       await saveProduct();
-
+      await catalogService.saveProduct(productDTO);
       setState(() {
-      
+      print("set state of save form");
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Home()));
       });
     }
   }
 
   saveProduct() {
-    ProductDTO productDTO = new ProductDTO();
-    for (var item in productAttributeDetailDTOList) {
+    print("save product");
+    print(this.productAttributeDetailDTOList);
+    for (var item in this.productAttributeDetailDTOList) {
       switch (item.attributeName) {
         case "Product Name":
           {
@@ -61,7 +69,7 @@ class _AddProductState extends State<AddProduct> {
       // item.attributeName == ;
 
     }
-
+    print("step2");
     productDTO.primaryImageUrl =
         "76f912dc-2271-437e-afce-7329f798658f/joker.jpg";
     productDTO.type = "product";
@@ -75,6 +83,7 @@ class _AddProductState extends State<AddProduct> {
     productDTO.productAttributeDetailDTO = productAttributeDetailDTOList;
     productDTO.productOptionDTO = [];
     productDTO.productLobCountryStatusDTO = [];
+    print("step3");
     for (var item in widget.categoryRegionLob.lobId) {
       for (var countries in widget.regions) {
         ProductLobCountryStatusDTO productLobCountryStatusDTO = ProductLobCountryStatusDTO();
@@ -112,6 +121,7 @@ class _AddProductState extends State<AddProduct> {
         body: ListView(
           children: <Widget>[
             Form(
+              key: formKey,
                 child: Column(
               children: <Widget>[
                 ListView.builder(
@@ -154,7 +164,10 @@ class _AddProductState extends State<AddProduct> {
                               validator: (arg1) {
                                 return null;
                               },
-                              onSaved: (String value) {
+                              
+                              onChanged: (String value) {
+                                print("On chaged called");
+                                print(value);
                                 setState(() {
                                   ProductAttributeDetailDTO
                                       productAttributeDetailDTO =
@@ -236,7 +249,7 @@ class _AddProductState extends State<AddProduct> {
                                       .catgryProductAttributeDTO
                                       .productAttributeId;
                                   for (var item
-                                      in productAttributeDetailDTOList) {
+                                      in this.productAttributeDetailDTOList) {
                                     if (item.attributeName ==
                                         widget
                                             .productAttributes
@@ -245,33 +258,23 @@ class _AddProductState extends State<AddProduct> {
                                                 index]
                                             .productAttributeDTO
                                             .name) {
-                                      productAttributeDetailDTOList
+                                      this.productAttributeDetailDTOList
                                           .remove(item);
                                     }
                                   }
-                                  productAttributeDetailDTOList
+                                  this.productAttributeDetailDTOList
                                       .add(productAttributeDetailDTO);
-                                  print(productAttributeDetailDTOList);
+                                      print("on saved..!");
+                                  print(this.productAttributeDetailDTOList);
                                 });
-                              },
-                              onChanged: (String value) {
-                                setState(() {
-                                  print(
-                                      "${widget.productAttributes.listCatProdAttrLoBRespDTO}");
-                                  print("$value");
-                                  prodValues.add(widget
-                                          .productAttributes
-                                          .listCatProdAttrLoBRespDTO
-                                          .createCategoryProductAttributeDTO[
-                                      index]);
-                                  print("$prodValues");
-                                });
-                              },
+                              }
+                              
                             ),
                           )
                         ],
                       );
                     }),
+                    Container(child: Text('${this.productAttributeDetailDTOList}'),),
                 Container(
                   padding: EdgeInsets.all(8),
                   child: RaisedButton(
@@ -312,7 +315,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
   CompanyRegionsResp companyRegions;
   var regions;
   List selectedRegions;
-  final formKey = new GlobalKey<FormState>();
+  final _formKey = new GlobalKey<FormState>();
   ProductAttributesResp listCatProdAttrLoBRespDTO;
   ListCatProdAttrLoBDTO listCatProdAttrLoBDTO = new ListCatProdAttrLoBDTO();
 
@@ -401,11 +404,13 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
   }
 
   _saveForm() async {
-    var form = formKey.currentState;
+    print(_formKey);
+    var form = _formKey.currentState;
     if (form.validate()) {
       await getProductAttributes();
-
+      print("after get prodattributes");
       setState(() {
+        print("set state of save form");
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -438,7 +443,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
         body: ListView(
           children: <Widget>[
             Form(
-                key: formKey,
+                key: _formKey,
                 child: Column(
                   children: <Widget>[
                     Container(
