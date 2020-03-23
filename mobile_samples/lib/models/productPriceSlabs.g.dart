@@ -8,8 +8,8 @@ part of 'productPriceSlabs.dart';
 
 ProductPriceSlabs _$ProductPriceSlabsFromJson(Map<String, dynamic> json) {
   return ProductPriceSlabs()
-    ..price = json['price'] as int
-    ..rangeStart = json['rangeStart'] as int;
+    ..price = json['price'] as String
+    ..rangeStart = json['rangeStart'] as num;
 }
 
 Map<String, dynamic> _$ProductPriceSlabsToJson(ProductPriceSlabs instance) =>

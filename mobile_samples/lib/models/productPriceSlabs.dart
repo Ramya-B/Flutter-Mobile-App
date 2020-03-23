@@ -6,7 +6,7 @@ part 'productPriceSlabs.g.dart';
 class ProductPriceSlabs {
     ProductPriceSlabs();
 
-    num price;
+    String price;
     num rangeStart;
     
     factory ProductPriceSlabs.fromJson(Map<String,dynamic> json) => _$ProductPriceSlabsFromJson(json);

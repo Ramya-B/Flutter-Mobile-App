@@ -170,6 +170,12 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "flutter_plugin_android_lifecycle",
+      "rootUri": "file:///Users/tradeleaves/TLFlutterdev/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///Users/tradeleaves/TLFlutterdev/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -238,6 +244,12 @@
     {
       "name": "image",
       "rootUri": "file:///Users/tradeleaves/TLFlutterdev/flutter/.pub-cache/hosted/pub.dartlang.org/image-2.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "image_picker",
+      "rootUri": "file:///Users/tradeleaves/TLFlutterdev/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.3+4",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -578,7 +590,7 @@
       "languageVersion": "2.2"
     }
   ],
-  "generated": "2020-03-23T03:57:26.583682Z",
+  "generated": "2020-03-23T10:12:18.612659Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }

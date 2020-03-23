@@ -527,7 +527,7 @@ class PriceList {
   }
 }
 
-class ProductPriceSlabs {
+/* class ProductPriceSlabs {
   int rangeStart;
   String price;
   ProductPriceSlabs({this.price, this.rangeStart});
@@ -544,7 +544,7 @@ class ProductPriceSlabs {
       'price': price,
     };
   }
-}
+} */
 
 /* class HsCodes {
   String countryCode;

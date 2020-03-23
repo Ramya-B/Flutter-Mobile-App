@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
@@ -11,6 +12,7 @@ import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import '../../service_locator.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddProduct extends StatefulWidget {
   final ProductAttributesResp productAttributes;
@@ -29,6 +31,7 @@ class _AddProductState extends State<AddProduct> {
    final formKey = new GlobalKey<FormState>();
     CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
     ProductDTO productDTO = new ProductDTO();
+    File file;
 
   @override
   void initState() {
@@ -49,7 +52,10 @@ class _AddProductState extends State<AddProduct> {
       });
     }
   }
-
+void _choose() async {
+   file = await ImagePicker.pickImage(source: ImageSource.camera);
+// file = await ImagePicker.pickImage(source: ImageSource.gallery);
+ }
   saveProduct() {
     print("save product");
     print(this.productAttributeDetailDTOList);
@@ -145,6 +151,7 @@ class _AddProductState extends State<AddProduct> {
                                 .productAttributeDTO
                                 .name),
                           ),
+                          widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType ==  "text" ? 
                           Container(
                             padding: EdgeInsets.all(10),
                             // margin: EdgeInsets.all(10),
@@ -270,7 +277,14 @@ class _AddProductState extends State<AddProduct> {
                               }
                               
                             ),
-                          )
+                          ):widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType ==  "images" ?Container(
+                            child: Column(
+                              children: <Widget>[
+                                IconButton(onPressed: (){_choose();},icon:Icon(Icons.camera)),
+
+                              ],
+                            ),
+                          ):Container()
                         ],
                       );
                     }),
