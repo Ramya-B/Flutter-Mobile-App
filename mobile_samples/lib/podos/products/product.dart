@@ -1,6 +1,6 @@
 import 'package:tradeleaves/models/index.dart';
 
-class ProductDTO {
+/* class ProductDTO {
   bool active;
   bool adminFlag;
   bool allowTrading;
@@ -25,6 +25,10 @@ class ProductDTO {
   String tlPreferredRating;
   String type;
   String userPreferredRating;
+		String channel;
+		String region;
+    String status;
+    List selectedSites = [];
 
   ProductDTO({
     this.catalogs,
@@ -48,29 +52,36 @@ class ProductDTO {
     this.tlPreferredRating,
     this.type,
     this.userPreferredRating,
+    this.channel,
   });
 
   factory ProductDTO.fromJson(Map<String, dynamic> json) {
-    var tagObjsJson =(json['hsCodes'] != null) ? json['hsCodes'] as List:[];
+    var tagObjsJson = (json['hsCodes'] != null) ? json['hsCodes'] as List : [];
     List<HsCodes> _hsCodes =
         tagObjsJson.map((tagJson) => HsCodes.fromJson(tagJson)).toList();
-    var prodJson = (json['productAttributeDetailDTO'] != null) ? json['productAttributeDetailDTO'] as List:[];
+    var prodJson = (json['productAttributeDetailDTO'] != null)
+        ? json['productAttributeDetailDTO'] as List
+        : [];
     List<ProductAttributeDetailDTO> _productAttributeDetailDTO = prodJson
         .map((tagJson) => ProductAttributeDetailDTO.fromJson(tagJson))
         .toList();
 
-    var lobCountryStatusDTO =  (json['productLobCountryStatusDTO'] != null) ? json['productLobCountryStatusDTO'] as List : [];
+    var lobCountryStatusDTO = (json['productLobCountryStatusDTO'] != null)
+        ? json['productLobCountryStatusDTO'] as List
+        : [];
     List<ProductLobCountryStatusDTO> _productLobCountryStatusDTO =
         lobCountryStatusDTO
             .map((tagJson) => ProductLobCountryStatusDTO.fromJson(tagJson))
             .toList();
 
-    var productOptionDTODup = (json['productOptionDTO'] != null) ?json['productOptionDTO'] as List:[];
+    var productOptionDTODup = (json['productOptionDTO'] != null)
+        ? json['productOptionDTO'] as List
+        : [];
     List<ProductOptionDTO> _productOptionDTO = productOptionDTODup
         .map((tagJson) => ProductOptionDTO.fromJson(tagJson))
         .toList();
 
-    var cat = (json['categoryIds'] != null)?json['categoryIds'] as List:[];
+    var cat = (json['categoryIds'] != null) ? json['categoryIds'] as List : [];
     List<String> _categoryIds =
         cat.map((tagJson) => tagJson.toString()).toList();
 
@@ -108,7 +119,7 @@ class ProductDTO {
     };
   }
 }
-
+ */
 class ProductSearchCriteriaDTO {
   Pagination pagination;
   ProductPrimarySearchCondition productPrimarySearchCondition;
@@ -181,7 +192,12 @@ class SiteCriteria {
     );
   }
   Map toJson() {
-    return {"channel": channel, "site": site, "status": status, "region": region};
+    return {
+      "channel": channel,
+      "site": site,
+      "status": status,
+      "region": region
+    };
   }
 }
 
@@ -228,53 +244,56 @@ class ProductPrimarySearchCondition {
 // }
 
 class PromoProductCriteria {
-   Pagination pagination;
-   SiteCriteria siteCriteria;
-   CategoryCriteria categoryCriteria;
-   String promotionID;
-   PromoProductCriteria({
-    this.pagination,
-    this.siteCriteria,
-    this.promotionID,
-    this.categoryCriteria
-   });
-     factory PromoProductCriteria.fromJson(Map<String, dynamic> json) {
+  Pagination pagination;
+  SiteCriteria siteCriteria;
+  CategoryCriteria categoryCriteria;
+  String promotionID;
+  PromoProductCriteria(
+      {this.pagination,
+      this.siteCriteria,
+      this.promotionID,
+      this.categoryCriteria});
+  factory PromoProductCriteria.fromJson(Map<String, dynamic> json) {
     return PromoProductCriteria(
       pagination: Pagination.fromJson(json['pagination']),
-       siteCriteria: SiteCriteria.fromJson(json['siteCriteria']),
-        categoryCriteria: CategoryCriteria.fromJson(json['categoryCriteria']),
-         promotionID: json['promotionID'] as String,
-
+      siteCriteria: SiteCriteria.fromJson(json['siteCriteria']),
+      categoryCriteria: CategoryCriteria.fromJson(json['categoryCriteria']),
+      promotionID: json['promotionID'] as String,
     );
   }
   Map toJson() {
     Map pagination = this.pagination != null ? this.pagination.toJson() : null;
     Map categoryCriteria =
-        this.categoryCriteria != null
-            ? this.categoryCriteria.toJson()
-            : null;
+        this.categoryCriteria != null ? this.categoryCriteria.toJson() : null;
     Map siteCriteria =
         this.siteCriteria != null ? this.siteCriteria.toJson() : null;
-    return {"pagination": pagination, "siteCriteria": siteCriteria, 
-    "categoryCriteria": categoryCriteria, "promotionID": promotionID};
+    return {
+      "pagination": pagination,
+      "siteCriteria": siteCriteria,
+      "categoryCriteria": categoryCriteria,
+      "promotionID": promotionID
+    };
   }
 }
-class CategoryCriteria{
+
+class CategoryCriteria {
   List<String> categoryId;
-  CategoryCriteria({
-    this.categoryId
-  });
+  CategoryCriteria({this.categoryId});
   factory CategoryCriteria.fromJson(Map<String, dynamic> json) {
-    return CategoryCriteria(
-      categoryId: json['categoryId'] as List<String>
-    );
+    return CategoryCriteria(categoryId: json['categoryId'] as List<String>);
   }
   Map toJson() {
     return {"categoryId": categoryId};
   }
 }
 
-class ProductAttributeDetailDTO {
+/* class ProductAttributeDetailDTO {
+  bool isRequired;
+  String displayType;
+  num categoryProductAttributeId;
+  String productAttributeId;
+  bool sortable;
+  String fieldId;
   String valueId;
   String attributeName;
   String valueType;
@@ -299,6 +318,12 @@ class ProductAttributeDetailDTO {
     this.facet,
     this.searchable,
     this.variant,
+    this.categoryProductAttributeId,
+    this.displayType,
+    this.fieldId,
+    this.isRequired,
+    this.productAttributeId,
+    this.sortable
   });
   factory ProductAttributeDetailDTO.fromJson(Map<String, dynamic> json) {
     return ProductAttributeDetailDTO(
@@ -313,6 +338,12 @@ class ProductAttributeDetailDTO {
       facet: json['facet'],
       searchable: json['searchable'],
       variant: json['variant'],
+      categoryProductAttributeId: json['categoryProductAttributeId'],
+      displayType: json['displayType'],
+      fieldId: json['fieldId'],
+      isRequired: json['required'],
+      productAttributeId: json['productAttributeId'],
+      sortable: json['sortable'],
     );
   }
 
@@ -329,11 +360,17 @@ class ProductAttributeDetailDTO {
       'facet': facet,
       'searchable': searchable,
       'variant': variant,
+      'categoryProductAttributeId': categoryProductAttributeId,
+      'displayType': displayType,
+      'fieldId': fieldId,
+      'required': isRequired,
+      'productAttributeId': productAttributeId,
+      'sortable': sortable,
     };
   }
-}
+} */
 
-class ImageDTO {
+/* class ImageDTO {
   String id;
   String imageType;
   String imageUrl;
@@ -365,9 +402,9 @@ class ImageDTO {
       'name': name,
     };
   }
-}
+} */
 
-class ProductOptionDTO {
+/* class ProductOptionDTO {
   List deliveryScheduleDTO;
   String displayTemplate;
   String end;
@@ -381,7 +418,7 @@ class ProductOptionDTO {
   String supplierSKUId;
 
   ProductOptionDTO({
-     this.deliveryScheduleDTO,
+    this.deliveryScheduleDTO,
     this.displayTemplate,
     this.end,
     this.imageDTO,
@@ -395,11 +432,17 @@ class ProductOptionDTO {
   });
   factory ProductOptionDTO.fromJson(Map<String, dynamic> json) {
     var prices = json['priceList'] != null ? json['priceList'] as List : null;
-    List<PriceList> _priceList = prices!= null ? prices.map((res) => PriceList.fromJson(res)).toList():null;
+    List<PriceList> _priceList = prices != null
+        ? prices.map((res) => PriceList.fromJson(res)).toList()
+        : null;
     var images = json['imageDTO'] as List;
-    List<ImageDTO> _imageDTO = images.map((res) => ImageDTO.fromJson(res)).toList();
-      var prodAttr =json['productAttributeDetailDTO'] != null ? json['productAttributeDetailDTO'] as List : [];
-    List<ProductAttributeDetailDTO> _productAttributeDetailDTO = prodAttr.map((res) => ProductAttributeDetailDTO.fromJson(res)).toList();
+    List<ImageDTO> _imageDTO =
+        images.map((res) => ImageDTO.fromJson(res)).toList();
+    var prodAttr = json['productAttributeDetailDTO'] != null
+        ? json['productAttributeDetailDTO'] as List
+        : [];
+    List<ProductAttributeDetailDTO> _productAttributeDetailDTO =
+        prodAttr.map((res) => ProductAttributeDetailDTO.fromJson(res)).toList();
     return ProductOptionDTO(
       deliveryScheduleDTO: json['deliveryScheduleDTO'] as List,
       displayTemplate: json['displayTemplate'],
@@ -430,31 +473,34 @@ class ProductOptionDTO {
       'supplierSKUId': supplierSKUId,
     };
   }
-}
+} */
 
 class PriceList {
-  String priceId ;
-  double mfgPrice ;
-  double sellablePrice ;
-  String unitType ;
+  String priceId;
+  double mfgPrice;
+  double sellablePrice;
+  String unitType;
   String currency;
-  String priceType ;
+  String priceType;
   List<ProductPriceSlabs> productPriceSlabs;
-  String lobId ;
+  String lobId;
 
-PriceList({
-this.priceId ,
-this.mfgPrice ,
-this.sellablePrice ,
-this.unitType ,
-this.currency,
-this.priceType ,
-this.productPriceSlabs,
-this.lobId ,
-});
+  PriceList({
+    this.priceId,
+    this.mfgPrice,
+    this.sellablePrice,
+    this.unitType,
+    this.currency,
+    this.priceType,
+    this.productPriceSlabs,
+    this.lobId,
+  });
   factory PriceList.fromJson(Map<String, dynamic> json) {
-    var productPriceSlab = json['productPriceSlabs'] !=null ? json['productPriceSlabs']  as List:[];
-   List<ProductPriceSlabs> _productPriceSlabs = productPriceSlab.map((res) => ProductPriceSlabs.fromJson(res)).toList();
+    var productPriceSlab = json['productPriceSlabs'] != null
+        ? json['productPriceSlabs'] as List
+        : [];
+    List<ProductPriceSlabs> _productPriceSlabs =
+        productPriceSlab.map((res) => ProductPriceSlabs.fromJson(res)).toList();
     return PriceList(
       priceId: json['priceId'],
       mfgPrice: json['mfgPrice'],
@@ -480,12 +526,12 @@ this.lobId ,
     };
   }
 }
-  
-class ProductPriceSlabs {
-  int rangeStart ;
+
+/* class ProductPriceSlabs {
+  int rangeStart;
   String price;
-  ProductPriceSlabs({this.price,this.rangeStart});
-   factory ProductPriceSlabs.fromJson(Map<String, dynamic> json) {
+  ProductPriceSlabs({this.price, this.rangeStart});
+  factory ProductPriceSlabs.fromJson(Map<String, dynamic> json) {
     return ProductPriceSlabs(
       rangeStart: json['rangeStart'],
       price: json['price'],
@@ -498,10 +544,9 @@ class ProductPriceSlabs {
       'price': price,
     };
   }
+} */
 
-}
-
-class HsCodes {
+/* class HsCodes {
   String countryCode;
   String direction;
   String hscode;
@@ -529,9 +574,9 @@ class HsCodes {
       'lobId': lobId,
     };
   }
-}
+} */
 
-class ProductLobCountryStatusDTO {
+/* class ProductLobCountryStatusDTO {
   String countryId;
   String lobId;
   String productId;
@@ -572,7 +617,7 @@ class ProductLobCountryStatusDTO {
       'statusId': statusId,
     };
   }
-}
+} */
 
 class ProductInfo {
   String categoryId;
@@ -583,8 +628,16 @@ class ProductInfo {
   String region;
   String lobSelection;
   String location;
-  ProductInfo({this.categoryId,this.isService,this.filters,this.countryId,this.channel,this.region,this.lobSelection,this.location});
-   factory ProductInfo.fromJson(Map<String, dynamic> json) {
+  ProductInfo(
+      {this.categoryId,
+      this.isService,
+      this.filters,
+      this.countryId,
+      this.channel,
+      this.region,
+      this.lobSelection,
+      this.location});
+  factory ProductInfo.fromJson(Map<String, dynamic> json) {
     return ProductInfo(
       categoryId: json['categoryId'],
       isService: json['isService'],
@@ -609,22 +662,31 @@ class ProductInfo {
       'location': location
     };
   }
-
 }
 
-
-class Filters{
+class Filters {
   Pagination pagination;
   List<TlCriteriaWeights> tlcriteriaWeights;
   List<TlCriteriaWeights> suppliertlcriteriaWeights;
   CategoryCriteria categoryCriteria;
   String sortBy;
-  Filters({this.pagination,this.tlcriteriaWeights,this.suppliertlcriteriaWeights,this.categoryCriteria,this.sortBy});
-   factory Filters.fromJson(Map<String, dynamic> json) {
-     var tlcriteria = json['tlcriteriaWeights'] != null ? json['tlcriteriaWeights']: [];
-     List<TlCriteriaWeights>  _tlcriteriaWeights = tlcriteria.map((data)=>TlCriteriaWeights.fromJson(data)).toList();
-      var tlSupplireCriteria = json['suppliertlcriteriaWeights'] != null ? json['suppliertlcriteriaWeights']: [];
-     List<TlCriteriaWeights>  _suppliertlcriteriaWeights = tlSupplireCriteria.map((data)=>TlCriteriaWeights.fromJson(data)).toList();
+  Filters(
+      {this.pagination,
+      this.tlcriteriaWeights,
+      this.suppliertlcriteriaWeights,
+      this.categoryCriteria,
+      this.sortBy});
+  factory Filters.fromJson(Map<String, dynamic> json) {
+    var tlcriteria =
+        json['tlcriteriaWeights'] != null ? json['tlcriteriaWeights'] : [];
+    List<TlCriteriaWeights> _tlcriteriaWeights =
+        tlcriteria.map((data) => TlCriteriaWeights.fromJson(data)).toList();
+    var tlSupplireCriteria = json['suppliertlcriteriaWeights'] != null
+        ? json['suppliertlcriteriaWeights']
+        : [];
+    List<TlCriteriaWeights> _suppliertlcriteriaWeights = tlSupplireCriteria
+        .map((data) => TlCriteriaWeights.fromJson(data))
+        .toList();
     return Filters(
       pagination: Pagination.fromJson(json['pagination']),
       tlcriteriaWeights: _tlcriteriaWeights,
@@ -643,18 +705,23 @@ class Filters{
       'sortBy': sortBy,
     };
   }
-
 }
 
-class TlCriteriaWeights{
-   String criteriaId;
-   String criteriaUniqueName;
-   String criteriaName;
-   String weightPercentage;
-   String functionName;
-   String functionPercentage;
-   TlCriteriaWeights({this.criteriaId,this.criteriaName,this.criteriaUniqueName,this.functionName,this.functionPercentage,this.weightPercentage});
-    factory TlCriteriaWeights.fromJson(Map<String, dynamic> json) {
+class TlCriteriaWeights {
+  String criteriaId;
+  String criteriaUniqueName;
+  String criteriaName;
+  String weightPercentage;
+  String functionName;
+  String functionPercentage;
+  TlCriteriaWeights(
+      {this.criteriaId,
+      this.criteriaName,
+      this.criteriaUniqueName,
+      this.functionName,
+      this.functionPercentage,
+      this.weightPercentage});
+  factory TlCriteriaWeights.fromJson(Map<String, dynamic> json) {
     return TlCriteriaWeights(
       criteriaId: json['criteriaId'],
       criteriaName: json['criteriaName '],
@@ -675,25 +742,30 @@ class TlCriteriaWeights{
       'weightPercentage': weightPercentage,
     };
   }
-
 }
 
-class UserListedProducts{
-int numberOfProducts;
-int totalProducts; 
-int start;
-List<ProductDTO> productSearchDTO;
+class UserListedProducts {
+  int numberOfProducts;
+  int totalProducts;
+  int start;
+  List<ProductDTO> productSearchDTO;
 
- UserListedProducts({this.numberOfProducts,this.totalProducts,this.productSearchDTO,this.start});
-    factory UserListedProducts.fromJson(Map<String, dynamic> json) {
-     var prods = json['productSearchDTO'] != null ? json['productSearchDTO'] as List : [];
-    List<ProductDTO>  _productsPromotionsResponseDTO =  prods.map((data)=>ProductDTO.fromJson(data)).toList();
+  UserListedProducts(
+      {this.numberOfProducts,
+      this.totalProducts,
+      this.productSearchDTO,
+      this.start});
+  factory UserListedProducts.fromJson(Map<String, dynamic> json) {
+    var prods = json['productSearchDTO'] != null
+        ? json['productSearchDTO'] as List
+        : [];
+    List<ProductDTO> _productsPromotionsResponseDTO =
+        prods.map((data) => ProductDTO.fromJson(data)).toList();
     return UserListedProducts(
       numberOfProducts: json['numberOfProducts'],
       totalProducts: json['totalProducts'],
-       start: json['start'],
+      start: json['start'],
       productSearchDTO: _productsPromotionsResponseDTO,
-      
     );
   }
 
@@ -701,9 +773,8 @@ List<ProductDTO> productSearchDTO;
     return {
       "numberOfProducts": numberOfProducts,
       'totalProducts': totalProducts,
-       "start": start,
+      "start": start,
       'productSearchDTO': productSearchDTO,
     };
   }
 }
-

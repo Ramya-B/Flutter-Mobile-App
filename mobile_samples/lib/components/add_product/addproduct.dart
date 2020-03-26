@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
+import 'package:tradeleaves/main.dart';
 import 'package:tradeleaves/models/companyRegionsResp.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/models/productAttributesResp.dart';
@@ -9,30 +11,123 @@ import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
-
 import '../../service_locator.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddProduct extends StatefulWidget {
   final ProductAttributesResp productAttributes;
-  AddProduct({this.productAttributes});
+  final ListCatProdAttrLoBDTO categoryRegionLob;
+  final List regions;
+
+  AddProduct({this.productAttributes, this.categoryRegionLob, this.regions});
   @override
   _AddProductState createState() => _AddProductState();
 }
 
 class _AddProductState extends State<AddProduct> {
   List<CreateCategoryProductAttributeDTO> prodValues = [];
+  List<ProductAttributeDetailDTO> productAttributeDetailDTOList=[];
+  List<ProductLobCountryStatusDTO> productLobCountryStatusDTOList;
+   final formKey = new GlobalKey<FormState>();
+    CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
+    ProductDTO productDTO = new ProductDTO();
+    File file;
+
   @override
   void initState() {
     super.initState();
+  }
+   _saveForm() async {
+    var form = formKey.currentState;
+    if (form.validate()) {
+       form.save();
+      await saveProduct();
+      await catalogService.saveProduct(productDTO);
+      setState(() {
+      print("set state of save form");
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Home()));
+      });
+    }
+  }
+void _choose() async {
+   file = await ImagePicker.pickImage(source: ImageSource.camera);
+// file = await ImagePicker.pickImage(source: ImageSource.gallery);
+ }
+  saveProduct() {
+    print("save product");
+    print(this.productAttributeDetailDTOList);
+    for (var item in this.productAttributeDetailDTOList) {
+      switch (item.attributeName) {
+        case "Product Name":
+          {
+            productDTO.productName = item.value;
+          }
+          break;
+        default:
+          {
+            print("Invalid choice");
+          }
+          break;
+      }
+      // item.attributeName == ;
+
+    }
+    print("step2");
+    productDTO.primaryImageUrl =
+        "76f912dc-2271-437e-afce-7329f798658f/joker.jpg";
+    productDTO.type = "product";
+    productDTO.channel = "B2BInternational";
+    productDTO.region = "IN";
+    productDTO.hsCodes = [];
+    productDTO.status = "Created";
+    productDTO.categoryIds = [widget.categoryRegionLob.categoryId];
+    productDTO.selectedSites = [];
+    productDTO.supplierId = "bf22e74d-e21f-4549-a3ef-a52e22350ffc";
+    productDTO.productAttributeDetailDTO = productAttributeDetailDTOList;
+    productDTO.productOptionDTO = [];
+    productDTO.productLobCountryStatusDTO = [];
+    print("step3");
+    for (var item in widget.categoryRegionLob.lobId) {
+      for (var countries in widget.regions) {
+        ProductLobCountryStatusDTO productLobCountryStatusDTO = ProductLobCountryStatusDTO();
+        productLobCountryStatusDTO.productLobCountryStatusId = null;
+				productLobCountryStatusDTO.productId = null;
+				productLobCountryStatusDTO.lobId = item.toString();
+				productLobCountryStatusDTO.regionId ="ASIA";
+				productLobCountryStatusDTO.countryId = countries.toString();
+				productLobCountryStatusDTO.statusId = "Created";
+				productLobCountryStatusDTO.reason = null;
+        productDTO.productLobCountryStatusDTO.add(productLobCountryStatusDTO);
+      }
+    }
+    ProductOptionDTO productOptionDTO = ProductOptionDTO();
+    productOptionDTO.productOptionName =  productDTO.productName ;
+    productOptionDTO.productAttributeDetailDTO= [];
+    productOptionDTO.priceList= [];
+    productOptionDTO.deliveryScheduleDTO= [];
+    productOptionDTO.imageDTO = [];
+    ImageDTO imageDTO= ImageDTO();
+    imageDTO.imageUrl = "76f912dc-2271-437e-afce-7329f798658f/joker.jpg";
+    imageDTO.name = "76f912dc-2271-437e-afce-7329f798658f/joker.jpg";
+    imageDTO.isCoverPhoto = true;
+    imageDTO.isHide = true;
+    imageDTO.lobId = "34343e34-7601-40de-878d-01b3bd1f0640";
+    imageDTO.imageType = "JPG";
+    productOptionDTO.imageDTO.add(imageDTO);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Add Product'),backgroundColor: Colors.green),
+        appBar:
+            AppBar(title: Text('Add Product'), backgroundColor: Colors.green),
         body: ListView(
           children: <Widget>[
             Form(
+              key: formKey,
                 child: Column(
               children: <Widget>[
                 ListView.builder(
@@ -56,6 +151,7 @@ class _AddProductState extends State<AddProduct> {
                                 .productAttributeDTO
                                 .name),
                           ),
+                          widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType ==  "text" ? 
                           Container(
                             padding: EdgeInsets.all(10),
                             // margin: EdgeInsets.all(10),
@@ -76,19 +172,123 @@ class _AddProductState extends State<AddProduct> {
                                 return null;
                               },
                               
-                              onChanged: (String name) {
+                              onChanged: (String value) {
+                                print("On chaged called");
+                                print(value);
                                 setState(() {
-                                  print("${widget.productAttributes.listCatProdAttrLoBRespDTO}");
-                                  print("$name");
-                                  prodValues.add(widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index]);
-                                  print("$prodValues");
+                                  ProductAttributeDetailDTO
+                                      productAttributeDetailDTO =
+                                      ProductAttributeDetailDTO();
+                                  productAttributeDetailDTO.attributeName =
+                                      widget
+                                          .productAttributes
+                                          .listCatProdAttrLoBRespDTO
+                                          .createCategoryProductAttributeDTO[
+                                              index]
+                                          .productAttributeDTO
+                                          .name;
+                                  productAttributeDetailDTO.valueType =
+                                      "VARCHAR";
+                                  productAttributeDetailDTO.required = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .required;
+                                  productAttributeDetailDTO.displayType = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .displayType;
+                                  productAttributeDetailDTO
+                                          .categoryProductAttributeId =
+                                      widget
+                                          .productAttributes
+                                          .listCatProdAttrLoBRespDTO
+                                          .createCategoryProductAttributeDTO[
+                                              index]
+                                          .catgryProductAttributeDTO
+                                          .categoryProductAttributeId;
+                                  productAttributeDetailDTO.productAttributeId =
+                                      widget
+                                          .productAttributes
+                                          .listCatProdAttrLoBRespDTO
+                                          .createCategoryProductAttributeDTO[
+                                              index]
+                                          .catgryProductAttributeDTO
+                                          .productAttributeId;
+                                  productAttributeDetailDTO.facet = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .facet;
+                                  productAttributeDetailDTO.searchable = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .searchable;
+                                  productAttributeDetailDTO.variant = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .variant;
+                                  productAttributeDetailDTO.sortable = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .sortable;
+                                  productAttributeDetailDTO.value = value;
+                                  productAttributeDetailDTO.lobId = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .lobId;
+                                  productAttributeDetailDTO.prodAttrId = widget
+                                      .productAttributes
+                                      .listCatProdAttrLoBRespDTO
+                                      .createCategoryProductAttributeDTO[index]
+                                      .catgryProductAttributeDTO
+                                      .productAttributeId;
+                                  for (var item
+                                      in this.productAttributeDetailDTOList) {
+                                    if (item.attributeName ==
+                                        widget
+                                            .productAttributes
+                                            .listCatProdAttrLoBRespDTO
+                                            .createCategoryProductAttributeDTO[
+                                                index]
+                                            .productAttributeDTO
+                                            .name) {
+                                      this.productAttributeDetailDTOList
+                                          .remove(item);
+                                    }
+                                  }
+                                  this.productAttributeDetailDTOList
+                                      .add(productAttributeDetailDTO);
+                                      print("on saved..!");
+                                  print(this.productAttributeDetailDTOList);
                                 });
-                              },
+                              }
+                              
                             ),
-                          )
+                          ):widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType ==  "images" ?Container(
+                            child: Column(
+                              children: <Widget>[
+                                IconButton(onPressed: (){_choose();},icon:Icon(Icons.camera)),
+
+                              ],
+                            ),
+                          ):Container()
                         ],
                       );
                     }),
+                    Container(child: Text('${this.productAttributeDetailDTOList}'),),
                 Container(
                   padding: EdgeInsets.all(8),
                   child: RaisedButton(
@@ -98,6 +298,7 @@ class _AddProductState extends State<AddProduct> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
+                        _saveForm();
                         print("product saved....!");
                       }),
                 ),
@@ -128,9 +329,10 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
   CompanyRegionsResp companyRegions;
   var regions;
   List selectedRegions;
-  final formKey = new GlobalKey<FormState>();
+  final _formKey = new GlobalKey<FormState>();
   ProductAttributesResp listCatProdAttrLoBRespDTO;
-  
+  ListCatProdAttrLoBDTO listCatProdAttrLoBDTO = new ListCatProdAttrLoBDTO();
+
   List lobs = [
     {
       "lobId": "34343e34-7601-40de-878d-01b3bd1f0641",
@@ -206,7 +408,6 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
   }
 
   getProductAttributes() async {
-    ListCatProdAttrLoBDTO listCatProdAttrLoBDTO = new ListCatProdAttrLoBDTO();
     listCatProdAttrLoBDTO.categoryId = this.selectedCategory;
     listCatProdAttrLoBDTO.lobId = this.selectedLobs;
     var prodAttr =
@@ -217,16 +418,20 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
   }
 
   _saveForm() async {
-    var form = formKey.currentState;
+    print(_formKey);
+    var form = _formKey.currentState;
     if (form.validate()) {
       await getProductAttributes();
-
+      print("after get prodattributes");
       setState(() {
+        print("set state of save form");
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => AddProduct(
-                    productAttributes: this.listCatProdAttrLoBRespDTO)));
+                    productAttributes: this.listCatProdAttrLoBRespDTO,
+                    categoryRegionLob: listCatProdAttrLoBDTO,
+                    regions: selectedRegions)));
       });
     }
   }
@@ -252,7 +457,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
         body: ListView(
           children: <Widget>[
             Form(
-                key: formKey,
+                key: _formKey,
                 child: Column(
                   children: <Widget>[
                     Container(
