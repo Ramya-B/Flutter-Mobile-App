@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
+import 'package:tradeleaves/constants.dart';
 import 'package:tradeleaves/main.dart';
 import 'package:tradeleaves/models/companyRegionsResp.dart';
 import 'package:tradeleaves/models/index.dart';
@@ -13,6 +16,8 @@ import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import '../../service_locator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart' as mime;
 
 class AddProduct extends StatefulWidget {
   final ProductAttributesResp productAttributes;
@@ -32,6 +37,8 @@ class _AddProductState extends State<AddProduct> {
     CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
     ProductDTO productDTO = new ProductDTO();
     File file;
+    String image;
+
 
   @override
   void initState() {
@@ -52,10 +59,28 @@ class _AddProductState extends State<AddProduct> {
       });
     }
   }
+
+ 
 void _choose() async {
-   file = await ImagePicker.pickImage(source: ImageSource.camera);
-// file = await ImagePicker.pickImage(source: ImageSource.gallery);
+  print("choose called");
+   file = await ImagePicker.pickImage(source: ImageSource.gallery);
+   print(file);
+   print(file.path);
+    var request = http.MultipartRequest('POST', Uri.parse("${Constants.envUrl}/mongoupload/attachments/?Override=false"));
+    request.files.add(await http.MultipartFile.fromPath('attachments', file.path, contentType: mime.MediaType('image', 'jpeg'),));
+  
+    print("request is...!");
+    print(request);
+    var res = await request.send();
+    final respStr = await res.stream.bytesToString();
+    print("image upload ...");
+    print(respStr);
+    print(res);
+    image = json.decode(respStr)["fileName"];
+    print(json.decode(respStr)["fileName"]);
+    
  }
+
   saveProduct() {
     print("save product");
     print(this.productAttributeDetailDTOList);
@@ -64,6 +89,12 @@ void _choose() async {
         case "Product Name":
           {
             productDTO.productName = item.value;
+          }
+          break;
+          case "Product Image":
+          {
+            productDTO.primaryImageUrl = this.image;
+        
           }
           break;
         default:
@@ -76,8 +107,7 @@ void _choose() async {
 
     }
     print("step2");
-    productDTO.primaryImageUrl =
-        "76f912dc-2271-437e-afce-7329f798658f/joker.jpg";
+    
     productDTO.type = "product";
     productDTO.channel = "B2BInternational";
     productDTO.region = "IN";
@@ -110,12 +140,12 @@ void _choose() async {
     productOptionDTO.deliveryScheduleDTO= [];
     productOptionDTO.imageDTO = [];
     ImageDTO imageDTO= ImageDTO();
-    imageDTO.imageUrl = "76f912dc-2271-437e-afce-7329f798658f/joker.jpg";
-    imageDTO.name = "76f912dc-2271-437e-afce-7329f798658f/joker.jpg";
+    imageDTO.imageUrl = this.image;
+    imageDTO.name = this.image;
     imageDTO.isCoverPhoto = true;
     imageDTO.isHide = true;
     imageDTO.lobId = "34343e34-7601-40de-878d-01b3bd1f0640";
-    imageDTO.imageType = "JPG";
+    imageDTO.imageType = this.image.substring(this.image.lastIndexOf('.'),this.image.length).toUpperCase();
     productOptionDTO.imageDTO.add(imageDTO);
   }
 
