@@ -1,4 +1,4 @@
-import 'package:tradeleaves/podos/products/product.dart';
+
 
 class CategoryDetailsLobDTO {
   List<String> lobId;

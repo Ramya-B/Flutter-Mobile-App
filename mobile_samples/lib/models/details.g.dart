@@ -8,39 +8,63 @@ part of 'details.dart';
 
 Details _$DetailsFromJson(Map<String, dynamic> json) {
   return Details()
-    ..reason = json['reason'] as String
-    ..rejected = json['rejected'] as String
-    ..channel = json['channel'] as String
-    ..lobId = json['lobId'] as String
-    ..countryCode = json['countryCode'] as String
-    ..companyCode = json['companyCode'] as String
-    ..tenantId = json['tenantId'] as String
-    ..logoImageUrl = json['logoImageUrl'] as String
+    ..partyId = json['partyId'] as String
+    ..salutation = json['salutation'] as String
+    ..firstName = json['firstName'] as String
+    ..middleName = json['middleName'] as String
+    ..lastName = json['lastName'] as String
+    ..personalTitle = json['personalTitle'] as String
+    ..suffix = json['suffix'] as String
+    ..nickname = json['nickname'] as String
+    ..firstNameLocal = json['firstNameLocal'] as String
+    ..middleNameLocal = json['middleNameLocal'] as String
+    ..lastNameLocal = json['lastNameLocal'] as String
+    ..otherLocal = json['otherLocal'] as String
+    ..memberId = json['memberId'] as String
+    ..gender = json['gender'] as String
+    ..birthDate = json['birthDate'] as String
+    ..height = json['height'] as String
+    ..weight = json['weight'] as String
+    ..mothersMaidenName = json['mothersMaidenName'] as String
+    ..maritalStatus = json['maritalStatus'] as String
+    ..socialSecurityNumber = json['socialSecurityNumber'] as String
+    ..passportNumber = json['passportNumber'] as String
+    ..passportExpireDate = json['passportExpireDate'] as String
     ..comments = json['comments'] as String
-    ..tickerSymbol = json['tickerSymbol'] as String
-    ..numEmployees = json['numEmployees'] as String
-    ..annualRevenue = json['annualRevenue'] as String
-    ..officeSiteName = json['officeSiteName'] as String
-    ..groupNameLocal = json['groupNameLocal'] as String
-    ..groupName = json['groupName'] as String
-    ..partyId = json['partyId'] as String;
+    ..existingCustomer = json['existingCustomer'] as String
+    ..occupation = json['occupation'] as String
+    ..tenantId = json['tenantId'] as String
+    ..optIn = json['optIn'] as bool
+    ..domainName = json['domainName'] as String;
 }
 
 Map<String, dynamic> _$DetailsToJson(Details instance) => <String, dynamic>{
-      'reason': instance.reason,
-      'rejected': instance.rejected,
-      'channel': instance.channel,
-      'lobId': instance.lobId,
-      'countryCode': instance.countryCode,
-      'companyCode': instance.companyCode,
-      'tenantId': instance.tenantId,
-      'logoImageUrl': instance.logoImageUrl,
+      'partyId': instance.partyId,
+      'salutation': instance.salutation,
+      'firstName': instance.firstName,
+      'middleName': instance.middleName,
+      'lastName': instance.lastName,
+      'personalTitle': instance.personalTitle,
+      'suffix': instance.suffix,
+      'nickname': instance.nickname,
+      'firstNameLocal': instance.firstNameLocal,
+      'middleNameLocal': instance.middleNameLocal,
+      'lastNameLocal': instance.lastNameLocal,
+      'otherLocal': instance.otherLocal,
+      'memberId': instance.memberId,
+      'gender': instance.gender,
+      'birthDate': instance.birthDate,
+      'height': instance.height,
+      'weight': instance.weight,
+      'mothersMaidenName': instance.mothersMaidenName,
+      'maritalStatus': instance.maritalStatus,
+      'socialSecurityNumber': instance.socialSecurityNumber,
+      'passportNumber': instance.passportNumber,
+      'passportExpireDate': instance.passportExpireDate,
       'comments': instance.comments,
-      'tickerSymbol': instance.tickerSymbol,
-      'numEmployees': instance.numEmployees,
-      'annualRevenue': instance.annualRevenue,
-      'officeSiteName': instance.officeSiteName,
-      'groupNameLocal': instance.groupNameLocal,
-      'groupName': instance.groupName,
-      'partyId': instance.partyId
+      'existingCustomer': instance.existingCustomer,
+      'occupation': instance.occupation,
+      'tenantId': instance.tenantId,
+      'optIn': instance.optIn,
+      'domainName': instance.domainName
     };

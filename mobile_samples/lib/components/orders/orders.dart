@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
-import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
 
 class Orders extends StatefulWidget {
