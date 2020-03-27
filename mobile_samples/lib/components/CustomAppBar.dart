@@ -46,9 +46,9 @@ var  authToken;
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-        //  Navigator.of(context).canPop() ?  Expanded(
-        //      child:   new IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.of(context).maybePop())
-        //    ): Container(),
+       /*   Navigator.of(context).canPop() ?  Expanded(
+             child:   new IconButton(icon: Icon(Icons.arrow_back), onPressed: () => Navigator.of(context).maybePop())
+           ): Container(),
           CircleAvatar(
             child: Image.asset(
               'assets/tl.png',
@@ -62,11 +62,13 @@ var  authToken;
               child: Container(
                 alignment: Alignment.center,
                 child: Text('TRADELEAVES'),
-              ))
+              )) */
+              Container(child: Image.asset("assets/tllogo.png"),width: 150,height: 120,)
         ],
       ),
       centerTitle: true,
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.white,
+      iconTheme: new IconThemeData(color: Colors.green),
       actions: <Widget>[
         new IconButton(icon: Icon(Icons.search), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => new SearchItems()))),
        new IconButton(icon: Icon(Icons.person), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => (this.authToken == null)? Login(): PersonalProfile())))
