@@ -1,3 +1,5 @@
+import 'package:tradeleaves/models/index.dart';
+
 class RegisterDTO {
   UserLoginDTO userLoginDTO;
   PersonalDetailsDTO person;
@@ -93,7 +95,7 @@ class PartyGroupDTO {
     };
   }
 }
-
+/* 
 class PersonalDetailsDTO {
   PersonDTO details;
   TelephoneDTO mobile;
@@ -116,8 +118,8 @@ class PersonalDetailsDTO {
       'email': email,
     };
   }
-}
-
+} */
+/* 
 class PersonDTO {
   String firstName;
   String domainName;
@@ -140,8 +142,8 @@ class PersonDTO {
       'optIn': optIn,
     };
   }
-}
-
+} */
+/* 
 class TelephoneDTO {
   String countryCode;
   String contactNumber;
@@ -179,7 +181,7 @@ class EmailContactDTO {
       'emailAddress': emailAddress,
     };
   }
-}
+} */
 
 class UserCheck {
    String email;

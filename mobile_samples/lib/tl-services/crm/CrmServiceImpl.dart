@@ -3,6 +3,10 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/constants.dart';
+import 'package:tradeleaves/models/changeUserPassword.dart';
+import 'package:tradeleaves/models/personalDetailsDTO.dart';
+import 'package:tradeleaves/models/resend.dart';
+import 'package:tradeleaves/models/updatePasswordDto.dart';
 import 'package:tradeleaves/podos/crm/register.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServices.dart';
 
@@ -194,6 +198,135 @@ class CrmServiceImpl extends CrmServices {
         return res;
       } else {
         return throw Exception('falied to get getStates.........');
+      }
+    });
+  }
+
+  @override
+  Future getPersonalDetails() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getPersonalDetails called......");
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/profile/login/person',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      print("getPersonalDetails response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getPersonalDetails  successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to  getPersonalDetails.........');
+      }
+    });
+  }
+
+  @override
+  Future updateUser(PersonalDetailsDTO personalDetailsDTO) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("updateUser called......");
+    return await http.post(
+      '${Constants.envUrl}$apiUrl/profile/update/person',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+      body: jsonEncode({
+        'personalDetailsDTO': personalDetailsDTO.toJson()
+      })
+    ).then((data) {
+      print("updateUser response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("updateUser  successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to  updateUser.........');
+      }
+    });
+  }
+
+  @override
+  Future updatePassword(UpdatePasswordDto updatePasswordDto) async{
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("updatePassword called......");
+    return await http.post(
+      '${Constants.envUrl}$apiUrl/profile/checkCurrent/previousPassword',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+      body: jsonEncode({
+        'updatePasswordDto': updatePasswordDto.toJson()
+      })
+    ).then((data) {
+      print("updatePassword response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("updatePassword  successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to  updatePassword.........');
+      }
+    });
+  }
+
+  @override
+  Future resendOtp(Resend resend) async{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("resendOtp called......");
+    print(resend.toJson());
+    return await http.post(
+      '${Constants.envUrl}$apiUrl/register/verification/resend',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+      body: jsonEncode( resend.toJson() )
+    ).then((data) {
+      print("resendOtp response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("resendOtp  successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to  resendOtp.........');
+      }
+    });
+  }
+
+  @override
+  Future chagePassword(ChangeUserPassword changeUserPassword) async{
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("chagePassword called......");
+    return await http.post(
+      '${Constants.envUrl}$apiUrl/register/person/changepassword',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+      body: jsonEncode( changeUserPassword.toJson() )
+    ).then((data) {
+      print("chagePassword response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("chagePassword  successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to  chagePassword.........');
       }
     });
   }

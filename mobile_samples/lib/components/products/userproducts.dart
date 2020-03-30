@@ -6,7 +6,6 @@ import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import '../../constants.dart';
 import '../../service_locator.dart';
-import 'ProductsList.dart';
 
 class UserProducts extends StatefulWidget {
   @override

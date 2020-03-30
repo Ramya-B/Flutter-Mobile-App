@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
-import 'package:tradeleaves/components/CustomDrawer.dart';
 
 class AlertNotifications extends StatefulWidget {
   @override

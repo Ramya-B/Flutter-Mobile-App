@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
-import 'package:tradeleaves/components/CustomDrawer.dart';
 
 class CategoryProducts extends StatefulWidget {
   final categoryName ;

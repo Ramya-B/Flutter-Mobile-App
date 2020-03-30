@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tradeleaves/components/login_register/login.dart';
 import 'package:tradeleaves/components/products/products_home.dart';
-
 import '../CustomAppBar.dart';
 import '../CustomBottomNavigationBar.dart';
 

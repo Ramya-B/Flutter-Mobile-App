@@ -1,0 +1,9 @@
+{
+    "details": "$details",
+    "mobile": "$mobile",
+    "email": "$email",
+    "role": null,
+    "secondaryMobile": null,
+    "secondaryEmail": null,
+    "registrationStatus": null
+  }

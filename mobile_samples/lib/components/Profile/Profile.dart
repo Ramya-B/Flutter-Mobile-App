@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/models/index.dart';
+import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
+
+import '../../service_locator.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -6,6 +10,34 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
+   CrmServiceImpl get crmService => locator<CrmServiceImpl>();
+    ProfileResp profileResp;
+   
+  getUserDetails() async{
+    print("getUserDetails called");
+    var userInfo = await crmService.getPersonalDetails();
+    print("get User details");
+    print(userInfo);
+    setState(() {
+      profileResp = ProfileResp.fromJson(userInfo);
+    });
+  }
+  updateUser() async{
+    print("update user called...");
+      var updateUser = await crmService.updateUser(profileResp.personalDetailsDTO);
+      print("update user resp...");
+      print(updateUser);
+      setState(() {
+         profileResp = ProfileResp.fromJson(updateUser);
+      });
+  }
+
+  @override
+  void initState() {
+    getUserDetails();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +66,7 @@ class _ProfileState extends State<Profile> {
                       height: 8,
                     ),
                     TextFormField(
+                      initialValue: profileResp.personalDetailsDTO.details.firstName !=  null ? profileResp.personalDetailsDTO.details.firstName: null,
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -41,6 +74,11 @@ class _ProfileState extends State<Profile> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5)),
                       ),
+                      onChanged: (String value){
+                        setState(() {
+                          profileResp.personalDetailsDTO.details.firstName = value;
+                        });
+                      },
                     )
                   ],
                 ),
@@ -55,6 +93,7 @@ class _ProfileState extends State<Profile> {
                       height: 8,
                     ),
                     TextFormField(
+                       initialValue: profileResp.personalDetailsDTO !=  null ? profileResp.personalDetailsDTO.details.middleName : null,
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -62,6 +101,11 @@ class _ProfileState extends State<Profile> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5)),
                       ),
+                      onChanged: (String value){
+                        setState(() {
+                          profileResp.personalDetailsDTO.details.middleName = value;
+                        });
+                      },
                     )
                   ],
                 ),
@@ -76,6 +120,7 @@ class _ProfileState extends State<Profile> {
                       height: 8,
                     ),
                     TextFormField(
+                       initialValue: profileResp.personalDetailsDTO !=  null ? profileResp.personalDetailsDTO.details.lastName:null,
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -83,6 +128,11 @@ class _ProfileState extends State<Profile> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5)),
                       ),
+                      onChanged: (String value){
+                        setState(() {
+                          profileResp.personalDetailsDTO.details.lastName = value;
+                        });
+                      },
                     )
                   ],
                 ),
@@ -97,6 +147,7 @@ class _ProfileState extends State<Profile> {
                       height: 8,
                     ),
                     TextFormField(
+                       initialValue: profileResp.personalDetailsDTO.mobile.contactNumber,
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -104,6 +155,11 @@ class _ProfileState extends State<Profile> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5)),
                       ),
+                      onChanged: (String value){
+                        setState(() {
+                          profileResp.personalDetailsDTO.mobile.contactNumber = value;
+                        });
+                      },
                     )
                   ],
                 ),
@@ -118,13 +174,19 @@ class _ProfileState extends State<Profile> {
                       height: 8,
                     ),
                     TextFormField(
+                       initialValue: profileResp.personalDetailsDTO.email.emailAddress,
                       decoration: InputDecoration(
                         contentPadding:
                             EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                         hintText: "Enter Email Address",
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5)),
+                            borderRadius: BorderRadius.circular(5))  
                       ),
+                      onChanged: (String value){
+                        setState(() {
+                          profileResp.personalDetailsDTO.email.emailAddress = value;
+                        });
+                      },
                     )
                   ],
                 ),
@@ -147,7 +209,7 @@ class _ProfileState extends State<Profile> {
                       ),
                       RaisedButton(
                         color: Colors.lightGreen,
-                        onPressed: () {},
+                        onPressed: () {updateUser();},
                         child: Text(
                           'Save',
                           style: TextStyle(color: Colors.white),
