@@ -15,4 +15,7 @@ abstract class CrmServices {
   Future updatePassword(UpdatePasswordDto updatePasswordDto);
   Future resendOtp(Resend resend);
   Future chagePassword(ChangeUserPassword changeUserPassword);
+  Future getSecurityQuestions();
+  Future saveSecurityQuestions(PartyQuestionsList partyQuestionsList);
+  Future fetchSecurityQuestionsByPartyId(String partyId);
 }
