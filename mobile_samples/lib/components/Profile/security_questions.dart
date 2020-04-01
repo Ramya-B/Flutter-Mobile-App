@@ -116,18 +116,41 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
     });
 
   }
-  prepareQuestions(QuestionsDTO question) async{
-    QuestionsDTO questionsDTO = new QuestionsDTO();
-    questionsDTO.questionId = question.questionId;
-    questionsDTO.categoryId = question.categoryId;
-//    questionsDTO.answer = this.answer1;
-    questionsList.add(questionsDTO);
-  }
-  prepareAnswersList(String answer, int index){
-        questionsList[index].answer = answer;
-
-  }
+//  prepareQuestions(QuestionsDTO question, String categoryId) async{
+//    QuestionsDTO questionsDTO = new QuestionsDTO();
+//    questionsDTO.questionId = question.questionId;
+//    questionsDTO.categoryId = question.categoryId;
+//    questionsList.add(questionsDTO);
+//  }
+//  prepareAnswersList(String answer, int index){
+//        questionsList[index].answer = answer;
+//
+//  }
   saveSecurityQuestions() async{
+    print(this.questionsList);
+    print("save security questions called");
+    questionsList = [];
+    if(this.question1!=null && this.answer1!=null){
+      QuestionsDTO questionsDTO = new QuestionsDTO();
+      questionsDTO.questionId = this.question1.questionId;
+      questionsDTO.categoryId = this.question1.categoryId;
+      questionsDTO.answer = this.answer1;
+      questionsList.add(questionsDTO);
+    }
+    if(this.question2!=null && this.answer2!=null){
+      QuestionsDTO questionsDTO = new QuestionsDTO();
+      questionsDTO.questionId = this.question2.questionId;
+      questionsDTO.categoryId = this.question2.categoryId;
+      questionsDTO.answer = this.answer2;
+      questionsList.add(questionsDTO);
+    }
+    if(this.question3!=null && this.answer3!=null){
+      QuestionsDTO questionsDTO = new QuestionsDTO();
+      questionsDTO.questionId = this.question3.questionId;
+      questionsDTO.categoryId = this.question3.categoryId;
+      questionsDTO.answer = this.answer3;
+      questionsList.add(questionsDTO);
+    }
     partyQuestionsList.questionsList = this.questionsList;
     print(partyQuestionsList);
     print(this.questionsList);
@@ -189,7 +212,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                                this.question1 = val;
                                 print('question1 printing');
                                 print(this.question1.question);
-                                prepareQuestions(this.question1);
+//                                prepareQuestions(this.question1, 1);
                               },
                         );
                       },
@@ -230,7 +253,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                           this.answer1 = value;
                           print("answer printing");
                           print(this.answer1);
-                          prepareAnswersList(value,0);
+//                          prepareAnswersList(value,0);
                         });
                       },
                     ) : Container(),
@@ -267,7 +290,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                             this.question2 = val;
                             print('question1 printing');
                             print(this.question2.question);
-                            prepareQuestions(this.question2);
+//                            prepareQuestions(this.question2);
                           },
                         );
                       },
@@ -332,7 +355,7 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
                             this.question3 = val;
                             print('question1 printing');
                             print(this.question3.question);
-                            prepareQuestions(this.question3);
+//                            prepareQuestions(this.question3);
                           },
                         );
                       },
