@@ -1,6 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
+import "ownerAndRoleDTO.dart";
+import "partyIdentificationDTO.dart";
+import "profileAttribute.dart";
 import "accountStatus.dart";
 import "subscription.dart";
+import "email.dart";
+import "address.dart";
+import "telephone.dart";
 import "details.dart";
 part 'company.g.dart';
 
@@ -8,21 +14,24 @@ part 'company.g.dart';
 class Company {
     Company();
 
+    String channel;
+    String lobId;
+    String countryCode;
     bool admin;
     String registeredEmailAddress;
     String classifiedsStatus;
     String personPartyId;
-    String partyContacts;
-    String ownerAndRoleDTO;
-    String partyIdentificationDTO;
-    String profileAttribute;
+    List partyContacts;
+    List<OwnerAndRoleDTO> ownerAndRoleDTO;
+    PartyIdentificationDTO partyIdentificationDTO;
+    List<ProfileAttribute> profileAttribute;
     AccountStatus accountStatus;
     Subscription subscription;
     String classifications;
     String identifications;
-    String email;
-    String address;
-    String telephone;
+    Email email;
+    Address address;
+    Telephone telephone;
     String status;
     Details details;
     

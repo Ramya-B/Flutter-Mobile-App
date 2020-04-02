@@ -1,0 +1,18 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'companyRegisterResp.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+CompanyRegisterResp _$CompanyRegisterRespFromJson(Map<String, dynamic> json) {
+  return CompanyRegisterResp()
+    ..company = json['company'] == null
+        ? null
+        : Company.fromJson(json['company'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$CompanyRegisterRespToJson(
+        CompanyRegisterResp instance) =>
+    <String, dynamic>{'company': instance.company};

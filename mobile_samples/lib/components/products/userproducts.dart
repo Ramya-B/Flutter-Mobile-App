@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tradeleaves/components/add_product/addproduct.dart';
+import 'package:tradeleaves/components/add_product/select_category_region.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';

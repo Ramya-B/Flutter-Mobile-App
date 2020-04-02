@@ -230,6 +230,7 @@ class CatalogServiceImpl extends CatalogServices {
     SharedPreferences prefs = await SharedPreferences.getInstance();
       print("saveProduct service....!");
       print(productDTO.toJson());
+      print(jsonEncode(productDTO));
     return await http
         .post(
       '${Constants.envUrl}$apiUrl/products/saveProduct/byLob',

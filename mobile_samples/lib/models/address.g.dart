@@ -1,0 +1,36 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'address.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+Address _$AddressFromJson(Map<String, dynamic> json) {
+  return Address()
+    ..id = json['id'] as String
+    ..name = json['name'] as String
+    ..address1 = json['address1'] as String
+    ..address2 = json['address2'] as String
+    ..state = json['state'] as String
+    ..city = json['city'] as String
+    ..country = json['country'] as String
+    ..postalcode = json['postalcode'] as String
+    ..contactType = json['contactType'] as String
+    ..contactTypeDescription = json['contactTypeDescription'] as String
+    ..verified = json['verified'] as String;
+}
+
+Map<String, dynamic> _$AddressToJson(Address instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'address1': instance.address1,
+      'address2': instance.address2,
+      'state': instance.state,
+      'city': instance.city,
+      'country': instance.country,
+      'postalcode': instance.postalcode,
+      'contactType': instance.contactType,
+      'contactTypeDescription': instance.contactTypeDescription,
+      'verified': instance.verified
+    };

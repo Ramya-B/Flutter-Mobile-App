@@ -1,0 +1,39 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'identificationAttributes.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+IdentificationAttributes _$IdentificationAttributesFromJson(
+    Map<String, dynamic> json) {
+  return IdentificationAttributes()
+    ..identificationGroupId = json['identificationGroupId'] as String
+    ..identificationTypeId = json['identificationTypeId'] as String
+    ..attributeName = json['attributeName'] as String
+    ..attributeValue = json['attributeValue'] as String
+    ..fromDate = json['fromDate'] as String
+    ..throughDate = json['throughDate'] as String
+    ..verified = json['verified'] as String
+    ..verifiedDate = json['verifiedDate'] as String
+    ..verificationTypeId = json['verificationTypeId'] as String
+    ..verifiedBy = json['verifiedBy'] as String
+    ..verifiedLink = json['verifiedLink'] as String;
+}
+
+Map<String, dynamic> _$IdentificationAttributesToJson(
+        IdentificationAttributes instance) =>
+    <String, dynamic>{
+      'identificationGroupId': instance.identificationGroupId,
+      'identificationTypeId': instance.identificationTypeId,
+      'attributeName': instance.attributeName,
+      'attributeValue': instance.attributeValue,
+      'fromDate': instance.fromDate,
+      'throughDate': instance.throughDate,
+      'verified': instance.verified,
+      'verifiedDate': instance.verifiedDate,
+      'verificationTypeId': instance.verificationTypeId,
+      'verifiedBy': instance.verifiedBy,
+      'verifiedLink': instance.verifiedLink
+    };

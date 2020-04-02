@@ -1,0 +1,8 @@
+{
+    "ownerParty": "$ownerParty",
+    "roleDTO": null,
+    "telephoneDTO": "$telephone",
+    "emailContactDTO": "$email",
+    "companyPartyId": null,
+    "admin": false
+  }
