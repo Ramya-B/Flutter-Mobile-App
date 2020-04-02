@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/constants.dart';
 import 'package:tradeleaves/models/changeUserPassword.dart';
+import 'package:tradeleaves/models/partyQuestionsList.dart';
 import 'package:tradeleaves/models/personalDetailsDTO.dart';
 import 'package:tradeleaves/models/resend.dart';
 import 'package:tradeleaves/models/updatePasswordDto.dart';
@@ -330,4 +331,84 @@ class CrmServiceImpl extends CrmServices {
       }
     });
   }
+
+  @override
+  Future getSecurityQuestions() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getSecurityQuestions called......");
+    return await http.get(
+        '${Constants.envUrl}$apiUrl/profile/admin/questions',
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+    ).then((data) {
+      print("getSecurityQuestions response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getSecurityQuestions  successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to  getSecurityQuestions.........');
+      }
+    });  }
+
+  @override
+  Future saveSecurityQuestions(PartyQuestionsList partyQuestionsList) async{
+    // TODO: implement saveSecurityQuestions
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("saveSecurityQuestions called......");
+    print(partyQuestionsList.toJson());
+    return await http.post(
+        '${Constants.envUrl}$apiUrl/profile/person/questions',
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+        body: jsonEncode({
+    'partyQuestionsList': partyQuestionsList.toJson()
+    })
+    ).then((data) {
+      print("saveSecurityQuestions response.cls..!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("saveSecurityQuestions  successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to  saveSecurityQuestions.........');
+      }
+    });
+
+  }
+
+  @override
+  Future fetchSecurityQuestionsByPartyId (String partyId) async{
+    // TODO: implement fetchSecurityQuestionsByPartyId
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("fetchSecurityQuestionsByPartyId service called......");
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/profile/getQuestions/partyId/$partyId',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      print("fetchSecurityQuestionsByPartyId response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("industryType get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get fetchSecurityQuestionsByPartyId.........');
+      }
+    });
+  }
+
+
 }
