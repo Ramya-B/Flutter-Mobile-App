@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/models/classificationGroupAttributeDTOResp.dart';
 import 'package:tradeleaves/models/companyType.dart';
@@ -19,16 +21,14 @@ class CompanyDetails extends StatefulWidget {
 
 class _CompanyDetailsState extends State<CompanyDetails> {
   bool isChecked = false;
-  String companyType;
-  String industryType;
+  CompanyType companyType;
+  IndustryType industryType;
   String state;
   String siteId = "1152f6df-91cf-4fc2-afa7-2baa63ef5429";
   int groupId = 1;
   String name = "India";
   bool isActive = true;
-
   User user;
-
   CrmServiceImpl get crmService => locator<CrmServiceImpl>();
   CustomServiceImpl get customService => locator<CustomServiceImpl>();
   UserServiceImpl get userService => locator<UserServiceImpl>();
@@ -38,7 +38,17 @@ class _CompanyDetailsState extends State<CompanyDetails> {
   List<Country> countryList;
   List<IndustryType> industryTypeList;
   List<States> statesList;
-
+  Company company = new Company();
+  Details details = new Details();
+  Telephone telephone = new Telephone();
+  Address address = new Address();
+  AccountStatus accountStatus= new AccountStatus();
+  Email email = new Email();
+  PartyIdentificationDTO partyIdentificationDTO = new PartyIdentificationDTO();
+  List<ProfileAttribute> profileAttribute = [];
+  List<IdentificationAttributes> identificationAttributes = [];
+  States states;
+  var businessAttributes = {};
   getUserInfo() async {
     var data = await userService.getUser();
     print("user response...");
@@ -149,6 +159,68 @@ class _CompanyDetailsState extends State<CompanyDetails> {
     super.initState();
   }
 
+
+
+  saveCompanyDetails() async{
+    print("save company details called");
+    telephone.verified = 'N';
+    address.verified = "N";
+    address.country = "India";
+    email.verified = "N";
+    details.partyId = this.user.companyId;
+    partyIdentificationDTO.partyId = this.user.companyId;
+    identificationAttributes = [];
+    IdentificationAttributes identificationFieldAttributes = new IdentificationAttributes();
+    identificationFieldAttributes.attributeName = "PAN";
+    identificationFieldAttributes.attributeValue= "APBPY1234P";
+    identificationFieldAttributes.identificationTypeId= "2152f6df-91cd-4fc2-afa7-2baa63ef5016";
+    identificationFieldAttributes.identificationGroupId = null;
+    identificationAttributes.add(identificationFieldAttributes);
+    partyIdentificationDTO.identificationAttributes = identificationAttributes;
+//    details.groupName = this.user.companyId;
+    details.countryCode = "IN";
+    details.lobId = "34343e34-7601-40de-878d-01b3bd1f0642";
+    company.channel="B2BInternational";
+    company.lobId="34343e34-7601-40de-878d-01b3bd1f0641";
+    company.countryCode= "IN";
+    company.details = details;
+    company.telephone = telephone;
+    company.address = address;
+
+    profileAttribute = [];
+    company.email = email;
+    company.status = 'N';
+    if(this.industryType !=null){
+      ProfileAttribute object = new ProfileAttribute();
+      object.attrName = 'INDUSTRY';
+      object.attrValue = this.industryType.industryId;
+      object.attributeNameForES = this.industryType.name;
+      profileAttribute.add(object);
+    }
+    if(this.companyType !=null){
+      ProfileAttribute object = new ProfileAttribute();
+      object.attrName = 'COMPANY_TYPE';
+      object.attrValue = this.companyType.companyTypeId;
+      object.attributeNameForES = this.companyType.name;
+      profileAttribute.add(object);
+    }
+    if(businessAttributes!=null){
+      ProfileAttribute object = new ProfileAttribute();
+      object.attrName = 'BUSINESS_TYPE';
+      object.attrValue = "Buying";
+      profileAttribute.add(object);
+    }
+    print(profileAttribute);
+    print(profileAttribute.toList());
+    company.profileAttribute = profileAttribute;
+    company.partyIdentificationDTO = partyIdentificationDTO;
+    print(jsonEncode(company));
+    print("printing the object");
+    var response = await crmService.saveCompanyDetails(company);
+    print("RESPONSE PRINTED");
+    print(response);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -162,12 +234,18 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               height: 8,
             ),
             TextFormField(
+              initialValue: details.groupName,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                 hintText: "This is your leagally registered name",
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
               ),
+              onChanged: (String value){
+                setState(() {
+                  details.groupName = value;
+                });
+              },
             )
           ],
         ),
@@ -182,12 +260,18 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               height: 8,
             ),
             TextFormField(
+              initialValue: details.groupNameLocal,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                 hintText: "Trading/Public Name",
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
               ),
+              onChanged: (String value){
+                setState(() {
+                  details.groupNameLocal = value;
+                });
+              },
             )
           ],
         ),
@@ -205,34 +289,52 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               child: Column(
                 children: <Widget>[
                   TextFormField(
+                    initialValue: address.address1,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                       hintText: "Address1",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5)),
                     ),
+                    onChanged: (String value){
+                      setState(() {
+                        address.address1 = value;
+                      });
+                    },
                   ),
                   SizedBox(
                     height: 5,
                   ),
                   TextFormField(
+                    initialValue: address.address2,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                       hintText: "Address2",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5)),
                     ),
+                    onChanged: (String value){
+                      setState(() {
+                        address.address2 = value;
+                      });
+                    },
                   ),
                   SizedBox(
                     height: 5,
                   ),
                   TextFormField(
+                    initialValue: address.city,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                       hintText: "City/Town",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5)),
                     ),
+                    onChanged: (String value){
+                      setState(() {
+                        address.city = value;
+                      });
+                    },
                   ),
                   SizedBox(
                     height: 5,
@@ -247,6 +349,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5)),
                     ),
+
                   ),
                   SizedBox(
                     height: 5,
@@ -265,11 +368,12 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                         style: TextStyle(fontSize: 15),
                                       ),
                                 isExpanded: true,
+                                value: states ,
                                 iconSize: 30.0,
                                 items: this.statesList.map(
                                   (val) {
-                                    return DropdownMenuItem<String>(
-                                      value: val.name,
+                                    return DropdownMenuItem<States>(
+                                      value: val,
                                       child: Text(
                                         val.name,
                                       ),
@@ -279,7 +383,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                 onChanged: (val) {
                                   setState(
                                     () {
-                                      this.state = val;
+                                      states = val;
+                                      address.state = val.name;
                                     },
                                   );
                                 },
@@ -300,12 +405,19 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                     height: 5,
                   ),
                   TextFormField(
+                    initialValue: address.postalcode,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                       hintText: "Pin Code",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5)),
                     ),
+                      onChanged: (String value){
+                        setState(() {
+                          address.postalcode = value;
+                        });
+                      },
+
                   )
                 ],
               ),
@@ -324,15 +436,16 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                     hint: companyType == null
                         ? Text('Company type')
                         : Text(
-                            companyType,
+                            this.companyType.name,
                             style: TextStyle(fontSize: 15),
                           ),
+                    value: companyType,
                     isExpanded: true,
                     iconSize: 30.0,
                     items: this.companyTypeList.map(
                       (val) {
-                        return DropdownMenuItem<String>(
-                          value: val.name,
+                        return DropdownMenuItem<CompanyType>(
+                          value: val,
                           child: Text(
                             val.name,
                           ),
@@ -372,15 +485,15 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               hint: industryType == null
                   ? Text('Primary industry')
                   : Text(
-                      industryType,
+                      this.industryType.name,
                       style: TextStyle(fontSize: 15),
                     ),
               isExpanded: true,
               iconSize: 30.0,
               items: this.industryTypeList.map(
                 (val) {
-                  return DropdownMenuItem<String>(
-                    value: val.name,
+                  return DropdownMenuItem<IndustryType>(
+                    value: val,
                     child: Text(val.name),
                   );
                 },
@@ -388,6 +501,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               onChanged: (val) {
                 setState(
                   () {
+                    print("industry type");
+                    print(val);
                     this.industryType = val;
                   },
                 );
@@ -436,6 +551,11 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                 values[businessTypeList
                                     .classificationGroupAttributeDTO[index]
                                     .attributeName] = value;
+                                print(values);
+                                 businessAttributes = values;
+                                print(value);
+
+                                print("printing business list");
                               });
                             },
                             controlAffinity: ListTileControlAffinity.leading,
@@ -471,6 +591,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               onChanged: (value) {
                 setState(() {
                   print(value);
+                  telephone.countryCode = "+91";
+                  telephone.contactNumber = value!=null ? value: this.user.personalDetails.profile.telephone[0].contactNumber;
                 });
               },
             )
@@ -501,6 +623,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               onChanged: (value) {
                 setState(() {
                   print(value);
+                  email.emailAddress = value!=null ? value : this.user.personalDetails.profile.email[0].emailAddress;
                 });
               },
             )
@@ -523,6 +646,12 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
               ),
+              onChanged: (value) {
+                setState(() {
+                  print(value);
+                  email.emailAddress = value;
+                });
+              },
             )
           ],
         ),
@@ -558,6 +687,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                       ),
                       Flexible(
                           child: TextFormField(
+                            initialValue:"",
                         decoration: InputDecoration(
                           contentPadding:
                               EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -565,6 +695,12 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5)),
                         ),
+                            onChanged: (value) {
+                              setState(() {
+                                print(value);
+//                                email.emailAddress = value;
+                              });
+                            },
                       )),
                     ],
                   ),
@@ -596,7 +732,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               ),
               RaisedButton(
                 color: Colors.lightGreen,
-                onPressed: () {},
+                onPressed: () {saveCompanyDetails();},
                 child: Text(
                   'Save & Continue',
                   style: TextStyle(color: Colors.white),

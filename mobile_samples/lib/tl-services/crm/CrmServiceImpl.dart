@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/constants.dart';
 import 'package:tradeleaves/models/changeUserPassword.dart';
+import 'package:tradeleaves/models/company.dart';
 import 'package:tradeleaves/models/partyQuestionsList.dart';
 import 'package:tradeleaves/models/personalDetailsDTO.dart';
 import 'package:tradeleaves/models/resend.dart';
@@ -406,6 +407,35 @@ class CrmServiceImpl extends CrmServices {
         return res;
       } else {
         return throw Exception('falied to get fetchSecurityQuestionsByPartyId.........');
+      }
+    });
+  }
+
+  @override
+  Future saveCompanyDetails(Company company) async{
+    // TODO: implement saveCompanyDetails
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("saveCompanyDetails called......");
+    print(company.toJson());
+    return await http.post(
+        '${Constants.envUrl}$apiUrl/profile/company/details/save',
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+        body: jsonEncode({
+          'companyDTO': company.toJson()
+        })
+    ).then((data) {
+      print("saveCompanyDetails response.cls..!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("saveCompanyDetails  successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to  saveCompanyDetails.........');
       }
     });
   }
