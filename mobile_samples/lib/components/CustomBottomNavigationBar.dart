@@ -7,6 +7,8 @@ import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
 import 'package:tradeleaves/components/products/products_home.dart';
 
+import 'homepages/bliss_home_page.dart';
+
 class CustomNavBar extends StatefulWidget {
   final selectedIndex;
 
@@ -56,7 +58,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
               builder: (context) => new Scaffold(
                     appBar: CustomToolBar(),
                     body: Container(
-                      child:HomeProducts(),
+                      child:BlissHomePage(),
                     ),
                     bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                     drawer: CustomDrawer(),
@@ -100,7 +102,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
                     appBar: CustomToolBar(),
                     body: Container(
                      
-                      child:HomeProducts(),
+                      child:BlissHomePage(),
                     ),
                     bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                     // drawer: CustomDrawer(),

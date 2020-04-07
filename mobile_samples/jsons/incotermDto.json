@@ -1,0 +1,9 @@
+
+    {
+        "incoterm": "CFR",
+        "description": "(CFR) Cost And Freight",
+        "modeOfTransport": "Ocean",
+        "infoText": "The seller must pay the costs of bringing the goods to the specified port. The buyer is responsible for risks.",
+        "system": true,
+        "version": "2010"
+    }
