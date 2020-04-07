@@ -34,6 +34,10 @@ class Details {
     String tenantId;
     bool optIn;
     String domainName;
+    String groupName;
+    String lobId;
+    String countryCode;
+    String groupNameLocal;
     
     factory Details.fromJson(Map<String,dynamic> json) => _$DetailsFromJson(json);
     Map<String, dynamic> toJson() => _$DetailsToJson(this);

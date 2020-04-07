@@ -26,5 +26,9 @@
     "occupation": null,
     "tenantId": "fbb8a805-161a-42b9-9354-73aafea1aaf7",
     "optIn": true,
-    "domainName": "tradeleaves.us"
+    "domainName": "tradeleaves.us",
+    "groupName": "",
+    "lobId": "",
+    "countryCode": "",
+    "groupNameLocal": ""
   }
