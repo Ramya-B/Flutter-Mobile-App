@@ -132,13 +132,17 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
                 builder: (context) => AddProduct(
                     productAttributes: this.listCatProdAttrLoBRespDTO,
                     categoryRegionLob: listCatProdAttrLoBDTO,
-                    regions: selectedRegions)));
+                    selectedCountries: selectedRegions,
+                    regions:companyRegions.partyCountryRegionListDTO.partyCountryRegionDTO,
+                    user: user,)),
+                    );
       });
     }
   }
 
   @override
   void initState() {
+    savedCats = [];
     selectedLobs = [];
     selectedRegions = [];
     response = false;
@@ -179,7 +183,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
                       child: ListView(
                         scrollDirection: Axis.vertical,
                         children: <Widget>[
-                          (this.response == true)
+                          (this.savedCats != null && this.savedCats.length != 0 && leafCats != null)
                               ? ListView.builder(
                                   scrollDirection: Axis.vertical,
                                   itemCount: this.savedCats.length,

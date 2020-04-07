@@ -10,6 +10,7 @@ class PriceList {
     String lobId;
     String priceType;
     List<ProductPriceSlabs> productPriceSlabs;
+    String unitType;
     
     factory PriceList.fromJson(Map<String,dynamic> json) => _$PriceListFromJson(json);
     Map<String, dynamic> toJson() => _$PriceListToJson(this);

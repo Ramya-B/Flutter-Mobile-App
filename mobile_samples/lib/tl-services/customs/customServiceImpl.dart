@@ -35,4 +35,51 @@ class CustomServiceImpl extends CustomServices {
       }
     });
   }
+
+  @override
+  Future<List> getIncoterms() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getIncoterms service...");
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/incoterms',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      print("getIncoterms response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("countryCodes get successfully......");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get getIncoterms..........');
+      }
+    });
+  }
+  @override
+  Future<List> getUoms() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getUoms service...");
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/uoms',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      print("getUoms response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getUoms get successfully......");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get getUoms..........');
+      }
+    });
+  }
 }

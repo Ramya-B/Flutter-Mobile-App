@@ -15,12 +15,14 @@ PriceList _$PriceListFromJson(Map<String, dynamic> json) {
         ?.map((e) => e == null
             ? null
             : ProductPriceSlabs.fromJson(e as Map<String, dynamic>))
-        ?.toList();
+        ?.toList()
+    ..unitType = json['unitType'] as String;
 }
 
 Map<String, dynamic> _$PriceListToJson(PriceList instance) => <String, dynamic>{
       'currency': instance.currency,
       'lobId': instance.lobId,
       'priceType': instance.priceType,
-      'productPriceSlabs': instance.productPriceSlabs
+      'productPriceSlabs': instance.productPriceSlabs,
+      'unitType': instance.unitType
     };

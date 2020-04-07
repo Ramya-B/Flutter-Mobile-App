@@ -1,0 +1,22 @@
+{
+
+"ID": 6000003,
+"countryCode": "IN",
+"postalCode": "400001",
+"village": "Mumbai",
+"state": "Maharashtra",
+"stateID": "16",
+"city": "Mumbai",
+"column_6": "",
+"town": "Mumbai",
+"column_8": null,
+"latitude": 18.6102,
+"longitude": 73.3519,
+"column_11": null,
+"cityImage": "727907c5-5987-4313-b57a-4ab7e0ecfcc6/mumbai.png",
+"modified": null,
+"created": null,
+"location":"$location" ,
+"isPopular": true,
+"isActive": true
+}

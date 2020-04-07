@@ -152,6 +152,12 @@
       "languageVersion": "2.3"
     },
     {
+      "name": "datetime_picker_formfield",
+      "rootUri": "file:///Users/tradeleaves/TLFlutterdev/flutter/.pub-cache/hosted/pub.dartlang.org/datetime_picker_formfield-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
       "name": "dio",
       "rootUri": "file:///Users/tradeleaves/TLFlutterdev/flutter/.pub-cache/hosted/pub.dartlang.org/dio-3.0.9",
       "packageUri": "lib/",
@@ -270,6 +276,12 @@
       "rootUri": "file:///Users/tradeleaves/TLFlutterdev/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.3+4",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "intl",
+      "rootUri": "file:///Users/tradeleaves/TLFlutterdev/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.16.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.5"
     },
     {
       "name": "io",
@@ -614,7 +626,7 @@
       "languageVersion": "2.2"
     }
   ],
-  "generated": "2020-04-01T14:53:08.823563Z",
+  "generated": "2020-04-03T07:43:27.884482Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }
