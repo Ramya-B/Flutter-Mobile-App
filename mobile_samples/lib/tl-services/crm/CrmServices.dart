@@ -19,4 +19,5 @@ abstract class CrmServices {
   Future saveSecurityQuestions(PartyQuestionsList partyQuestionsList);
   Future fetchSecurityQuestionsByPartyId(String partyId);
   Future saveCompanyDetails(Company company);
+  Future getCompanyDetails();
 }

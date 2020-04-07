@@ -440,5 +440,31 @@ class CrmServiceImpl extends CrmServices {
     });
   }
 
+  @override
+  Future getCompanyDetails() async{
+    // TODO: implement getCompanyDetails
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getCompanyDetails service called......");
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/profile/getCompanyDetails/company',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      print("getCompanyDetails response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getCompanyDetails get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get getCompanyDetails.........');
+      }
+    });
+  }
+
+
 
 }

@@ -129,6 +129,60 @@ class _CompanyDetailsState extends State<CompanyDetails> {
           List<IndustryType>.from(res.map((i) => IndustryType.fromJson(i)));
     });
   }
+  getCompanyDetails() async{
+    print("getCompanyDetails called");
+    var res = await crmService.getCompanyDetails();
+    print("getCompanyDetails response object ...........");
+    print(res);
+//    company = res.company;
+    setState(() {
+      CompanyRegisterResp companyRegisterResp = CompanyRegisterResp.fromJson(res);
+      print(companyRegisterResp);
+      company = companyRegisterResp.company;
+      print("printing company object");
+      print(this.company);
+      details = company.details;
+      address = company.address;
+      email = company.email;
+      profileAttribute = company.profileAttribute;
+      partyIdentificationDTO = company.partyIdentificationDTO;
+      for(States state in statesList){
+        if(state.name == address.state){
+          this.states = state;
+        }
+      }
+      if(company.profileAttribute.length>0){
+        print("1st if called");
+        for(ProfileAttribute types in company.profileAttribute){
+          print("1st for called");
+          if(types.attrName == "COMPANY_TYPE"){
+            print("if 2nd");
+            for(CompanyType companyTypes in companyTypeList){
+              print("second for called");
+              print(companyTypes.companyTypeId);
+              print(types.attrValue);
+              if(companyTypes.companyTypeId == types.attrValue){
+                print("if matched");
+                companyType = companyTypes;
+                print(companyType);
+                break;
+              }
+            }
+          }
+          if(types.attrName == "INDUSTRY"){
+            for(IndustryType industryTypes in industryTypeList){
+              if(industryTypes.industryId == types.attrValue){
+                industryType = industryTypes;
+              }
+            }
+          }
+
+
+        }
+      }
+
+    });
+  }
 
   @override
   void initState() {
@@ -156,6 +210,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
     print("Before Calling getStates ----------------");
     getStates();
     print("After Calling getStates ----------------");
+    getCompanyDetails();
     super.initState();
   }
 
@@ -233,7 +288,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
             SizedBox(
               height: 8,
             ),
-            TextFormField(
+            details.groupName!=null ? TextFormField(
               initialValue: details.groupName,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -246,7 +301,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                   details.groupName = value;
                 });
               },
-            )
+            ): Container(),
           ],
         ),
         SizedBox(
@@ -259,7 +314,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
             SizedBox(
               height: 8,
             ),
-            TextFormField(
+            details.groupNameLocal!=null ? TextFormField(
               initialValue: details.groupNameLocal,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -272,7 +327,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                   details.groupNameLocal = value;
                 });
               },
-            )
+            ) : Container()
           ],
         ),
         SizedBox(
@@ -288,7 +343,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
             Container(
               child: Column(
                 children: <Widget>[
-                  TextFormField(
+                  address.address1!=null ? TextFormField(
                     initialValue: address.address1,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -301,11 +356,11 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                         address.address1 = value;
                       });
                     },
-                  ),
+                  ) : Container(),
                   SizedBox(
                     height: 5,
                   ),
-                  TextFormField(
+                  address.address2 !=null ? TextFormField(
                     initialValue: address.address2,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -318,11 +373,11 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                         address.address2 = value;
                       });
                     },
-                  ),
+                  )  :Container(),
                   SizedBox(
                     height: 5,
                   ),
-                  TextFormField(
+                  address.city!=null ? TextFormField(
                     initialValue: address.city,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -335,7 +390,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                         address.city = value;
                       });
                     },
-                  ),
+                  ) : Container(),
                   SizedBox(
                     height: 5,
                   ),
@@ -404,7 +459,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                   SizedBox(
                     height: 5,
                   ),
-                  TextFormField(
+                  address.postalcode!=null ? TextFormField(
                     initialValue: address.postalcode,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -418,7 +473,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                         });
                       },
 
-                  )
+                  ) : Container(),
                 ],
               ),
             )
@@ -432,6 +487,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Text('Company Type'),
+                  Text(companyType.toString()),
                   DropdownButton(
                     hint: companyType == null
                         ? Text('Company type')
@@ -573,15 +629,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               height: 8,
             ),
             TextFormField(
-              initialValue: this
-                          .user
-                          .personalDetails
-                          .profile
-                          .telephone[0]
-                          .contactNumber !=
-                      null
-                  ? this.user.personalDetails.profile.telephone[0].contactNumber
-                  : 0,
+              initialValue:telephone.contactNumber!=null ? telephone.contactNumber
+                  :this.user.personalDetails.profile.telephone[0].contactNumber,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                 hintText: "Enter Mobile Number",
@@ -609,11 +658,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               height: 8,
             ),
             TextFormField(
-              initialValue:
-                  this.user.personalDetails.profile.email[0].emailAddress !=
-                          null
-                      ? this.user.personalDetails.profile.email[0].emailAddress
-                      : null,
+              initialValue:email.emailAddress!=null? email.emailAddress
+                      : this.user.personalDetails.profile.email[0].emailAddress,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                 hintText: "Enter your email",
