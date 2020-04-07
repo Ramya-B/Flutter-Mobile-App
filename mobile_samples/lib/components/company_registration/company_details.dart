@@ -128,6 +128,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
       this.industryTypeList =
           List<IndustryType>.from(res.map((i) => IndustryType.fromJson(i)));
     });
+    getCompanyDetails();
   }
   getCompanyDetails() async{
     print("getCompanyDetails called");
@@ -210,7 +211,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
     print("Before Calling getStates ----------------");
     getStates();
     print("After Calling getStates ----------------");
-    getCompanyDetails();
+
     super.initState();
   }
 
@@ -487,7 +488,6 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Text('Company Type'),
-                  Text(companyType.toString()),
                   DropdownButton(
                     hint: companyType == null
                         ? Text('Company type')
