@@ -1,17 +1,19 @@
 import 'dart:convert';
-
+import 'package:path/path.dart';
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/models/IdentityNumberAttributesList.dart';
 import 'package:tradeleaves/models/classificationGroupAttributeDTOResp.dart';
 import 'package:tradeleaves/models/companyType.dart';
 import 'package:tradeleaves/models/country.dart';
 import 'package:tradeleaves/models/identificationGroups.dart';
+import 'package:tradeleaves/models/identificationTypeDTOList.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/models/industryType.dart';
 import 'package:tradeleaves/models/states.dart';
 import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import 'package:tradeleaves/tl-services/customs/customServiceImpl.dart';
-
+import 'package:multiselect_formfield/multiselect_formfield.dart';
 import '../../service_locator.dart';
 
 class CompanyDetails extends StatefulWidget {
@@ -34,7 +36,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
   UserServiceImpl get userService => locator<UserServiceImpl>();
   ClassificationGroupAttributeDTOResp businessTypeList;
   List<CompanyType> companyTypeList;
-  List<IdentificationGroups> indentificationGroupList;
+  List<IdentificationGroups> identificationGroupList;
   List<Country> countryList;
   List<IndustryType> industryTypeList;
   List<States> statesList;
@@ -48,7 +50,12 @@ class _CompanyDetailsState extends State<CompanyDetails> {
   List<ProfileAttribute> profileAttribute = [];
   List<IdentificationAttributes> identificationAttributes = [];
   States states;
-  var businessAttributes = {};
+  String businessAttributes;
+  var businessTypes;
+  var identityValue;
+  List selectedBusinessTypes;
+  List<IdentificationAttributesList> identificationAttributesList = [];
+  IdentificationAttributesList identityType;
   getUserInfo() async {
     var data = await userService.getUser();
     print("user response...");
@@ -73,8 +80,53 @@ class _CompanyDetailsState extends State<CompanyDetails> {
     print("getIdentificationGroups response object {}...........");
     print(res);
     setState(() {
-      this.indentificationGroupList = List<IdentificationGroups>.from(
+      this.identificationGroupList = List<IdentificationGroups>.from(
           res.map((i) => IdentificationGroups.fromJson(i)));
+      print("identification documents");
+      print(json.encode(this.identificationGroupList));
+
+
+//      for(IdentificationGroups groups in this.identificationGroupList){
+        for(IdentificationTypeDTOList types in this.identificationGroupList[0].identificationTypeDTOList){
+          if (types.identificationFieldsList[0].type != 'Attachment') {
+            print("matched if");
+            print(types.identificationTypeName);
+            print(types.identificationFieldsList[0].type);
+            IdentificationAttributesList identificationAttributes = new IdentificationAttributesList();
+            identificationAttributes.attributeName = types.identificationTypeName;
+            identificationAttributes.attributeType = types.identificationFieldsList[0].type;
+            identificationAttributes.attributeValidation = types.identificationFieldsList[0].validation;
+            if(types.identificationFieldsList[0].required == "Y"){
+              identificationAttributes.isRequired = true;
+            }else{
+              identificationAttributes.isRequired = false;
+            }
+            identificationAttributes.anyOneFilled = true; // Require one from many fields
+            identificationAttributes.identificationTypeId = types.identificationTypeId;
+//            if(identificationAttributesList.length>0){
+//              print("printed las if in attributes");
+//              for(IdentificationAttributesList attTypes in identificationAttributesList){
+//                  if(attTypes.attributeName != types.identificationTypeName){
+//                    identificationAttributesList.add(identificationAttributes);
+//                    print("list pushed in if");
+////                    break;
+//                  }
+//              }
+//            }else{
+//              print("list pushed in else");
+//              identificationAttributesList.add(identificationAttributes);
+//            }
+            identificationAttributesList.add(identificationAttributes);
+            print("identification attributes");
+            print(jsonEncode(identificationAttributesList));
+
+          }
+        }
+//      }
+      print("identificationAttributesList printed");
+      print(identificationAttributesList);
+      print(jsonEncode(identificationAttributesList));
+
     });
   }
 
@@ -108,14 +160,15 @@ class _CompanyDetailsState extends State<CompanyDetails> {
 
   getBusinessTypes() async {
     print('getBusinessTypes called.....');
-    var response = await crmService.businessType();
+//    var response = await crmService.businessType();
+    businessTypes = await crmService.businessType();
     this.businessTypeList =
-        ClassificationGroupAttributeDTOResp.fromJson(response);
+        ClassificationGroupAttributeDTOResp.fromJson(businessTypes);
     print("getBusinessTypes response object {}...........");
-    print(response);
+    print(businessTypes);
     setState(() {
       this.businessTypeList =
-          ClassificationGroupAttributeDTOResp.fromJson(response);
+          ClassificationGroupAttributeDTOResp.fromJson(businessTypes);
     });
   }
 
@@ -143,10 +196,18 @@ class _CompanyDetailsState extends State<CompanyDetails> {
       print("printing company object");
       print(this.company);
       details = company.details;
-      address = company.address;
-      email = company.email;
-      profileAttribute = company.profileAttribute;
-      partyIdentificationDTO = company.partyIdentificationDTO;
+      if(company.email!=null){
+        email = company.email;
+      }
+      if(company.address!=null){
+        address = company.address;
+      }
+      if(company.details!=null){
+        details = company.details;
+      }
+      if(company.partyIdentificationDTO!=null){
+        partyIdentificationDTO = company.partyIdentificationDTO;
+      }
       for(States state in statesList){
         if(state.name == address.state){
           this.states = state;
@@ -157,16 +218,9 @@ class _CompanyDetailsState extends State<CompanyDetails> {
         for(ProfileAttribute types in company.profileAttribute){
           print("1st for called");
           if(types.attrName == "COMPANY_TYPE"){
-            print("if 2nd");
             for(CompanyType companyTypes in companyTypeList){
-              print("second for called");
-              print(companyTypes.companyTypeId);
-              print(types.attrValue);
               if(companyTypes.companyTypeId == types.attrValue){
-                print("if matched");
                 companyType = companyTypes;
-                print(companyType);
-                break;
               }
             }
           }
@@ -177,9 +231,33 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               }
             }
           }
-
+          if(types.attrName == "BUSINESS_TYPE"){
+            selectedBusinessTypes = types.attrValue.split(",");
+            print("Selected businesstypes");
+            print(selectedBusinessTypes);
+          }
 
         }
+      }
+      print("identificationAttributesLists");
+      print(jsonEncode(identificationAttributesList));
+      if(company.partyIdentificationDTO.identificationAttributes.length>0){
+        print("inside if");
+//        print();
+          for(IdentificationAttributes attributes in company.partyIdentificationDTO.identificationAttributes){
+                if(attributes.attributeValue!=null){
+                    identityValue = attributes.attributeValue;
+                }
+                for(IdentificationAttributesList groupValues in identificationAttributesList){
+                  print("inside for");
+                  print(attributes.attributeName);
+                  print(groupValues.attributeName);
+                  if(groupValues.attributeName == attributes.attributeName){
+                    groupValues.identificationGroupId = attributes.identificationGroupId;
+                  }
+                }
+          }
+
       }
 
     });
@@ -189,7 +267,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
   void initState() {
     statesList = [];
     countryList = [];
-    indentificationGroupList = [];
+    identificationGroupList = [];
     companyTypeList = [];
     industryTypeList = [];
     getUserInfo();
@@ -227,11 +305,13 @@ class _CompanyDetailsState extends State<CompanyDetails> {
     partyIdentificationDTO.partyId = this.user.companyId;
     identificationAttributes = [];
     IdentificationAttributes identificationFieldAttributes = new IdentificationAttributes();
-    identificationFieldAttributes.attributeName = "PAN";
-    identificationFieldAttributes.attributeValue= "APBPY1234P";
-    identificationFieldAttributes.identificationTypeId= "2152f6df-91cd-4fc2-afa7-2baa63ef5016";
-    identificationFieldAttributes.identificationGroupId = null;
+    identificationFieldAttributes.attributeName = identityType.attributeName;
+    identificationFieldAttributes.attributeValue= identityValue;
+    identificationFieldAttributes.identificationTypeId= identityType.identificationTypeId;
+    identificationFieldAttributes.identificationGroupId = identityType.identificationGroupId;
     identificationAttributes.add(identificationFieldAttributes);
+    print(jsonEncode(identificationAttributes));
+    print("identirty areve");
     partyIdentificationDTO.identificationAttributes = identificationAttributes;
 //    details.groupName = this.user.companyId;
     details.countryCode = "IN";
@@ -242,7 +322,6 @@ class _CompanyDetailsState extends State<CompanyDetails> {
     company.details = details;
     company.telephone = telephone;
     company.address = address;
-
     profileAttribute = [];
     company.email = email;
     company.status = 'N';
@@ -260,10 +339,11 @@ class _CompanyDetailsState extends State<CompanyDetails> {
       object.attributeNameForES = this.companyType.name;
       profileAttribute.add(object);
     }
-    if(businessAttributes!=null){
+    if(selectedBusinessTypes!=null){
       ProfileAttribute object = new ProfileAttribute();
       object.attrName = 'BUSINESS_TYPE';
-      object.attrValue = "Buying";
+      object.attrValue = selectedBusinessTypes.join(",");
+      print("business types");
       profileAttribute.add(object);
     }
     print(profileAttribute);
@@ -289,7 +369,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
             SizedBox(
               height: 8,
             ),
-            details.groupName!=null ? TextFormField(
+//            details.groupName!=null ?
+            TextFormField(
               initialValue: details.groupName,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -299,10 +380,13 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               ),
               onChanged: (String value){
                 setState(() {
+                  print(details.groupName);
+                  print("group name");
                   details.groupName = value;
                 });
               },
-            ): Container(),
+            ),
+//        : Container(),
           ],
         ),
         SizedBox(
@@ -315,7 +399,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
             SizedBox(
               height: 8,
             ),
-            details.groupNameLocal!=null ? TextFormField(
+//            details.groupNameLocal!=null ?
+            TextFormField(
               initialValue: details.groupNameLocal,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -328,7 +413,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                   details.groupNameLocal = value;
                 });
               },
-            ) : Container()
+            ),
+//                : Container()
           ],
         ),
         SizedBox(
@@ -344,7 +430,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
             Container(
               child: Column(
                 children: <Widget>[
-                  address.address1!=null ? TextFormField(
+//                  address.address1!=null ?
+                  TextFormField(
                     initialValue: address.address1,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -357,11 +444,13 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                         address.address1 = value;
                       });
                     },
-                  ) : Container(),
+                  ),
+//                      : Container(),
                   SizedBox(
                     height: 5,
                   ),
-                  address.address2 !=null ? TextFormField(
+//                  address.address2 !=null ?
+                  TextFormField(
                     initialValue: address.address2,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -374,11 +463,13 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                         address.address2 = value;
                       });
                     },
-                  )  :Container(),
+                  )  ,
+//                      :Container(),
                   SizedBox(
                     height: 5,
                   ),
-                  address.city!=null ? TextFormField(
+//                  address.city!=null ?
+                  TextFormField(
                     initialValue: address.city,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -391,7 +482,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                         address.city = value;
                       });
                     },
-                  ) : Container(),
+                  ),
+//                      : Container(),
                   SizedBox(
                     height: 5,
                   ),
@@ -460,7 +552,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                   SizedBox(
                     height: 5,
                   ),
-                  address.postalcode!=null ? TextFormField(
+//                  address.postalcode!=null ?
+                  TextFormField(
                     initialValue: address.postalcode,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
@@ -474,7 +567,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                         });
                       },
 
-                  ) : Container(),
+                  ),
+//                      : Container(),
                 ],
               ),
             )
@@ -578,48 +672,34 @@ class _CompanyDetailsState extends State<CompanyDetails> {
           height: 20,
         ),
         Container(
-          child: (this.businessTypeList != null &&
-                  this.businessTypeList.classificationGroupAttributeDTO.length >
-                      0)
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                      Text("What's your primary business activity?"),
-                      ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: this
-                            .businessTypeList
-                            .classificationGroupAttributeDTO
-                            .length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return new CheckboxListTile(
-                            title: new Text(businessTypeList
-                                .classificationGroupAttributeDTO[index]
-                                .attributeName),
-                            value: values[businessTypeList
-                                .classificationGroupAttributeDTO[index]
-                                .attributeName],
-                            activeColor: Colors.green,
-                            checkColor: Colors.white,
-                            onChanged: (bool value) {
-                              setState(() {
-                                values[businessTypeList
-                                    .classificationGroupAttributeDTO[index]
-                                    .attributeName] = value;
-                                print(values);
-                                 businessAttributes = values;
-                                print(value);
-
-                                print("printing business list");
-                              });
-                            },
-                            controlAffinity: ListTileControlAffinity.leading,
-                          );
-                        },
-                      ),
-                    ])
-              : Container(),
+          padding: EdgeInsets.all(16),
+          child: MultiSelectFormField(
+            autovalidate: false,
+            titleText: 'Primary Industry',
+            validator: (value) {
+              if (value == null || value.length == 0) {
+                return 'Please select one or more options';
+              }
+              return null;
+            },
+            dataSource: businessTypes["classificationGroupAttributeDTO"],
+            textField: 'attributeName',
+            valueField: 'attributeName',
+            okButtonLabel: 'OK',
+            cancelButtonLabel: 'CANCEL',
+            // required: true,
+            hintText: 'Please choose one or more',
+            value: selectedBusinessTypes,
+            onSaved: (value) {
+              if (value == null) return;
+              setState(() {
+                selectedBusinessTypes = value;
+                print("printing the business types");
+                print(selectedBusinessTypes);
+                print(selectedBusinessTypes.join(','));
+              });
+            },
+          )
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -704,55 +784,72 @@ class _CompanyDetailsState extends State<CompanyDetails> {
         SizedBox(
           height: 20,
         ),
-        (this.companyType != null && this.industryType != null)
+
+        this.identificationAttributesList.length > 0
             ? Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text('Identity Number'),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      DropdownButton<String>(
-                        onChanged: (c) {},
-                        underline: Container(),
-                        items: [
-                          DropdownMenuItem<String>(
-                            child: Text(
-                              this
-                                  .indentificationGroupList[1]
-                                  .identificationTypeDTOList[1]
-                                  .identificationFieldsList[0]
-                                  .name,
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          )
-                        ],
-                      ),
-                      Flexible(
-                          child: TextFormField(
-                            initialValue:"",
-                        decoration: InputDecoration(
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                          hintText: "Enter PAN Number",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5)),
-                        ),
-                            onChanged: (value) {
-                              setState(() {
-                                print(value);
-//                                email.emailAddress = value;
-                              });
-                            },
-                      )),
-                    ],
-                  ),
-                ],
-              )
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Text('Identity Number'),
+            DropdownButton(
+              hint: this.identityType!=null ? Text(this.identityType.attributeName) : Text(
+    "Identity Number",
+    style: TextStyle(fontSize: 15),
+    ),
+              value: identityType,
+              isExpanded: true,
+              iconSize: 30.0,
+              items: identificationAttributesList.map(
+                    (val) {
+                  return DropdownMenuItem<IdentificationAttributesList>(
+                    value: val,
+                    child: Text(
+                      val.attributeName,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  );
+                },
+              ).toList(),
+              onChanged: (val) {
+                setState(
+                      () {
+                   print("selection of identity type");
+                   this.identityType = val;
+                   print(jsonEncode(val));
+                  },
+                );
+              },
+            )
+
+          ],
+        )
             : Container(),
+        SizedBox(
+          height: 20,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Text('Identity Value'),
+            SizedBox(
+              height: 8,
+            ),
+            TextFormField(
+              initialValue: identityValue,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
+                hintText: "Type your identity value",
+                border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  print(value);
+                  identityValue= value;
+                });
+              },
+            )
+          ],
+        ),
         SizedBox(
           height: 20,
         ),
