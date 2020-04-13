@@ -1,7 +1,13 @@
 {
     "currency": "INR",
     "lobId": "34343e34-7601-40de-878d-01b3bd1f0642",
-    "priceType": null,
+    "priceType": "",
     "productPriceSlabs":"$[]productPriceSlabs",
-    "unitType":""
+    "unitType":"",
+    "incoterms": "",
+    "isIncoSelected": true,
+    "edcStart": "34",
+    "edcEnd": "43",
+    "edcSelectedTime": "Days",
+    "attributeName": "Order Delivery Time"
 }

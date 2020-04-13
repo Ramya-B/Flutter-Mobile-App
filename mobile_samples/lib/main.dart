@@ -1,9 +1,10 @@
- import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:tradeleaves/components/products/products_home.dart';
+import 'components/sample.dart';
 import 'service_locator.dart';
 
 void main() {

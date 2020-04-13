@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_absolute_path/flutter_absolute_path.dart';
+import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
@@ -68,7 +70,7 @@ class _AddProductState extends State<AddProduct> {
 
   @override
   void initState() {
-    productPriceSlabs= [];
+    productPriceSlabs = [];
     prices = [];
     countryCodesList = [];
     choosenCities = [];
@@ -83,6 +85,49 @@ class _AddProductState extends State<AddProduct> {
     super.initState();
   }
 
+  getFilePickers(
+      CreateCategoryProductAttributeDTO
+          createCategoryProductAttributeDTO) async {
+    print("file pickers are called..!");
+    List<File> files = await FilePicker.getMultiFile(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'pdf', 'doc'],
+    );
+    print(files);
+
+    for (var fileItem in files) {
+      switch (fileItem.path.toString().substring(
+          fileItem.path.toString().lastIndexOf('.'),
+          fileItem.path.toString().length)) {
+        case 'jpg':
+        case 'jpeg':
+        case 'JPG':
+        case 'JPEG':
+          mime.MediaType('image', 'jpeg');
+          break;
+      }
+      print(fileItem.path);
+      var request = http.MultipartRequest(
+          'POST',
+          Uri.parse(
+              "${Constants.envUrl}/mongoupload/attachments/?Override=false"));
+      request.files.add(await http.MultipartFile.fromPath(
+        'attachments',
+        fileItem.path,
+        contentType: null,
+      ));
+
+      print("request is...!");
+      print(request);
+      var res = await request.send();
+      final respStr = await res.stream.bytesToString();
+      print("image upload ...");
+      print(respStr);
+      var imageInfo = json.decode(respStr)["fileName"];
+      setProductAttribute(createCategoryProductAttributeDTO, imageInfo);
+    }
+  }
+
   _saveForm() async {
     var form = formKey.currentState;
     if (form.validate()) {
@@ -93,8 +138,8 @@ class _AddProductState extends State<AddProduct> {
       await catalogService.saveProduct(productDTO);
       setState(() {
         print("set state of save form");
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Home()));
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => Home()));
       });
     }
   }
@@ -102,51 +147,52 @@ class _AddProductState extends State<AddProduct> {
   setProductAttribute(
       CreateCategoryProductAttributeDTO createCategoryProductAttributeDTO,
       var value) async {
-    print("set product attributes called");
-    print(value);
-    ProductAttributeDetailDTO productAttributeDetailDTO =
-        ProductAttributeDetailDTO();
-    productAttributeDetailDTO.attributeName =
-        createCategoryProductAttributeDTO.productAttributeDTO.name;
-    productAttributeDetailDTO.required =
-        createCategoryProductAttributeDTO.catgryProductAttributeDTO.required;
-    productAttributeDetailDTO.displayType =
-        createCategoryProductAttributeDTO.catgryProductAttributeDTO.displayType;
-    productAttributeDetailDTO.categoryProductAttributeId =
-        createCategoryProductAttributeDTO
-            .catgryProductAttributeDTO.categoryProductAttributeId;
-    productAttributeDetailDTO.productAttributeId =
-        createCategoryProductAttributeDTO
-            .catgryProductAttributeDTO.productAttributeId;
-    productAttributeDetailDTO.facet =
-        createCategoryProductAttributeDTO.catgryProductAttributeDTO.facet;
-    productAttributeDetailDTO.searchable =
-        createCategoryProductAttributeDTO.catgryProductAttributeDTO.searchable;
-    productAttributeDetailDTO.variant =
-        createCategoryProductAttributeDTO.catgryProductAttributeDTO.variant;
-    productAttributeDetailDTO.sortable =
-        createCategoryProductAttributeDTO.catgryProductAttributeDTO.sortable;
-    productAttributeDetailDTO.value = value;
-    productAttributeDetailDTO.lobId =
-        createCategoryProductAttributeDTO.catgryProductAttributeDTO.lobId;
-    productAttributeDetailDTO.prodAttrId = createCategoryProductAttributeDTO
-        .catgryProductAttributeDTO.productAttributeId;
+    if (value != null) {
+      print("set product attributes called");
+      print(value);
+      ProductAttributeDetailDTO productAttributeDetailDTO =
+          ProductAttributeDetailDTO();
+      productAttributeDetailDTO.attributeName =
+          createCategoryProductAttributeDTO.productAttributeDTO.name;
+      productAttributeDetailDTO.required =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.required;
+      productAttributeDetailDTO.displayType = createCategoryProductAttributeDTO
+          .catgryProductAttributeDTO.displayType;
+      productAttributeDetailDTO.categoryProductAttributeId =
+          createCategoryProductAttributeDTO
+              .catgryProductAttributeDTO.categoryProductAttributeId;
+      productAttributeDetailDTO.productAttributeId =
+          createCategoryProductAttributeDTO
+              .catgryProductAttributeDTO.productAttributeId;
+      productAttributeDetailDTO.facet =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.facet;
+      productAttributeDetailDTO.searchable = createCategoryProductAttributeDTO
+          .catgryProductAttributeDTO.searchable;
+      productAttributeDetailDTO.variant =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.variant;
+      productAttributeDetailDTO.sortable =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.sortable;
+      productAttributeDetailDTO.value = value;
+      productAttributeDetailDTO.lobId =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.lobId;
+      productAttributeDetailDTO.prodAttrId = createCategoryProductAttributeDTO
+          .catgryProductAttributeDTO.productAttributeId;
 
-    switch (createCategoryProductAttributeDTO
-        .catgryProductAttributeDTO.displayType) {
-      case "textarea":
-        {
-          productAttributeDetailDTO.valueType = "BLOB";
-        }
-        break;
-      default:
-        {
-          print("Invalid choice");
-          productAttributeDetailDTO.valueType = "VARCHAR";
-        }
-        break;
-    }
-    /* print("before removing ");
+      switch (createCategoryProductAttributeDTO
+          .catgryProductAttributeDTO.displayType) {
+        case "textarea":
+          {
+            productAttributeDetailDTO.valueType = "BLOB";
+          }
+          break;
+        default:
+          {
+            print("Invalid choice");
+            productAttributeDetailDTO.valueType = "VARCHAR";
+          }
+          break;
+      }
+      /* print("before removing ");
     print(this.productAttributeDetailDTOList);
     for (var item in this.productAttributeDetailDTOList) {
       if (item.attributeName ==
@@ -155,10 +201,11 @@ class _AddProductState extends State<AddProduct> {
         this.productAttributeDetailDTOList.remove(item);
       }
     } */
-    this.productAttributeDetailDTOList.add(productAttributeDetailDTO);
-    print(
-        "${productAttributeDetailDTO.attributeName} -- ${productAttributeDetailDTO.value}into prod attributes..!");
-    print(this.productAttributeDetailDTOList);
+      this.productAttributeDetailDTOList.add(productAttributeDetailDTO);
+      print(
+          "${productAttributeDetailDTO.attributeName} -- ${productAttributeDetailDTO.value}into prod attributes..!");
+      print(this.productAttributeDetailDTOList);
+    }
   }
 
   _getImageList(
@@ -264,13 +311,13 @@ class _AddProductState extends State<AddProduct> {
     print("save product");
     print(this.productAttributeDetailDTOList);
     for (var item in this.productAttributeDetailDTOList) {
-      switch (item.attributeName) {
-        case "Product Name":
+      switch (item.displayType) {
+        case "name":
           {
             productDTO.productName = item.value;
           }
           break;
-        case "Product Image":
+        case "images":
           {
             productDTO.primaryImageUrl = this.imageList[0].imageUrl;
           }
@@ -318,7 +365,7 @@ class _AddProductState extends State<AddProduct> {
     productOptionDTO.productOptionName = productDTO.productName;
     productOptionDTO.productAttributeDetailDTO = [];
     this.prices.add(this.price);
-    productOptionDTO.priceList = this.prices;
+    productOptionDTO.priceList = [];
     productOptionDTO.deliveryScheduleDTO = [];
     productOptionDTO.imageDTO = this.imageList;
     productOptionDTO.start = "2000-10-22"; //need to change
@@ -371,15 +418,70 @@ class _AddProductState extends State<AddProduct> {
     print(countryCodes);
     setState(() {
       setState(() {
-          this.countryCodesList =
-          List<Country>.from(countryCodes.map((data) => Country.fromJson(data)))
-              .toList();
+        this.countryCodesList = List<Country>.from(
+            countryCodes.map((data) => Country.fromJson(data))).toList();
       });
-    
     });
   }
 
+  setCheckBoxAttributes(
+      CreateCategoryProductAttributeDTO createCategoryProductAttributeDTO,
+      List<CatProdAttrValues> catProdAttrValues,
+      var values) {
+    if (values.length > 0 && catProdAttrValues.length > 0) {
+      for (int i = 0; i < values.length; i++) {
+        for (int j = 0; i < catProdAttrValues.length; j++) {
+          if (values[i].toString() == catProdAttrValues[j].name) {
+            setProductAttribute(createCategoryProductAttributeDTO,
+                catProdAttrValues[j].value.toString());
+          }
+        }
+      }
+    }
+  }
+
   setPriceList() {}
+  saveDeliverySchedule( CreateCategoryProductAttributeDTO createCategoryProductAttributeDTO, var value, String type){
+    ProductAttributeDetailDTO productAttributeDetailDTO =
+          ProductAttributeDetailDTO();
+      productAttributeDetailDTO.attributeName =
+          createCategoryProductAttributeDTO.productAttributeDTO.name;
+      productAttributeDetailDTO.required =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.required;
+      productAttributeDetailDTO.displayType = createCategoryProductAttributeDTO
+          .catgryProductAttributeDTO.displayType;
+      productAttributeDetailDTO.categoryProductAttributeId =
+          createCategoryProductAttributeDTO
+              .catgryProductAttributeDTO.categoryProductAttributeId;
+      productAttributeDetailDTO.productAttributeId =
+          createCategoryProductAttributeDTO
+              .catgryProductAttributeDTO.productAttributeId;
+      productAttributeDetailDTO.facet =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.facet;
+      productAttributeDetailDTO.searchable = createCategoryProductAttributeDTO
+          .catgryProductAttributeDTO.searchable;
+      productAttributeDetailDTO.variant =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.variant;
+      productAttributeDetailDTO.sortable =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.sortable;
+      productAttributeDetailDTO.value = value;
+      productAttributeDetailDTO.lobId =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.lobId;
+      productAttributeDetailDTO.prodAttrId = createCategoryProductAttributeDTO
+          .catgryProductAttributeDTO.productAttributeId;
+          if(type == 'Start'){
+           productAttributeDetailDTO.startTime = value;
+          }else if(type == 'End'){
+           productAttributeDetailDTO.endTime = value;
+          }else if(type == 'Period'){
+           productAttributeDetailDTO.selectedPeriod = value;
+          }
+          if(productAttributeDetailDTO.startTime != null && productAttributeDetailDTO.endTime != null && productAttributeDetailDTO.selectedPeriod != null ){
+            print('Delivery terms are added successfully..!');
+             this.productAttributeDetailDTOList.add(productAttributeDetailDTO);
+          }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -414,14 +516,7 @@ class _AddProductState extends State<AddProduct> {
                                     .productAttributeDTO
                                     .name),
                               ),
-                              (widget
-                                              .productAttributes
-                                              .listCatProdAttrLoBRespDTO
-                                              .createCategoryProductAttributeDTO[
-                                                  index]
-                                              .catgryProductAttributeDTO
-                                              .displayType ==
-                                          "text" ||
+                              (widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType == "text" ||
                                       widget
                                               .productAttributes
                                               .listCatProdAttrLoBRespDTO
@@ -445,7 +540,15 @@ class _AddProductState extends State<AddProduct> {
                                                   index]
                                               .catgryProductAttributeDTO
                                               .displayType ==
-                                          "url")
+                                          "url" ||
+                                      widget
+                                              .productAttributes
+                                              .listCatProdAttrLoBRespDTO
+                                              .createCategoryProductAttributeDTO[
+                                                  index]
+                                              .catgryProductAttributeDTO
+                                              .displayType ==
+                                          "name")
                                   ? Container(
                                       padding: EdgeInsets.all(10),
                                       // margin: EdgeInsets.all(10),
@@ -534,13 +637,7 @@ class _AddProductState extends State<AddProduct> {
                                         // },
                                       ),
                                     )
-                                  : widget
-                                              .productAttributes
-                                              .listCatProdAttrLoBRespDTO
-                                              .createCategoryProductAttributeDTO[
-                                                  index]
-                                              .catgryProductAttributeDTO
-                                              .displayType ==
+                                  : widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType ==
                                           "images"
                                       ? Container(
                                           height: imageList.length > 0 &&
@@ -660,6 +757,7 @@ class _AddProductState extends State<AddProduct> {
                                                   icon: Icon(
                                                     Icons.calendar_today,
                                                   ),
+
                                                   hintText: widget
                                                       .productAttributes
                                                       .listCatProdAttrLoBRespDTO
@@ -673,20 +771,19 @@ class _AddProductState extends State<AddProduct> {
                                                   //         BorderRadius.circular(
                                                   //             8))
                                                 ),
-                                                onChanged: (DateTime val){
+                                                onChanged: (DateTime val) {
                                                   print(val.toUtc());
-
                                                 },
-                                                validator: (val){
+                                                validator: (val) {
                                                   print("date is");
                                                   print(val.toUtc());
                                                   setProductAttribute(
-                                                    widget
-                                                      .productAttributes
-                                                      .listCatProdAttrLoBRespDTO
-                                                      .createCategoryProductAttributeDTO[index],  val.toUtc().toString());
-                                                  
-                                            
+                                                      widget
+                                                          .productAttributes
+                                                          .listCatProdAttrLoBRespDTO
+                                                          .createCategoryProductAttributeDTO[index],
+                                                      val.toUtc().toString());
+
                                                   return null;
                                                 },
                                                 format:
@@ -696,24 +793,23 @@ class _AddProductState extends State<AddProduct> {
                                                   return showDatePicker(
                                                       context: context,
                                                       firstDate: DateTime(1900),
-                                                      initialDate: currentValue
-                                                               ??
-                                                          DateTime.now(),
+                                                      initialDate:
+                                                          currentValue ??
+                                                              DateTime.now(),
                                                       lastDate: DateTime(2100));
                                                 },
                                               ))
                                           : widget
                                                       .productAttributes
                                                       .listCatProdAttrLoBRespDTO
-                                                      .createCategoryProductAttributeDTO[
-                                                          index]
+                                                      .createCategoryProductAttributeDTO[index]
                                                       .catgryProductAttributeDTO
                                                       .displayType ==
                                                   "City Type"
                                               ? Container(
-                                                  padding: EdgeInsets.all(10.0),
                                                   child: SearchableDropdown
                                                       .multiple(
+                                                    displayClearIcon: false,
                                                     items: citiesList.map(
                                                         (CityDetails
                                                             cityDetail) {
@@ -726,9 +822,20 @@ class _AddProductState extends State<AddProduct> {
                                                     }).toList(),
                                                     selectedItems:
                                                         choosenCities,
-                                                    hint: "Select Cities",
-                                                    searchHint: "Select Cities",
-                                                    displayClearIcon: false,
+                                                    hint: widget
+                                                        .productAttributes
+                                                        .listCatProdAttrLoBRespDTO
+                                                        .createCategoryProductAttributeDTO[
+                                                            index]
+                                                        .productAttributeDTO
+                                                        .name,
+                                                    searchHint: widget
+                                                        .productAttributes
+                                                        .listCatProdAttrLoBRespDTO
+                                                        .createCategoryProductAttributeDTO[
+                                                            index]
+                                                        .productAttributeDTO
+                                                        .name,
                                                     onChanged: (value) {
                                                       setState(() {
                                                         print(
@@ -780,84 +887,502 @@ class _AddProductState extends State<AddProduct> {
                                                     isExpanded: true,
                                                   ),
                                                 )
-                                              : widget
-                                                          .productAttributes
-                                                          .listCatProdAttrLoBRespDTO
-                                                          .createCategoryProductAttributeDTO[
-                                                              index]
-                                                          .catgryProductAttributeDTO
-                                                          .displayType ==
-                                                      "price"
-                                                  ? Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .stretch,
-                                                      children: <Widget>[
-                                                          Text(
-                                                              'Unit of Measurement'),
-                                                          SizedBox(
-                                                            height: 8,
-                                                          ),
-                                                          DropdownButton(
-                                                            hint: Text(
-                                                                'select UOM'),
-                                                            isExpanded: true,
-                                                            iconSize: 30.0,
-                                                            items: this
-                                                                .uomsList
-                                                                .map(
-                                                              (val) {
-                                                                return DropdownMenuItem<
-                                                                    UomDTO>(
-                                                                  value: val,
+                                              : widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType == "checkbox"
+                                                  ? /* Container(
+                                                      child: SearchableDropdown
+                                                          .multiple(
+                                                             displayClearIcon: false,
+                                                        items: widget
+                                                            .productAttributes
+                                                            .listCatProdAttrLoBRespDTO
+                                                            .createCategoryProductAttributeDTO[
+                                                                index]
+                                                            .catProdAttrValues
+                                                            .map((CatProdAttrValues
+                                                                catProdAttrValues) {
+                                                          return DropdownMenuItem<
+                                                              CatProdAttrValues>(
+                                                            value:
+                                                                catProdAttrValues,
+                                                            child: Text(
+                                                                catProdAttrValues
+                                                                    .name),
+                                                          );
+                                                        }).toList(),
+                                                        // selectedItems:choosenCities,
+                                                        hint: widget
+                                                            .productAttributes
+                                                            .listCatProdAttrLoBRespDTO
+                                                            .createCategoryProductAttributeDTO[
+                                                                index]
+                                                            .productAttributeDTO
+                                                            .name,
+                                                        searchHint: widget
+                                                            .productAttributes
+                                                            .listCatProdAttrLoBRespDTO
+                                                            .createCategoryProductAttributeDTO[
+                                                                index]
+                                                            .productAttributeDTO
+                                                            .name,
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            print(
+                                                                "Checkbox on changed");
+                                                            print(value);
+                                                             setCheckBoxAttributes(
+                                                              widget
+                                                                      .productAttributes
+                                                                      .listCatProdAttrLoBRespDTO
+                                                                      .createCategoryProductAttributeDTO[
+                                                                  index],
+                                                              widget
+                                                                  .productAttributes
+                                                                  .listCatProdAttrLoBRespDTO
+                                                                  .createCategoryProductAttributeDTO[
+                                                                      index]
+                                                                  .catProdAttrValues,
+                                                              value);
+                                                          });
+                                                        },
+                                                        validator: (val) {
+                                                          print("validator called in checkbox....!");
+                                                         
+                                                        },
+                                                        dialogBox: true,
+                                                        closeButton:
+                                                            (choosenCities) {
+                                                          return Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: <Widget>[
+                                                              RaisedButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    setState(
+                                                                        () {
+                                                                      choosenCities
+                                                                          .clear();
+                                                                      choosenCities
+                                                                          .addAll(
+                                                                              Iterable<int>.generate(citiesList.length).toList());
+                                                                    });
+                                                                  },
                                                                   child: Text(
-                                                                      val.unit),
-                                                                );
-                                                              },
-                                                            ).toList(),
-                                                            onChanged: (val) {
-                                                              setState(
-                                                                () {
-                                                                  // this.industryType = val;
-                                                                },
-                                                              );
-                                                            },
-                                                          )
-                                                        ])
-                                                  : Container(
+                                                                      "Select all")),
+                                                              RaisedButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    setState(
+                                                                        () {
+                                                                      choosenCities
+                                                                          .clear();
+                                                                    });
+                                                                  },
+                                                                  child: Text(
+                                                                      "Deselect all")),
+                                                            ],
+                                                          );
+                                                        },
+                                                        isExpanded: true,
+                                                      ),
+                                                    ) */
+                                                  Container(
                                                       padding:
                                                           EdgeInsets.all(10),
-                                                      // margin: EdgeInsets.all(10),
-                                                      child: TextFormField(
-                                                        decoration: InputDecoration(
-                                                            contentPadding:
-                                                                EdgeInsets
-                                                                    .fromLTRB(
-                                                                        20,
-                                                                        15,
-                                                                        20,
-                                                                        15),
-                                                            hintText: widget
-                                                                .productAttributes
-                                                                .listCatProdAttrLoBRespDTO
-                                                                .createCategoryProductAttributeDTO[
-                                                                    index]
-                                                                .productAttributeDTO
-                                                                .name
-                                                                .toString(),
-                                                            border: OutlineInputBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8))),
-                                                        validator: (arg1) {
-                                                          return null;
+                                                      child: CheckboxGroup(
+                                                        labels: List<String>.from(widget
+                                                            .productAttributes
+                                                            .listCatProdAttrLoBRespDTO
+                                                            .createCategoryProductAttributeDTO[
+                                                                index]
+                                                            .catProdAttrValues
+                                                            .map((data) {
+                                                          return data.name
+                                                              .toString();
+                                                        })).toList(),
+                                                        onSelected:
+                                                            (List<String>
+                                                                checked) {
+                                                          print(checked
+                                                              .toString());
+                                                          setCheckBoxAttributes(
+                                                              widget
+                                                                      .productAttributes
+                                                                      .listCatProdAttrLoBRespDTO
+                                                                      .createCategoryProductAttributeDTO[
+                                                                  index],
+                                                              widget
+                                                                  .productAttributes
+                                                                  .listCatProdAttrLoBRespDTO
+                                                                  .createCategoryProductAttributeDTO[
+                                                                      index]
+                                                                  .catProdAttrValues,
+                                                              checked);
                                                         },
-                                                      ))
+                                                      ),
+                                                    )
+                                                  : widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType == "radio"
+                                                      ? Container(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  10),
+                                                          child:
+                                                              RadioButtonGroup(
+                                                                  labels: List<String>.from(widget
+                                                                      .productAttributes
+                                                                      .listCatProdAttrLoBRespDTO
+                                                                      .createCategoryProductAttributeDTO[
+                                                                          index]
+                                                                      .catProdAttrValues
+                                                                      .map(
+                                                                          (data) {
+                                                                    return data
+                                                                        .name
+                                                                        .toString();
+                                                                  })).toList(),
+                                                                  onSelected:
+                                                                      (String
+                                                                          selected) {
+                                                                    print(
+                                                                        selected);
+                                                                    setProductAttribute(
+                                                                        widget
+                                                                            .productAttributes
+                                                                            .listCatProdAttrLoBRespDTO
+                                                                            .createCategoryProductAttributeDTO[index],
+                                                                        selected);
+                                                                  }),
+                                                        )
+                                                      /* SearchableDropdown.single(
+                                                          displayClearIcon:
+                                                              false,
+                                                          items: widget
+                                                              .productAttributes
+                                                              .listCatProdAttrLoBRespDTO
+                                                              .createCategoryProductAttributeDTO[
+                                                                  index]
+                                                              .catProdAttrValues
+                                                              .map((CatProdAttrValues
+                                                                  catProdAttrValues) {
+                                                            return DropdownMenuItem<
+                                                                String>(
+                                                              value:
+                                                                  catProdAttrValues
+                                                                      .value,
+                                                              child: Text(
+                                                                  catProdAttrValues
+                                                                      .name),
+                                                            );
+                                                          }).toList(),
+                                                          // value: selectedValue,
+                                                          hint: "Select one",
+                                                          searchHint:
+                                                              "Select one",
+                                                          onChanged: (value) {
+                                                            setState(() {
+                                                              print(value);
+                                                              // selectedValue = value;
+                                                            });
+                                                          },
+                                                          validator: (value) {
+                                                            return null;
+                                                          },
+                                                          doneButton: "Done",
+                                                          displayItem:
+                                                              (item, selected) {
+                                                            return (Row(
+                                                                children: [
+                                                                  selected
+                                                                      ? Icon(
+                                                                          Icons
+                                                                              .radio_button_checked,
+                                                                          color:
+                                                                              Colors.grey,
+                                                                        )
+                                                                      : Icon(
+                                                                          Icons
+                                                                              .radio_button_unchecked,
+                                                                          color:
+                                                                              Colors.grey,
+                                                                        ),
+                                                                  SizedBox(
+                                                                      width: 7),
+                                                                  Expanded(
+                                                                    child: item,
+                                                                  ),
+                                                                ]));
+                                                          },
+                                                          isExpanded: true,
+                                                        ) */
+                                                      : widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType == "select"
+                                                          ? Container(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(10),
+                                                              child: new DropdownButton<
+                                                                  CatProdAttrValues>(
+                                                                items: widget
+                                                                    .productAttributes
+                                                                    .listCatProdAttrLoBRespDTO
+                                                                    .createCategoryProductAttributeDTO[
+                                                                        index]
+                                                                    .catProdAttrValues
+                                                                    .map((CatProdAttrValues
+                                                                        value) {
+                                                                  return new DropdownMenuItem<
+                                                                      CatProdAttrValues>(
+                                                                    // value:
+                                                                    // value,
+                                                                    child: new Text(
+                                                                        value
+                                                                            .name),
+                                                                  );
+                                                                }).toList(),
+                                                                isExpanded:
+                                                                    true,
+                                                                onChanged:
+                                                                    (val) {
+                                                                  print(val);
+                                                                  setProductAttribute(
+                                                                      widget
+                                                                          .productAttributes
+                                                                          .listCatProdAttrLoBRespDTO
+                                                                          .createCategoryProductAttributeDTO[index],
+                                                                      val);
+                                                                },
+                                                              ),
+                                                            )
+                                                          : widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType == "search and select"
+                                                              ? Container(
+                                                                  child:
+                                                                      SearchableDropdown
+                                                                          .single(
+                                                                    displayClearIcon:
+                                                                        false,
+                                                                    items: widget
+                                                                        .productAttributes
+                                                                        .listCatProdAttrLoBRespDTO
+                                                                        .createCategoryProductAttributeDTO[
+                                                                            index]
+                                                                        .catProdAttrValues
+                                                                        .map((CatProdAttrValues
+                                                                            value) {
+                                                                      return new DropdownMenuItem<
+                                                                          CatProdAttrValues>(
+                                                                        value:
+                                                                            value,
+                                                                        child: new Text(
+                                                                            value.name),
+                                                                      );
+                                                                    }).toList(),
+                                                                    // value: selectedValue,
+                                                                    hint: widget
+                                                                        .productAttributes
+                                                                        .listCatProdAttrLoBRespDTO
+                                                                        .createCategoryProductAttributeDTO[
+                                                                            index]
+                                                                        .productAttributeDTO
+                                                                        .name,
+                                                                    searchHint:
+                                                                        "Select one",
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      setState(
+                                                                          () {
+                                                                        print(
+                                                                            value);
+                                                                        // selectedValue = value;
+                                                                      });
+                                                                    },
+                                                                    isExpanded:
+                                                                        true,
+                                                                    validator:
+                                                                        (val) {
+                                                                      print(
+                                                                          val);
+                                                                      // setProductAttribute(
+                                                                      //     widget
+                                                                      //         .productAttributes
+                                                                      //         .listCatProdAttrLoBRespDTO
+                                                                      //         .createCategoryProductAttributeDTO[index],
+                                                                      //     val);
+                                                                    },
+                                                                  ),
+
+                                                                  /*  SearchableDropdown
+                                                                          .single(
+                                                                    items: widget
+                                                                        .productAttributes
+                                                                        .listCatProdAttrLoBRespDTO
+                                                                        .createCategoryProductAttributeDTO[
+                                                                            index]
+                                                                        .catProdAttrValues
+                                                                        .map((CatProdAttrValues
+                                                                            value) {
+                                                                      return new DropdownMenuItem<
+                                                                          CatProdAttrValues>(
+                                                                        value:
+                                                                            value,
+                                                                        child: new Text(
+                                                                            value.name),
+                                                                      );
+                                                                    }).toList(),
+                                                                    // value: selectedValue,
+                                                                    hint:
+                                                                        "Select one",
+                                                                    searchHint:
+                                                                        null,
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      setState(
+                                                                          () {
+                                                                        print(
+                                                                            value);
+                                                                      });
+                                                                    },
+                                                                    validator:
+                                                                        (val) {
+                                                                      print(
+                                                                          val);
+                                                                      setProductAttribute(
+                                                                          widget
+                                                                              .productAttributes
+                                                                              .listCatProdAttrLoBRespDTO
+                                                                              .createCategoryProductAttributeDTO[index],
+                                                                          val);
+                                                                    },
+                                                                    dialogBox: true,
+                                                                     isExpanded: true,
+                                                                    menuConstraints:
+                                                                        BoxConstraints.tight(
+                                                                            Size.fromHeight(350)),
+                                                                  ),
+                                                                */
+                                                                )
+                                                              : widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType == "year"
+                                                                  ? Container(
+                                                                      padding:
+                                                                          EdgeInsets.all(
+                                                                              10),
+                                                                      child: new DropdownButton<
+                                                                          String>(
+                                                                        items: List<String>.generate(
+                                                                            num.parse(widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catProdAttrValues[0].value) -
+                                                                                num.parse(widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catProdAttrValues[0].name),
+                                                                            (counter) => (num.parse(widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catProdAttrValues[0].name) + counter).toString()).map((String value) {
+                                                                          return new DropdownMenuItem<
+                                                                              String>(
+                                                                            value:
+                                                                                value,
+                                                                            child:
+                                                                                new Text(value),
+                                                                          );
+                                                                        }).toList(),
+                                                                        isExpanded:
+                                                                            true,
+                                                                        onChanged:
+                                                                            (year) {
+                                                                          print(
+                                                                              year);
+                                                                          setProductAttribute(
+                                                                              widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index],
+                                                                              year);
+                                                                        },
+                                                                      ),
+                                                                    )
+                                                                  : widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType == "textarea" || widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType == "description"
+                                                                      ? Container(
+                                                                          padding:
+                                                                              EdgeInsets.all(10),
+                                                                          child:
+                                                                              TextFormField(
+                                                                            maxLines:
+                                                                                4,
+                                                                            keyboardType:
+                                                                                TextInputType.multiline,
+                                                                            decoration: InputDecoration(
+                                                                                contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                                                                hintText: widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].productAttributeDTO.name.toString(),
+                                                                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+                                                                            validator:
+                                                                                (arg1) {
+                                                                              print("validator called...$arg1");
+                                                                              setProductAttribute(widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index], arg1);
+                                                                              return null;
+                                                                            },
+                                                                          ),
+                                                                        )
+                                                                      : widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType == "file" || widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType == "certification"
+                                                                          ? Container(
+                                                                              padding: EdgeInsets.all(10),
+                                                                              child: Container(
+                                                                                child: IconButton(
+                                                                                    icon: Icon(Icons.add),
+                                                                                    onPressed: () {
+                                                                                      getFilePickers(widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index]);
+                                                                                    }),
+                                                                              ),
+                                                                            )
+                                                                          : widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType == "Delivery Schedule"
+                                                                              ? Container(
+                                                                                  padding: EdgeInsets.all(10),
+                                                                                  child: Row(
+                                                                                    children: <Widget>[
+                                                                                      Expanded(
+                                                                                        child: new DropdownButton<String>(
+                                                                                          items: [
+                                                                                            'Days',
+                                                                                            'Weeks',
+                                                                                            'Months'
+                                                                                          ].map((value) {
+                                                                                            return new DropdownMenuItem<String>(
+                                                                                              value: value,
+                                                                                              child: new Text(value),
+                                                                                            );
+                                                                                          }).toList(),
+                                                                                          isExpanded: true,
+                                                                                          onChanged: (val) {
+                                                                                            print(val);
+                                                                                            saveDeliverySchedule(widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index],val,'Period');
+                                                                                          },
+                                                                                        ),
+                                                                                      ),
+                                                                                      Container(padding: EdgeInsets.all(5),),
+                                                                                      Expanded(
+                                                                                        child: TextFormField(
+                                                                                          decoration: InputDecoration(contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15), hintText: 'Start', border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+                                                                                          validator: (arg1) {
+                                                                                            saveDeliverySchedule(widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index],arg1,'Start');
+                                                                                            return null;
+                                                                                          },
+                                                                                        ),
+                                                                                      ),
+                                                                                      Container(padding: EdgeInsets.all(5),child: Text('-'),),
+                                                                                      Expanded(
+                                                                                        child: TextFormField(
+                                                                                          decoration: InputDecoration(contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15), hintText: 'End', border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+                                                                                          validator: (arg1) {
+                                                                                             saveDeliverySchedule(widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index],arg1,'End');
+                                                                                            return null;
+                                                                                          },
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ))
+                                                                              : Container(
+                                                                                  padding: EdgeInsets.all(10),
+                                                                                  // margin: EdgeInsets.all(10),
+                                                                                  child: TextFormField(
+                                                                                    decoration: InputDecoration(contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15), hintText: widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].productAttributeDTO.name.toString(), border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+                                                                                    validator: (arg1) {
+                                                                                      return null;
+                                                                                    },
+                                                                                  ))
                             ],
                           );
                         }),
-                    ListView.builder(
+                    /* ListView.builder(
                         padding: EdgeInsets.all(10),
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
@@ -917,9 +1442,12 @@ class _AddProductState extends State<AddProduct> {
                                                       setState(
                                                         () {
                                                           print(val);
-                                                           this.price.unitType =
-                                                               val.unit.toString();
-                                                               print(this.price.unitType);
+                                                          this.price.unitType =
+                                                              val.unit
+                                                                  .toString();
+                                                          print(this
+                                                              .price
+                                                              .unitType);
                                                         },
                                                       );
                                                     },
@@ -953,7 +1481,9 @@ class _AddProductState extends State<AddProduct> {
                                                         () {
                                                           this.price.currency =
                                                               val.currency;
-                                                              print(this.price.currency);
+                                                          print(this
+                                                              .price
+                                                              .currency);
                                                         },
                                                       );
                                                     },
@@ -970,7 +1500,8 @@ class _AddProductState extends State<AddProduct> {
                                                         contentPadding:
                                                             EdgeInsets.fromLTRB(
                                                                 10, 5, 5, 10),
-                                                        hintText: 'Per Unit Weight In Kg \'s ',
+                                                        hintText:
+                                                            'Per Unit Weight In Kg \'s ',
                                                         border: OutlineInputBorder(
                                                             borderRadius:
                                                                 BorderRadius
@@ -1001,13 +1532,14 @@ class _AddProductState extends State<AddProduct> {
                                                         contentPadding:
                                                             EdgeInsets.fromLTRB(
                                                                 10, 5, 5, 10),
-                                                        hintText: 'Minimum Order Quantity',
+                                                        hintText:
+                                                            'Minimum Order Quantity',
                                                         border: OutlineInputBorder(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
                                                                         8))),
-                                                     validator: (arg1) {
+                                                    validator: (arg1) {
                                                       setProductAttribute(
                                                           widget
                                                               .productAttributes
@@ -1048,8 +1580,9 @@ class _AddProductState extends State<AddProduct> {
                                                           validator: (arg1) {
                                                             return null;
                                                           },
-                                                          onChanged: (String val){
-                                                            this.start =val;
+                                                          onChanged:
+                                                              (String val) {
+                                                            this.start = val;
                                                           },
                                                         ),
                                                       ),
@@ -1077,8 +1610,9 @@ class _AddProductState extends State<AddProduct> {
                                                           validator: (arg1) {
                                                             return null;
                                                           },
-                                                          onChanged: (String val){
-                                                            this.end =val;
+                                                          onChanged:
+                                                              (String val) {
+                                                            this.end = val;
                                                           },
                                                         ),
                                                       ),
@@ -1106,8 +1640,9 @@ class _AddProductState extends State<AddProduct> {
                                                           validator: (arg1) {
                                                             return null;
                                                           },
-                                                          onChanged: (String val){
-                                                            this.cost =val;
+                                                          onChanged:
+                                                              (String val) {
+                                                            this.cost = val;
                                                           },
                                                         ),
                                                       ),
@@ -1133,11 +1668,23 @@ class _AddProductState extends State<AddProduct> {
                                                                       .white,
                                                                 )),
                                                             onTap: () {
-                                                              ProductPriceSlabs productPriceSlabs = new ProductPriceSlabs();
-                                                              productPriceSlabs.rangeStart  = this.end;
-                                                              productPriceSlabs.price = this.cost;
-                                                              this.productPriceSlabs.add(productPriceSlabs);
-                                                              this.price.productPriceSlabs = this.productPriceSlabs;
+                                                              ProductPriceSlabs
+                                                                  productPriceSlabs =
+                                                                  new ProductPriceSlabs();
+                                                              productPriceSlabs
+                                                                      .rangeStart =
+                                                                  this.end;
+                                                              productPriceSlabs
+                                                                      .price =
+                                                                  this.cost;
+                                                              this
+                                                                  .productPriceSlabs
+                                                                  .add(
+                                                                      productPriceSlabs);
+                                                              this
+                                                                      .price
+                                                                      .productPriceSlabs =
+                                                                  this.productPriceSlabs;
                                                             },
                                                           ),
                                                         ),
@@ -1150,7 +1697,8 @@ class _AddProductState extends State<AddProduct> {
                                   ],
                                 );
                               });
-                        }),
+                        }), 
+ */
                     Container(
                       padding: EdgeInsets.all(8),
                       child: RaisedButton(

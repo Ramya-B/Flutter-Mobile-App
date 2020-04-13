@@ -22,7 +22,18 @@ ProductAttributeDetailDTO _$ProductAttributeDetailDTOFromJson(
     ..fieldId = json['fieldId'] as String
     ..value = json['value'] as String
     ..lobId = json['lobId'] as String
-    ..prodAttrId = json['prodAttrId'] as String;
+    ..prodAttrId = json['prodAttrId'] as String
+    ..startTime = json['startTime'] as String
+    ..endTime = json['endTime'] as String
+    ..selectedPeriod = json['selectedPeriod'] as String
+    ..price = json['price'] == null
+        ? null
+        : Price.fromJson(json['price'] as Map<String, dynamic>)
+    ..unitType = json['unitType'] == null
+        ? null
+        : UnitType.fromJson(json['unitType'] as Map<String, dynamic>)
+    ..perUnitWeight = json['perUnitWeight'] as String
+    ..minOrderQty = json['minOrderQty'] as String;
 }
 
 Map<String, dynamic> _$ProductAttributeDetailDTOToJson(
@@ -41,5 +52,12 @@ Map<String, dynamic> _$ProductAttributeDetailDTOToJson(
       'fieldId': instance.fieldId,
       'value': instance.value,
       'lobId': instance.lobId,
-      'prodAttrId': instance.prodAttrId
+      'prodAttrId': instance.prodAttrId,
+      'startTime': instance.startTime,
+      'endTime': instance.endTime,
+      'selectedPeriod': instance.selectedPeriod,
+      'price': instance.price,
+      'unitType': instance.unitType,
+      'perUnitWeight': instance.perUnitWeight,
+      'minOrderQty': instance.minOrderQty
     };

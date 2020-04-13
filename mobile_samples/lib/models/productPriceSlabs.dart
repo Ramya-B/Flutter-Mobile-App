@@ -7,7 +7,7 @@ class ProductPriceSlabs {
     ProductPriceSlabs();
 
     String price;
-    String rangeStart;
+    num rangeStart;
     
     factory ProductPriceSlabs.fromJson(Map<String,dynamic> json) => _$ProductPriceSlabsFromJson(json);
     Map<String, dynamic> toJson() => _$ProductPriceSlabsToJson(this);

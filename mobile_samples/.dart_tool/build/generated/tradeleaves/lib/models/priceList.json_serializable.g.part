@@ -12,7 +12,13 @@ PriceList _$PriceListFromJson(Map<String, dynamic> json) {
             ? null
             : ProductPriceSlabs.fromJson(e as Map<String, dynamic>))
         ?.toList()
-    ..unitType = json['unitType'] as String;
+    ..unitType = json['unitType'] as String
+    ..incoterms = json['incoterms'] as String
+    ..isIncoSelected = json['isIncoSelected'] as bool
+    ..edcStart = json['edcStart'] as String
+    ..edcEnd = json['edcEnd'] as String
+    ..edcSelectedTime = json['edcSelectedTime'] as String
+    ..attributeName = json['attributeName'] as String;
 }
 
 Map<String, dynamic> _$PriceListToJson(PriceList instance) => <String, dynamic>{
@@ -20,5 +26,11 @@ Map<String, dynamic> _$PriceListToJson(PriceList instance) => <String, dynamic>{
       'lobId': instance.lobId,
       'priceType': instance.priceType,
       'productPriceSlabs': instance.productPriceSlabs,
-      'unitType': instance.unitType
+      'unitType': instance.unitType,
+      'incoterms': instance.incoterms,
+      'isIncoSelected': instance.isIncoSelected,
+      'edcStart': instance.edcStart,
+      'edcEnd': instance.edcEnd,
+      'edcSelectedTime': instance.edcSelectedTime,
+      'attributeName': instance.attributeName
     };

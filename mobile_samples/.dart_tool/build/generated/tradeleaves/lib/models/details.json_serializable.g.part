@@ -31,7 +31,11 @@ Details _$DetailsFromJson(Map<String, dynamic> json) {
     ..occupation = json['occupation'] as String
     ..tenantId = json['tenantId'] as String
     ..optIn = json['optIn'] as bool
-    ..domainName = json['domainName'] as String;
+    ..domainName = json['domainName'] as String
+    ..groupName = json['groupName'] as String
+    ..lobId = json['lobId'] as String
+    ..countryCode = json['countryCode'] as String
+    ..groupNameLocal = json['groupNameLocal'] as String;
 }
 
 Map<String, dynamic> _$DetailsToJson(Details instance) => <String, dynamic>{
@@ -62,5 +66,9 @@ Map<String, dynamic> _$DetailsToJson(Details instance) => <String, dynamic>{
       'occupation': instance.occupation,
       'tenantId': instance.tenantId,
       'optIn': instance.optIn,
-      'domainName': instance.domainName
+      'domainName': instance.domainName,
+      'groupName': instance.groupName,
+      'lobId': instance.lobId,
+      'countryCode': instance.countryCode,
+      'groupNameLocal': instance.groupNameLocal
     };
