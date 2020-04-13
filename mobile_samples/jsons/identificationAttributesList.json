@@ -1,0 +1,9 @@
+{
+  "attributeName":"",
+  "attributeType" :"",
+  "attributeValidation": "",
+  "isRequired": true,
+  "anyOneFilled":true,
+  "identificationTypeId": "",
+  "identificationGroupId": ""
+}
