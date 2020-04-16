@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'package:path/path.dart';
 import 'package:flutter/material.dart';
-import 'package:tradeleaves/models/IdentityNumberAttributesList.dart';
 import 'package:tradeleaves/models/classificationGroupAttributeDTOResp.dart';
 import 'package:tradeleaves/models/companyType.dart';
 import 'package:tradeleaves/models/country.dart';

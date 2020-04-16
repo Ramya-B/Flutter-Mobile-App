@@ -58,7 +58,8 @@ class _HomeState extends State<Home> {
           Container(
             height: 600,
             // constraints: BoxConstraints(minHeight: 700),
-            child: HomeProducts(),
+             child: HomeProducts(),
+          //  child:  SimpleFormScreen()
           ),
         ],
       ),

@@ -28,6 +28,8 @@ class ProductAttributeDetailDTO {
     UnitType unitType;
     String perUnitWeight;
     String minOrderQty;
+    List valuesList;
+    String currency;
     
     factory ProductAttributeDetailDTO.fromJson(Map<String,dynamic> json) => _$ProductAttributeDetailDTOFromJson(json);
     Map<String, dynamic> toJson() => _$ProductAttributeDetailDTOToJson(this);

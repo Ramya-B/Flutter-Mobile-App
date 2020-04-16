@@ -26,7 +26,11 @@ CreateCategoryProductAttributeDTO _$CreateCategoryProductAttributeDTOFromJson(
         ?.map((e) => e == null
             ? null
             : CatProdAttrRoles.fromJson(e as Map<String, dynamic>))
-        ?.toList();
+        ?.toList()
+    ..productAttributeDetailDTO = json['productAttributeDetailDTO'] == null
+        ? null
+        : ProductAttributeDetailDTO.fromJson(
+            json['productAttributeDetailDTO'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$CreateCategoryProductAttributeDTOToJson(
@@ -35,5 +39,6 @@ Map<String, dynamic> _$CreateCategoryProductAttributeDTOToJson(
       'productAttributeDTO': instance.productAttributeDTO,
       'catgryProductAttributeDTO': instance.catgryProductAttributeDTO,
       'catProdAttrValues': instance.catProdAttrValues,
-      'catProdAttrRoles': instance.catProdAttrRoles
+      'catProdAttrRoles': instance.catProdAttrRoles,
+      'productAttributeDetailDTO': instance.productAttributeDetailDTO
     };

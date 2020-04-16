@@ -2,5 +2,6 @@
     "productAttributeDTO": "$productAttributeDTO",
     "catgryProductAttributeDTO":"$catgryProductAttributeDTO" ,
     "catProdAttrValues": "$[]catProdAttrValues",
-    "catProdAttrRoles":  "$[]catProdAttrRoles"
+    "catProdAttrRoles":  "$[]catProdAttrRoles",
+    "productAttributeDetailDTO" : "$productAttributeDetailDTO"
 }

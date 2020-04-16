@@ -5,5 +5,5 @@
     "imageDTO": "$[]imageDTO",
     "productAttributeDetailDTO": "$[]productAttributeDetailDTO",
     "priceList": "$[]priceList",
-    "deliveryScheduleDTO": []
+    "deliveryScheduleDTO":  "$[]deliveryScheduleDTO"
 }

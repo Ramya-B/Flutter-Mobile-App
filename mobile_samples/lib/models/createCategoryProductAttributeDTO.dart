@@ -3,6 +3,7 @@ import "productAttributeDTO.dart";
 import "catgryProductAttributeDTO.dart";
 import "catProdAttrValues.dart";
 import "catProdAttrRoles.dart";
+import "productAttributeDetailDTO.dart";
 part 'createCategoryProductAttributeDTO.g.dart';
 
 @JsonSerializable()
@@ -13,6 +14,7 @@ class CreateCategoryProductAttributeDTO {
     CatgryProductAttributeDTO catgryProductAttributeDTO;
     List<CatProdAttrValues> catProdAttrValues;
     List<CatProdAttrRoles> catProdAttrRoles;
+    ProductAttributeDetailDTO productAttributeDetailDTO;
     
     factory CreateCategoryProductAttributeDTO.fromJson(Map<String,dynamic> json) => _$CreateCategoryProductAttributeDTOFromJson(json);
     Map<String, dynamic> toJson() => _$CreateCategoryProductAttributeDTOToJson(this);

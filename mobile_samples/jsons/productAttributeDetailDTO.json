@@ -19,5 +19,7 @@
     "price": "$price",
     "unitType" : "$unitType",
     "perUnitWeight": "12",
-    "minOrderQty": "23"
+    "minOrderQty": "23",
+    "valuesList":[],
+    "currency":""
 }

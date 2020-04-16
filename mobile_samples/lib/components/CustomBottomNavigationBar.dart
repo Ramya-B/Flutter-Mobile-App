@@ -5,7 +5,6 @@ import 'package:tradeleaves/components/chat/chat.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
-import 'package:tradeleaves/components/products/products_home.dart';
 
 import 'homepages/bliss_home_page.dart';
 

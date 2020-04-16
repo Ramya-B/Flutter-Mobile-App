@@ -16,6 +16,7 @@ class _SimpleFormScreenState extends State<SimpleFormScreen> {
   FormRenderService _formRenderService;
   FormManager _formManager;
   FormElement _form;
+  
   getJsonFromMongo() async{
      SharedPreferences prefs =  await SharedPreferences.getInstance();
      return await http
@@ -39,7 +40,6 @@ class _SimpleFormScreenState extends State<SimpleFormScreen> {
 
   @override
   void initState() {
-    getJsonFromMongo();
     super.initState();
     _buildForm();
   }

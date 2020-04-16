@@ -33,7 +33,9 @@ ProductAttributeDetailDTO _$ProductAttributeDetailDTOFromJson(
         ? null
         : UnitType.fromJson(json['unitType'] as Map<String, dynamic>)
     ..perUnitWeight = json['perUnitWeight'] as String
-    ..minOrderQty = json['minOrderQty'] as String;
+    ..minOrderQty = json['minOrderQty'] as String
+    ..valuesList = json['valuesList'] as List
+    ..currency = json['currency'] as String;
 }
 
 Map<String, dynamic> _$ProductAttributeDetailDTOToJson(
@@ -59,5 +61,7 @@ Map<String, dynamic> _$ProductAttributeDetailDTOToJson(
       'price': instance.price,
       'unitType': instance.unitType,
       'perUnitWeight': instance.perUnitWeight,
-      'minOrderQty': instance.minOrderQty
+      'minOrderQty': instance.minOrderQty,
+      'valuesList': instance.valuesList,
+      'currency': instance.currency
     };
