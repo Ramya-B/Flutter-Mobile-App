@@ -12,5 +12,14 @@
     "fieldId": "Product_Name_14280681",
     "value": "Product_Test1",
     "lobId": "34343e34-7601-40de-878d-01b3bd1f0640",
-    "prodAttrId": "68ccd738-6a15-4d31-a648-7056c4dbc9ea"
+    "prodAttrId": "68ccd738-6a15-4d31-a648-7056c4dbc9ea",
+    "startTime": "5",
+    "endTime": "6",
+    "selectedPeriod": "Days",
+    "price": "$price",
+    "unitType" : "$unitType",
+    "perUnitWeight": "12",
+    "minOrderQty": "23",
+    "valuesList":[],
+    "currency":""
 }

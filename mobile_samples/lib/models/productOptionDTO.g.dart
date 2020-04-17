@@ -24,7 +24,11 @@ ProductOptionDTO _$ProductOptionDTOFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : PriceList.fromJson(e as Map<String, dynamic>))
         ?.toList()
-    ..deliveryScheduleDTO = json['deliveryScheduleDTO'] as List;
+    ..deliveryScheduleDTO = (json['deliveryScheduleDTO'] as List)
+        ?.map((e) => e == null
+            ? null
+            : DeliveryScheduleDTO.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$ProductOptionDTOToJson(ProductOptionDTO instance) =>

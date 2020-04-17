@@ -11,6 +11,12 @@ class PriceList {
     String priceType;
     List<ProductPriceSlabs> productPriceSlabs;
     String unitType;
+    String incoterms;
+    bool isIncoSelected;
+    String edcStart;
+    String edcEnd;
+    String edcSelectedTime;
+    String attributeName;
     
     factory PriceList.fromJson(Map<String,dynamic> json) => _$PriceListFromJson(json);
     Map<String, dynamic> toJson() => _$PriceListToJson(this);

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../service_locator.dart';
 import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 
@@ -33,14 +32,12 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
     getUserInfo();
     getSecurityQuestions();
 
-    // TODO: implement initState
     super.initState();
 
   }
   getUserInfo() async {
     var data = await userService.getUser();
     print("user response...");
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     this.user = User.fromJson(data);
     setState(() {
       this.user = User.fromJson(data);

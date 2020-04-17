@@ -1,4 +1,9 @@
 {
     "price": "1800",
-    "rangeStart": "1000"
+    "rangeStart": 1000,
+    "qtyStart": "1",
+    "qtyEnd": "2",
+    "priceStart": "4",
+    "priceEnd": "",
+    "isQtyError": false
 }

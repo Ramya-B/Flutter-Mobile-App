@@ -116,6 +116,52 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
     print("getProductAttributes");
     print(prodAttr);
     this.listCatProdAttrLoBRespDTO = ProductAttributesResp.fromJson(prodAttr);
+    for (var createCategoryProductAttributeDTO in this.listCatProdAttrLoBRespDTO.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO ) {
+     ProductAttributeDetailDTO productAttributeDetailDTO =
+          ProductAttributeDetailDTO();
+      productAttributeDetailDTO.attributeName =
+          createCategoryProductAttributeDTO.productAttributeDTO.name;
+      productAttributeDetailDTO.required =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.required;
+      productAttributeDetailDTO.displayType = createCategoryProductAttributeDTO
+          .catgryProductAttributeDTO.displayType;
+      productAttributeDetailDTO.categoryProductAttributeId =
+          createCategoryProductAttributeDTO
+              .catgryProductAttributeDTO.categoryProductAttributeId;
+      productAttributeDetailDTO.productAttributeId =
+          createCategoryProductAttributeDTO
+              .catgryProductAttributeDTO.productAttributeId;
+      productAttributeDetailDTO.facet =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.facet;
+      productAttributeDetailDTO.searchable = createCategoryProductAttributeDTO
+          .catgryProductAttributeDTO.searchable;
+      productAttributeDetailDTO.variant =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.variant;
+      productAttributeDetailDTO.sortable =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.sortable;
+      productAttributeDetailDTO.value = null;
+      productAttributeDetailDTO.valuesList = null;
+      productAttributeDetailDTO.lobId =
+          createCategoryProductAttributeDTO.catgryProductAttributeDTO.lobId;
+      productAttributeDetailDTO.prodAttrId = createCategoryProductAttributeDTO
+          .catgryProductAttributeDTO.productAttributeId;
+
+      switch (createCategoryProductAttributeDTO
+          .catgryProductAttributeDTO.displayType) {
+        case "textarea":
+          {
+            productAttributeDetailDTO.valueType = "BLOB";
+          }
+          break;
+        default:
+          {
+            print("Invalid choice");
+            productAttributeDetailDTO.valueType = "VARCHAR";
+          }
+          break;
+      }
+      createCategoryProductAttributeDTO.productAttributeDetailDTO = productAttributeDetailDTO;
+    }
   }
 
   _saveForm() async {
@@ -150,6 +196,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
     getCompanyRegions();
     super.initState();
   }
+  
 
   @override
   Widget build(BuildContext context) {

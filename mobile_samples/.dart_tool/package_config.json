@@ -164,6 +164,18 @@
       "languageVersion": "2.4"
     },
     {
+      "name": "dynamic_forms",
+      "rootUri": "file:///D:/tl-softwares/flutter/.pub-cache/hosted/pub.dartlang.org/dynamic_forms-0.11.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
+    },
+    {
+      "name": "expression_language",
+      "rootUri": "file:///D:/tl-softwares/flutter/.pub-cache/hosted/pub.dartlang.org/expression_language-0.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
+    },
+    {
       "name": "file_picker",
       "rootUri": "file:///D:/tl-softwares/flutter/.pub-cache/hosted/pub.dartlang.org/file_picker-1.6.2",
       "packageUri": "lib/",
@@ -186,6 +198,18 @@
       "rootUri": "file:///D:/tl-softwares/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_absolute_path-1.0.6",
       "packageUri": "lib/",
       "languageVersion": "2.1"
+    },
+    {
+      "name": "flutter_dynamic_forms",
+      "rootUri": "file:///D:/tl-softwares/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_dynamic_forms-0.11.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
+    },
+    {
+      "name": "flutter_dynamic_forms_components",
+      "rootUri": "file:///D:/tl-softwares/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_dynamic_forms_components-0.11.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
     },
     {
       "name": "flutter_launcher_icons",
@@ -240,6 +264,12 @@
       "rootUri": "file:///D:/tl-softwares/flutter/.pub-cache/hosted/pub.dartlang.org/graphs-0.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "grouped_buttons",
+      "rootUri": "file:///D:/tl-softwares/flutter/.pub-cache/hosted/pub.dartlang.org/grouped_buttons-1.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "html",
@@ -476,6 +506,18 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "rational",
+      "rootUri": "file:///D:/tl-softwares/flutter/.pub-cache/hosted/pub.dartlang.org/rational-0.3.8",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "rxdart",
+      "rootUri": "file:///D:/tl-softwares/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.23.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
+    },
+    {
       "name": "searchable_dropdown",
       "rootUri": "file:///D:/tl-softwares/flutter/.pub-cache/hosted/pub.dartlang.org/searchable_dropdown-1.1.2",
       "packageUri": "lib/",
@@ -632,7 +674,7 @@
       "languageVersion": "2.2"
     }
   ],
-  "generated": "2020-04-09T07:46:10.713822Z",
+  "generated": "2020-04-17T10:24:42.577900Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }

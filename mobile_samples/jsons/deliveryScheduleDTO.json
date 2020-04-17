@@ -1,0 +1,10 @@
+{
+    "deliveryScheduleId": "250a2004-e3ea-4c74-8d12-fe143556adee",
+    "minValue": 1,
+    "maxValue": 4,
+    "incoTerms": null,
+    "unitType": "Days",
+    "attributeId": "3dfd0c37-e240-45d5-9067-13db20c0d340",
+    "attributeName": "Order Preparation Time",
+    "lobId": "34343e34-7601-40de-878d-01b3bd1f0640"
+}
