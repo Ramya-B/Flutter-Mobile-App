@@ -20,4 +20,7 @@ abstract class CrmServices {
   Future fetchSecurityQuestionsByPartyId(String partyId);
   Future saveCompanyDetails(Company company);
   Future getCompanyDetails();
-}
+  Future createOwnerAndRole(OwnerAndRoleDTO ownerAndRoleDTO);
+  Future createCompanyIdentification(PartyIdentificationDTO partyIdentificationDTO);
+  Future deleteIdentificationDocuments(PartyIdentificationDTO partyIdentificationDTO);
+  }

@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/constants.dart';
 import 'package:tradeleaves/models/changeUserPassword.dart';
 import 'package:tradeleaves/models/company.dart';
+import 'package:tradeleaves/models/ownerAndRoleDTO.dart';
+import 'package:tradeleaves/models/partyIdentificationDTO.dart';
 import 'package:tradeleaves/models/partyQuestionsList.dart';
 import 'package:tradeleaves/models/personalDetailsDTO.dart';
 import 'package:tradeleaves/models/resend.dart';
@@ -464,6 +466,95 @@ class CrmServiceImpl extends CrmServices {
       }
     });
   }
+
+  @override
+  Future createOwnerAndRole(OwnerAndRoleDTO ownerAndRoleDTO) async{
+    // TODO: implement createOwnerAndRole
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("createOwnerAndRole service called......");
+    return await http.post(
+        '${Constants.envUrl}$apiUrl/profile/create/owner',
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+        body: jsonEncode({
+          'ownerAndRoleDTO': ownerAndRoleDTO.toJson()
+        })
+    ).then((data) {
+      print("createOwnerAndRole response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("createOwnerAndRole get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get createOwnerAndRole.........');
+      }
+    });
+  }
+
+  @override
+  Future createCompanyIdentification(PartyIdentificationDTO partyIdentificationDTO) async{
+    // TODO: implement createCompanyIdentification
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("createCompanyIdentification service called......");
+    print(partyIdentificationDTO.toJson());
+    print(jsonEncode(partyIdentificationDTO.identificationAttributes));
+    return await http.post(
+        '${Constants.envUrl}$apiUrl/profile/companyIdentification/company',
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+        body: jsonEncode({
+          'partyIdentificationDTO': partyIdentificationDTO.toJson()
+        })
+    ).then((data) {
+      print("createCompanyIdentification response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("createCompanyIdentification get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get createCompanyIdentification.........');
+      }
+    });
+  }
+
+  @override
+  Future deleteIdentificationDocuments(PartyIdentificationDTO partyIdentificationDTO) async{
+    // TODO: implement deleteIdentificationDocuments
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("deleteIdentificationDocuments service called......");
+    print(partyIdentificationDTO.toJson());
+    print(jsonEncode(partyIdentificationDTO.identificationAttributes));
+    return await http.post(
+        '${Constants.envUrl}$apiUrl/profile/company/identification/delete',
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+        body: jsonEncode({
+          'partyIdentificationDTO': partyIdentificationDTO.toJson()
+        })
+    ).then((data) {
+      print("deleteIdentificationDocuments response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("createCompanyIdentification get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get deleteIdentificationDocuments.........');
+      }
+    });
+  }
+
 
 
 

@@ -168,9 +168,10 @@ class _AddProductState extends State<AddProduct> {
       maxImages: 5 - this.imageList.length,
       enableCamera: true,
     );
+    print("printing product image file resulu set");
 
     // The data selected here comes back in the list
-    print(resultList);
+//    print(jsonEncode(resultList));
 
     for (var imageFile in resultList) {
       postImage(imageFile, resultList.length).then((imageResp) {
@@ -204,6 +205,7 @@ class _AddProductState extends State<AddProduct> {
   }
 
   Future<dynamic> postImage(Asset imageFile, int length) async {
+    print("printing product image file");
     print(imageFile.name);
     var path = await FlutterAbsolutePath.getAbsolutePath(imageFile.identifier);
     print(path);
@@ -220,6 +222,8 @@ class _AddProductState extends State<AddProduct> {
         'POST',
         Uri.parse(
             "${Constants.envUrl}/mongoupload/attachments/?Override=false"));
+    print("request");
+    print(request);
     request.files.add(await http.MultipartFile.fromPath(
       'attachments',
       path,

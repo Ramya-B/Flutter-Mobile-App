@@ -2,5 +2,10 @@
 {
     "identificationTypeId": "2152f6df-91cd-4fc2-afa7-2baa63ef5011",
     "identificationTypeName": "Passport",
-    "identificationFieldsList": "$[]identificationFieldsList"
+    "attributeName": "",
+    "attributeType": "",
+    "attributeValue":"",
+    "identificationFieldsList": "$[]identificationFieldsList",
+    "identificationGroupId": "",
+    "attributeNameWithOutBucketName": ""
   }
