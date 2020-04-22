@@ -59,6 +59,7 @@ class _AddProductState extends State<AddProduct> {
   List<PriceList> priceList;
   List<ProductOptionDTO> productOptionDTOList;
   List<DeliveryScheduleDTO> deliveryScheduleDTOList;
+  List test = [];
   /* PriceList price = new PriceList();
   List<ProductPriceSlabs> productPriceSlabs;
   String start;
@@ -1747,6 +1748,25 @@ class _AddProductState extends State<AddProduct> {
                                                                                           ),
                                                                                         ),
                                                                                         Column(
+                                                                                          children: <Widget>[
+                                                                                            ListView.builder(
+                                                                                               physics: const NeverScrollableScrollPhysics(),
+                                                                                                shrinkWrap: true,
+                                                                                              itemCount: widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price.priceList.length ,
+                                                                                              itemBuilder: (BuildContext context,int index){
+                                                                                              return IconButton(icon: Icon(Icons.add), onPressed: (){
+                                                                                               
+                                                                                                   print(jsonEncode( widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].productAttributeDetailDTO));
+                                                                                                  //  print(jsonEncode( widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price));
+                                                                                                  //   print(jsonEncode( widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price.priceList.length));
+                                                                                                  // print(jsonEncode( widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price.priceList));
+                                                                                                // widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price.priceList.add(new PriceList() );
+                                                                                            
+                                                                                              });
+                                                                                            })
+                                                                                          ],
+                                                                                        ),
+                                                                                        /* Column(
                                                                                             mainAxisAlignment: MainAxisAlignment.start,
                                                                                             children: List.generate(1, (index1) {
                                                                                               widget.productAttributes.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price = new Price();
@@ -1941,6 +1961,7 @@ class _AddProductState extends State<AddProduct> {
                                                                                               );
                                                                                             })),
 
+ */
                                                                                         /*  Row(
                                                                                           children: <Widget>[
                                                                                             Expanded(

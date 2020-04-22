@@ -9,5 +9,6 @@
     "edcStart": "34",
     "edcEnd": "43",
     "edcSelectedTime": "Days",
-    "attributeName": "Order Delivery Time"
+    "attributeName": "Order Delivery Time",
+    "selectedIncoterm":"$incotermDto"
 }

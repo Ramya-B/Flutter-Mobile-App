@@ -1,6 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 import "price.dart";
 import "unitType.dart";
+import "catProdAttrValues.dart";
+import "country.dart";
+import "uomDTO.dart";
+import "incotermDto.dart";
 part 'productAttributeDetailDTO.g.dart';
 
 @JsonSerializable()
@@ -30,6 +34,12 @@ class ProductAttributeDetailDTO {
     String minOrderQty;
     List valuesList;
     String currency;
+    CatProdAttrValues catProdAttrValue;
+    Country country;
+    UomDTO uom;
+    IncotermDto incoterm;
+    String attributeId;
+    String selectedItem;
     
     factory ProductAttributeDetailDTO.fromJson(Map<String,dynamic> json) => _$ProductAttributeDetailDTOFromJson(json);
     Map<String, dynamic> toJson() => _$ProductAttributeDetailDTOToJson(this);

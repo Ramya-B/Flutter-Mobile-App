@@ -68,6 +68,7 @@ export 'createCategoryProductAttributeDTO.dart' ;
 export 'updatePasswordRequest.dart' ; 
 export 'productAttributeDTO.dart' ; 
 export 'priceList.dart' ; 
+export 'faqs.dart' ; 
 export 'categoryTreePathDto.dart' ; 
 export 'ratingReviewCriterias.dart' ; 
 export 'productDTO.dart' ; 

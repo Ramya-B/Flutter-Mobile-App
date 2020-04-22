@@ -3,6 +3,7 @@ import "productAttributeDetailDTO.dart";
 import "productOptionDTO.dart";
 import "productLobCountryStatusDTO.dart";
 import "hsCodes.dart";
+import "faqs.dart";
 part 'productDTO.g.dart';
 
 @JsonSerializable()
@@ -20,6 +21,7 @@ class ProductDTO {
     List<HsCodes> hsCodes;
     String status;
     List categoryIds;
+    List<Faqs> faqs;
     List selectedSites;
     String supplierId;
     
