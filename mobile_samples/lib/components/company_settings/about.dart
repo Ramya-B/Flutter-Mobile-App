@@ -39,8 +39,10 @@ class _AboutState extends State<About> {
   Classifications classifications = new Classifications();
   List<ClassificationDetails> details = [];
   String companyImage;
+
   CrmServiceImpl get crmService => locator<CrmServiceImpl>();
   String companyHighLights;
+  String companyStatus;
 
   Future<dynamic> uploadImage(imageFile, int length) async {
     print("image file");
@@ -108,6 +110,19 @@ class _AboutState extends State<About> {
     setState(() {
       companyRegisterResp = CompanyRegisterResp.fromJson(res);
       this.company = companyRegisterResp.company;
+      if (company != null &&
+          company.accountStatus != null &&
+          company.accountStatus.statusId == 'APPROVED') {
+        companyStatus = 'APPROVED';
+      } else if (company != null &&
+          company.accountStatus != null &&
+          company.accountStatus.statusId == 'UNDER_APPROVAL') {
+        companyStatus = 'UNDER VERIFICATION';
+      } else if (company != null &&
+          company.accountStatus != null &&
+          company.accountStatus.statusId == 'REJECTED') {
+        companyStatus = 'REJECTED';
+      }
       if (company.profileAttribute != null &&
           company.profileAttribute.length > 0) {
         print("1st if called");
@@ -132,8 +147,8 @@ class _AboutState extends State<About> {
             print("Selected businesstypes");
             print(selectedBusinessTypes);
           }
-          if(types.attrName == 'Company_Highlights'){
-                companyHighLights = types.attrValue;
+          if (types.attrName == 'Company_Highlights') {
+            companyHighLights = types.attrValue;
           }
         }
       }
@@ -199,6 +214,7 @@ class _AboutState extends State<About> {
     var res = await crmService.companyTypes(siteId);
     print("getCompanyTypes response object {}...........");
     print(res);
+    print(jsonEncode(res));
     setState(() {
       this.companyTypeList =
           List<CompanyType>.from(res.map((i) => CompanyType.fromJson(i)));
@@ -208,20 +224,27 @@ class _AboutState extends State<About> {
   getClassificationForEmployees() async {
     print("getClassificationForEmployees cslled");
     var res = await crmService.getClassificationForEmployees();
-    setState(() {});
+    print("printing before");
+    print(jsonEncode(res));
+    setState(() {
+      ClassificationGroupAttributeDTOResp employeesResponse = ClassificationGroupAttributeDTOResp.fromJson(res);
+      this.employees = employeesResponse.classificationGroupAttributeDTO;
+      print("printing employess");
+      print(jsonEncode(employees));
+    });
   }
 
   updateCompany() async {
     print('update company called');
     print(jsonEncode(companyYear));
     print(employee);
-    if(companyHighLights!=null){
+    if (companyHighLights != null) {
       ProfileAttribute companyHighlights = new ProfileAttribute();
       companyHighlights.attrName = 'Company_Highlights';
       companyHighlights.attrValue = companyHighLights;
       companyHighlights.attrType = 'BLOB';
       company.profileAttribute.add(companyHighlights);
-  }
+    }
 
     if (companyYear.value != null) {
       details.add(companyYear);
@@ -245,6 +268,12 @@ class _AboutState extends State<About> {
     var res = await crmService.postCompany(company);
     print("updated successfulyy");
     setState(() {});
+  }
+
+  discardChanges() async {
+    print("discardChanges called");
+    company = null;
+    getCompanyDetails();
   }
 
   @override
@@ -291,7 +320,7 @@ class _AboutState extends State<About> {
                       children: <Widget>[
                         Text('COMPANY STATUS', style: TextStyle(fontSize: 12)),
                         Text(
-                          'APPROVED',
+                          '$companyStatus',
                           style:
                               TextStyle(color: Colors.green[700], fontSize: 20),
                         )
@@ -475,20 +504,6 @@ class _AboutState extends State<About> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      SizedBox(
-                        height: 30,
-                        width: 70,
-                        child: RaisedButton(
-                          color: Colors.grey[200],
-                          onPressed: () {},
-                          child: Text(
-                            '1-10',
-                            style: TextStyle(color: Colors.green[700]),
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                      ),
                       SizedBox(
                         height: 30,
                         width: 70,
@@ -709,19 +724,17 @@ class _AboutState extends State<About> {
 //                              Border.all(width: 1, color: Colors.grey[200]))
 //                  )
                   Container(
-                    padding:
-                    EdgeInsets.all(10),
-                    child:
-                    TextFormField(
-                      maxLines:
-                      4,
-                      keyboardType:
-                      TextInputType.multiline,
+                    padding: EdgeInsets.all(10),
+                    child: TextFormField(
+                      maxLines: 4,
+                      keyboardType: TextInputType.multiline,
+                      initialValue:
+                          companyHighLights != null ? companyHighLights : '',
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                           hintText: 'Company Highlights',
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))
-                      ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8))),
                       validator: (arg1) {
                         return null;
                       },
@@ -729,7 +742,7 @@ class _AboutState extends State<About> {
                         print(val);
                         companyHighLights = val;
                       },
-                      ),
+                    ),
                   )
                 ],
               ),
@@ -754,7 +767,7 @@ class _AboutState extends State<About> {
                         children: <Widget>[
                           this.company.details.logoImageUrl != null
                               ? Image.network(
-                            '${Constants.envUrl}${Constants.mongoImageUrl}/${this.company.details.logoImageUrl}',
+                                  '${Constants.envUrl}${Constants.mongoImageUrl}/${this.company.details.logoImageUrl}',
                                   height: 130,
                                   width: 130,
                                 )
@@ -785,7 +798,9 @@ class _AboutState extends State<About> {
                   children: <Widget>[
                     InkWell(
                       child: Text('Discard Changes'),
-                      onTap: () {},
+                      onTap: () {
+                        discardChanges();
+                      },
                     ),
                     SizedBox(
                       width: 15,
