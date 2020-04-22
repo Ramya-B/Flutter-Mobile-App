@@ -16,6 +16,7 @@ import 'package:tradeleaves/models/productAttributesResp.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import 'package:tradeleaves/tl-services/core-npm/citiesImpl.dart';
 import 'package:tradeleaves/tl-services/customs/customServiceImpl.dart';
+import '../../main.dart';
 import '../../service_locator.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as mime;
@@ -62,8 +63,10 @@ class _AddProduct1State extends State<AddProduct1> {
   List test = [];
   List<Faqs> faqs;
   List<ProductAttributeDetailDTO> customList;
+  ProductDTO product;
   @override
   void initState() {
+    //  var prod =  getProductDetails();
     faqs = [];
     customList = [];
     setCustomAttr();
@@ -81,16 +84,54 @@ class _AddProduct1State extends State<AddProduct1> {
     getCountryCodes();
     getIncotermsList();
     getCities();
+    // handleEditProduct( this.product);
     super.initState();
+  }
+
+  Future getProductDetails() async {
+    print("get Product called...!");
+    var prod = await catalogService
+        .getProductById("fee01ff6-3ea6-413a-8471-739fb405f656");
+    print("product details is...!");
+    print(product);
+  }
+
+  handleEditProduct(ProductDTO product) async {
+    print("handleEditProduct");
+    print(jsonEncode(product.productAttributeDetailDTO));
+
+    for (int i = 0;
+        i <
+            widget.productAttributes.listCatProdAttrLoBRespDTO
+                .createCategoryProductAttributeDTO.length;
+        i++) {
+      CreateCategoryProductAttributeDTO createCategoryProductAttributeDTO =
+          widget.productAttributes.listCatProdAttrLoBRespDTO
+              .createCategoryProductAttributeDTO[i];
+      for (int j = 0; j < product.productAttributeDetailDTO.length; j++) {
+        ProductAttributeDetailDTO prod = product.productAttributeDetailDTO[j];
+        switch (createCategoryProductAttributeDTO
+            .productAttributeDetailDTO.displayType) {
+          case "name":
+          case "email":
+          case "number":
+            {
+              print("name setted...${prod.value}");
+              widget
+                  .productAttributes
+                  .listCatProdAttrLoBRespDTO
+                  .createCategoryProductAttributeDTO[i]
+                  .productAttributeDetailDTO
+                  .value = prod.value;
+            }
+            break;
+        }
+      }
+    }
   }
 
   setFaqs() async {
     faqs.add(new Faqs());
-    /*  active: true
-answer: "<p>a1</p>"
-question: "q1"
-name: "c9750133-7094-46c1-8854-21cc27c74398"
-_id: "5e998d189cb4f597260f4084" */
   }
 
   getFilePickers(
@@ -145,8 +186,8 @@ _id: "5e998d189cb4f597260f4084" */
       await catalogService.saveProduct(productDTO);
       setState(() {
         print("set state of save form");
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (context) => Home()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Home()));
       });
     }
   }
@@ -328,7 +369,7 @@ _id: "5e998d189cb4f597260f4084" */
           break;
         case "images":
           {
-            productDTO.primaryImageUrl = this.imageList[0].imageUrl;
+            productDTO.primaryImageUrl = this.imageList.length > 0? this.imageList[0].imageUrl :null;
           }
           break;
         case "City Type":
@@ -475,14 +516,13 @@ _id: "5e998d189cb4f597260f4084" */
     for (var item in this.priceList) {
       print(jsonEncode(item));
     }
-    
-    if(this.customList.length>0){
+
+    if (this.customList.length > 0) {
       for (ProductAttributeDetailDTO item in this.customList) {
         print(jsonEncode(item));
-        if(item.attributeName != null && item.value != null){
-            this.productAttributeDetailDTOList.add(item);
+        if (item.attributeName != null && item.value != null) {
+          this.productAttributeDetailDTOList.add(item);
         }
-      
       }
     }
     ProductOptionDTO productOptionDTO = ProductOptionDTO();
@@ -576,7 +616,9 @@ _id: "5e998d189cb4f597260f4084" */
   }
 
   setPriceList(ProductAttributeDetailDTO productAttributeDetailDTO) {
-    for (var price in productAttributeDetailDTO.price.priceList) {
+    if(productAttributeDetailDTO.unitType != null &&
+    productAttributeDetailDTO.unitType.unit != null ){
+      for (var price in productAttributeDetailDTO.price.priceList) {
       price.currency = productAttributeDetailDTO.currency;
       price.unitType = productAttributeDetailDTO.unitType.unit;
       price.lobId = productAttributeDetailDTO.lobId;
@@ -597,6 +639,8 @@ _id: "5e998d189cb4f597260f4084" */
             productAttributeDetailDTO.perUnitWeight);
       }
     }
+    }
+    
   }
 
   setProdAttr(
@@ -613,49 +657,78 @@ _id: "5e998d189cb4f597260f4084" */
     print(jsonEncode(productAttributeDTO));
     this.productAttributeDetailDTOList.add(productAttributeDTO);
   }
-   setCustomAttr(){
-    ProductAttributeDetailDTO prodAttr=   new ProductAttributeDetailDTO();
+
+  setCustomAttr() {
+    ProductAttributeDetailDTO prodAttr = new ProductAttributeDetailDTO();
     prodAttr.lobId = "34343e34-7601-40de-878d-01b3bd1f0640";
-    prodAttr.valueType="VARCHAR";
+    prodAttr.valueType = "VARCHAR";
     this.customList.add(prodAttr);
   }
 
   setDeliveryScheduleTerms(ProductAttributeDetailDTO productAttributeDetailDTO,
       String incoterm, String start, String end, String days) {
-    print("setDeliveryScheduleTerms called");
-    print("start $start");
-    print("end $end");
-    print("days $days");
-    DeliveryScheduleDTO deliveryScheduleDTO = DeliveryScheduleDTO();
-    deliveryScheduleDTO.minValue = num.parse(start);
-    deliveryScheduleDTO.maxValue = num.parse(end);
-    deliveryScheduleDTO.incoTerms = incoterm;
-    deliveryScheduleDTO.unitType = days;
-    deliveryScheduleDTO.attributeName =
-          productAttributeDetailDTO.attributeName;  
-     if (productAttributeDetailDTO.displayType == 'Delivery Schedule') {
-      deliveryScheduleDTO.attributeId =
-          productAttributeDetailDTO.prodAttrId != null
-              ? productAttributeDetailDTO.prodAttrId
-              : productAttributeDetailDTO.productAttributeId;
-     
-    } 
-    // else {
-    //   deliveryScheduleDTO.attributeName = "Order Delivery Time";
-    // }
-    deliveryScheduleDTO.lobId = productAttributeDetailDTO.lobId;
-    this.deliveryScheduleDTOList.add(deliveryScheduleDTO);
+        if(start !=null && end !=null && days !=null ){
+              print("setDeliveryScheduleTerms called");
+              print("start $start");
+              print("end $end");
+              print("days $days");
+              DeliveryScheduleDTO deliveryScheduleDTO = DeliveryScheduleDTO();
+              deliveryScheduleDTO.minValue = num.parse(start);
+              deliveryScheduleDTO.maxValue = num.parse(end);
+              deliveryScheduleDTO.incoTerms = incoterm;
+              deliveryScheduleDTO.unitType = days;
+              deliveryScheduleDTO.attributeName = productAttributeDetailDTO.attributeName;
+              if (productAttributeDetailDTO.displayType == 'Delivery Schedule') {
+                deliveryScheduleDTO.attributeId =
+                    productAttributeDetailDTO.prodAttrId != null
+                        ? productAttributeDetailDTO.prodAttrId
+                        : productAttributeDetailDTO.productAttributeId;
+              }
+              deliveryScheduleDTO.lobId = productAttributeDetailDTO.lobId;
+              this.deliveryScheduleDTOList.add(deliveryScheduleDTO);
+                  }
+   
   }
 
   Widget _getDisplayTypes(
       List<CreateCategoryProductAttributeDTO> createCategoryProductAttributeDTO,
-      BuildContext context) {
-    return new Center(
+      BuildContext context,
+      lobId) {
+    return new Container(
+       margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+                border: Border.all(),
+              ),
       child: new Column(
+        
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          ListView.builder(
+          
+               Container(
+                 alignment: Alignment.center,
+             padding: EdgeInsets.all(10) ,
+              decoration: BoxDecoration(
+                color: Colors.lightGreen
+                                            // border: Border(
+                                            //   bottom: BorderSide(
+                                            //       color: Colors.grey),
+                                            // ),
+                                          ),
+              // color: Colors.lightGreen,
+              child: Text(lobId == "34343e34-7601-40de-878d-01b3bd1f0641"
+                  ? "MarketPlace - Global"
+                  : lobId == "34343e34-7601-40de-878d-01b3bd1f0642"
+                      ? "BLISS - Domestic"
+                      : lobId == "34343e34-7601-40de-878d-01b3bd1f0643"
+                          ? "BLISS - Global"
+                          : lobId == "34343e34-7601-40de-878d-01b3bd1f0644"
+                              ? "MarketPlace - Domestic"
+                              : "All",style: TextStyle(color: Colors.white,fontSize: 18),),
+            ),
+            
+          
+          createCategoryProductAttributeDTO.length>0 ?  ListView.builder(
               padding: EdgeInsets.all(10),
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -735,6 +808,9 @@ _id: "5e998d189cb4f597260f4084" */
                                   createCategoryProductAttributeDTO[index]
                                       .productAttributeDetailDTO
                                       .value = value;
+                                  print(createCategoryProductAttributeDTO[index]
+                                      .productAttributeDetailDTO
+                                      .value);
                                 }),
                           )
                         : createCategoryProductAttributeDTO[index]
@@ -845,14 +921,15 @@ _id: "5e998d189cb4f597260f4084" */
                                                 .toString(),
                                       ),
                                       onChanged: (DateTime val) {
-                                        print(val.toUtc());
+                                        setState(() {
+                                           createCategoryProductAttributeDTO[index]
+                                            .productAttributeDetailDTO
+                                            .value =  val !=null ?val.toUtc().toString():null;
+                                        });
                                       },
                                       validator: (val) {
                                         print("date is");
-                                        print(val.toUtc());
-                                        createCategoryProductAttributeDTO[index]
-                                            .productAttributeDetailDTO
-                                            .value = val.toUtc().toString();
+                                       
                                         return null;
                                       },
                                       format: DateFormat("yyyy-MM-dd"),
@@ -1156,7 +1233,7 @@ _id: "5e998d189cb4f597260f4084" */
                                                                   maxLines: 4,
                                                                   keyboardType:
                                                                       TextInputType
-                                                                          .multiline,
+                                                                          .text,
                                                                   decoration: InputDecoration(
                                                                       contentPadding:
                                                                           EdgeInsets.fromLTRB(
@@ -1389,7 +1466,7 @@ _id: "5e998d189cb4f597260f4084" */
                                                                                               alignment: Alignment.centerLeft,
                                                                                             ),
                                                                                             Container(
-                                                                                              padding: EdgeInsets.all(10),
+                                                                                              padding: EdgeInsets.only(left: 10),
                                                                                               child: Row(
                                                                                                 children: <Widget>[
                                                                                                   Expanded(
@@ -1419,7 +1496,39 @@ _id: "5e998d189cb4f597260f4084" */
                                                                                                       },
                                                                                                     ),
                                                                                                   ),
-                                                                                                  IconButton(
+                                                                                                   Container(
+                                                                                                          child: ClipOval(
+                                                                                                            child: Material(
+                                                                                                              color: Colors.green, // button color
+                                                                                                              child: InkWell(
+                                                                                                                splashColor: Colors.lightGreen, // inkwell color
+                                                                                                                child: SizedBox(
+                                                                                                                    width: 25,
+                                                                                                                    height: 25,
+                                                                                                                    child: Icon(
+                                                                                                                     priceList == createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price.priceList.length - 1 ? Icons.add : Icons.delete,
+                                                                                                                      color: Colors.white,
+                                                                                                                      size: 20,
+                                                                                                                    )),
+                                                                                                                onTap: () {
+                                                                                                                  setState(() {
+                                                                                                          print('tapped...!');
+                                                                                                          print(jsonEncode(createCategoryProductAttributeDTO[index].productAttributeDetailDTO));
+                                                                                                          if (priceList == createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price.priceList.length - 1) {
+                                                                                                            PriceList pr = new PriceList();
+                                                                                                            pr.productPriceSlabs = [];
+                                                                                                            pr.productPriceSlabs.add(new ProductPriceSlabs());
+                                                                                                            createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price.priceList.add(pr);
+                                                                                                          } else {
+                                                                                                            createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price.priceList.removeAt(priceList);
+                                                                                                          }
+                                                                                                        });
+                                                                                                                },
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                /*   IconButton(
                                                                                                       icon: Icon(priceList == createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price.priceList.length - 1 ? Icons.add : Icons.delete),
                                                                                                       onPressed: () {
                                                                                                         setState(() {
@@ -1434,7 +1543,7 @@ _id: "5e998d189cb4f597260f4084" */
                                                                                                             createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price.priceList.removeAt(priceList);
                                                                                                           }
                                                                                                         });
-                                                                                                      })
+                                                                                                      }) */
                                                                                                 ],
                                                                                               ),
                                                                                             ),
@@ -1502,7 +1611,7 @@ _id: "5e998d189cb4f597260f4084" */
                                                                                                           ),
                                                                                                         ),
                                                                                                         Expanded(
-                                                                                                          child: Text('/Centimeter'),
+                                                                                                          child: Text(createCategoryProductAttributeDTO[index].productAttributeDetailDTO.uom != null ? '/ ${createCategoryProductAttributeDTO[index].productAttributeDetailDTO.uom.unit}':''),
                                                                                                         ),
                                                                                                         Container(
                                                                                                           child: ClipOval(
@@ -1511,11 +1620,12 @@ _id: "5e998d189cb4f597260f4084" */
                                                                                                               child: InkWell(
                                                                                                                 splashColor: Colors.lightGreen, // inkwell color
                                                                                                                 child: SizedBox(
-                                                                                                                    width: 35,
-                                                                                                                    height: 35,
+                                                                                                                    width: 25,
+                                                                                                                    height: 25,
                                                                                                                     child: Icon(
                                                                                                                       priceslab == createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price.priceList[priceList].productPriceSlabs.length - 1 ? Icons.add : Icons.delete,
                                                                                                                       color: Colors.white,
+                                                                                                                      size: 20,
                                                                                                                     )),
                                                                                                                 onTap: () {
                                                                                                                   setState(() {
@@ -1607,18 +1717,143 @@ _id: "5e998d189cb4f597260f4084" */
                                                                               )
                                                                             ]),
                                                                           )
-                                                                        : Container(
-                                                                            padding: EdgeInsets.all(10),
-                                                                            // margin: EdgeInsets.all(10),
-                                                                            child: TextFormField(
-                                                                              decoration: InputDecoration(contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15), hintText: createCategoryProductAttributeDTO[index].productAttributeDTO.name.toString(), border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
-                                                                              validator: (arg1) {
-                                                                                return null;
-                                                                              },
-                                                                            ))
+                                                                        : createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType == "hscode"
+                                                                            ? Container(
+                                                                                padding: EdgeInsets.all(10),
+                                                                                child: Column(
+                                                                                  children: <Widget>[
+                                                                                    Row(
+                                                                                      children: <Widget>[
+                                                                                        Expanded(
+                                                                                          child: Container(
+                                                                                            child: DropdownButton(
+                                                                                              hint: Text('country'),
+                                                                                              value: createCategoryProductAttributeDTO[index].productAttributeDetailDTO.country,
+                                                                                              isExpanded: true,
+                                                                                              iconSize: 30.0,
+                                                                                              items: this.countryCodesList.map(
+                                                                                                (val) {
+                                                                                                  return DropdownMenuItem<Country>(
+                                                                                                    value: val,
+                                                                                                    child: Text(val.currency),
+                                                                                                  );
+                                                                                                },
+                                                                                              ).toList(),
+                                                                                              onChanged: (val) {
+                                                                                                setState(
+                                                                                                  () {
+                                                                                                    print(val);
+                                                                                                    // createCategoryProductAttributeDTO[index].productAttributeDetailDTO.currency = val.currency;
+                                                                                                    // createCategoryProductAttributeDTO[index].productAttributeDetailDTO.country = val;
+                                                                                                    // print(createCategoryProductAttributeDTO[index].productAttributeDetailDTO.currency);
+                                                                                                  },
+                                                                                                );
+                                                                                              },
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                        Container(
+                                                                                          padding: EdgeInsets.all(5),
+                                                                                        ),
+                                                                                        Expanded(
+                                                                                          flex: 2,
+                                                                                          child: TextFormField(
+                                                                                            decoration: InputDecoration(contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15), hintText: 'Search HS Codes', border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+                                                                                            validator: (start) {
+                                                                                              createCategoryProductAttributeDTO[index].productAttributeDetailDTO.startTime = start;
+                                                                                              return null;
+                                                                                            },
+                                                                                            onChanged: (start) {},
+                                                                                          ),
+                                                                                        ),
+                                                                                        Container(
+                                                                                          padding: EdgeInsets.all(5),
+                                                                                        ),
+                                                                                        Container(
+                                                                                          child: IconButton(
+                                                                                              icon: Icon(Icons.search),
+                                                                                              onPressed: () {
+                                                                                                print("searching");
+                                                                                              }),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                    Container(
+                                                                                      padding: EdgeInsets.all(10),
+                                                                                    ),
+                                                                                    Row(
+                                                                                      children: <Widget>[
+                                                                                        Expanded(
+                                                                                          child: Container(
+                                                                                            child: DropdownButton(
+                                                                                              hint: Text('country'),
+                                                                                              value: createCategoryProductAttributeDTO[index].productAttributeDetailDTO.country,
+                                                                                              isExpanded: true,
+                                                                                              iconSize: 30.0,
+                                                                                              items: this.countryCodesList.map(
+                                                                                                (val) {
+                                                                                                  return DropdownMenuItem<Country>(
+                                                                                                    value: val,
+                                                                                                    child: Text(val.currency),
+                                                                                                  );
+                                                                                                },
+                                                                                              ).toList(),
+                                                                                              onChanged: (val) {
+                                                                                                setState(
+                                                                                                  () {
+                                                                                                    print(val);
+                                                                                                    // createCategoryProductAttributeDTO[index].productAttributeDetailDTO.currency = val.currency;
+                                                                                                    // createCategoryProductAttributeDTO[index].productAttributeDetailDTO.country = val;
+                                                                                                    // print(createCategoryProductAttributeDTO[index].productAttributeDetailDTO.currency);
+                                                                                                  },
+                                                                                                );
+                                                                                              },
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                        Container(
+                                                                                          padding: EdgeInsets.all(5),
+                                                                                        ),
+                                                                                        Expanded(
+                                                                                          flex: 2,
+                                                                                          child: TextFormField(
+                                                                                            decoration: InputDecoration(contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15), hintText: 'Search HS Codes', border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+                                                                                            validator: (start) {
+                                                                                              createCategoryProductAttributeDTO[index].productAttributeDetailDTO.startTime = start;
+                                                                                              return null;
+                                                                                            },
+                                                                                            onChanged: (start) {},
+                                                                                          ),
+                                                                                        ),
+                                                                                        Container(
+                                                                                          padding: EdgeInsets.all(5),
+                                                                                        ),
+                                                                                        Container(
+                                                                                          child: IconButton(
+                                                                                              icon: Icon(Icons.search),
+                                                                                              onPressed: () {
+                                                                                                print("searching");
+                                                                                              }),
+                                                                                        ),
+                                                                                      ],
+                                                                                    )
+                                                                                  ],
+                                                                                ))
+                                                                            : Container(
+                                                                                padding: EdgeInsets.all(10),
+                                                                                // margin: EdgeInsets.all(10),
+                                                                                child: TextFormField(
+                                                                                  decoration: InputDecoration(contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15), hintText: createCategoryProductAttributeDTO[index].productAttributeDTO.name.toString(), border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+                                                                                  validator: (arg1) {
+                                                                                    return null;
+                                                                                  },
+                                                                                ))
                   ],
                 );
-              }),
+              }):Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(15),
+                child: Text('No attributes defined.')),
         ],
       ),
     );
@@ -1638,7 +1873,8 @@ _id: "5e998d189cb4f597260f4084" */
                     _getDisplayTypes(
                         widget.productAttributes.listCatProdAttrLoBRespDTO
                             .createCategoryProductAttributeDTO,
-                        context),
+                        context,
+                        "34343e34-7601-40de-878d-01b3bd1f0640"),
                     Container(
                       child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
@@ -1657,10 +1893,20 @@ _id: "5e998d189cb4f597260f4084" */
                                         .listCatProdAttrLoBRespDTO
                                         .catProdAttrLoBListDTO[catProds]
                                         .createCategoryProductAttributeDTO,
-                                    context),
+                                    context,
+                                    widget
+                                        .productAttributes
+                                        .listCatProdAttrLoBRespDTO
+                                        .catProdAttrLoBListDTO[catProds]
+                                        .lobId),
                               ],
                             );
                           }),
+                    ),
+                    Container(
+                      child: Text('Faqs'),
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.all(10),
                     ),
                     Container(
                       padding: EdgeInsets.all(10),
@@ -1695,6 +1941,35 @@ _id: "5e998d189cb4f597260f4084" */
                                         )),
                                         Container(
                                           margin: EdgeInsets.all(10),
+                                          child: ClipOval(
+                                            child: Material(
+                                              color: Colors.green, // button color
+                                              child: InkWell(
+                                                splashColor: Colors.lightGreen, // inkwell color
+                                                child: SizedBox(
+                                                    width: 25,
+                                                    height: 25,
+                                                    child: Icon(
+                                                       this.faqs.length - 1 == faq ? Icons.add : Icons.delete,
+                                                      color: Colors.white,
+                                                      size: 20,
+                                                    )),
+                                                onTap: () {
+                                                 setState(() {
+                                                if (this.faqs.length - 1 ==
+                                                    faq) {
+                                                  this.faqs.add(new Faqs());
+                                                } else {
+                                                  this.faqs.removeAt(faq);
+                                                }
+                                              });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        /* Container(
+                                          margin: EdgeInsets.all(10),
                                           child: IconButton(
                                             icon: Icon(
                                                 this.faqs.length - 1 == faq
@@ -1711,13 +1986,14 @@ _id: "5e998d189cb4f597260f4084" */
                                               });
                                             },
                                           ),
-                                        )
+                                        ) */
                                       ],
                                     ),
                                     Container(
+                                      margin: EdgeInsets.only(top:10),
                                       child: TextFormField(
                                         maxLines: 4,
-                                        keyboardType: TextInputType.multiline,
+                                        keyboardType: TextInputType.text,
                                         decoration: InputDecoration(
                                             contentPadding: EdgeInsets.fromLTRB(
                                                 20, 15, 20, 15),
@@ -1739,7 +2015,12 @@ _id: "5e998d189cb4f597260f4084" */
                         ],
                       ),
                     ),
-                     Container(
+                    Container(
+                      child: Text('Custom Attributes'),
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.all(10),
+                    ),
+                    Container(
                       padding: EdgeInsets.all(10),
                       child: Column(
                         children: <Widget>[
@@ -1767,48 +2048,85 @@ _id: "5e998d189cb4f597260f4084" */
                                             return null;
                                           },
                                           onChanged: (val) {
-                                            this.customList[custom].attributeName = val;
+                                            this
+                                                .customList[custom]
+                                                .attributeName = val;
                                           },
                                         )),
                                         Container(
                                           margin: EdgeInsets.all(10),
+                                          child: ClipOval(
+                                            child: Material(
+                                              color: Colors.green, // button color
+                                              child: InkWell(
+                                                splashColor: Colors.lightGreen, // inkwell color
+                                                child: SizedBox(
+                                                    width: 25,
+                                                    height: 25,
+                                                    child: Icon(
+                                                       this.customList.length - 1 == custom ? Icons.add : Icons.delete,
+                                                      color: Colors.white,
+                                                      size: 20,
+                                                    )),
+                                                onTap: () {
+                                                 setState(() {
+                                                if (this.customList.length -
+                                                        1 ==
+                                                    custom) {
+                                                  setCustomAttr();
+                                                } else {
+                                                  this
+                                                      .customList
+                                                      .removeAt(custom);
+                                                }
+                                              });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                       /*  Container(
+                                          margin: EdgeInsets.all(10),
                                           child: IconButton(
                                             icon: Icon(
                                                 this.customList.length - 1 == custom
+                                                       
                                                     ? Icons.add
                                                     : Icons.delete),
                                             onPressed: () {
                                               setState(() {
-                                                if (this.customList.length - 1 ==
+                                                if (this.customList.length -
+                                                        1 ==
                                                     custom) {
-                                                 setCustomAttr();
+                                                  setCustomAttr();
                                                 } else {
-                                                  this.customList.removeAt(custom);
+                                                  this
+                                                      .customList
+                                                      .removeAt(custom);
                                                 }
                                               });
                                             },
                                           ),
-                                        )
+                                        ) */
                                       ],
                                     ),
-                                     Container(
-                                            child: TextFormField(
-                                          decoration: InputDecoration(
-                                              contentPadding:
-                                                  EdgeInsets.fromLTRB(
-                                                      20, 15, 20, 15),
-                                              hintText: 'attribute value',
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8))),
-                                          validator: (arg1) {
-                                            return null;
-                                          },
-                                          onChanged: (val) {
-                                            this.customList[custom].value = val;
-                                          },
-                                        )),
+                                    Container(
+                                       margin: EdgeInsets.only(top:10),
+                                        child: TextFormField(
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.fromLTRB(
+                                              20, 15, 20, 15),
+                                          hintText: 'attribute value',
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8))),
+                                      validator: (arg1) {
+                                        return null;
+                                      },
+                                      onChanged: (val) {
+                                        this.customList[custom].value = val;
+                                      },
+                                    )),
                                   ],
                                 );
                               })

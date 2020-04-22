@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
-import 'package:tradeleaves/components/add_product/addproduct.dart';
 import 'package:tradeleaves/components/add_product/postProduct.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/podos/categories/categories.dart';
@@ -34,7 +33,6 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
   final _formKey = new GlobalKey<FormState>();
   ProductAttributesResp listCatProdAttrLoBRespDTO;
   ListCatProdAttrLoBDTO listCatProdAttrLoBDTO = new ListCatProdAttrLoBDTO();
-
   List lobs = [
     {
       "lobId": "34343e34-7601-40de-878d-01b3bd1f0641",
@@ -181,7 +179,6 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
       createCategoryProductAttributeDTO.productAttributeDetailDTO = productAttributeDetailDTO;
     }
   }
-
   _saveForm() async {
     print(_formKey);
     var form = _formKey.currentState;
@@ -268,6 +265,11 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
                                           ),
                                           alignment: Alignment.centerLeft,
                                           child: InkWell(
+                                            onTap: (){
+                                              setState(() {
+                                                this.savedCats[index1].isExpanded = !this.savedCats[index1].isExpanded;
+                                              });
+                                            },
                                             child: new Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.start,
@@ -275,7 +277,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
                                                 new IconButton(
                                                     icon: new Container(
                                                       child: new Icon(
-                                                        expandFlag
+                                                        this.savedCats[index1].isExpanded
                                                             ? Icons
                                                                 .keyboard_arrow_up
                                                             : Icons
@@ -286,8 +288,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
                                                     ),
                                                     onPressed: () {
                                                       setState(() {
-                                                        expandFlag =
-                                                            !expandFlag;
+                                                        this.savedCats[index1].isExpanded = !this.savedCats[index1].isExpanded;
                                                       });
                                                     }),
                                                 Text(
@@ -307,7 +308,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
                                                     .categoryTreePathDto
                                                     .childCategoryDto
                                                     .length >
-                                                0)
+                                                0  &&  this.savedCats[index1].isExpanded)
                                             ? ListView.builder(
                                                 physics:
                                                     const NeverScrollableScrollPhysics(),
@@ -347,10 +348,20 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
                                                                     (context,
                                                                         int index3) {
                                                                   return Container(
+                                                                    
                                                                     decoration:
                                                                         BoxDecoration(
                                                                       border:
                                                                           Border(
+                                                                            left: BorderSide(
+                                                                              width: 5,
+                                                                              color:this.selectedCategory !=null && this.selectedCategory ==this
+                                                                              .leafCats
+                                                                              .categoryTreePathDto
+                                                                              .childCategoryDto[index2]
+                                                                              .leafCategoryListDto[index3]
+                                                                              .categoryId ? Colors.red:Colors.white,
+                                                                            ) ,
                                                                         bottom: BorderSide(
                                                                             color:
                                                                                 Colors.grey),
@@ -371,13 +382,15 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
                                                                               .categoryId;
                                                                         });
                                                                       },
-                                                                      highlightColor: (this.selectedCategory == this.leafCats.categoryTreePathDto.childCategoryDto[index2].leafCategoryListDto[index3].categoryId)
-                                                                          ? Colors
-                                                                              .black
-                                                                          : Colors
-                                                                              .white,
                                                                       child:
-                                                                          Row(
+                                                                         Container(
+                                                                           color:  this.selectedCategory !=null && this.selectedCategory ==this
+                                                                              .leafCats
+                                                                              .categoryTreePathDto
+                                                                              .childCategoryDto[index2]
+                                                                              .leafCategoryListDto[index3]
+                                                                              .categoryId ? Colors.grey[300]:Colors.white,
+                                                                           child:  Row(
                                                                         mainAxisAlignment:
                                                                             MainAxisAlignment.start,
                                                                         children: <
@@ -395,6 +408,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
                                                                           ),
                                                                         ],
                                                                       ),
+                                                                         )
                                                                     ),
                                                                   );
                                                                 })
