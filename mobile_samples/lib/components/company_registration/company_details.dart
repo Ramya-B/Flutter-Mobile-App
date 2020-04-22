@@ -101,26 +101,12 @@ class _CompanyDetailsState extends State<CompanyDetails> {
             }
             identificationAttributes.anyOneFilled = true; // Require one from many fields
             identificationAttributes.identificationTypeId = types.identificationTypeId;
-//            if(identificationAttributesList.length>0){
-//              print("printed las if in attributes");
-//              for(IdentificationAttributesList attTypes in identificationAttributesList){
-//                  if(attTypes.attributeName != types.identificationTypeName){
-//                    identificationAttributesList.add(identificationAttributes);
-//                    print("list pushed in if");
-////                    break;
-//                  }
-//              }
-//            }else{
-//              print("list pushed in else");
-//              identificationAttributesList.add(identificationAttributes);
-//            }
             identificationAttributesList.add(identificationAttributes);
             print("identification attributes");
             print(jsonEncode(identificationAttributesList));
 
           }
         }
-//      }
       print("identificationAttributesList printed");
       print(identificationAttributesList);
       print(jsonEncode(identificationAttributesList));
@@ -430,7 +416,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                 children: <Widget>[
 //                  address.address1!=null ?
                   TextFormField(
-                    initialValue: address.address1,
+                    initialValue: address.address1!=null ? address.address1 : '',
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                       hintText: "Address1",
@@ -449,7 +435,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                   ),
 //                  address.address2 !=null ?
                   TextFormField(
-                    initialValue: address.address2,
+                    initialValue: address.address2!=null ? address.address2: '',
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                       hintText: "Address2",
@@ -468,7 +454,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                   ),
 //                  address.city!=null ?
                   TextFormField(
-                    initialValue: address.city,
+                    initialValue: address.city!=null ? address.city: '',
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                       hintText: "City/Town",
@@ -832,7 +818,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               height: 8,
             ),
             TextFormField(
-              initialValue: identityValue,
+              initialValue: identityValue!=null ? identityValue : '',
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                 hintText: "Type your identity value",
