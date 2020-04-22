@@ -552,6 +552,89 @@ class CrmServiceImpl extends CrmServices {
     });
   }
 
+  @override
+  Future performStartVerify(Company company) async{
+    // TODO: implement performStartVerify
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("performStartVerify service called......");
+    print(company.toJson());
+    return await http.post(
+        '${Constants.envUrl}$apiUrl/profile/registerstartverify/workflow',
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+        body: jsonEncode({
+          'companyDTO': company.toJson()
+        })
+    ).then((data) {
+      print("performStartVerify response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("performStartVerify get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get performStartVerify.........');
+      }
+    });
+  }
+
+  @override
+  Future getClassificationForEmployees() async{
+    // TODO: implement getClassificationForEmployees
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getClassificationForEmployees service called......");
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/profile/classification/employees',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      print("getClassificationForEmployees response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getClassificationForEmployees get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get getClassificationForEmployees.........');
+      }
+    });
+  }
+
+  @override
+  Future postCompany(Company company) async{
+    // TODO: implement postCompany
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("postCompany service called......");
+    print(company.toJson());
+    return await http.post(
+        '${Constants.envUrl}$apiUrl/profile/company/profile',
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+        body: jsonEncode({
+          'companyDTO': company.toJson()
+        })
+    ).then((data) {
+      print("postCompany response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("postCompany get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get postCompany.........');
+      }
+    });
+  }
+
 
 
 

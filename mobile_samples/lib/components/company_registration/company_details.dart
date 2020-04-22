@@ -255,6 +255,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
     companyTypeList = [];
     industryTypeList = [];
     getUserInfo();
+    getCompanyDetails();
     print("Before Calling defaultCountry--**--**--**");
     defaultCountry();
     print("After Calling defaultCountry--**--**--**");

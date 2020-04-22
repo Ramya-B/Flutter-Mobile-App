@@ -38,6 +38,11 @@ class Details {
     String lobId;
     String countryCode;
     String groupNameLocal;
+    String officeSiteName;
+    String rejected;
+    String reason;
+    String logoImageUrl;
+    String base64;
     
     factory Details.fromJson(Map<String,dynamic> json) => _$DetailsFromJson(json);
     Map<String, dynamic> toJson() => _$DetailsToJson(this);

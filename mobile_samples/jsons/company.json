@@ -12,7 +12,7 @@
     "profileAttribute": "$[]profileAttribute",
     "accountStatus": "$accountStatus",
     "subscription": "$subscription",
-    "classifications": null,
+    "classifications": "$classifications",
     "identifications": null,
     "email": "$email",
     "address": "$address",
