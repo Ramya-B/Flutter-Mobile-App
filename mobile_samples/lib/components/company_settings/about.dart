@@ -39,7 +39,7 @@ class _AboutState extends State<About> {
   Classifications classifications = new Classifications();
   List<ClassificationDetails> details = [];
   String companyImage;
-
+  int empIndex;
   CrmServiceImpl get crmService => locator<CrmServiceImpl>();
   String companyHighLights;
   String companyStatus;
@@ -166,11 +166,13 @@ class _AboutState extends State<About> {
             print("no of employee found");
             employee = attributes;
             print(employee);
-//            for (ClassificationGroupAttributeDTO employeeDetails in employees) {
-//              if (employee.value == employeeDetails.attributeDescription) {
-//                vm.empIndex = j;
-//              }
-//            }
+            int index = 0;
+            for (ClassificationGroupAttributeDTO employeeDetails in employees) {
+              if (employee.value == employeeDetails.attributeDescription) {
+                empIndex = index;
+                index= index+1;
+              }
+            }
           } else if (attributes.type == 'TURNOVER') {
             print("turnOver found");
             turnOver = attributes;
@@ -250,7 +252,6 @@ class _AboutState extends State<About> {
       details.add(companyYear);
     }
     if (employee.value != null) {
-      employee.value = "11-20";
       details.add(employee);
     }
     if (turnOver.value != null) {
@@ -272,8 +273,14 @@ class _AboutState extends State<About> {
 
   discardChanges() async {
     print("discardChanges called");
-    company = null;
+    company=null;
     getCompanyDetails();
+  }
+  updateIndex(index) async{
+    print("update index called");
+    empIndex=index;
+    print(empIndex);
+    print(jsonEncode(employee));
   }
 
   @override
@@ -501,67 +508,45 @@ class _AboutState extends State<About> {
                   SizedBox(
                     height: 8,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 30,
-                        width: 70,
-                        child: RaisedButton(
-                          color: Colors.grey[200],
-                          onPressed: () {},
-                          child: Text(
-                            '11-20',
-                            style: TextStyle(color: Colors.green[700]),
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                        width: 70,
-                        child: RaisedButton(
-                          color: Colors.green[700],
-                          onPressed: () {},
-                          child: Text(
-                            '21-30',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                        width: 70,
-                        child: RaisedButton(
-                          color: Colors.grey[200],
-                          onPressed: () {},
-                          child: Text(
-                            '31-50',
-                            style: TextStyle(color: Colors.green[700]),
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                        width: 70,
-                        child: RaisedButton(
-                          color: Colors.grey[200],
-                          onPressed: () {},
-                          child: Text(
-                            '50+',
-                            style: TextStyle(color: Colors.green[700]),
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                      )
-                    ],
-                  )
+                  Container(
+                    height: 70,
+                    child: GridView.builder(
+                        itemCount: employees.length,
+                        scrollDirection: Axis.horizontal,
+                        gridDelegate:
+                        new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 30,
+                                width: 120,
+                                child: RaisedButton(
+                                  color: index==empIndex ? Colors.green[700] : Colors.grey[200],
+                                  onPressed: () {
+                                    setState(() {
+                                      employee.value = employees[index].attributeDescription;
+                                      empIndex=index;
+                                      print(empIndex == index);
+                                      updateIndex(index);
+                                    });
+
+                                  },
+                                  child: Text(
+                                    employees[index].attributeDescription.toString(),
+                                    style:
+                                    TextStyle(color: index==empIndex ? Colors.white : Colors.green[700]),
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(20)),
+                                ),
+                              )
+                            ],
+                          );
+                        }),
+                  ),
                 ],
               ),
               SizedBox(
@@ -799,7 +784,9 @@ class _AboutState extends State<About> {
                     InkWell(
                       child: Text('Discard Changes'),
                       onTap: () {
-                        discardChanges();
+                        setState(() {
+                          discardChanges();
+                        });
                       },
                     ),
                     SizedBox(

@@ -277,7 +277,7 @@ class _VerficationPageState extends State<VerficationPage> {
         postAttributes.identificationTypeId = element.identificationTypeId;
         postAttributes.identificationGroupId = element.identificationGroupId;
         partyIdentificationDTOObject.identificationAttributes.add(postAttributes);
-
+        identificationDocuments.removeAt(index);
         var identificationResponse = await crmService.deleteIdentificationDocuments(partyIdentificationDTOObject);
         print("printing the documents");
         print(identificationResponse);
@@ -286,7 +286,9 @@ class _VerficationPageState extends State<VerficationPage> {
         print(identificationDocuments.length);
         print(jsonEncode(identificationDocuments));
       }else{
-        identificationDocuments.removeWhere(element);
+//        identificationDocuments.removeWhere(element);
+        identificationDocuments.removeAt(index);
+
       }
   }
   Future<dynamic> uploadImage(imageFile, int length) async {
@@ -872,7 +874,9 @@ class _VerficationPageState extends State<VerficationPage> {
         style: TextStyle(color: Colors.red),
       ),
       onTap: () {
-        deleteIdentificationDocuments(element,i);
+        setState(() {
+          deleteIdentificationDocuments(element,i);
+        });
       },
     ),),
     ],
