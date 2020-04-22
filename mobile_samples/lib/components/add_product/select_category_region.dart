@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
 import 'package:tradeleaves/components/add_product/addproduct.dart';
+import 'package:tradeleaves/components/add_product/postProduct.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
@@ -116,7 +117,14 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
     print("getProductAttributes");
     print(prodAttr);
     this.listCatProdAttrLoBRespDTO = ProductAttributesResp.fromJson(prodAttr);
-    for (var createCategoryProductAttributeDTO in this.listCatProdAttrLoBRespDTO.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO ) {
+    setProductAttributeDetailDto(this.listCatProdAttrLoBRespDTO.listCatProdAttrLoBRespDTO.createCategoryProductAttributeDTO);
+    for (var item in this.listCatProdAttrLoBRespDTO.listCatProdAttrLoBRespDTO.catProdAttrLoBListDTO) {
+      setProductAttributeDetailDto(item.createCategoryProductAttributeDTO);
+    }
+  }
+
+  setProductAttributeDetailDto(List<CreateCategoryProductAttributeDTO> createCategoryProductAttributeDTO) async{
+ for (var createCategoryProductAttributeDTO in createCategoryProductAttributeDTO ) {
      ProductAttributeDetailDTO productAttributeDetailDTO =
           ProductAttributeDetailDTO();
       productAttributeDetailDTO.attributeName =
@@ -153,6 +161,16 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
             productAttributeDetailDTO.valueType = "BLOB";
           }
           break;
+        case "price":
+          {
+            productAttributeDetailDTO.price = new Price();
+            productAttributeDetailDTO.price.priceList = [];
+            productAttributeDetailDTO.price.priceList.add(new PriceList());
+            productAttributeDetailDTO.price.priceList[0].productPriceSlabs = [];
+            productAttributeDetailDTO.price.priceList[0].productPriceSlabs.add(new ProductPriceSlabs());
+            
+          }
+          break;
         default:
           {
             print("Invalid choice");
@@ -175,7 +193,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => AddProduct(
+                builder: (context) => AddProduct1(
                     productAttributes: this.listCatProdAttrLoBRespDTO,
                     categoryRegionLob: listCatProdAttrLoBDTO,
                     selectedCountries: selectedRegions,
@@ -420,7 +438,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
                         },
                       ),
                     ),
-                    Container(
+                    regions != null ?Container(
                       padding: EdgeInsets.all(16),
                       child: MultiSelectFormField(
                         autovalidate: false,
@@ -448,7 +466,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
                           });
                         },
                       ),
-                    ),
+                    ):Container(),
                     Container(
                       padding: EdgeInsets.all(8),
                       child: RaisedButton(

@@ -4,7 +4,7 @@ import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:tradeleaves/components/products/products_home.dart';
-import 'components/sample.dart';
+import 'components/add_product/select_category_region.dart';
 import 'service_locator.dart';
 
 void main() {
@@ -62,6 +62,12 @@ class _HomeState extends State<Home> {
           //  child:  SimpleFormScreen()
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {Navigator.of(context)
+                .push(new MaterialPageRoute(builder: (context) => SelectCategoryRegion()));},
+        child: Icon(Icons.add),
+        backgroundColor: Colors.green,
       ),
     ));
   }

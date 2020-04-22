@@ -22,7 +22,11 @@ PriceList _$PriceListFromJson(Map<String, dynamic> json) {
     ..edcStart = json['edcStart'] as String
     ..edcEnd = json['edcEnd'] as String
     ..edcSelectedTime = json['edcSelectedTime'] as String
-    ..attributeName = json['attributeName'] as String;
+    ..attributeName = json['attributeName'] as String
+    ..selectedIncoterm = json['selectedIncoterm'] == null
+        ? null
+        : IncotermDto.fromJson(
+            json['selectedIncoterm'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$PriceListToJson(PriceList instance) => <String, dynamic>{
@@ -36,5 +40,6 @@ Map<String, dynamic> _$PriceListToJson(PriceList instance) => <String, dynamic>{
       'edcStart': instance.edcStart,
       'edcEnd': instance.edcEnd,
       'edcSelectedTime': instance.edcSelectedTime,
-      'attributeName': instance.attributeName
+      'attributeName': instance.attributeName,
+      'selectedIncoterm': instance.selectedIncoterm
     };

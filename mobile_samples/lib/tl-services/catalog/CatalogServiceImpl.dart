@@ -7,6 +7,9 @@ import 'dart:convert';
 import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServices.dart';
 import 'package:tradeleaves/constants.dart';
+import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
+
+import '../../service_locator.dart';
 
 class CatalogServiceImpl extends CatalogServices {
   
@@ -14,7 +17,7 @@ class CatalogServiceImpl extends CatalogServices {
   Map<String, String> headers = {
     'Content-type': 'application/json; charset=UTF-8'
   };
-
+  UserServiceImpl get user => locator<UserServiceImpl>();
   @override
   Future search(ProductSearchCriteriaDTO productSearchCriteriaDTO) async {
     return await http
@@ -243,6 +246,14 @@ class CatalogServiceImpl extends CatalogServices {
         var res = json.decode(data.body);
         print("saveProduct resp....");
         print(res);
+        for (Faqs faq in productDTO.faqs) {
+          faq.name = res["productDTO"]["productId"];
+          faq.active = true;
+        }
+        if(productDTO.faqs.length > 0){
+         user.saveFaqs(productDTO.faqs);
+        }
+       
         return res;
       } else {
         return throw Exception('falied to saveProduct ....');
