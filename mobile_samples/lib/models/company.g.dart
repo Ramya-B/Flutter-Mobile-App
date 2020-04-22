@@ -36,7 +36,10 @@ Company _$CompanyFromJson(Map<String, dynamic> json) {
     ..subscription = json['subscription'] == null
         ? null
         : Subscription.fromJson(json['subscription'] as Map<String, dynamic>)
-    ..classifications = json['classifications'] as String
+    ..classifications = json['classifications'] == null
+        ? null
+        : Classifications.fromJson(
+            json['classifications'] as Map<String, dynamic>)
     ..identifications = json['identifications'] as String
     ..email = json['email'] == null
         ? null

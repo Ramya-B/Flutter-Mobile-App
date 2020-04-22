@@ -39,7 +39,12 @@ Details _$DetailsFromJson(Map<String, dynamic> json) {
     ..groupName = json['groupName'] as String
     ..lobId = json['lobId'] as String
     ..countryCode = json['countryCode'] as String
-    ..groupNameLocal = json['groupNameLocal'] as String;
+    ..groupNameLocal = json['groupNameLocal'] as String
+    ..officeSiteName = json['officeSiteName'] as String
+    ..rejected = json['rejected'] as String
+    ..reason = json['reason'] as String
+    ..logoImageUrl = json['logoImageUrl'] as String
+    ..base64 = json['base64'] as String;
 }
 
 Map<String, dynamic> _$DetailsToJson(Details instance) => <String, dynamic>{
@@ -74,5 +79,10 @@ Map<String, dynamic> _$DetailsToJson(Details instance) => <String, dynamic>{
       'groupName': instance.groupName,
       'lobId': instance.lobId,
       'countryCode': instance.countryCode,
-      'groupNameLocal': instance.groupNameLocal
+      'groupNameLocal': instance.groupNameLocal,
+      'officeSiteName': instance.officeSiteName,
+      'rejected': instance.rejected,
+      'reason': instance.reason,
+      'logoImageUrl': instance.logoImageUrl,
+      'base64': instance.base64
     };

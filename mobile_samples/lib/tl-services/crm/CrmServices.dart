@@ -23,4 +23,7 @@ abstract class CrmServices {
   Future createOwnerAndRole(OwnerAndRoleDTO ownerAndRoleDTO);
   Future createCompanyIdentification(PartyIdentificationDTO partyIdentificationDTO);
   Future deleteIdentificationDocuments(PartyIdentificationDTO partyIdentificationDTO);
+  Future performStartVerify(Company company);
+  Future postCompany(Company company);
+  Future getClassificationForEmployees();
   }

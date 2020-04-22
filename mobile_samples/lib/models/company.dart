@@ -4,6 +4,7 @@ import "partyIdentificationDTO.dart";
 import "profileAttribute.dart";
 import "accountStatus.dart";
 import "subscription.dart";
+import "classifications.dart";
 import "email.dart";
 import "address.dart";
 import "telephone.dart";
@@ -27,7 +28,7 @@ class Company {
     List<ProfileAttribute> profileAttribute;
     AccountStatus accountStatus;
     Subscription subscription;
-    String classifications;
+    Classifications classifications;
     String identifications;
     Email email;
     Address address;

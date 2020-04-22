@@ -6,6 +6,7 @@ import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as mime;
 import 'package:image_cropper/image_cropper.dart';
+import 'package:tradeleaves/components/company_settings/companysettings.dart';
 import 'package:tradeleaves/constants.dart';
 import 'package:tradeleaves/models/identificationAttributesList.dart';
 import 'package:tradeleaves/models/index.dart';
@@ -206,7 +207,11 @@ class _VerficationPageState extends State<VerficationPage> {
           identificationDocument.attributeName =  "Authorization Letter";
           identificationDocument.attributeType =  "Attachment";
           identificationDocument.attributeValue = json.decode(fileResp)["fileName"];
-          identificationDocument.attributeNameWithOutBucketName = '';
+          var nameSplit = [];
+          nameSplit = json.decode(fileResp)["fileName"].split('/');
+          if (nameSplit!=null && nameSplit.length > 1) {
+            identificationDocument.attributeNameWithOutBucketName = nameSplit[1];
+          }
           identificationDocuments.add(identificationDocument);
         });
       }).catchError((err) {
@@ -264,7 +269,7 @@ class _VerficationPageState extends State<VerficationPage> {
       print(index);
       if(element.identificationGroupId!=null){
         PartyIdentificationDTO partyIdentificationDTOObject = new PartyIdentificationDTO();
-        partyIdentificationDTOObject.partyId = user.partyId;
+        partyIdentificationDTOObject.partyId = user.companyId;
         partyIdentificationDTOObject.identificationAttributes = [];
         IdentificationAttributes postAttributes = new IdentificationAttributes();
         postAttributes.attributeName = element.attributeName;
@@ -272,7 +277,7 @@ class _VerficationPageState extends State<VerficationPage> {
         postAttributes.identificationTypeId = element.identificationTypeId;
         postAttributes.identificationGroupId = element.identificationGroupId;
         partyIdentificationDTOObject.identificationAttributes.add(postAttributes);
-
+        identificationDocuments.removeAt(index);
         var identificationResponse = await crmService.deleteIdentificationDocuments(partyIdentificationDTOObject);
         print("printing the documents");
         print(identificationResponse);
@@ -281,7 +286,9 @@ class _VerficationPageState extends State<VerficationPage> {
         print(identificationDocuments.length);
         print(jsonEncode(identificationDocuments));
       }else{
-        identificationDocuments.removeWhere(element);
+//        identificationDocuments.removeWhere(element);
+        identificationDocuments.removeAt(index);
+
       }
   }
   Future<dynamic> uploadImage(imageFile, int length) async {
@@ -308,14 +315,21 @@ class _VerficationPageState extends State<VerficationPage> {
       return respStr;
     }
 
+  performStartVerify(company) async{
+    print("performStartVerify called");
+    var response = await crmService.performStartVerify(company);
+    print(response);
+     Navigator.push(
+         context, MaterialPageRoute(builder: (context) => CompanySettings()));
 
+  }
     saveCompanyVerification() async{
       print("saveCompanyVerification called");
       PartyIdentificationDTO partyIdentificationDTO = new PartyIdentificationDTO();
       OwnerParty userAsOwner = new OwnerParty();
       userAsOwner.partyId = user.partyId;
       ownerAndRoleDTO.ownerParty = userAsOwner;
-      partyIdentificationDTO.partyId = user.partyId;
+      partyIdentificationDTO.partyId = user.companyId;
 
       if(selectedRadioTile == 1){
         ownerAndRoleDTO.telephoneDTO = null;
@@ -371,6 +385,7 @@ class _VerficationPageState extends State<VerficationPage> {
       var identificationResponse = await crmService.createCompanyIdentification(partyIdentificationDTO);
       print("create identification attributes response");
       print(identificationResponse);
+      performStartVerify(company);
     }
 
 
@@ -832,7 +847,7 @@ class _VerficationPageState extends State<VerficationPage> {
           color: Colors.black,
         ),
 //    Container(
-  DataTable(
+        identificationDocuments!=null && identificationDocuments.length>0 ? DataTable(
         columns: [
     DataColumn(label: Text('File Name')),
     DataColumn(label: Text('Verification Type')),
@@ -859,7 +874,9 @@ class _VerficationPageState extends State<VerficationPage> {
         style: TextStyle(color: Colors.red),
       ),
       onTap: () {
-        deleteIdentificationDocuments(element,i);
+        setState(() {
+          deleteIdentificationDocuments(element,i);
+        });
       },
     ),),
     ],
@@ -867,32 +884,32 @@ class _VerficationPageState extends State<VerficationPage> {
     )),
     ).values.toList() :
     [],
-    ),
+    ): Container(),
 
         Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              InkWell(
-                child: Text(
-                  'Skip this step',
-                  style: TextStyle(color: Colors.green),
-                ),
-                onTap: () {},
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              RaisedButton(
-                color: Colors.lightGreen,
-                onPressed: () {},
-                child: Text(
-                  'Save & Exit',
-                  style: TextStyle(color: Colors.white),
-                ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-              ),
+//              InkWell(
+//                child: Text(
+//                  'Skip this step',
+//                  style: TextStyle(color: Colors.green),
+//                ),
+//                onTap: () {},
+//              ),
+//              SizedBox(
+//                width: 15,
+//              ),
+//              RaisedButton(
+//                color: Colors.lightGreen,
+//                onPressed: () {},
+//                child: Text(
+//                  'Save & Exit',
+//                  style: TextStyle(color: Colors.white),
+//                ),
+//                shape: RoundedRectangleBorder(
+//                    borderRadius: BorderRadius.circular(20)),
+//              ),
               SizedBox(
                 width: 15,
               ),
@@ -902,7 +919,7 @@ class _VerficationPageState extends State<VerficationPage> {
                   saveCompanyVerification();
                 },
                 child: Text(
-                  'Save & Continue',
+                  'Create Company',
                   style: TextStyle(color: Colors.white),
                 ),
                 shape: RoundedRectangleBorder(

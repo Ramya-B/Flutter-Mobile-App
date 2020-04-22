@@ -13,8 +13,13 @@ import 'package:tradeleaves/components/Settings/setting.dart';
 import 'package:tradeleaves/components/products/products_home.dart';
 import 'package:tradeleaves/components/products/userproducts.dart';
 import 'package:tradeleaves/components/webpage/mywebview.dart';
+import '../service_locator.dart';
 import 'Profile/person_profile.dart';
 import 'company_registration/register_business.dart';
+import 'company_settings/companysettings.dart';
+import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
+import 'package:tradeleaves/models/index.dart';
+
 
 class CustomDrawer extends StatefulWidget {
   @override
@@ -26,10 +31,29 @@ class _CustomDrawerState extends State<CustomDrawer> {
   var emailId;
   var fullName;
   var authToken;
+  User user;
+  bool showCompanySettings = false;
+  bool showCompanyRegistration=false;
+  UserServiceImpl get userService => locator<UserServiceImpl>();
+  getUserInfo() async {
+    var data = await userService.getUser();
+    print("user response...");
+    setState(() {
+      this.user = User.fromJson(data);
+      if(user.personalDetails.profile.company.status == "COMPLETE"){
+          showCompanySettings = true;
+      }else{
+        showCompanyRegistration = true;
+      }
+    });
+  }
+
+
 
   @override
   void initState() {
     setData();
+    getUserInfo();
     super.initState();
   }
 
@@ -127,14 +151,26 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                 )
               : Container(),
-          InkWell(
+//          (user!=null) && (user.personalDetails.profile.company.accountStatus == null) || (user.personalDetails.profile.company.accountStatus != null && user.personalDetails.profile.company.accountStatus.statusId == "CREATED_INCOMPLETED") ?
+          showCompanyRegistration ? InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => CompanyRegistration())),
             child: new ListTile(
               title: Text('Business Setup'),
               leading: Icon(Icons.business),
             ),
-          ),
+          )
+              : Container(),
+//          user!=null && (user.personalDetails.profile.company.status == "COMPLETE" )?
+          showCompanySettings ? InkWell(
+            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                builder: (context) => CompanySettings())),
+            child: new ListTile(
+              title: Text('Company Settings'),
+              leading: Icon(Icons.business),
+            ),
+          )
+              : Container(),
           InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (BuildContext context) => new MyWebView(
