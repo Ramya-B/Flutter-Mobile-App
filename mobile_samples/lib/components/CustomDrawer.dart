@@ -32,12 +32,19 @@ class _CustomDrawerState extends State<CustomDrawer> {
   var fullName;
   var authToken;
   User user;
+  bool showCompanySettings = false;
+  bool showCompanyRegistration=false;
   UserServiceImpl get userService => locator<UserServiceImpl>();
   getUserInfo() async {
     var data = await userService.getUser();
     print("user response...");
     setState(() {
       this.user = User.fromJson(data);
+      if(user.personalDetails.profile.company.status == "COMPLETE"){
+          showCompanySettings = true;
+      }else{
+        showCompanyRegistration = true;
+      }
     });
   }
 
@@ -145,25 +152,25 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 )
               : Container(),
 //          (user!=null) && (user.personalDetails.profile.company.accountStatus == null) || (user.personalDetails.profile.company.accountStatus != null && user.personalDetails.profile.company.accountStatus.statusId == "CREATED_INCOMPLETED") ?
-          InkWell(
+          showCompanyRegistration ? InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => CompanyRegistration())),
             child: new ListTile(
               title: Text('Business Setup'),
               leading: Icon(Icons.business),
             ),
-          ),
-//              : Container(),
+          )
+              : Container(),
 //          user!=null && (user.personalDetails.profile.company.status == "COMPLETE" )?
-          InkWell(
+          showCompanySettings ? InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => CompanySettings())),
             child: new ListTile(
               title: Text('Company Settings'),
               leading: Icon(Icons.business),
             ),
-          ),
-//              : Container(),
+          )
+              : Container(),
           InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (BuildContext context) => new MyWebView(
