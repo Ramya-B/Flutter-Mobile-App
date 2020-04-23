@@ -30,6 +30,10 @@ ProductDTO _$ProductDTOFromJson(Map<String, dynamic> json) {
         ?.toList()
     ..status = json['status'] as String
     ..categoryIds = json['categoryIds'] as List
+    ..faqs = (json['faqs'] as List)
+        ?.map(
+            (e) => e == null ? null : Faqs.fromJson(e as Map<String, dynamic>))
+        ?.toList()
     ..selectedSites = json['selectedSites'] as List
     ..supplierId = json['supplierId'] as String;
 }
@@ -47,6 +51,7 @@ Map<String, dynamic> _$ProductDTOToJson(ProductDTO instance) =>
       'hsCodes': instance.hsCodes,
       'status': instance.status,
       'categoryIds': instance.categoryIds,
+      'faqs': instance.faqs,
       'selectedSites': instance.selectedSites,
       'supplierId': instance.supplierId
     };

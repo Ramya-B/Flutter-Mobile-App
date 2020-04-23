@@ -1,0 +1,20 @@
+{
+  "customerRequestItemId": "5db51660-2d0d-47b4-89f4-4f883b9a5b30",
+  "customerRequestId": 15734,
+  "statusId": null,
+  "priority": null,
+  "sequenceNum": null,
+  "requiredByDate": "2020-04-30",
+  "productId": null,
+  "quantity": 1000,
+  "quantityType": "Kg",
+  "selectedAmount": 1000,
+  "maximumAmount": null,
+  "reservStart": null,
+  "reservLength": null,
+  "reservPersons": null,
+  "description": null,
+  "story": null,
+  "reqByDate": "2020-04-30T00:00:00.000Z",
+  "globalPriceFlag": "Y"
+}
