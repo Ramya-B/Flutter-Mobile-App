@@ -81,6 +81,9 @@ flutter:
     - assets/tl.png
     - assets/tllogo.png
     - assets/test_form1.xml
+    - assets/homepages/bliss-domestic.jpg
+    - assets/homepages/hero_img_tradewinds.jpg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

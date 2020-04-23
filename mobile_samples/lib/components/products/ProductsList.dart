@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/contact_supplier/contact_supplier.dart';
 import 'package:tradeleaves/components/products/ProductDetails.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/podos/search/search.dart';
@@ -80,6 +81,7 @@ class _FetchPromotedProductsState extends State<FetchPromotedProducts> {
               return SingleProduct(
                 productDTO: this.promotedProducts[index].productDTO,
                 supplierDTO: this.promotedProducts[index].supplierSearchDTO,
+                isSearchResults: true,
               );
             })),
       ],
@@ -121,6 +123,7 @@ class _ProductsState extends State<Products> {
           return SingleProduct(
             productDTO: this.promotedProducts[index].productDTO,
             supplierDTO: this.promotedProducts[index].supplierSearchDTO,
+            isSearchResults: true,
           );
         });
   }
@@ -129,10 +132,12 @@ class _ProductsState extends State<Products> {
 class SingleProduct extends StatefulWidget {
   final productDTO;
   final supplierDTO;
+  final bool isSearchResults;
 
   SingleProduct({
     this.productDTO,
     this.supplierDTO,
+    this.isSearchResults
   });
 
   @override
@@ -155,8 +160,8 @@ class _SingleProductState extends State<SingleProduct> {
             children: <Widget>[
               (widget.productDTO.primaryImageUrl != null )? Image.network(
                 (widget.productDTO.primaryImageUrl.toString().contains('http') )? ('${widget.productDTO.primaryImageUrl}'):('${Constants.envUrl}${Constants.mongoImageUrl}/${widget.productDTO.primaryImageUrl}'),
-                width: 150,
-                height: 150,
+                width: 120,
+                height: 120,
               ):Container( width: 150,
                 height: 150,),
               Expanded(
@@ -169,6 +174,29 @@ class _SingleProductState extends State<SingleProduct> {
                       style: TextStyle(fontSize: 16),
                     )),
               ),
+              Expanded(
+                              child: Container(
+                  height: 20,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                      Expanded(child: IconButton(icon: Icon(Icons.favorite_border),color:Colors.green, onPressed: (){})),
+                      Expanded(
+                                              child: IconButton(icon: Icon(Icons.message), color: Colors.green,onPressed: (){
+                          if(widget.isSearchResults){
+                             Navigator.of(context).push(new MaterialPageRoute(
+                          builder: (context) => new ContactSupplier(
+                                productDTO: widget.productDTO,
+                                supplierDTO: widget.supplierDTO,
+                              )));
+                          }
+                          
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),

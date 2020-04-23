@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
-import 'package:tradeleaves/components/products/products_home.dart';
-import 'components/add_product/select_category_region.dart';
-import 'components/landing_pages/bliss_home_page.dart';
-import 'components/landing_pages/tl_landing_pages.dart';
+import 'package:tradeleaves/components/contact_supplier/contact_supplier.dart';
+import 'components/landing_pages/mp_home_page.dart';
 import 'service_locator.dart';
 
 void main() {
@@ -60,7 +58,7 @@ class _HomeState extends State<Home> {
           Container(
             height: 600,
             // child: HomeProducts(),
-              child: BLISSHomePage(),
+              child: MarketplaceHomePage(),
           //  child:  SimpleFormScreen()
           ),
         ],

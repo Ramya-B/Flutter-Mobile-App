@@ -15,7 +15,9 @@ SupplierListDto _$SupplierListDtoFromJson(Map<String, dynamic> json) {
     ..productLobId = json['productLobId'] as String
     ..planUniqueId = json['planUniqueId'] as String
     ..childCustRequestId = json['childCustRequestId'] as num
-    ..custRequestDelScheduleDTO = json['custRequestDelScheduleDTO'] as String;
+    ..custRequestDelScheduleDTO = json['custRequestDelScheduleDTO'] as String
+    ..email = json['email'] as String
+    ..supplierStatus = json['supplierStatus'] as String;
 }
 
 Map<String, dynamic> _$SupplierListDtoToJson(SupplierListDto instance) =>
@@ -27,5 +29,7 @@ Map<String, dynamic> _$SupplierListDtoToJson(SupplierListDto instance) =>
       'productLobId': instance.productLobId,
       'planUniqueId': instance.planUniqueId,
       'childCustRequestId': instance.childCustRequestId,
-      'custRequestDelScheduleDTO': instance.custRequestDelScheduleDTO
+      'custRequestDelScheduleDTO': instance.custRequestDelScheduleDTO,
+      'email': instance.email,
+      'supplierStatus': instance.supplierStatus
     };

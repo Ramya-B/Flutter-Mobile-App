@@ -2,10 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as mime;
-import 'package:image_cropper/image_cropper.dart';
 import 'package:tradeleaves/components/company_settings/companysettings.dart';
 import 'package:tradeleaves/constants.dart';
 import 'package:tradeleaves/models/identificationAttributesList.dart';

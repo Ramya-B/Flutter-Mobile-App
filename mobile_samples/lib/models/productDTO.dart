@@ -24,6 +24,7 @@ class ProductDTO {
     List<Faqs> faqs;
     List selectedSites;
     String supplierId;
+    String productId;
     
     factory ProductDTO.fromJson(Map<String,dynamic> json) => _$ProductDTOFromJson(json);
     Map<String, dynamic> toJson() => _$ProductDTOToJson(this);

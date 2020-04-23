@@ -6,7 +6,6 @@ import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import 'package:tradeleaves/models/index.dart';
 import '../../service_locator.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:tradeleaves/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as mime;
@@ -266,7 +265,7 @@ class _AboutState extends State<About> {
     accountStatus.statusId = "UNDER_APPROVAL";
     company.details.rejected = 'N';
     company.details.reason = null;
-    var res = await crmService.postCompany(company);
+    await crmService.postCompany(company);
     print("updated successfulyy");
     setState(() {});
   }

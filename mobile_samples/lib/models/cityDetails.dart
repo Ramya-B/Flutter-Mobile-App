@@ -6,7 +6,6 @@ part 'cityDetails.g.dart';
 class CityDetails {
     CityDetails();
 
-    num ID;
     String countryCode;
     String postalCode;
     String village;

@@ -466,7 +466,6 @@ class CrmServiceImpl extends CrmServices {
 
   @override
   Future createOwnerAndRole(OwnerAndRoleDTO ownerAndRoleDTO) async{
-    // TODO: implement createOwnerAndRole
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("createOwnerAndRole service called......");
     return await http.post(
@@ -494,7 +493,6 @@ class CrmServiceImpl extends CrmServices {
 
   @override
   Future createCompanyIdentification(PartyIdentificationDTO partyIdentificationDTO) async{
-    // TODO: implement createCompanyIdentification
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("createCompanyIdentification service called......");
     print(partyIdentificationDTO.toJson());
@@ -524,7 +522,6 @@ class CrmServiceImpl extends CrmServices {
 
   @override
   Future deleteIdentificationDocuments(PartyIdentificationDTO partyIdentificationDTO) async{
-    // TODO: implement deleteIdentificationDocuments
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("deleteIdentificationDocuments service called......");
     print(partyIdentificationDTO.toJson());
@@ -554,7 +551,6 @@ class CrmServiceImpl extends CrmServices {
 
   @override
   Future performStartVerify(Company company) async{
-    // TODO: implement performStartVerify
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("performStartVerify service called......");
     print(company.toJson());
@@ -583,7 +579,6 @@ class CrmServiceImpl extends CrmServices {
 
   @override
   Future getClassificationForEmployees() async{
-    // TODO: implement getClassificationForEmployees
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("getClassificationForEmployees service called......");
     return await http.get(
@@ -608,7 +603,6 @@ class CrmServiceImpl extends CrmServices {
 
   @override
   Future postCompany(Company company) async{
-    // TODO: implement postCompany
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("postCompany service called......");
     print(company.toJson());
@@ -631,6 +625,30 @@ class CrmServiceImpl extends CrmServices {
         return res;
       } else {
         return throw Exception('falied to get postCompany.........');
+      }
+    });
+  }
+
+  @override
+  Future getSupplierById(String supplierId) async{
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getSupplierById service called......");
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/profile/person/partyId/$supplierId',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      print("getSupplierById response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getSupplierById get successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get getSupplierById.........');
       }
     });
   }

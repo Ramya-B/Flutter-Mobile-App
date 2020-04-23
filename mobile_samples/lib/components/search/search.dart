@@ -195,6 +195,7 @@ class _SearchItemsState extends State<SearchItems> {
                   return SingleProduct(
                     productDTO: this.prodList[index].productDTO,
                     supplierDTO: this.prodList[index].supplierSearchDTO,
+                    isSearchResults: true,
                   );
                 }),
           )

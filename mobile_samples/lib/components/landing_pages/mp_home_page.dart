@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/login_register/register.dart';
 import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 
@@ -45,7 +46,7 @@ class _MarketplaceHomePageState extends State<MarketplaceHomePage> {
         children: <Widget>[
           Container(
             alignment: Alignment.center,
-            height: MediaQuery.of(context).size.height / 2,
+            height: MediaQuery.of(context).size.height / 3,
             width: MediaQuery.of(context).size.width,
             decoration: new BoxDecoration(
               image: new DecorationImage(
@@ -307,7 +308,10 @@ class _MarketplaceHomePageState extends State<MarketplaceHomePage> {
                       color: Colors.green[700],
                       child: MaterialButton(
                           minWidth: MediaQuery.of(context).size.width / 2,
-                          onPressed: () {},
+                          onPressed: () {
+                              Navigator.push(
+                       context, MaterialPageRoute(builder: (context) => Register()));
+                          },
                           child: Text("Sign Me Up For Free Today",
                               textAlign: TextAlign.center,
                               style: TextStyle(color: Colors.white)))),
@@ -346,7 +350,10 @@ class _MarketplaceHomePageState extends State<MarketplaceHomePage> {
                       color: Colors.green[700],
                       child: MaterialButton(
                           minWidth: MediaQuery.of(context).size.width / 2,
-                          onPressed: () {},
+                          onPressed: () {
+                              Navigator.push(
+                       context, MaterialPageRoute(builder: (context) => Register()));
+                          },
                           child: Text("Sign Me Up For Free Today",
                               textAlign: TextAlign.center,
                               style: TextStyle(color: Colors.white)))),
@@ -464,7 +471,10 @@ class _MarketplaceHomePageState extends State<MarketplaceHomePage> {
                       color: Colors.green[700],
                       child: MaterialButton(
                           minWidth: MediaQuery.of(context).size.width / 2,
-                          onPressed: () {},
+                          onPressed: () {
+                              Navigator.push(
+                       context, MaterialPageRoute(builder: (context) => Register()));
+                          },
                           child: Text("Sign Me Up For Free Today",
                               textAlign: TextAlign.center,
                               style: TextStyle(color: Colors.white)))),
@@ -754,7 +764,10 @@ class _MarketplaceHomePageState extends State<MarketplaceHomePage> {
                       color: Colors.green[700],
                       child: MaterialButton(
                           minWidth: MediaQuery.of(context).size.width / 2,
-                          onPressed: () {},
+                          onPressed: () {
+                              Navigator.push(
+                       context, MaterialPageRoute(builder: (context) => Register()));
+                          },
                           child: Text("Sign Me Up For Free Today",
                               textAlign: TextAlign.center,
                               style: TextStyle(color: Colors.white)))),

@@ -26,4 +26,5 @@ abstract class CrmServices {
   Future performStartVerify(Company company);
   Future postCompany(Company company);
   Future getClassificationForEmployees();
+  Future getSupplierById(String supplierId);
   }

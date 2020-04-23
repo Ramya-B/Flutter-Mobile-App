@@ -450,7 +450,6 @@ class _ContactState extends State<Contact> {
   }
   @override
   void initState() {
-    // TODO: implement initState
     getCompanyDetails();
     super.initState();
   }

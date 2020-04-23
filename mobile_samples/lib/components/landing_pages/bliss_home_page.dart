@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/login_register/register.dart';
 import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 
@@ -45,15 +46,28 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
         children: <Widget>[
           Container(
             alignment: Alignment.center,
-            height: MediaQuery.of(context).size.height / 2.6,
+            height: MediaQuery.of(context).size.height / 3,
             width: MediaQuery.of(context).size.width,
             decoration: new BoxDecoration(
               image: new DecorationImage(
-                image: new AssetImage('assets/venkat/blissHome.jpg'),
+                image: new AssetImage('assets/homepages/bliss-domestic.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
             child: Container(
+             decoration: new BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black,
+            blurRadius: 30.0, // soften the shadow
+            spreadRadius: 5.0, //extend the shadow
+            offset: Offset(
+              15.0, // Move to right 10  horizontally
+              15.0, // Move to bottom 10 Vertically
+            ),
+          )
+        ],
+    ),
               width: MediaQuery.of(context).size.width / 1.4,
               child: Text(
                   'ELEVATE YOUR BUSINESS VISIBILITY LOCALLY OR GLOBALLY',
@@ -360,7 +374,10 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
                 color: Colors.lightGreen,
                 child: MaterialButton(
                     minWidth: MediaQuery.of(context).size.width / 2,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                       context, MaterialPageRoute(builder: (context) => Register()));
+                    },
                     child: Text("Sign Me Up For Free Today",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white)))),
@@ -411,7 +428,10 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
                       color: Colors.green[700],
                       child: MaterialButton(
                           minWidth: MediaQuery.of(context).size.width / 2,
-                          onPressed: () {},
+                          onPressed: () {
+                              Navigator.push(
+                       context, MaterialPageRoute(builder: (context) => Register()));
+                          },
                           child: Text("Sign Me Up For Free Today",
                               textAlign: TextAlign.center,
                               style: TextStyle(color: Colors.white)))),
@@ -520,7 +540,10 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
                       color: Colors.green[700],
                       child: MaterialButton(
                           minWidth: MediaQuery.of(context).size.width / 2,
-                          onPressed: () {},
+                          onPressed: () {
+                              Navigator.push(
+                       context, MaterialPageRoute(builder: (context) => Register()));
+                          },
                           child: Text("Sign Me Up For Free Today",
                               textAlign: TextAlign.center,
                               style: TextStyle(color: Colors.white)))),
@@ -549,7 +572,10 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
                       color: Colors.green[700],
                       child: MaterialButton(
                           minWidth: MediaQuery.of(context).size.width / 2,
-                          onPressed: () {},
+                          onPressed: () {
+                              Navigator.push(
+                       context, MaterialPageRoute(builder: (context) => Register()));
+                          },
                           child: Text("Sign Me Up For Free Today",
                               textAlign: TextAlign.center,
                               style: TextStyle(color: Colors.white)))),

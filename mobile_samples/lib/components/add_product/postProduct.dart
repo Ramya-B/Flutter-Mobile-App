@@ -10,13 +10,13 @@ import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
+import 'package:tradeleaves/components/products/userproducts.dart';
 import 'package:tradeleaves/constants.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/models/productAttributesResp.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 import 'package:tradeleaves/tl-services/core-npm/citiesImpl.dart';
 import 'package:tradeleaves/tl-services/customs/customServiceImpl.dart';
-import '../../main.dart';
 import '../../service_locator.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as mime;
@@ -90,7 +90,7 @@ class _AddProduct1State extends State<AddProduct1> {
 
   Future getProductDetails() async {
     print("get Product called...!");
-    var prod = await catalogService
+     await catalogService
         .getProductById("fee01ff6-3ea6-413a-8471-739fb405f656");
     print("product details is...!");
     print(product);
@@ -187,7 +187,7 @@ class _AddProduct1State extends State<AddProduct1> {
       setState(() {
         print("set state of save form");
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Home()));
+            context, MaterialPageRoute(builder: (context) => UserProducts()));
       });
     }
   }

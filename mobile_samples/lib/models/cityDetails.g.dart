@@ -8,7 +8,6 @@ part of 'cityDetails.dart';
 
 CityDetails _$CityDetailsFromJson(Map<String, dynamic> json) {
   return CityDetails()
-    ..ID = json['ID'] as num
     ..countryCode = json['countryCode'] as String
     ..postalCode = json['postalCode'] as String
     ..village = json['village'] as String
@@ -33,7 +32,6 @@ CityDetails _$CityDetailsFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$CityDetailsToJson(CityDetails instance) =>
     <String, dynamic>{
-      'ID': instance.ID,
       'countryCode': instance.countryCode,
       'postalCode': instance.postalCode,
       'village': instance.village,
