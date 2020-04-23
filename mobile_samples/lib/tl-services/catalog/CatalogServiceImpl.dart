@@ -232,7 +232,7 @@ class CatalogServiceImpl extends CatalogServices {
   Future saveProduct(ProductDTO productDTO) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
       print("saveProduct service....!");
-      print(productDTO.toJson());
+      // print(productDTO.toJson());
       print(jsonEncode(productDTO));
     return await http
         .post(
@@ -257,6 +257,27 @@ class CatalogServiceImpl extends CatalogServices {
         return res;
       } else {
         return throw Exception('falied to saveProduct ....');
+      }
+    });
+  }
+
+  @override
+  Future getProductById(String productId) async{
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+      print("getProductById service....!");
+      print(productId);
+    return await http
+        .get(
+      '${Constants.envUrl}$apiUrl/products/$productId',
+      headers: {HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}" , 'Content-type': 'application/json; charset=UTF-8'},
+    ).then((data) {
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getProductById resp....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to getProductById ....');
       }
     });
   }

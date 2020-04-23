@@ -96,6 +96,7 @@ class CategoryDTO {
   List<CategoryAttributeDTO> categoryAttribute;
   List<CategoryLobDTO> categoryLobDtoList;
   String categoryImage;
+  bool isExpanded=false;
 
   CategoryDTO(
       {this.id,
@@ -112,7 +113,8 @@ class CategoryDTO {
       this.priority,
       this.categoryAttribute,
       this.categoryLobDtoList,
-      this.categoryImage});
+      this.categoryImage,
+      this.isExpanded});
 
   factory CategoryDTO.fromJson(Map<String, dynamic> json) {
         var catAttr =  json['categoryAttribute'] != null ? json['categoryAttribute'] as List :[];
@@ -134,7 +136,8 @@ class CategoryDTO {
         priority: json['priority'],
         categoryAttribute: _categoryAttribute,
         categoryLobDtoList: _categoryLobDtoList,
-        categoryImage: json['categoryImage']);
+        categoryImage: json['categoryImage'],
+        isExpanded: true);
   }
   Map<String, dynamic> toJson() {
     return {

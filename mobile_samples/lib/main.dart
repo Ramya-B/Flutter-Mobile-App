@@ -63,12 +63,6 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {Navigator.of(context)
-                .push(new MaterialPageRoute(builder: (context) => SelectCategoryRegion()));},
-        child: Icon(Icons.add),
-        backgroundColor: Colors.green,
-      ),
     ));
   }
 } 

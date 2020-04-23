@@ -13,5 +13,6 @@ abstract class CatalogServices {
   Future getLeafCategories(CategoryDetailsLobDTO categoryDetailsLobDTO);
   Future getProductAttributesByLob(ListCatProdAttrLoBDTO listCatProdAttrLoBDTO);   
   Future saveProduct(ProductDTO productDTO);
+  Future getProductById(String productId);
 }
 
