@@ -16,7 +16,7 @@ class OrmServiceImpl extends OrmServices {
     print("createBuyrequest called");
     // TODO: implement createBuyrequest
     return await http
-        .post('${Constants.envUrl}$apiUrl/register',
+        .post('${Constants.envUrl}$apiUrl/order/api/buyrequests/create/request',
         headers: headers, body: jsonEncode(customerRequestDTO.toJson()))
         .then((data) {
       print("response rgister...!");
