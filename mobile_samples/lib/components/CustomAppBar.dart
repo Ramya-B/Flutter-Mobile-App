@@ -63,7 +63,7 @@ var  authToken;
                 alignment: Alignment.center,
                 child: Text('TRADELEAVES'),
               )) */
-              Container(child: Image.asset("assets/tllogo.png"),width: 150,height: 120,)
+              Container(child: Image.asset("assets/tllogo.png"),width: 180,height: 140,)
         ],
       ),
       centerTitle: true,

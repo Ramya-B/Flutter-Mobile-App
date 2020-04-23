@@ -5,6 +5,8 @@ import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:tradeleaves/components/products/products_home.dart';
 import 'components/add_product/select_category_region.dart';
+import 'components/landing_pages/bliss_home_page.dart';
+import 'components/landing_pages/tl_landing_pages.dart';
 import 'service_locator.dart';
 
 void main() {
@@ -57,8 +59,8 @@ class _HomeState extends State<Home> {
         children: <Widget>[
           Container(
             height: 600,
-            // constraints: BoxConstraints(minHeight: 700),
-             child: HomeProducts(),
+            // child: HomeProducts(),
+              child: BLISSHomePage(),
           //  child:  SimpleFormScreen()
           ),
         ],
