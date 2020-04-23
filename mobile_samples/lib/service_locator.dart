@@ -5,7 +5,7 @@ import 'package:tradeleaves/tl-services/core-npm/citiesImpl.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import 'package:tradeleaves/tl-services/customs/customServiceImpl.dart';
 import 'package:tradeleaves/tl-services/login/LoginServiceImpl.dart';
-
+import 'package:tradeleaves/tl-services/orm-api/OrmServiceImpl.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -16,4 +16,5 @@ setupServiceLocator() {
   locator.registerLazySingleton(() => UserServiceImpl());
   locator.registerLazySingleton(() => CitiesServiceImpl());
   locator.registerLazySingleton(() => CustomServiceImpl());
+  locator.registerLazySingleton(() => OrmServiceImpl());
 }
