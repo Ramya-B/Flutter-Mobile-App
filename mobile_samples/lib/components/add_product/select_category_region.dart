@@ -202,7 +202,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Add Product'),
-          backgroundColor: Colors.green,
+          backgroundColor: Constants.toolbarColor,
         ),
         backgroundColor: Colors.white,
         body: ListView(

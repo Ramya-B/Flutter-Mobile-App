@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../constants.dart';
+
 class MyWebView extends StatelessWidget {
   final String selectedUrl;
 
@@ -17,7 +19,7 @@ class MyWebView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.green,
+          backgroundColor: Constants.toolbarColor,
         ),
         body: WebView(
           initialUrl: selectedUrl,

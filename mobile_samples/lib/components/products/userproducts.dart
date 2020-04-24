@@ -76,7 +76,7 @@ class _UserProductsState extends State<UserProducts> {
     return Scaffold(
       appBar: AppBar(
         title: Text('My products'),
-        backgroundColor: Colors.green,
+        backgroundColor: Constants.toolbarColor,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {Navigator.of(context)

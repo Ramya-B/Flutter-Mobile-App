@@ -8,6 +8,8 @@ import 'package:tradeleaves/podos/search/search.dart';
 import 'package:tradeleaves/service_locator.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 
+import '../../constants.dart';
+
 class SearchItems extends StatefulWidget {
   final int categoryId;
   final bool isCategoryBasedSearch;
@@ -174,7 +176,7 @@ class _SearchItemsState extends State<SearchItems> {
           ],
         ),
         centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: Constants.toolbarColor,
         actions: <Widget>[
           new IconButton(
               icon: Icon(Icons.search),

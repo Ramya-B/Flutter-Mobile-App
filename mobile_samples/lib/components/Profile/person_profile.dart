@@ -5,6 +5,8 @@ import 'package:tradeleaves/components/Profile/preferences.dart';
 import 'package:tradeleaves/components/Profile/profile.dart';
 import 'package:tradeleaves/components/Profile/security_questions.dart';
 
+import '../../constants.dart';
+
 class PersonalProfile extends StatefulWidget {
   @override
   _PersonalProfileState createState() => _PersonalProfileState();
@@ -19,7 +21,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
       length: 5,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.lightGreen,
+          backgroundColor: Constants.toolbarColor,
           title: Text('Personal Profile'),
           centerTitle: true,
           bottom: TabBar(

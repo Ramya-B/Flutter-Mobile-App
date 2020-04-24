@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/company_registration/company_details.dart';
 import 'package:tradeleaves/components/company_registration/verification.dart';
 
+import '../../constants.dart';
+
 class CompanyRegistration extends StatefulWidget {
   @override
   _CompanyRegistrationState createState() => _CompanyRegistrationState();
@@ -19,7 +21,7 @@ class _CompanyRegistrationState extends State<CompanyRegistration> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.green,
+          backgroundColor: Constants.toolbarColor,
           title: Text('Company Registration'),
         ),
         body: ListView(

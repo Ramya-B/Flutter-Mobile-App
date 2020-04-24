@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/inquiries/inquiries.list.dart';
+
+import '../../constants.dart';
 class Inquiries extends StatefulWidget {
   @override
   _InquiriesState createState() => _InquiriesState();
@@ -13,7 +15,7 @@ class _InquiriesState extends State<Inquiries> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.green[700],
+          backgroundColor: Constants.toolbarColor,
           title: Text('My Inquiries'),
           centerTitle: true,
           bottom: TabBar(

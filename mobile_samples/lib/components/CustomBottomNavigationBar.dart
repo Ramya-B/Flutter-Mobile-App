@@ -55,14 +55,9 @@ class _CustomNavBarState extends State<CustomNavBar> {
       case 0:
         {
           Navigator.of(context).push(new MaterialPageRoute(
-              builder: (context) => new Scaffold(
-                    appBar: CustomToolBar(),
-                    body: Container(
-                      child:TradeleavesLandingPage(),
+              builder: (context) =>TradeleavesLandingPage(),
                     ),
-                    bottomNavigationBar: CustomNavBar(selectedIndex: 0),
-                    drawer: CustomDrawer(),
-                  )));
+                    );
         }
         break;
       case 1:

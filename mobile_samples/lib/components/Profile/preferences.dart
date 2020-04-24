@@ -33,9 +33,6 @@ class _PreferencesState extends State<Preferences> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Preferences Page'),
-      // ),
       body: ListView(
         children: <Widget>[
           Container(

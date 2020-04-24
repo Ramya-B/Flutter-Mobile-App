@@ -5,10 +5,6 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.green[700],
-      // appBar: AppBar(
-      //   title: Text('Splash screen'),
-      //   backgroundColor: Colors.green[700],
-      // ),
       body: Center(
           child: Container(
               padding: EdgeInsets.all(10),

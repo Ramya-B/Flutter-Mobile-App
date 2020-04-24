@@ -34,8 +34,8 @@ class _TradeleavesLandingPageState extends State<TradeleavesLandingPage> {
             children: [
               Container(
                 child: Image.asset("assets/tllogo.png"),
-                width: 200,
-                height: 170,
+                width: 160,
+                height: 150,
               )
             ],
           ),
@@ -63,21 +63,34 @@ class _TradeleavesLandingPageState extends State<TradeleavesLandingPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children : <Widget>[ TabBar(
                   labelPadding: EdgeInsets.all(5),
-                  unselectedLabelColor: Colors.grey,
+                  unselectedLabelColor: Colors.white,
                   indicatorColor: Colors.green  ,
+                  indicatorWeight: 4,
                   isScrollable: true,
                   labelColor: Colors.white,
                   tabs: <Widget>[
                     Container(
+                      padding: EdgeInsets.only(right: 10,left: 20),
                       height: 15,
                       child: Tab(
                       child: Text('BLISS'),
                     ),
+                    //  decoration: BoxDecoration(
+                    //         border: Border(
+                    //           right: BorderSide(width: 2,style: BorderStyle.solid,color: Colors.white)
+                    //         ),
+                    //       ),
                     ),
                      Container(
+                       decoration: BoxDecoration(
+                            border: Border(
+                              left: BorderSide(width: 2,style: BorderStyle.solid,color: Colors.white)
+                            ),
+                          ),
+                       padding: EdgeInsets.only(left:20,right:20),
                       height: 15,
                       child: Tab(
-                      child: Text('Marketplace'),
+                      child: Text('MARKETPLACE',),
                     ))
                     
                   ],
