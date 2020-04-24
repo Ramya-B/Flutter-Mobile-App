@@ -49,5 +49,6 @@
   "supplierStatus": null,
   "systemSent": false,
   "planUniqueId": null,
-  "serviceRequest": false
+  "serviceRequest": false,
+  "lobName": ""
 }

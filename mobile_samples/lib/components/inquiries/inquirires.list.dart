@@ -25,13 +25,37 @@ class _InquiriesState extends State<Inquiries> {
   int parentCustomerRequestId;
   bool isHasChildRequests;
   bool hasResponse;
+  List lobs = [
+    {
+      "lobId": "34343e34-7601-40de-878d-01b3bd1f0640",
+      "lobName": "All"
+    },
+    {
+      "lobId": "34343e34-7601-40de-878d-01b3bd1f0641",
+      "lobName": "Marketplace"
+    },
+    {
+      "lobId": "34343e34-7601-40de-878d-01b3bd1f0642",
+      "lobName": "Bliss"
+    }
+  ];
   getInquiriesForParty(activeBuyRequestInputDTO) async{
     print("getInquiriesForParty called");
     var res = await ormService.getBuyRequestById(activeBuyRequestInputDTO);
     print("getBuyRequestsForParty response");
     inquiries = InquiriesResponseDto.fromJson(res);
     print(jsonEncode(inquiries));
+    if (inquiries!=null && inquiries.requestDetails!=null && inquiries.requestDetails.length > 0 && lobs!=null && lobs.length > 0) {
+      for (RequestDetails inquiry in inquiries.requestDetails) {
+        if (inquiry.requestDTO.lobId == "34343e34-7601-40de-878d-01b3bd1f0642" || inquiry.requestDTO.lobId == "34343e34-7601-40de-878d-01b3bd1f0643") {
+         inquiry.requestDTO.lobName = "BLISS";
+        } else if (inquiry.requestDTO.lobId == "34343e34-7601-40de-878d-01b3bd1f0641" || inquiry.requestDTO.lobId == "34343e34-7601-40de-878d-01b3bd1f0644") {
+          inquiry.requestDTO.lobName = "Marketplace";
+        }
+      }
+    }
   }
+
   getBuyRequestsForParty(activeBuyRequestInputDTO, hasMultipleRequests, index) async{
     print("getBuyRequestsForParty called");
     var res = await ormService.getBuyRequestById(activeBuyRequestInputDTO);
@@ -45,10 +69,17 @@ class _InquiriesState extends State<Inquiries> {
       } else {
         inquiries.requestDetails[index].hasChildRequests = true;
       }
-
     }
-
+    for (RequestDetails inquiry in inquiries.requestDetails) {
+      if (inquiry.requestDTO.lobId == "34343e34-7601-40de-878d-01b3bd1f0642" || inquiry.requestDTO.lobId == "34343e34-7601-40de-878d-01b3bd1f0643") {
+        inquiry.requestDTO.lobName = "BLISS";
+      } else if (inquiry.requestDTO.lobId == "34343e34-7601-40de-878d-01b3bd1f0641" || inquiry.requestDTO.lobId == "34343e34-7601-40de-878d-01b3bd1f0644") {
+        inquiry.requestDTO.lobName = "Marketplace";
+      }
+    }
   }
+  }
+
   checkHasChildRequests(parentCustomerRequestId) async{
     print("checkHasChildRequests called");
     if (inquiries.requestDetails!=null && inquiries.requestDetails.length > 0) {
@@ -69,6 +100,7 @@ class _InquiriesState extends State<Inquiries> {
       }
     }
   }
+
   getRequestDetails(index, inquiry, showChildRequests, response) async{
     print("get Request deatisl called");
     if (previousIndex == index && inquiry.supplierRequestCount != 0) {
@@ -94,11 +126,10 @@ class _InquiriesState extends State<Inquiries> {
           getBuyRequestsForParty(activeBuyRequestInputDTO, true, index);
 
         }
-
       }
-
     }
   }
+
   @override
   void initState() {
     // TODO: implement initState

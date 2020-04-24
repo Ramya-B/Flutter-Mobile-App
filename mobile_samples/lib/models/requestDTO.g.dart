@@ -61,7 +61,8 @@ RequestDTO _$RequestDTOFromJson(Map<String, dynamic> json) {
     ..supplierStatus = json['supplierStatus'] as String
     ..systemSent = json['systemSent'] as bool
     ..planUniqueId = json['planUniqueId'] as String
-    ..serviceRequest = json['serviceRequest'] as bool;
+    ..serviceRequest = json['serviceRequest'] as bool
+    ..lobName = json['lobName'] as String;
 }
 
 Map<String, dynamic> _$RequestDTOToJson(RequestDTO instance) =>
@@ -116,5 +117,6 @@ Map<String, dynamic> _$RequestDTOToJson(RequestDTO instance) =>
       'supplierStatus': instance.supplierStatus,
       'systemSent': instance.systemSent,
       'planUniqueId': instance.planUniqueId,
-      'serviceRequest': instance.serviceRequest
+      'serviceRequest': instance.serviceRequest,
+      'lobName': instance.lobName
     };

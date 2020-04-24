@@ -56,6 +56,7 @@ class RequestDTO {
     bool systemSent;
     String planUniqueId;
     bool serviceRequest;
+    String lobName;
     
     factory RequestDTO.fromJson(Map<String,dynamic> json) => _$RequestDTOFromJson(json);
     Map<String, dynamic> toJson() => _$RequestDTOToJson(this);
