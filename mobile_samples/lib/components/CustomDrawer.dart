@@ -179,7 +179,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       drawer: CustomDrawer(),
                     ))),
             child: new ListTile(
-              title: Text('Home Page'),
+              title: Text('Top Results'),
               leading: Icon(Icons.home),
             ),
           ),

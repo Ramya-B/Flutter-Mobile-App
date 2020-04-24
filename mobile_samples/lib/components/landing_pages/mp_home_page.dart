@@ -119,13 +119,11 @@ class _MarketplaceHomePageState extends State<MarketplaceHomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              SizedBox(
-                width: 135,
-                height: 135,
+              Expanded(
                 child: RaisedButton(
                   onPressed: () => {},
                   color: Colors.lightGreen,
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(30),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -142,13 +140,11 @@ class _MarketplaceHomePageState extends State<MarketplaceHomePage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 135,
-                width: 135,
+              Expanded(
                 child: RaisedButton(
                   onPressed: () => {},
                   color: Colors.lightGreen,
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(30),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -165,13 +161,11 @@ class _MarketplaceHomePageState extends State<MarketplaceHomePage> {
                   ),
                 ),
               ),
-              SizedBox(
-                width: 135,
-                height: 135,
+              Expanded(
                 child: RaisedButton(
                   onPressed: () => {},
                   color: Colors.lightGreen,
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(30),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
