@@ -1,5 +1,5 @@
 {
-  "parentRequestDTO": null,
+  "parentRequestDTO": "$parentRequestDTO",
   "requestDetails": "$[]requestDetails",
   "totalCount": 6
 }

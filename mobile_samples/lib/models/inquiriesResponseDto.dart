@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import "parentRequestDTO.dart";
 import "requestDetails.dart";
 part 'inquiriesResponseDto.g.dart';
 
@@ -6,7 +7,7 @@ part 'inquiriesResponseDto.g.dart';
 class InquiriesResponseDto {
     InquiriesResponseDto();
 
-    String parentRequestDTO;
+    ParentRequestDTO parentRequestDTO;
     List<RequestDetails> requestDetails;
     num totalCount;
     

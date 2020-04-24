@@ -50,6 +50,7 @@ export 'mobile.dart' ;
 export 'ownerAndRoleDTO.dart' ; 
 export 'ownerParty.dart' ; 
 export 'pagination.dart' ; 
+export 'parentRequestDTO.dart' ; 
 export 'partyCountryRegionDTO.dart' ; 
 export 'partyCountryRegionListDTO.dart' ; 
 export 'partyIdentificationDTO.dart' ; 

@@ -8,7 +8,10 @@ part of 'inquiriesResponseDto.dart';
 
 InquiriesResponseDto _$InquiriesResponseDtoFromJson(Map<String, dynamic> json) {
   return InquiriesResponseDto()
-    ..parentRequestDTO = json['parentRequestDTO'] as String
+    ..parentRequestDTO = json['parentRequestDTO'] == null
+        ? null
+        : ParentRequestDTO.fromJson(
+            json['parentRequestDTO'] as Map<String, dynamic>)
     ..requestDetails = (json['requestDetails'] as List)
         ?.map((e) => e == null
             ? null
