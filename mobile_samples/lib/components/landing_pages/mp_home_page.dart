@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/categories/categories.dart';
+import 'package:tradeleaves/components/categories/sub_categories.dart';
 import 'package:tradeleaves/components/login_register/register.dart';
 import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
@@ -30,6 +32,17 @@ class _MarketplaceHomePageState extends State<MarketplaceHomePage> {
       this.categoryList =
           List<CategoryDTO>.from(data.map((f) => CategoryDTO.fromJson(f)))
               .toList();
+              for(int i=0;i<this.categoryList.length;i++){
+                for (var item in this.categoryList[i].categoryAttribute) {
+                  if(item.attributeName == 'ThumbnailImageAttribute' && item.attributeValue != null){
+                    this.categoryList[i].thumbnailImage = '${Constants.envUrl}${Constants.mongoImageUrl}/${item.attributeValue}';
+                    }
+                    else{
+                      item.attributeValue = null;
+                    }
+                  } 
+              }
+    
     });
   }
 
@@ -80,24 +93,25 @@ class _MarketplaceHomePageState extends State<MarketplaceHomePage> {
                 Text(
                   'For businesses of EVERY size in EVERY sector.',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 RichText(
                   textAlign: TextAlign.center,
+                  softWrap: true,
                   text: TextSpan(children: <TextSpan>[
                     TextSpan(
                         text:
-                            'Whether you are a trade veteran or just getting started, our user-friendly '),
+                            'Whether you are a trade veteran or just getting started, our user-friendly ',style: TextStyle(fontSize: 15)),
                     TextSpan(
                         text: 'digital marketplace ',
                         style: TextStyle(color: Colors.green[700])),
                     TextSpan(
                         text:
                             'makes increased visibility and exponential growth a few clicks away. It really is as easy as 1, 2, 3!')
-                  ], style: TextStyle(fontSize: 17, color: Colors.black)),
+                  ], style: TextStyle(fontSize: 15, color: Colors.black)),
                 ),
               ],
             ),
@@ -396,69 +410,76 @@ class _MarketplaceHomePageState extends State<MarketplaceHomePage> {
                 SizedBox(
                   height: 15,
                 ),
-                ListView.builder(
-                    shrinkWrap: true,
+              (this.categoryList != null && this.categoryList.length>0)
+          ? Container(
+              // height: 400,
+              // constraints: BoxConstraints(minHeight: 100, maxHeight: 800),
+              child: GridView.builder(
+                shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: this.categoryList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: <Widget>[
-                          ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: this
-                                          .categoryList[index]
-                                          .categoryAttribute
-                                          .length >
-                                      9
-                                  ? 9
-                                  : this
-                                      .categoryList[index]
-                                      .categoryAttribute
-                                      .length,
-                              itemBuilder: (context, int index1) {
-                                return (this
-                                            .categoryList[index]
-                                            .categoryAttribute[index1]
-                                            .attributeName ==
-                                        'ThumbnailImageAttribute')
-                                    ? Center(
-                                        child: Container(
-                                            width: 120.0,
-                                            height: 120.0,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: new NetworkImage(
-                                                        '${Constants.envUrl}${Constants.mongoImageUrl}/${this.categoryList[index].categoryAttribute[index1].attributeValue}')))),
-                                      )
-                                    : Container();
-                              }),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            "${this.categoryList[index].name}",
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                        ],
-                      );
-                    }),
-                Container(
-                  alignment: Alignment.center,
-                  height: 120,
-                  width: 120,
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.grey[200]),
-                  child: Container(
-                      width: MediaQuery.of(context).size.width / 1.6,
-                      child: Text(
-                        'VIEW ALL CATEGORIES',
-                        textAlign: TextAlign.center,
-                      )),
+                  itemCount: this.categoryList.length >= 10
+                                  ? 10
+                                  : this.categoryList.length,
+                  gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: (){
+                           Navigator.of(context).push(new MaterialPageRoute(
+                              builder: (context) => SubCategoryDeatils(
+                              categoryDTO : this.categoryList[index],
+                              categoryImage:this.categoryList[index].thumbnailImage 
+                              )));
+                        },
+                        child: Column(
+                          children: <Widget>[
+                                           (this.categoryList[index].thumbnailImage != null)
+                                      ? Center(
+                                          child: Container(
+                                              width: 120.0,
+                                              height: 120.0,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: new NetworkImage(
+                                                          '${this.categoryList[index].thumbnailImage}')))),
+                                        )
+                                      : Container(
+                                        child: Icon(Icons.image),
+                                      ),
+                                       SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "${this.categoryList[index].name}",
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),  
+                          ],
+                        ),
+                    );
+                  }))
+          : Container(),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(new MaterialPageRoute(
+                        builder: (context) => Categories()));
+                  },
+                                  child: Container(
+                    alignment: Alignment.center,
+                    height: 120,
+                    width: 120,
+                    decoration: new BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.grey[200]),
+                    child: Container(
+                        width: MediaQuery.of(context).size.width / 1.6,
+                        child: Text(
+                          'VIEW ALL CATEGORIES',
+                          textAlign: TextAlign.center,
+                        )),
+                  ),
                 ),
                 SizedBox(
                   height: 10,

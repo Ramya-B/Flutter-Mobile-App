@@ -185,7 +185,7 @@ class _SearchItemsState extends State<SearchItems> {
       body: ListView(
         children: <Widget>[
           Container(
-            height: 600,
+             height: 800,
             child: GridView.builder(
                 controller: _controller,
                 itemCount: this.prodList.length,

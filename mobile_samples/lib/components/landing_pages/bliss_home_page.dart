@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/components/categories/categories.dart';
+import 'package:tradeleaves/components/categories/sub_categories.dart';
 import 'package:tradeleaves/components/login_register/register.dart';
 import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
@@ -30,6 +32,13 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
       this.categoryList =
           List<CategoryDTO>.from(data.map((f) => CategoryDTO.fromJson(f)))
               .toList();
+      for(int i=0;i<this.categoryList.length;i++){
+        for (var item in this.categoryList[i].categoryAttribute) {
+          if(item.attributeName == 'ThumbnailImageAttribute'){
+            this.categoryList[i].thumbnailImage = '${Constants.envUrl}${Constants.mongoImageUrl}/${item.attributeValue}';
+            }
+          } 
+      }
     });
   }
 
@@ -55,19 +64,19 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
               ),
             ),
             child: Container(
-             decoration: new BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black,
-            blurRadius: 30.0, // soften the shadow
-            spreadRadius: 5.0, //extend the shadow
-            offset: Offset(
-              15.0, // Move to right 10  horizontally
-              15.0, // Move to bottom 10 Vertically
-            ),
-          )
-        ],
-    ),
+              decoration: new BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                    blurRadius: 30.0, // soften the shadow
+                    spreadRadius: 5.0, //extend the shadow
+                    offset: Offset(
+                      15.0, // Move to right 10  horizontally
+                      15.0, // Move to bottom 10 Vertically
+                    ),
+                  )
+                ],
+              ),
               width: MediaQuery.of(context).size.width / 1.4,
               child: Text(
                   'ELEVATE YOUR BUSINESS VISIBILITY LOCALLY OR GLOBALLY',
@@ -107,7 +116,7 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
                 Text(
                   'With TradeLeaves BLISS, You Get it All!',
                   style: TextStyle(
-                      fontSize: 26,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.green[700]),
                   textAlign: TextAlign.center,
@@ -119,7 +128,7 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
                   width: MediaQuery.of(context).size.width / 1.4,
                   child: Text(
                     'Expand your business horizon - local to global. Get genuine inquiries from verified buyers and a whole lot more!',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 15),
                     textAlign: TextAlign.center,
                   ),
                 )
@@ -375,8 +384,8 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
                 child: MaterialButton(
                     minWidth: MediaQuery.of(context).size.width / 2,
                     onPressed: () {
-                      Navigator.push(
-                       context, MaterialPageRoute(builder: (context) => Register()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Register()));
                     },
                     child: Text("Sign Me Up For Free Today",
                         textAlign: TextAlign.center,
@@ -429,8 +438,10 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
                       child: MaterialButton(
                           minWidth: MediaQuery.of(context).size.width / 2,
                           onPressed: () {
-                              Navigator.push(
-                       context, MaterialPageRoute(builder: (context) => Register()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Register()));
                           },
                           child: Text("Sign Me Up For Free Today",
                               textAlign: TextAlign.center,
@@ -448,7 +459,7 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
                   child: Text(
                     'Categories',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 34, color: Colors.green[700]),
+                    style: TextStyle(fontSize: 20, color: Colors.green[700]),
                   ),
                 ),
                 SizedBox(
@@ -456,78 +467,83 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
                 ),
                 Text(
                   'List your products for Global visibility',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
                   height: 15,
                 ),
-                ListView.builder(
-                    shrinkWrap: true,
+               (this.categoryList != null && this.categoryList.length>0)
+          ? Container(
+              child: GridView.builder(
+                shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: this.categoryList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: <Widget>[
-                          ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: this
-                                          .categoryList[index]
-                                          .categoryAttribute
-                                          .length >
-                                      9
-                                  ? 9
-                                  : this
-                                      .categoryList[index]
-                                      .categoryAttribute
-                                      .length,
-                              itemBuilder: (context, int index1) {
-                                return (this
-                                            .categoryList[index]
-                                            .categoryAttribute[index1]
-                                            .attributeName ==
-                                        'ThumbnailImageAttribute')
-                                    ? Center(
-                                        child: Container(
-                                            width: 120.0,
-                                            height: 120.0,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: new NetworkImage(
-                                                        '${Constants.envUrl}${Constants.mongoImageUrl}/${this.categoryList[index].categoryAttribute[index1].attributeValue}')))),
-                                      )
-                                    : Container();
-                              }),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            "${this.categoryList[index].name}",
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                        ],
-                      );
-                    }),
+                  itemCount: this.categoryList.length >= 10
+                                  ? 10
+                                  : this.categoryList.length,
+                  gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: (){
+                           Navigator.of(context).push(new MaterialPageRoute(
+                              builder: (context) => SubCategoryDeatils(
+                              categoryDTO : this.categoryList[index],
+                              categoryImage:this.categoryList[index].thumbnailImage 
+                              )));
+                        },
+                        child: Column(
+                          children: <Widget>[
+                                           (this.categoryList[index].thumbnailImage != null)
+                                      ? Center(
+                                          child: Container(
+                                              width: 120.0,
+                                              height: 120.0,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: new NetworkImage(
+                                                          '${this.categoryList[index].thumbnailImage}')))),
+                                        )
+                                      : Container(
+                                        child: Icon(Icons.image),
+                                      ),
+                                       SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "${this.categoryList[index].name}",
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),  
+                          ],
+                        ),
+                    );
+                  }))
+          : Container(),
                 SizedBox(
                   height: 15,
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  height: 120,
-                  width: 120,
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.grey[200]),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(new MaterialPageRoute(
+                        builder: (context) => Categories()));
+                  },
                   child: Container(
-                      width: MediaQuery.of(context).size.width / 1.6,
-                      child: Text(
-                        'VIEW ALL CATEGORIES',
-                        textAlign: TextAlign.center,
-                      )),
+                    alignment: Alignment.center,
+                    height: 120,
+                    width: 120,
+                    decoration: new BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.grey[200]),
+                    child: Container(
+                        width: MediaQuery.of(context).size.width / 1.6,
+                        child: Text(
+                          'VIEW ALL CATEGORIES',
+                          textAlign: TextAlign.center,
+                        )),
+                  ),
                 ),
                 SizedBox(
                   height: 10,
@@ -541,8 +557,10 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
                       child: MaterialButton(
                           minWidth: MediaQuery.of(context).size.width / 2,
                           onPressed: () {
-                              Navigator.push(
-                       context, MaterialPageRoute(builder: (context) => Register()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Register()));
                           },
                           child: Text("Sign Me Up For Free Today",
                               textAlign: TextAlign.center,
@@ -573,8 +591,10 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
                       child: MaterialButton(
                           minWidth: MediaQuery.of(context).size.width / 2,
                           onPressed: () {
-                              Navigator.push(
-                       context, MaterialPageRoute(builder: (context) => Register()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Register()));
                           },
                           child: Text("Sign Me Up For Free Today",
                               textAlign: TextAlign.center,

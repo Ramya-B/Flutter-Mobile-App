@@ -33,22 +33,23 @@ class _CustomDrawerState extends State<CustomDrawer> {
   var authToken;
   User user;
   bool showCompanySettings = false;
-  bool showCompanyRegistration=false;
+  bool showCompanyRegistration = false;
+  var site = 'Global';
+  var country = 'IN';
   UserServiceImpl get userService => locator<UserServiceImpl>();
+  
   getUserInfo() async {
     var data = await userService.getUser();
     print("user response...");
     setState(() {
       this.user = User.fromJson(data);
-      if(user.personalDetails.profile.company.status == "COMPLETE"){
-          showCompanySettings = true;
-      }else{
+      if (user.personalDetails.profile.company.status == "COMPLETE") {
+        showCompanySettings = true;
+      } else {
         showCompanyRegistration = true;
       }
     });
   }
-
-
 
   @override
   void initState() {
@@ -105,12 +106,73 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     onPressed: () {},
                   ),
                 ),
+          Container(
+            color: Colors.grey[50],
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                   child: Container(
+                    margin: EdgeInsets.all(10),
+                    padding: EdgeInsets.only(left: 20),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: site,
+                        items: <String>['Domestic', 'Global'].map((String value) {
+                          return new DropdownMenuItem<String>(
+                            value: value,
+                            child: new Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String newValue) {
+                          setState(() {
+                            site = newValue;
+                          });
+                        },
+                      ),
+                    ),
+                    decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(width: 1.0, style: BorderStyle.solid),
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 20,left: 10),
+                  padding: EdgeInsets.only(left: 20,right: 10),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: country,
+                      items: <String>['IN', 'US'].map((String value) {
+                        return new DropdownMenuItem<String>(
+                          value: value,
+                          child: new Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          country = newValue;
+                        });
+                      },
+                    ),
+                  ),
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(width: 1.0, style: BorderStyle.solid),
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => new Scaffold(
                       appBar: CustomToolBar(),
                       body: Container(
-                        height: 600,
                         child: HomeProducts(),
                       ),
                       bottomNavigationBar: CustomNavBar(selectedIndex: 0),
@@ -152,31 +214,33 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 )
               : Container(),
 //          (user!=null) && (user.personalDetails.profile.company.accountStatus == null) || (user.personalDetails.profile.company.accountStatus != null && user.personalDetails.profile.company.accountStatus.statusId == "CREATED_INCOMPLETED") ?
-          showCompanyRegistration ? InkWell(
-            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                builder: (context) => CompanyRegistration())),
-            child: new ListTile(
-              title: Text('Business Setup'),
-              leading: Icon(Icons.business),
-            ),
-          )
+          showCompanyRegistration
+              ? InkWell(
+                  onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (context) => CompanyRegistration())),
+                  child: new ListTile(
+                    title: Text('Business Setup'),
+                    leading: Icon(Icons.business),
+                  ),
+                )
               : Container(),
 //          user!=null && (user.personalDetails.profile.company.status == "COMPLETE" )?
-          showCompanySettings ? InkWell(
-            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                builder: (context) => CompanySettings())),
-            child: new ListTile(
-              title: Text('Company Settings'),
-              leading: Icon(Icons.business),
-            ),
-          )
+          showCompanySettings
+              ? InkWell(
+                  onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (context) => CompanySettings())),
+                  child: new ListTile(
+                    title: Text('Company Settings'),
+                    leading: Icon(Icons.business),
+                  ),
+                )
               : Container(),
           InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (BuildContext context) => new MyWebView(
-                    selectedUrl: "https://www.tradeleaves.com/"))),
+                    selectedUrl: "https://classifieds.tradeleaves.com/"))),
             child: new ListTile(
-              title: Text('BLISS'),
+              title: Text('Classifieds'),
               leading: Icon(Icons.table_chart),
             ),
           ),

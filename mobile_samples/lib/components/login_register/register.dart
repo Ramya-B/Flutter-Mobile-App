@@ -11,6 +11,7 @@ import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import 'package:tradeleaves/tl-services/login/LoginServiceImpl.dart';
 
 import 'landing_page.dart';
+import 'login.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -18,20 +19,28 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
+  final _nameController = TextEditingController();
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _passController = TextEditingController();
-  final TextEditingController _confirmPassController = TextEditingController();
+  final _emailController = TextEditingController();
 
-  bool _autoValidate = false;
+  final _mobileController = TextEditingController();
+
+  final _passwordController = TextEditingController();
+
+  final _confirmPasswordController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
 
   var name;
   var email;
   var mobile;
-  var companyName;
   var password;
+  var confirmPassword;
+  var companyName;
   bool optIn = false;
+  bool autoValidate = false;
+  String countryCode;
+  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
 
   @override
   void initState() {
@@ -52,7 +61,7 @@ class _RegisterState extends State<Register> {
     person.details = details;
     Mobile mobile = new Mobile();
     mobile.contactNumber = this.mobile;
-    mobile.countryCode = "+91";
+    mobile.countryCode = this.countryCode;
     person.mobile = mobile;
     Email email = new Email();
     email.emailAddress = this.email;
@@ -72,22 +81,24 @@ class _RegisterState extends State<Register> {
             )));
   }
 
-  @override
+   @override
   Widget build(BuildContext context) {
     final nameField = TextFormField(
-      style: style,
+      controller: _nameController,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Full Name",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
-      validator: (arg1) {
-        if (arg1.isEmpty || arg1 == "") {
-          _autoValidate = false;
+          fillColor: Colors.grey[200],
+          filled: true,
+          contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+          hintText: "Your Full Name",
+          border: InputBorder.none),
+      validator: (name) {
+        if (name.isEmpty || name == "") {
+          autoValidate = false;
           return "Name can't be empty";
-        } else if (arg1.length < 3) {
+        } else if (name.length < 3) {
           return 'Name must be more than two characters';
         }
-        _autoValidate = true;
+        autoValidate = true;
         return null;
       },
       onChanged: (String name) {
@@ -98,18 +109,20 @@ class _RegisterState extends State<Register> {
     );
 
     final emailField = TextFormField(
-      style: style,
+      controller: _emailController,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Email",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
-      validator: (arg2) {
+          filled: true,
+          fillColor: Colors.grey[200],
+          contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+          hintText: "yourName@company.com",
+          border: InputBorder.none),
+      validator: (email) {
         Pattern pattern =
             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
         RegExp _regExpEmail = new RegExp(pattern);
-        if (arg2.isEmpty || arg2 == "") {
+        if (email.isEmpty || email == "") {
           return "Email can't be empty";
-        } else if (!_regExpEmail.hasMatch(arg2)) {
+        } else if (!_regExpEmail.hasMatch(email)) {
           return 'Please enter valid email';
         }
         return null;
@@ -121,61 +134,78 @@ class _RegisterState extends State<Register> {
       },
     );
 
-    final phoneField = TextFormField(
-      inputFormatters: [
-        WhitelistingTextInputFormatter.digitsOnly,
-        LengthLimitingTextInputFormatter(10)
+    final mobileField = Row(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(left: 10),
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: DropdownButton<String>(
+            value: countryCode,
+            items: <String>['+91', '+1'].map((String value) {
+              return new DropdownMenuItem<String>(
+                value: value,
+                child: new Text(value),
+              );
+            }).toList(),
+            onChanged: (String newValue) {
+              setState(() {
+                countryCode = newValue;
+              });
+            },
+          ),
+        ),
+        Flexible(
+          child: TextFormField(
+            inputFormatters: [
+              WhitelistingTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(10)
+            ],
+            controller: _mobileController,
+            decoration: InputDecoration(
+                fillColor: Colors.grey[200],
+                filled: true,
+                contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                hintText: "Enter mobile number",
+                border: InputBorder.none),
+            validator: (mobile) {
+              Pattern pattern = r'^[2-9][0-9]{9}$';
+              RegExp _regExpPhn = new RegExp(pattern);
+              if (mobile.isEmpty || mobile == "") {
+                return "Phone number can't be empty";
+              } else if (!_regExpPhn.hasMatch(mobile)) {
+                return 'Please enter valid phone number';
+              }
+              return null;
+            },
+            onChanged: (String mobile) {
+              setState(() {
+                this.mobile = mobile;
+              });
+            },
+          ),
+        )
       ],
-      style: style,
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(15.0, 0, 15.0, 0),
-        hintText: "Phone Number",
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-      validator: (arg3) {
-        Pattern pattern = r'^[2-9][0-9]{9}$';
-        RegExp _regExpPhn = new RegExp(pattern);
-        if (arg3.isEmpty || arg3 == "") {
-          return "Phone number can't be empty";
-        } else if (!_regExpPhn.hasMatch(arg3)) {
-          return 'Please enter valid phone number';
-        }
-        return null;
-      },
-      onChanged: (String mobile) {
-        setState(() {
-          this.mobile = mobile;
-        });
-      },
     );
 
-    final companyField = TextFormField(
-        style: style,
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "Company Name",
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
-        onChanged: (String company) {
-          setState(() {
-            this.companyName = company;
-          });
-        });
-
     final passwordField = TextFormField(
-      controller: _passController,
       obscureText: true,
-      style: style,
+      controller: _passwordController,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Password",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
-      validator: (arg5) {
+          filled: true,
+          fillColor: Colors.grey[200],
+          contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+          hintText: "Enter your password",
+          border: InputBorder.none),
+      validator: (password) {
         Pattern pattern =
             r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
         RegExp _regExpPwd = new RegExp(pattern);
-        if (arg5.isEmpty || arg5 == "") {
+        if (password.isEmpty || password == "") {
           return "Password can't be empty";
-        } else if (!_regExpPwd.hasMatch(arg5)) {
+        } else if (!_regExpPwd.hasMatch(password)) {
           return "Enter Valid Password";
         }
         return null;
@@ -188,79 +218,89 @@ class _RegisterState extends State<Register> {
     );
 
     final confirmPasswordField = TextFormField(
-      controller: _confirmPassController,
       obscureText: true,
-      style: style,
+      controller: _confirmPasswordController,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Confirm Password",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
-      validator: (arg6) {
-        if (arg6 != _passController.text) {
+          fillColor: Colors.grey[200],
+          filled: true,
+          contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+          hintText: "Confirm your password",
+          border: InputBorder.none),
+      validator: (confirmPassword) {
+        if (confirmPassword != _passwordController.text) {
           return "Password not match";
         }
         return null;
       },
     );
 
-    final checkBoxField = CheckboxListTile(
-        title: Text("I agree to receive SMS"),
-        value: this.optIn,
-        onChanged: (bool value) {
-          setState(() {
-            this.optIn = value;
-          });
-        },
-        controlAffinity: ListTileControlAffinity.leading);
+    final tlLogo = SizedBox(
+      height: 80,
+      width: MediaQuery.of(context).size.width / 2,
+      child: Image.asset("assets/tllogo.png", fit: BoxFit.contain),
+    );
 
-    final registerButton = Material(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.green,
-        child: MaterialButton(
-            minWidth: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            onPressed: () {
-              print(_formKey.currentState.validate());
-              (_formKey.currentState.validate() == true)
-                  ? registerInfo()
-                  : Navigator.of(context);
-            },
-            child: Text("Register Your Account",
-                textAlign: TextAlign.center,
-                style: style.copyWith(
-                    color: Colors.white, fontWeight: FontWeight.bold))));
-
+    final registerButton = SizedBox(
+      height: 30,
+      child: Material(
+          elevation: 2,
+          borderRadius: BorderRadius.circular(30),
+          color: Colors.green[700],
+          child: MaterialButton(
+              minWidth: MediaQuery.of(context).size.width / 3,
+              onPressed: () {
+                print(_formKey.currentState.validate());
+                (_formKey.currentState.validate() == true)
+                    ? registerInfo()
+                    : Navigator.of(context);
+              },
+              child: Text("Register Now",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white)))),
+    );
     return Scaffold(
-       appBar: AppBar(title: Text('Sign Up'),backgroundColor: Colors.green,),
-        body: Center(
-            child: SingleChildScrollView(
-                child: Container(
-                    color: Colors.white,
-                    child: Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: Form(
-                          key: _formKey,
-                          autovalidate: _autoValidate,
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                nameField,
-                                SizedBox(height: 20),
-                                emailField,
-                                SizedBox(height: 20),
-                                phoneField,
-                                SizedBox(height: 20),
-                                companyField,
-                                SizedBox(height: 20),
-                                passwordField,
-                                SizedBox(height: 20),
-                                confirmPasswordField,
-                                checkBoxField,
-                                SizedBox(height: 20),
-                                registerButton
-                              ]),
-                        ))))));
+      appBar: AppBar(
+        title: Text('Register Screen'),
+        backgroundColor: Colors.green[900],
+      ),
+      body: Form(
+        key: _formKey,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Container(
+              margin: EdgeInsets.all(40),
+              child: Column(
+                children: <Widget>[
+                  tlLogo,
+                  nameField,
+                  SizedBox(height: 15),
+                  emailField,
+                  SizedBox(height: 15),
+                  mobileField,
+                  SizedBox(height: 15),
+                  passwordField,
+                  SizedBox(height: 15),
+                  confirmPasswordField,
+                  SizedBox(height: 15),
+                  registerButton,
+                  SizedBox(height: 15),
+                  Text("Already have an account?"),
+                  SizedBox(height: 5),
+                  InkWell(
+                    onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Login())),
+                    child: Text(
+                      'Click here to login',
+                      style: TextStyle(color: Colors.green[800]),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -315,24 +355,6 @@ class _RegisterDetailsState extends State<RegisterDetails> {
       Navigator.of(context)
           .push(new MaterialPageRoute(builder: (context) => LandingPage()));
     }
-  }
-
-  getUserProducts() async {
-    print("getUserProducts");
-    ProductCriteria productCriteria = new ProductCriteria();
-    Pagination pagination = new Pagination();
-    pagination.start = 0;
-    pagination.limit= 10;
-    Sort sort = new Sort();
-    sort.direction = 'desc';
-    sort.sort = 'createdTime';
-    this.sorts.add(sort);
-    productCriteria.pagination = pagination;
-    productCriteria.sort = this.sorts;
-    productCriteria.siteCriterias = [];
-    var getUserProducts = await catalogService.getUserProducts(productCriteria);
-    print("getUser response...!");
-    print(getUserProducts);
   }
 
   getUserInfo() async {

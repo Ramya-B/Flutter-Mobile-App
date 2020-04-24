@@ -5,8 +5,9 @@ import 'package:tradeleaves/components/chat/chat.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:mongo_dart/mongo_dart.dart' show Db, DbCollection;
+import 'package:tradeleaves/components/landing_pages/bliss_home_page.dart';
 
-import 'homepages/bliss_home_page.dart';
+import 'landing_pages/tl_landing_pages.dart';
 
 class CustomNavBar extends StatefulWidget {
   final selectedIndex;
@@ -57,7 +58,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
               builder: (context) => new Scaffold(
                     appBar: CustomToolBar(),
                     body: Container(
-                      child:BlissHomePage(),
+                      child:TradeleavesLandingPage(),
                     ),
                     bottomNavigationBar: CustomNavBar(selectedIndex: 0),
                     drawer: CustomDrawer(),
@@ -75,7 +76,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
                     bottomNavigationBar: CustomNavBar(
                       selectedIndex: 1,
                     ),
-                    // drawer: CustomDrawer(),
+                    drawer: CustomDrawer(),
                   )));
         }
         break;
@@ -97,15 +98,8 @@ class _CustomNavBarState extends State<CustomNavBar> {
       default:
         {
           Navigator.of(context).push(new MaterialPageRoute(
-              builder: (context) => new Scaffold(
-                    appBar: CustomToolBar(),
-                    body: Container(
-                     
-                      child:BlissHomePage(),
-                    ),
-                    bottomNavigationBar: CustomNavBar(selectedIndex: 0),
-                    // drawer: CustomDrawer(),
-                  )));
+              builder: (context) => TradeleavesLandingPage(),
+                    ));
         }
         break;
     }
@@ -120,37 +114,12 @@ class _CustomNavBarState extends State<CustomNavBar> {
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
         BottomNavigationBarItem(
-//            icon: Icon(Icons.shopping_cart), title: Text('Cart')),
           title: new Text('Cart'),
           icon: new Stack(children: <Widget>[
             new Container(
               child:  new Icon(Icons.shopping_cart),
              
             ),
-//             new Positioned(
-//               // draw a red marble
-//               top: 0.0,
-//               right: 0.0,
-//               child: new Container(
-// //                padding: EdgeInsets.all(2),
-//                 decoration: new BoxDecoration(
-//                   color: Colors.blue,
-//                   borderRadius: BorderRadius.circular(6),
-//                 ),
-//                 constraints: BoxConstraints(
-//                   minWidth: 14,
-//                   minHeight: 14,
-//                 ),
-//                 child: Text(
-//                   this.items.toString(),
-//                   style: TextStyle(
-//                     color: Colors.white,
-//                     fontSize: 14,
-//                   ),
-//                   textAlign: TextAlign.center,
-//                 ),
-//               ),
-//             )
           ]),
         ),
         BottomNavigationBarItem(icon: Icon(Icons.chat), title: Text('Chat')),
