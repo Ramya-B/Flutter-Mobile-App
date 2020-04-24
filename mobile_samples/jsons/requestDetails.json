@@ -1,0 +1,12 @@
+{
+  "requestDTO": "$requestDTO",
+  "supplierRequestCount": 1,
+  "unreadResponseCount": 0,
+  "hasRejectedRequests": false,
+  "rejectedRequestCount": 0,
+  "hasResponse": false,
+  "replyCount": 0,
+  "hasQuote": false,
+  "messageReplyCount": 0,
+  "lastActivityTs": "2020-04-24T04:10:46.539Z"
+}

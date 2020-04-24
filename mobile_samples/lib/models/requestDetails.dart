@@ -1,0 +1,22 @@
+import 'package:json_annotation/json_annotation.dart';
+import "requestDTO.dart";
+part 'requestDetails.g.dart';
+
+@JsonSerializable()
+class RequestDetails {
+    RequestDetails();
+
+    RequestDTO requestDTO;
+    num supplierRequestCount;
+    num unreadResponseCount;
+    bool hasRejectedRequests;
+    num rejectedRequestCount;
+    bool hasResponse;
+    num replyCount;
+    bool hasQuote;
+    num messageReplyCount;
+    String lastActivityTs;
+    
+    factory RequestDetails.fromJson(Map<String,dynamic> json) => _$RequestDetailsFromJson(json);
+    Map<String, dynamic> toJson() => _$RequestDetailsToJson(this);
+}
