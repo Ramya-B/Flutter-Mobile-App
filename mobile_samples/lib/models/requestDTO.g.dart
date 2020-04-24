@@ -31,7 +31,7 @@ RequestDTO _$RequestDTOFromJson(Map<String, dynamic> json) {
     ..closedDateTime = json['closedDateTime'] as String
     ..internalComment = json['internalComment'] as String
     ..reason = json['reason'] as String
-    ..parentCustomerRequestId = json['parentCustomerRequestId'] as String
+    ..parentCustomerRequestId = json['parentCustomerRequestId'] as num
     ..billed = json['billed'] as String
     ..tenantId = json['tenantId'] as String
     ..categoryId = json['categoryId'] as String

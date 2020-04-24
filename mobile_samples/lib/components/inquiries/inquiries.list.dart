@@ -25,7 +25,8 @@ class _MyInquiriesState extends State<MyInquiries> {
   List requestDetails;
   int parentCustomerRequestId;
   bool isHasChildRequests;
-  bool hasResponse;
+  bool hasMultipleRequests;
+  bool hasResponse = false;
   List lobs = [
     {"lobId": "34343e34-7601-40de-878d-01b3bd1f0640", "lobName": "All"},
     {"lobId": "34343e34-7601-40de-878d-01b3bd1f0641", "lobName": "Marketplace"},
@@ -66,19 +67,24 @@ class _MyInquiriesState extends State<MyInquiries> {
   getBuyRequestsForParty(
       activeBuyRequestInputDTO, hasMultipleRequests, index) async {
     print("getBuyRequestsForParty called");
+    print(hasMultipleRequests);
     var res = await ormService.getBuyRequestById(activeBuyRequestInputDTO);
     print("getBuyRequestsForParty response");
     print(res);
     print("after response");
-    this.inquiries = InquiriesResponseDto.fromJson(res);
+    InquiriesResponseDto inquiriesResponse = InquiriesResponseDto.fromJson(res);
     print(jsonEncode(inquiries));
     if (hasMultipleRequests) {
-      inquiries.requestDetails[index].childRequests = inquiries.requestDetails;
-      if (hasResponse) {
-        inquiries.requestDetails[index].hasChildRequestsResponse = true;
-      } else {
-        inquiries.requestDetails[index].hasChildRequests = true;
-      }
+      print("went to if");
+      setState(() {
+        inquiries.requestDetails[index].childRequests = inquiriesResponse.requestDetails;
+        if (hasResponse) {
+          inquiries.requestDetails[index].hasChildRequestsResponse = true;
+        } else {
+          inquiries.requestDetails[index].hasChildRequests = true;
+        }
+      });
+
     }
     if (inquiries != null &&
         inquiries.requestDetails != null &&
@@ -144,7 +150,10 @@ class _MyInquiriesState extends State<MyInquiries> {
               parentCustomerRequestId;
           activeBuyRequestInputDTO.startIndex = 0;
           activeBuyRequestInputDTO.size = inquiry.supplierRequestCount;
-          getBuyRequestsForParty(activeBuyRequestInputDTO, true, index);
+          hasMultipleRequests = true;
+          setState(() {
+            getBuyRequestsForParty(activeBuyRequestInputDTO, hasMultipleRequests, index);
+          });
         }
       }
     }
@@ -506,11 +515,13 @@ class _MyInquiriesState extends State<MyInquiries> {
                             ],
                           ),
                         ),
-                        Container(
+                        (inquiries.requestDetails[index].childRequests != null &&
+                            inquiries.requestDetails[index].childRequests.length > 0)
+                            ? Container(
                             child: (inquiries.requestDetails[index].childRequests != null &&
                                 inquiries.requestDetails[index].childRequests.length > 0)
                                 ? ListView.builder(
-                                    padding: const EdgeInsets.all(8),
+//                                    padding: const EdgeInsets.all(8),
                                     itemCount: inquiries.requestDetails[index].childRequests.length,
                                     shrinkWrap: true,
                                     physics:
@@ -543,7 +554,7 @@ class _MyInquiriesState extends State<MyInquiries> {
                                         onTap: () {
                                           setState(() {
                                             getRequestDetails(index,
-                                                selectedInquiries[index], 1, false);
+                                                inquiries.requestDetails[index], 1, false);
                                           });
                                         },
                                       ),
@@ -569,8 +580,10 @@ class _MyInquiriesState extends State<MyInquiries> {
                                     ],
                                   ),
                                 ],
-                              ),)]))
-                                : Container())
+                              ),)])
+                            )
+                                : Container()
+                        ) : Container()
                       ],
                     ))
             : Container(),
