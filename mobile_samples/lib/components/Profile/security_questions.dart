@@ -159,9 +159,6 @@ class _SecurityQuestionsState extends State<SecurityQuestions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Security Questions Page'),
-      // ),
       body: ListView(
         children: <Widget>[
           Container(

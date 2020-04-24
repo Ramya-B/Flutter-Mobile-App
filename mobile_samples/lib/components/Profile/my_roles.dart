@@ -9,9 +9,6 @@ class _MyRolesState extends State<MyRoles> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('MyRoles Page'),
-      // ),
       body: ListView(
         children: <Widget>[
           Container(

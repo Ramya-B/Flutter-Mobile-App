@@ -9,6 +9,7 @@ import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import 'package:tradeleaves/tl-services/customs/customServiceImpl.dart';
 import 'package:intl/intl.dart';
 import 'package:tradeleaves/tl-services/orm-api/OrmServiceImpl.dart';
+import '../../constants.dart';
 import '../../service_locator.dart';
 
 class ContactSupplier extends StatefulWidget {
@@ -114,7 +115,7 @@ class _ContactSupplierState extends State<ContactSupplier> {
     return Scaffold(
       appBar: AppBar(
         title:Text('Contact Supplier'),
-        backgroundColor: Colors.green,
+        backgroundColor: Constants.toolbarColor,
       ),
           body: Container(
             padding: EdgeInsets.all(10),

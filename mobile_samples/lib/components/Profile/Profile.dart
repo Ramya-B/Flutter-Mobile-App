@@ -41,9 +41,6 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Profile Page'),
-      // ),
       body: ListView(
         children: <Widget>[
           Container(

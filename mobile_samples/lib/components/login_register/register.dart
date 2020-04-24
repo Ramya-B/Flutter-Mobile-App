@@ -10,6 +10,7 @@ import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import 'package:tradeleaves/tl-services/login/LoginServiceImpl.dart';
 
+import '../../constants.dart';
 import 'landing_page.dart';
 import 'login.dart';
 
@@ -384,8 +385,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
-        backgroundColor: Colors.pink[50],
-        appBar: AppBar(title: Text('OTP Page'),backgroundColor: Colors.green,),
+        appBar: AppBar(title: Text('OTP Page'),backgroundColor: Constants.toolbarColor,),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

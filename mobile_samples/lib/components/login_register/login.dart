@@ -5,6 +5,7 @@ import 'package:tradeleaves/models/user.dart';
 import 'package:tradeleaves/podos/crm/register.dart';
 import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/tl-services/login/LoginServiceImpl.dart';
+import '../../constants.dart';
 import '../../main.dart';
 import '../../service_locator.dart';
 
@@ -144,7 +145,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Login Screen'),
-        backgroundColor: Colors.green[900],
+        backgroundColor: Constants.toolbarColor,
       ),
       body: Form(
         key: _formKey,

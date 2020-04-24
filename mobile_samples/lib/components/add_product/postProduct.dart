@@ -1863,7 +1863,7 @@ class _AddProduct1State extends State<AddProduct1> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar:
-            AppBar(title: Text('Add Product'), backgroundColor: Colors.green),
+            AppBar(title: Text('Add Product'), backgroundColor: Constants.toolbarColor),
         body: ListView(
           children: <Widget>[
             Form(

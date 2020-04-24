@@ -76,9 +76,6 @@ class _ChangePasswordState extends State<ChangePassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('ChangePassword Page'),
-      // ),
       body: ListView(
         children: <Widget>[
           Container(

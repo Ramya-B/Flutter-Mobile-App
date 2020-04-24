@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/company_settings/contact.dart';
 import 'package:tradeleaves/components/company_settings/about.dart';
+
+import '../../constants.dart';
 //import 'package:tradeleaves/components/company_settings/contact.dart';
 class CompanySettings extends StatefulWidget {
   @override
@@ -14,7 +16,7 @@ class _CompanySettingsState extends State<CompanySettings> {
       length: 8,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.green[700],
+          backgroundColor: Constants.toolbarColor,
           title: Text('Company Settings'),
           centerTitle: true,
           bottom: TabBar(
