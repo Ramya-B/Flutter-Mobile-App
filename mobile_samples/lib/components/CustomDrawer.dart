@@ -19,6 +19,7 @@ import 'company_registration/register_business.dart';
 import 'company_settings/companysettings.dart';
 import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/models/index.dart';
+import 'package:tradeleaves/components/inquiries/inquirires.list.dart';
 
 class CustomDrawer extends StatefulWidget {
   @override
@@ -257,6 +258,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
             child: new ListTile(
               title: Text('My Products'),
               leading: Icon(Icons.view_list),
+            ),
+          ),
+          InkWell(
+            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                builder: (context) => new Inquiries())),
+            child: new ListTile(
+              title: Text('Inquiries'),
+              leading: Icon(Icons.email),
             ),
           ),
           InkWell(

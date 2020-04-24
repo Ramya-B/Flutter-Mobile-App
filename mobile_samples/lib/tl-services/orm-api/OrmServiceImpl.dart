@@ -36,6 +36,33 @@ class OrmServiceImpl extends OrmServices {
     });
   }
 
+  @override
+  Future getBuyRequestById(activeBuyRequestInputDTO) async{
+    // TODO: implement getBuyRequestById
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getBuyRequestById called");
+    print(jsonEncode(activeBuyRequestInputDTO));
+    return await http
+        .post('${Constants.envUrl}$apiUrl/buyrequests/active/getrequestbyid',
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+        body: jsonEncode({
+          'activeBuyRequestInputDTO': activeBuyRequestInputDTO.toJson()
+        })).then((data) {
+      print("response getBuyRequestById ...!");
+      print(data);
+      if (data?.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getBuyRequestById successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to getBuyRequestById');
+      }
+    });  }
+
 
 
 }

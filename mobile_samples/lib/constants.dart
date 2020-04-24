@@ -1,7 +1,7 @@
 
 class Constants{
-  static const  envUrl ="http://192.168.60.38:9400";
-  static const  envDomainUrl ="192.168.60.38:9400";
+  static const  envUrl ="http://192.168.60.50:9400";
+  static const  envDomainUrl ="192.168.60.50:9400";
   static const  mongoImageUrl ="/tl/public/assest/get";
   static List lobs = [
     {
