@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'requestDetails.dart';
+part of 'childRequests.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-RequestDetails _$RequestDetailsFromJson(Map<String, dynamic> json) {
-  return RequestDetails()
+ChildRequests _$ChildRequestsFromJson(Map<String, dynamic> json) {
+  return ChildRequests()
     ..requestDTO = json['requestDTO'] == null
         ? null
         : RequestDTO.fromJson(json['requestDTO'] as Map<String, dynamic>)
@@ -23,13 +23,11 @@ RequestDetails _$RequestDetailsFromJson(Map<String, dynamic> json) {
     ..childRequests = (json['childRequests'] as List)
         ?.map((e) => e == null
             ? null
-            : RequestDetails.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..hasChildRequestsResponse = json['hasChildRequestsResponse'] as bool
-    ..hasChildRequests = json['hasChildRequests'] as bool;
+            : ChildRequests.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
-Map<String, dynamic> _$RequestDetailsToJson(RequestDetails instance) =>
+Map<String, dynamic> _$ChildRequestsToJson(ChildRequests instance) =>
     <String, dynamic>{
       'requestDTO': instance.requestDTO,
       'supplierRequestCount': instance.supplierRequestCount,
@@ -41,7 +39,5 @@ Map<String, dynamic> _$RequestDetailsToJson(RequestDetails instance) =>
       'hasQuote': instance.hasQuote,
       'messageReplyCount': instance.messageReplyCount,
       'lastActivityTs': instance.lastActivityTs,
-      'childRequests': instance.childRequests,
-      'hasChildRequestsResponse': instance.hasChildRequestsResponse,
-      'hasChildRequests': instance.hasChildRequests
+      'childRequests': instance.childRequests
     };

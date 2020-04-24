@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 import "requestDTO.dart";
-part 'requestDetails.g.dart';
+part 'childRequests.g.dart';
 
 @JsonSerializable()
-class RequestDetails {
-    RequestDetails();
+class ChildRequests {
+    ChildRequests();
 
     RequestDTO requestDTO;
     num supplierRequestCount;
@@ -16,10 +16,8 @@ class RequestDetails {
     bool hasQuote;
     num messageReplyCount;
     String lastActivityTs;
-    List<RequestDetails> childRequests;
-    bool hasChildRequestsResponse;
-    bool hasChildRequests;
+    List<ChildRequests> childRequests;
     
-    factory RequestDetails.fromJson(Map<String,dynamic> json) => _$RequestDetailsFromJson(json);
-    Map<String, dynamic> toJson() => _$RequestDetailsToJson(this);
+    factory ChildRequests.fromJson(Map<String,dynamic> json) => _$ChildRequestsFromJson(json);
+    Map<String, dynamic> toJson() => _$ChildRequestsToJson(this);
 }

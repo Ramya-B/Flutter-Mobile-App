@@ -10,6 +10,7 @@ export 'changeUserPassword.dart' ;
 export 'chatCredentials.dart' ; 
 export 'chatUser.dart' ; 
 export 'childCategoryDto.dart' ; 
+export 'childRequests.dart' ; 
 export 'cityDetails.dart' ; 
 export 'classificationDetails.dart' ; 
 export 'classificationGroupAttributeDTO.dart' ; 

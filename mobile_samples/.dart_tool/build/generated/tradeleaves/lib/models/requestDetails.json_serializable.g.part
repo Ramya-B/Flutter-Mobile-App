@@ -15,7 +15,14 @@ RequestDetails _$RequestDetailsFromJson(Map<String, dynamic> json) {
     ..replyCount = json['replyCount'] as num
     ..hasQuote = json['hasQuote'] as bool
     ..messageReplyCount = json['messageReplyCount'] as num
-    ..lastActivityTs = json['lastActivityTs'] as String;
+    ..lastActivityTs = json['lastActivityTs'] as String
+    ..childRequests = (json['childRequests'] as List)
+        ?.map((e) => e == null
+            ? null
+            : RequestDetails.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..hasChildRequestsResponse = json['hasChildRequestsResponse'] as bool
+    ..hasChildRequests = json['hasChildRequests'] as bool;
 }
 
 Map<String, dynamic> _$RequestDetailsToJson(RequestDetails instance) =>
@@ -29,5 +36,8 @@ Map<String, dynamic> _$RequestDetailsToJson(RequestDetails instance) =>
       'replyCount': instance.replyCount,
       'hasQuote': instance.hasQuote,
       'messageReplyCount': instance.messageReplyCount,
-      'lastActivityTs': instance.lastActivityTs
+      'lastActivityTs': instance.lastActivityTs,
+      'childRequests': instance.childRequests,
+      'hasChildRequestsResponse': instance.hasChildRequestsResponse,
+      'hasChildRequests': instance.hasChildRequests
     };

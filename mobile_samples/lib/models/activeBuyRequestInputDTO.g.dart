@@ -11,7 +11,8 @@ ActiveBuyRequestInputDTO _$ActiveBuyRequestInputDTOFromJson(
   return ActiveBuyRequestInputDTO()
     ..startIndex = json['startIndex'] as num
     ..size = json['size'] as num
-    ..lobId = json['lobId'] as String;
+    ..lobId = json['lobId'] as String
+    ..parentCustomerRequestId = json['parentCustomerRequestId'] as num;
 }
 
 Map<String, dynamic> _$ActiveBuyRequestInputDTOToJson(
@@ -19,5 +20,6 @@ Map<String, dynamic> _$ActiveBuyRequestInputDTOToJson(
     <String, dynamic>{
       'startIndex': instance.startIndex,
       'size': instance.size,
-      'lobId': instance.lobId
+      'lobId': instance.lobId,
+      'parentCustomerRequestId': instance.parentCustomerRequestId
     };

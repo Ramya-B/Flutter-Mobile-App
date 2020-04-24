@@ -9,6 +9,7 @@ class ActiveBuyRequestInputDTO {
     num startIndex;
     num size;
     String lobId;
+    num parentCustomerRequestId;
     
     factory ActiveBuyRequestInputDTO.fromJson(Map<String,dynamic> json) => _$ActiveBuyRequestInputDTOFromJson(json);
     Map<String, dynamic> toJson() => _$ActiveBuyRequestInputDTOToJson(this);
