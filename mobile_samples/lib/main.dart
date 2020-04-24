@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/components/CustomDrawer.dart';
-import 'package:tradeleaves/components/contact_supplier/contact_supplier.dart';
-import 'components/landing_pages/mp_home_page.dart';
+import 'package:tradeleaves/components/landing_pages/bliss_home_page.dart';
+import 'components/landing_pages/tl_landing_pages.dart';
 import 'service_locator.dart';
 
 void main() {
@@ -48,7 +48,8 @@ class _HomeState extends State<Home> {
           currentFocus.unfocus();
         }
     },
-    child:Scaffold(
+    child:TradeleavesLandingPage()
+    /* Scaffold(
       appBar: CustomToolBar(),
       drawer: CustomDrawer(),
       bottomNavigationBar: CustomNavBar(selectedIndex: 0),
@@ -58,12 +59,13 @@ class _HomeState extends State<Home> {
           Container(
             height: 600,
             // child: HomeProducts(),
-              child: MarketplaceHomePage(),
+            child: BLISSHomePage(),
+              // child: MarketplaceHomePage(),
           //  child:  SimpleFormScreen()
           ),
         ],
       ),
-    ));
+    ) */);
   }
 } 
  

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
 import 'package:tradeleaves/components/add_product/postProduct.dart';
+import 'package:tradeleaves/constants.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/podos/categories/categories.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
@@ -33,24 +34,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
   final _formKey = new GlobalKey<FormState>();
   ProductAttributesResp listCatProdAttrLoBRespDTO;
   ListCatProdAttrLoBDTO listCatProdAttrLoBDTO = new ListCatProdAttrLoBDTO();
-  List lobs = [
-    {
-      "lobId": "34343e34-7601-40de-878d-01b3bd1f0641",
-      "lobName": "MarketPlace - Global"
-    },
-    {
-      "lobId": "34343e34-7601-40de-878d-01b3bd1f0642",
-      "lobName": "BLISS - Domestic"
-    },
-    {
-      "lobId": "34343e34-7601-40de-878d-01b3bd1f0643",
-      "lobName": "BLISS - Global"
-    },
-    {
-      "lobId": "34343e34-7601-40de-878d-01b3bd1f0644",
-      "lobName": "MarketPlace - Domestic"
-    }
-  ];
+  List lobs = Constants.lobs;
   getCompanyRegions() async {
     regions = await crmService.companyRegions();
     companyRegions = CompanyRegionsResp.fromJson(regions);

@@ -162,8 +162,9 @@ class _SingleProductState extends State<SingleProduct> {
                 (widget.productDTO.primaryImageUrl.toString().contains('http') )? ('${widget.productDTO.primaryImageUrl}'):('${Constants.envUrl}${Constants.mongoImageUrl}/${widget.productDTO.primaryImageUrl}'),
                 width: 120,
                 height: 120,
-              ):Container( width: 150,
-                height: 150,),
+              ):Container( width: 120,
+                height: 120,
+                child: Icon(Icons.image)),
               Expanded(
                 child: Container(
                     padding: EdgeInsets.all(2.0),

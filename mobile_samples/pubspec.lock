@@ -148,6 +148,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  copyable:
+    dependency: transitive
+    description:
+      name: copyable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1+2"
   crypto:
     dependency: transitive
     description:
@@ -693,6 +700,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  tabbed_scaffold:
+    dependency: "direct main"
+    description:
+      name: tabbed_scaffold
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2+2"
   term_glyph:
     dependency: transitive
     description:

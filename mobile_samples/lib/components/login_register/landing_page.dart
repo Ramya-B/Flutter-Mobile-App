@@ -11,11 +11,8 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Business Setup'),
-          backgroundColor: Colors.green,
-          centerTitle: true,
-        ),
+        appBar: CustomToolBar(),
+        drawer: CustomDrawer(),
         body: ListView(
           padding: EdgeInsets.all(25),
           children: <Widget>[

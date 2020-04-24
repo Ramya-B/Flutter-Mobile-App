@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +30,7 @@ class _ContactSupplierState extends State<ContactSupplier> {
   CustomerRequestDTO customerRequestDTO;
   var supplierData;
   String supplierEmail;
+  UomDTO uom;
   getUomList() async {
     var uoms = await customService.getUoms();
     print(uoms);
@@ -112,15 +112,12 @@ class _ContactSupplierState extends State<ContactSupplier> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
-      extendBodyBehindAppBar: true,
-          body: AlertDialog(
-          contentPadding: EdgeInsets.all(25),
-          title: Center(child: Text("Contact Supplier")),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          content: Container(
-            height: 400,
+      appBar: AppBar(
+        title:Text('Contact Supplier'),
+        backgroundColor: Colors.green,
+      ),
+          body: Container(
+            padding: EdgeInsets.all(10),
             child: SingleChildScrollView(
                 child: Form(
               key: _formKey,
@@ -157,6 +154,7 @@ class _ContactSupplierState extends State<ContactSupplier> {
                       padding: EdgeInsets.all(10),
                       child: TextFormField(
                         maxLines: 4,
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                             hintText: 'Notes',
@@ -185,7 +183,7 @@ class _ContactSupplierState extends State<ContactSupplier> {
                                 child: DropdownButton(
                                   hint: Text('select UOM'),
                                   isExpanded: true,
-                                  value:  null,
+                                  value:  uom!=null ? uom :null,
                                   iconSize: 30.0,
                                   items: this.uomsList.map(
                                     (val) {
@@ -199,6 +197,7 @@ class _ContactSupplierState extends State<ContactSupplier> {
                                     setState(
                                       () {
                                         print(jsonEncode(val));
+                                        uom = val;
                                         customerRequestDTO
                                             .items[0].globalPriceFlag = "N";
                                         customerRequestDTO.items[0].quantityType =
@@ -216,6 +215,7 @@ class _ContactSupplierState extends State<ContactSupplier> {
                         ),
                         Expanded(
                             child: TextFormField(
+                               keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                               contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                               hintText: 'Order Quantity',
@@ -282,7 +282,7 @@ class _ContactSupplierState extends State<ContactSupplier> {
                 ],
               ),
             )),
-          )),
+          ),
     );
   }
 }

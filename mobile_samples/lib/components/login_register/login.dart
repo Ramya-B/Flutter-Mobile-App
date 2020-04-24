@@ -69,48 +69,46 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     final emailField = TextFormField(
       controller: _emailController,
-      obscureText: false,
-      style: style,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Enter Your Email",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
-      validator: (arg1) {
+          filled: true,
+          fillColor: Colors.grey[200],
+          contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+          hintText: "yourName@company.com",
+          border: InputBorder.none),
+      validator: (email) {
         Pattern pattern =
             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
         RegExp _regExpEmail = new RegExp(pattern);
-        if (arg1.isEmpty || arg1 == "") {
+        if (email.isEmpty || email == "") {
           return "Email Can't be empty";
-        } else if (!_regExpEmail.hasMatch(arg1)) {
+        } else if (!_regExpEmail.hasMatch(email)) {
           return 'Please enter valid email';
         }
         return null;
       },
-      // onChanged: (String userName) {
-      //   this.email = userName;
-      // },
-      onChanged: (String userName) {
+      onChanged: (String userEmail) {
         setState(() {
-          this.email = userName;
+          this.email = userEmail;
         });
       },
     );
 
     final passwordField = TextFormField(
-      controller: _passController,
       obscureText: true,
-      style: style,
+      controller: _passController,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Enter Your Password",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
-      validator: (arg2) {
+          filled: true,
+          fillColor: Colors.grey[200],
+          contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+          hintText: "Enter your password",
+          border: InputBorder.none),
+      validator: (password) {
         Pattern pattern =
             r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
         RegExp _regExpPwd = new RegExp(pattern);
-        if (arg2.isEmpty || arg2 == "") {
+        if (password.isEmpty || password == "") {
           return "Password can't be empty";
-        } else if (!_regExpPwd.hasMatch(arg2)) {
+        } else if (!_regExpPwd.hasMatch(password)) {
           return "Enter Valid Password";
         }
         return null;
@@ -120,76 +118,70 @@ class _LoginState extends State<Login> {
       },
     );
 
-    final loginButton = Material(
-        // elevation: 100,
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.green,
-        child: MaterialButton(
-            minWidth: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            onPressed: () {
-              _formKey.currentState.validate()
-                  ? verifyLogIn()
-                  : Navigator.of(context);
-            },
-            child: Text("Login",
-                textAlign: TextAlign.center,
-                style: style.copyWith(
-                    color: Colors.white, fontWeight: FontWeight.bold))));
-
-    final registerButton = Material(
-        // elevation: 100,
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.green,
-        child: MaterialButton(
-            minWidth: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            onPressed: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => Register())),
-            child: Text("SignUp",
-                textAlign: TextAlign.center,
-                style: style.copyWith(
-                    color: Colors.white, fontWeight: FontWeight.bold))));
-
-    final accountChecking = Container(
-      alignment: Alignment.center,
-      height: 50,
-      child: Text('If you don \'t have account ?'),
+    final tlLogo = SizedBox(
+      height: 80,
+      width: MediaQuery.of(context).size.width / 2,
+      child: Image.asset("assets/tllogo.png", fit: BoxFit.contain),
     );
 
+    final loginButton = SizedBox(
+      height: 30,
+      child: Material(
+          elevation: 2,
+          borderRadius: BorderRadius.circular(30),
+          color: Colors.green[700],
+          child: MaterialButton(
+              minWidth: MediaQuery.of(context).size.width / 4,
+              onPressed: () {
+                _formKey.currentState.validate()
+                    ? verifyLogIn()
+                    : Navigator.of(context);
+              },
+              child: Text("Login",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white)))),
+    );
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Log In'),
-          backgroundColor: Colors.green,
+      appBar: AppBar(
+        title: Text('Login Screen'),
+        backgroundColor: Colors.green[900],
+      ),
+      body: Form(
+        key: _formKey,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Container(
+              margin: EdgeInsets.all(40),
+              child: Column(
+                children: <Widget>[
+                  tlLogo,
+                  emailField,
+                  SizedBox(height: 15),
+                  passwordField,
+                  SizedBox(height: 15),
+                  loginButton,
+                  SizedBox(height: 10),
+                  InkWell(
+                    onTap: () {},
+                    child: Text('Forgot password?'),
+                  ),
+                  SizedBox(height: 20),
+                  Text("Dont't have an account?"),
+                  SizedBox(height: 5),
+                  InkWell(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => Register())),
+                    child: Text(
+                      'Click here to register',
+                      style: TextStyle(color: Colors.green[800]),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
-        // drawer: CustomDrawer(),
-        body: Form(
-          key: _formKey,
-          child: Center(
-              child: SingleChildScrollView(
-                  child: Container(
-                      color: Colors.white,
-                      child: Padding(
-                          padding: const EdgeInsets.all(30),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 100,
-                                  child: Image.asset("assets/tl.png",
-                                      fit: BoxFit.contain),
-                                ),
-                                SizedBox(height: 20),
-                                emailField,
-                                SizedBox(height: 20),
-                                passwordField,
-                                SizedBox(height: 30),
-                                loginButton,
-                                // SizedBox(height: 20),
-                                accountChecking,
-                                registerButton
-                              ]))))),
-        ));
+      ),
+    );
   }
 }
