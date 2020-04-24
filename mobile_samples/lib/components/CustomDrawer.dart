@@ -19,7 +19,7 @@ import 'company_registration/register_business.dart';
 import 'company_settings/companysettings.dart';
 import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/models/index.dart';
-import 'package:tradeleaves/components/inquiries/inquirires.list.dart';
+import 'package:tradeleaves/components/inquiries/inquiries.dart';
 
 class CustomDrawer extends StatefulWidget {
   @override
