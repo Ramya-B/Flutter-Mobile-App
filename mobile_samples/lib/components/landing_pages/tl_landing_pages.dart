@@ -55,9 +55,8 @@ class _TradeleavesLandingPageState extends State<TradeleavesLandingPage> {
           ],
           centerTitle: true,
           bottom: new PreferredSize(
-            preferredSize: const Size(100,12),
+            preferredSize: new Size(MediaQuery.of(context).size.width,12),
             child: Container(
-              alignment: Alignment.center,
               color: Colors.black87,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +69,7 @@ class _TradeleavesLandingPageState extends State<TradeleavesLandingPage> {
                   labelColor: Colors.white,
                   tabs: <Widget>[
                     Container(
-                      padding: EdgeInsets.only(right: 10,left: 20),
+                      padding: EdgeInsets.only(right: 10,left: 40),
                       height: 15,
                       child: Tab(
                       child: Text('BLISS'),
