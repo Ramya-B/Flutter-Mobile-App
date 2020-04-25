@@ -481,7 +481,7 @@ class _MyInquiriesState extends State<MyInquiries> {
                                 children: <Widget>[
                                   InkWell(
                                     child: Text(
-                                      'Sent to 1 supplier(s)',
+                                      (inquiries.requestDetails[index].hasChildRequests!=null && inquiries.requestDetails[index].hasChildRequests) ? 'Hide Requests' : 'Sent to 1 supplier(s)' ,
                                       style: TextStyle(color: Colors.green),
                                     ),
                                     onTap: () {
@@ -500,7 +500,7 @@ class _MyInquiriesState extends State<MyInquiries> {
                                 children: <Widget>[
                                   InkWell(
                                     child: Text(
-                                      '0 supplier(s) responded',
+                                      (inquiries.requestDetails[index].hasChildRequests!=null && inquiries.requestDetails[index].hasChildRequests) ? '' : '0 supplier(s) responded',
                                       style: TextStyle(color: Colors.green),
                                     ),
                                     onTap: () {
@@ -516,7 +516,7 @@ class _MyInquiriesState extends State<MyInquiries> {
                           ),
                         ),
                         (inquiries.requestDetails[index].childRequests != null &&
-                            inquiries.requestDetails[index].childRequests.length > 0)
+                            inquiries.requestDetails[index].childRequests.length > 0 && inquiries.requestDetails[index].hasChildRequests!=null && inquiries.requestDetails[index].hasChildRequests)
                             ? Container(
                             child: (inquiries.requestDetails[index].childRequests != null &&
                                 inquiries.requestDetails[index].childRequests.length > 0)
@@ -552,7 +552,6 @@ class _MyInquiriesState extends State<MyInquiries> {
                                                 .requestDTO
                                                 .toPartyName
                                                 : '-',
-                                            style: TextStyle(color: Colors.green),
                                           ),
                                           onTap: null,
                                         ),
