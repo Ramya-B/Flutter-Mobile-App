@@ -123,7 +123,7 @@ class _MarketplaceHomePageState extends State<MarketplaceHomePage> {
                 child: RaisedButton(
                   onPressed: () => {},
                   color: Colors.lightGreen,
-                  padding: EdgeInsets.all(30),
+                  padding: EdgeInsets.all(20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -144,7 +144,7 @@ class _MarketplaceHomePageState extends State<MarketplaceHomePage> {
                 child: RaisedButton(
                   onPressed: () => {},
                   color: Colors.lightGreen,
-                  padding: EdgeInsets.all(30),
+                  padding: EdgeInsets.all(20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -165,7 +165,7 @@ class _MarketplaceHomePageState extends State<MarketplaceHomePage> {
                 child: RaisedButton(
                   onPressed: () => {},
                   color: Colors.lightGreen,
-                  padding: EdgeInsets.all(30),
+                  padding: EdgeInsets.all(20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
