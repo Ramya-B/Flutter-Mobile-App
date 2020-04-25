@@ -26,7 +26,8 @@ RequestDetails _$RequestDetailsFromJson(Map<String, dynamic> json) {
             : RequestDetails.fromJson(e as Map<String, dynamic>))
         ?.toList()
     ..hasChildRequestsResponse = json['hasChildRequestsResponse'] as bool
-    ..hasChildRequests = json['hasChildRequests'] as bool;
+    ..hasChildRequests = json['hasChildRequests'] as bool
+    ..hasIgnoredRequests = json['hasIgnoredRequests'] as bool;
 }
 
 Map<String, dynamic> _$RequestDetailsToJson(RequestDetails instance) =>
@@ -43,5 +44,6 @@ Map<String, dynamic> _$RequestDetailsToJson(RequestDetails instance) =>
       'lastActivityTs': instance.lastActivityTs,
       'childRequests': instance.childRequests,
       'hasChildRequestsResponse': instance.hasChildRequestsResponse,
-      'hasChildRequests': instance.hasChildRequests
+      'hasChildRequests': instance.hasChildRequests,
+      'hasIgnoredRequests': instance.hasIgnoredRequests
     };

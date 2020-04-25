@@ -36,8 +36,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
   bool showCompanyRegistration = false;
   var site = 'Global';
   var country = 'IN';
+
   UserServiceImpl get userService => locator<UserServiceImpl>();
-  
+
   getUserInfo() async {
     var data = await userService.getUser();
     print("user response...");
@@ -112,13 +113,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
-                   child: Container(
+                  child: Container(
                     margin: EdgeInsets.all(10),
                     padding: EdgeInsets.only(left: 20),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         value: site,
-                        items: <String>['Domestic', 'Global'].map((String value) {
+                        items:
+                            <String>['Domestic', 'Global'].map((String value) {
                           return new DropdownMenuItem<String>(
                             value: value,
                             child: new Text(value),
@@ -140,8 +142,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(right: 20,left: 10),
-                  padding: EdgeInsets.only(left: 20,right: 10),
+                  margin: EdgeInsets.only(right: 20, left: 10),
+                  padding: EdgeInsets.only(left: 20, right: 10),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       value: country,
@@ -261,8 +263,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
           ),
           InkWell(
-            onTap: () => Navigator.of(context).push(new MaterialPageRoute(
-                builder: (context) => new Inquiries())),
+            onTap: () => Navigator.of(context).push(
+                new MaterialPageRoute(builder: (context) => new Inquiries())),
             child: new ListTile(
               title: Text('Inquiries'),
               leading: Icon(Icons.email),

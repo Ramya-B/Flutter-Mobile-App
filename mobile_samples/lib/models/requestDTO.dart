@@ -29,7 +29,7 @@ class RequestDTO {
     String closedDateTime;
     String internalComment;
     String reason;
-    String parentCustomerRequestId;
+    num parentCustomerRequestId;
     String billed;
     String tenantId;
     String categoryId;

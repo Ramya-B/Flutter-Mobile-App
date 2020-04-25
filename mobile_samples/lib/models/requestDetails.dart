@@ -19,6 +19,7 @@ class RequestDetails {
     List<RequestDetails> childRequests;
     bool hasChildRequestsResponse;
     bool hasChildRequests;
+    bool hasIgnoredRequests;
     
     factory RequestDetails.fromJson(Map<String,dynamic> json) => _$RequestDetailsFromJson(json);
     Map<String, dynamic> toJson() => _$RequestDetailsToJson(this);

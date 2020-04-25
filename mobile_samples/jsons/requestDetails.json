@@ -11,5 +11,6 @@
   "lastActivityTs": "2020-04-24T04:10:46.539Z",
   "childRequests": "$[]requestDetails",
   "hasChildRequestsResponse": true,
-  "hasChildRequests": true
+  "hasChildRequests": true,
+  "hasIgnoredRequests": false
 }
