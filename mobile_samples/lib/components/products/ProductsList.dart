@@ -130,8 +130,8 @@ class _ProductsState extends State<Products> {
 }
 
 class SingleProduct extends StatefulWidget {
-  final productDTO;
-  final supplierDTO;
+  final ProductDTO productDTO;
+  final SupplierDTO supplierDTO;
   final bool isSearchResults;
 
   SingleProduct({
@@ -145,6 +145,20 @@ class SingleProduct extends StatefulWidget {
 }
 
 class _SingleProductState extends State<SingleProduct> {
+  CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
+  bool isFavorited = false;
+
+  handleFav() async{
+    setState(() {
+      widget.productDTO.isFavorited = !widget.productDTO.isFavorited;
+    });
+    FavouriteProductsDTO favouriteProductsDTO = new FavouriteProductsDTO();
+    favouriteProductsDTO.productId = widget.productDTO.productId;
+    favouriteProductsDTO.productImageUrl = widget.productDTO.primaryImageUrl;
+    favouriteProductsDTO.suppplierName = widget.supplierDTO.supplierName;
+    favouriteProductsDTO.partyId = widget.supplierDTO.supplierId;
+    catalogService.handleFavorites(favouriteProductsDTO);
+  }
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -175,15 +189,15 @@ class _SingleProductState extends State<SingleProduct> {
                       style: TextStyle(fontSize: 16),
                     )),
               ),
-              Expanded(
-                              child: Container(
+              Expanded( child: Container(
                   height: 20,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                      Expanded(child: IconButton(icon: Icon(Icons.favorite_border),color:Colors.green, onPressed: (){})),
-                      Expanded(
-                                              child: IconButton(icon: Icon(Icons.message), color: Colors.green,onPressed: (){
+                      Expanded(child: IconButton(icon: Icon(widget.productDTO.isFavorited ? Icons.favorite : Icons.favorite_border),color:Colors.green, onPressed: (){
+                       handleFav();
+                      })),
+                      Expanded(child: IconButton(icon: Icon(Icons.message), color: Colors.green,onPressed: (){
                           if(widget.isSearchResults){
                              Navigator.of(context).push(new MaterialPageRoute(
                           builder: (context) => new ContactSupplier(
@@ -204,8 +218,4 @@ class _SingleProductState extends State<SingleProduct> {
       ),
     );
   }
-}
-
-class CategoryProducts{
-  
 }

@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/models/uomDTO.dart';
-import 'package:tradeleaves/podos/suppliers/supplier.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import 'package:tradeleaves/tl-services/customs/customServiceImpl.dart';
 import 'package:intl/intl.dart';

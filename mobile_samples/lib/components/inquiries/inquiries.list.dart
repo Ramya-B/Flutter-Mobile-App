@@ -161,11 +161,10 @@ class _MyInquiriesState extends State<MyInquiries> {
 
   @override
   void initState() {
-    // TODO: implement initState
     activeBuyRequestInputDTO.lobId = "34343e34-7601-40de-878d-01b3bd1f0640";
     activeBuyRequestInputDTO.size = 10;
     activeBuyRequestInputDTO.startIndex = 0;
-    List<RequestDetails> selectedInquiries = [];
+    // List<RequestDetails> selectedInquiries = [];
     setState(() {
       getInquiriesForParty(activeBuyRequestInputDTO);
     });

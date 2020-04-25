@@ -130,6 +130,10 @@ class ProductSearchCriteriaDTO {
   var channel;
   var region;
   SiteCriteria siteCriteria;
+  List criteriaWeights;
+  List suppliercriteriaWeights;
+  List suppliertlcriteriaWeights;
+  List tlcriteriaWeights;
   ProductSearchCriteriaDTO({
     this.pagination,
     this.productPrimarySearchCondition,
@@ -140,6 +144,10 @@ class ProductSearchCriteriaDTO {
     this.channel,
     this.region,
     this.siteCriteria,
+    this.tlcriteriaWeights,
+    this.suppliertlcriteriaWeights,
+    this.suppliercriteriaWeights,
+    this.criteriaWeights
   });
 
   factory ProductSearchCriteriaDTO.fromJson(Map<String, dynamic> json) {

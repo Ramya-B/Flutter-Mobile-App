@@ -21,6 +21,9 @@ import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/components/inquiries/inquiries.dart';
 
+import 'favourites/favourite.dart';
+import 'favourites/favourite_screen.dart';
+
 class CustomDrawer extends StatefulWidget {
   @override
   _CustomDrawerState createState() => _CustomDrawerState();
@@ -261,6 +264,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
               title: Text('My Products'),
               leading: Icon(Icons.view_list),
             ),
+          ),
+          InkWell(
+          onTap: () => Navigator.of(context).push(
+              new MaterialPageRoute(builder: (context) => new Favourite())),
+          child: new ListTile(
+            title: Text('Favorites'),
+            leading: Icon(Icons.favorite),
+          ),
           ),
           InkWell(
             onTap: () => Navigator.of(context).push(
