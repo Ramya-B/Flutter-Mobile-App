@@ -537,47 +537,42 @@ class _MyInquiriesState extends State<MyInquiries> {
                               ),
                               child: Column(
                                 children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      InkWell(
-                                        child: Text(
-                                          inquiries.requestDetails[index].childRequests[idx]
-                                              .requestDTO
-                                              .toPartyName !=
-                                              null
-                                              ? inquiries.requestDetails[index].childRequests[idx]
-                                              .requestDTO
-                                              .toPartyName
-                                              : '-',
-                                          style: TextStyle(color: Colors.green),
+                                  Container(
+                                    margin: EdgeInsets.all(8),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        InkWell(
+                                          child: Text(
+                                            inquiries.requestDetails[index].childRequests[idx]
+                                                .requestDTO
+                                                .toPartyName !=
+                                                null
+                                                ? inquiries.requestDetails[index].childRequests[idx]
+                                                .requestDTO
+                                                .toPartyName
+                                                : '-',
+                                            style: TextStyle(color: Colors.green),
+                                          ),
+                                          onTap: null,
                                         ),
-                                        onTap: () {
-                                          setState(() {
-                                            getRequestDetails(index,
-                                                inquiries.requestDetails[index], 1, false);
-                                          });
-                                        },
-                                      ),
-                                      Text(
-                                        inquiries.requestDetails[index].childRequests[idx]
-                                            .requestDTO
-                                            .customerRequestDate
-                                            .substring(0, 10),
-                                        style: TextStyle(color: Colors.brown),
-                                      ),
-                                      InkWell(
-                                        child: Text(
-                                          'Ignore',
-                                          style: TextStyle(color: Colors.green),
-                                        ),
-                                        onTap: () {
-                                          setState(() {
-                                            getRequestDetails(index,
-                                                selectedInquiries[index], 1, false);
-                                          });
-                                        },
-                                      ),
-                                    ],
+                                        Row(
+                                          children: <Widget>[
+                                            Text( inquiries.requestDetails[index].childRequests[idx]
+                                                .requestDTO
+                                                .customerRequestDate
+                                                .substring(0, 10)),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            InkWell(
+                                              child: Text('Ignore', style: TextStyle(color: Colors.green)),
+                                              onTap: null,
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),)])
