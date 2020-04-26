@@ -20,9 +20,7 @@ import 'company_settings/companysettings.dart';
 import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/components/inquiries/inquiries.dart';
-
 import 'favourites/favourite.dart';
-import 'favourites/favourite_screen.dart';
 
 class CustomDrawer extends StatefulWidget {
   @override
@@ -138,7 +136,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ),
                     decoration: ShapeDecoration(
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 1.0, style: BorderStyle.solid),
+                        side: BorderSide(color: Colors.grey),
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
                       ),
                     ),
@@ -165,7 +163,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                   decoration: ShapeDecoration(
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(width: 1.0, style: BorderStyle.solid),
+                      side: BorderSide(color: Colors.grey),
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
                   ),

@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tradeleaves/components/CustomAppBar.dart';
-import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';

@@ -24,16 +24,21 @@ class ProductDetails extends StatefulWidget {
 
 class _ProductDetailsState extends State<ProductDetails> {
    CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
-
- var prodAttrs =  ["text"];
+ var prodAttrs =  ["text",'City Type','radio','checkbox'];
   @override
   void initState() {
     super.initState();
   }
    setValues() async{
-      for (var attr in widget.productDTO.productAttributeDetailDTO) {
+      // for (var attr in widget.productDTO.productAttributeDetailDTO) {
+      //     switch (attr.displayType) {
+      //       case "City Type":
+              
+      //         break;
+      //       default:
+      //     }
         
-      }
+      // }
    }
    handleFav() async{
     setState(() {
@@ -182,7 +187,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context,int index){
                        ProductAttributeDetailDTO  prodAttr =    widget.productDTO.productAttributeDetailDTO[index];
-                      return (prodAttr.attributeName.trim() != null && prodAttr.value.trim() !=null && this.prodAttrs.indexOf(prodAttr.displayType.toString())!=-1) ? Row(
+                      return (prodAttr.attributeName.trim() != null && prodAttr.value.trim() !=null) ? Row(
                         children: <Widget>[
                           Expanded(child:  Container(
                             padding: EdgeInsets.all(5.0),

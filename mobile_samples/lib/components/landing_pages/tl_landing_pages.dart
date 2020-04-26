@@ -7,7 +7,6 @@ import 'package:tradeleaves/components/landing_pages/mp_home_page.dart';
 import 'package:tradeleaves/components/login_register/login.dart';
 import 'package:tradeleaves/components/login_register/logout.dart';
 import 'package:tradeleaves/components/search/search.dart';
-import 'package:tradeleaves/models/index.dart';
 
 class TradeleavesLandingPage extends StatefulWidget {
   @override
