@@ -129,7 +129,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           )
                         : Text('${widget.supplierDTO.supplierStatus}'),
                   ]),
-                  widget.supplierDTO.rating != 0
+                  widget.supplierDTO.rating != null && widget.supplierDTO.rating != 0
                       ? Container(
                           padding: EdgeInsets.all(5.0),
                           alignment: Alignment.topLeft,
@@ -187,7 +187,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context,int index){
                        ProductAttributeDetailDTO  prodAttr =    widget.productDTO.productAttributeDetailDTO[index];
-                      return (prodAttr.attributeName.trim() != null && prodAttr.value.trim() !=null) ? Row(
+                      return (prodAttr.attributeName!=null && prodAttr.value !=null) ? Row(
                         children: <Widget>[
                           Expanded(child:  Container(
                             padding: EdgeInsets.all(5.0),

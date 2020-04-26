@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/add_product/select_category_region.dart';
+import 'package:tradeleaves/components/products/ProductDetails.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
+import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import '../../constants.dart';
 import '../../service_locator.dart';
 
@@ -15,17 +17,44 @@ class UserProducts extends StatefulWidget {
 class _UserProductsState extends State<UserProducts> {
   List<Sort> sorts = [];
   CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
+  CrmServiceImpl get crmService => locator<CrmServiceImpl>();
   UserListedProducts userProducts;
   List<ProductDTO> userProductsList = [];
   ScrollController _controller;
   var counter = 1;
   var pageStart = 0;
+  SupplierDTO supplierDTO;
   @override
   void initState() {
+    getSupplierDetails();
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
     getUserProducts();
     super.initState();
+  }
+  getSupplierDetails() async{
+    var data = await crmService.getCompanyDetails();
+    Company com = Company.fromJson(data["company"]);
+    supplierDTO = new SupplierDTO();
+    supplierDTO.supplierId = com.details.partyId;
+    supplierDTO.supplierName = com.details.groupName;
+    // supplierDTO.businessType = null;
+    // supplierDTO.companyType =null;
+    // supplierDTO.industryType  =null;
+    // supplierDTO.noOfEmployees = null;
+    // supplierDTO.rating = null;
+    // supplierDTO.revenueCurrency = null;
+    // supplierDTO.searchable = null;
+    supplierDTO.supplierCity= com.address.city;
+    supplierDTO.supplierCountry= com.address.country;
+    // supplierDTO.supplierRevenue=com.details.;
+    supplierDTO.supplierStatus= com.accountStatus.statusId;
+    // supplierDTO.supplierSubscriptionId=null;
+    // supplierDTO.supplierSubscriptionType=null;
+    // supplierDTO.tlPreferredRating=null;
+    // supplierDTO.userPreferredRating=null;
+    // supplierDTO.yearsInBusiness= com.details.;
+
   }
 
   getUserProducts() async {
@@ -96,18 +125,23 @@ class _UserProductsState extends State<UserProducts> {
                   itemBuilder: (BuildContext context, int index) {
                     return SingleUserProduct(
                       productDTO: this.userProductsList[index],
+                      supplierDTO: this.supplierDTO,
                     );
                   }))
-          : Container(),
+          : Center(
+            child: CircularProgressIndicator(),
+          ),
     );
   }
 }
 
 class SingleUserProduct extends StatefulWidget {
   final productDTO;
+  final supplierDTO;
 
   SingleUserProduct({
     this.productDTO,
+    this.supplierDTO
   });
   @override
   _SingleUserProductState createState() => _SingleUserProductState();
@@ -118,6 +152,10 @@ class _SingleUserProductState extends State<SingleUserProduct> {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
+        onTap: (){
+          Navigator.of(context)
+                .push(new MaterialPageRoute(builder: (context) => ProductDetails(productDTO:widget.productDTO ,supplierDTO: widget.supplierDTO,)));
+        },
         child: Container(
           padding: EdgeInsets.all(4.0),
           child: Column(
