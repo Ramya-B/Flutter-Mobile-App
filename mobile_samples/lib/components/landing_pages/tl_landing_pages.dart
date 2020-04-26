@@ -89,7 +89,7 @@ class _TradeleavesLandingPageState extends State<TradeleavesLandingPage> {
                   tabs: <Widget>[
                     Container(
                       padding: EdgeInsets.only(right: 10,left: 40),
-                      height: 15,
+                      height: 13,
                       child: Tab(
                       child: Text('BLISS'),
                     ),
@@ -106,7 +106,7 @@ class _TradeleavesLandingPageState extends State<TradeleavesLandingPage> {
                             ),
                           ),
                        padding: EdgeInsets.only(left:20,right:20),
-                      height: 15,
+                      height: 13,
                       child: Tab(
                       child: Text('MARKETPLACE',),
                     ))
