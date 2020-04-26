@@ -5,7 +5,9 @@ import 'package:tradeleaves/components/Profile/person_profile.dart';
 import 'package:tradeleaves/components/landing_pages/bliss_home_page.dart';
 import 'package:tradeleaves/components/landing_pages/mp_home_page.dart';
 import 'package:tradeleaves/components/login_register/login.dart';
+import 'package:tradeleaves/components/login_register/logout.dart';
 import 'package:tradeleaves/components/search/search.dart';
+import 'package:tradeleaves/models/index.dart';
 
 class TradeleavesLandingPage extends StatefulWidget {
   @override
@@ -46,12 +48,29 @@ class _TradeleavesLandingPageState extends State<TradeleavesLandingPage> {
                 icon: Icon(Icons.search),
                 onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => new SearchItems()))),
-            new IconButton(
+             (this.authToken == null)? new IconButton(icon: Icon(Icons.person), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  Login()))): PopupMenuButton(
                 icon: Icon(Icons.person),
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => (this.authToken == null)
-                        ? Login()
-                        : PersonalProfile())))
+                offset: Offset(0,100),
+                itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: Text("Account"),
+                        value: 'Account',
+                      ),
+                      PopupMenuItem(
+                        child: Text("Sign Out"),
+                        value: 'Sign Out',
+                      ),
+                    ],
+                    onSelected: (value) {
+                      print("value:$value");
+                      if(value == 'Account'){ 
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  PersonalProfile()));
+
+                      }else if(value == 'Sign Out'){
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  LogOut()));
+                      }
+                    },
+              ),
           ],
           centerTitle: true,
           bottom: new PreferredSize(

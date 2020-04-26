@@ -3,7 +3,6 @@ import 'package:tradeleaves/components/contact_supplier/contact_supplier.dart';
 import 'package:tradeleaves/components/products/ProductDetails.dart';
 import 'package:tradeleaves/models/favouriteProductsListDTO.dart';
 import 'package:tradeleaves/models/index.dart';
-import 'package:tradeleaves/podos/products/product.dart';
 import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 
 import '../../constants.dart';

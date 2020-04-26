@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/components/search/search.dart';
 import 'Profile/person_profile.dart';
 import 'login_register/login.dart';
+import 'login_register/logout.dart';
 
 
 class CustomToolBar extends StatefulWidget  with PreferredSizeWidget  {
@@ -71,7 +72,29 @@ var  authToken;
       iconTheme: new IconThemeData(color: Colors.green),
       actions: <Widget>[
         new IconButton(icon: Icon(Icons.search), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => new SearchItems()))),
-       new IconButton(icon: Icon(Icons.person), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => (this.authToken == null)? Login(): PersonalProfile())))
+        (this.authToken == null)? new IconButton(icon: Icon(Icons.person), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  Login()))): PopupMenuButton(
+                icon: Icon(Icons.person),
+                offset: Offset(0,100),
+                itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: Text("Account"),
+                        value: 'Account',
+                      ),
+                      PopupMenuItem(
+                        child: Text("Sign Out"),
+                        value: 'Sign Out',
+                      ),
+                    ],
+                    onSelected: (value) {
+                      print("value:$value");
+                      if(value == 'Account'){ 
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  PersonalProfile()));
+
+                      }else if(value == 'Sign Out'){
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  LogOut()));
+                      }
+                    },
+              ),
       ],
     );
   }
