@@ -61,7 +61,36 @@ class OrmServiceImpl extends OrmServices {
       } else {
         return throw Exception('falied to getBuyRequestById');
       }
-    });  }
+    });
+  }
+
+  @override
+  Future getSupplierReceiveCustRequest(supplierReceiveCustRequestDTO) async{
+    // TODO: implement getSupplierReceiveCustRequest
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getSupplierReceiveCustRequest called");
+    print(jsonEncode(supplierReceiveCustRequestDTO));
+    return await http
+        .post('${Constants.envUrl}$apiUrl/buyrequests/received/requests',
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+        body: jsonEncode({
+          'supplierReceiveCustRequestDTO': supplierReceiveCustRequestDTO.toJson()
+        })).then((data) {
+      print("response getSupplierReceiveCustRequest ...!");
+      print(data);
+      if (data?.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getSupplierReceiveCustRequest successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to getSupplierReceiveCustRequest');
+      }
+    });
+  }
 
 
 

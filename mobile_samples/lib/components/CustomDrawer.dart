@@ -21,6 +21,8 @@ import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/components/inquiries/inquiries.dart';
 
+import 'leads/leads.dart';
+
 class CustomDrawer extends StatefulWidget {
   @override
   _CustomDrawerState createState() => _CustomDrawerState();
@@ -267,6 +269,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 new MaterialPageRoute(builder: (context) => new Inquiries())),
             child: new ListTile(
               title: Text('Inquiries'),
+              leading: Icon(Icons.email),
+            ),
+          ),
+          InkWell(
+            onTap: () => Navigator.of(context).push(
+                new MaterialPageRoute(builder: (context) => new Leads())),
+            child: new ListTile(
+              title: Text('Leads'),
               leading: Icon(Icons.email),
             ),
           ),
