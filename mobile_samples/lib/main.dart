@@ -1,9 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tradeleaves/components/CustomAppBar.dart';
-import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
-import 'package:tradeleaves/components/CustomDrawer.dart';
-import 'package:tradeleaves/components/landing_pages/bliss_home_page.dart';
 import 'components/landing_pages/tl_landing_pages.dart';
 import 'service_locator.dart';
 

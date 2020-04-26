@@ -144,7 +144,7 @@ class _LoginState extends State<Login> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login Screen'),
+        title: Text('Login'),
         backgroundColor: Constants.toolbarColor,
       ),
       body: Form(

@@ -12,7 +12,6 @@ import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import '../../service_locator.dart';
 
 class CatalogServiceImpl extends CatalogServices {
-  
   static const String apiUrl = "/catalog/api";
   Map<String, String> headers = {
     'Content-type': 'application/json; charset=UTF-8'
@@ -119,7 +118,8 @@ class CatalogServiceImpl extends CatalogServices {
       body: jsonEncode(<String, Object>{
         'productInfo': productInfo.toJson(),
       }),
-    ).then((data) {
+    )
+        .then((data) {
       if (data.statusCode == 200) {
         var res = json.decode(data.body);
         print("products by category id....");
@@ -133,19 +133,22 @@ class CatalogServiceImpl extends CatalogServices {
 
   @override
   Future getUserProducts(ProductCriteria productCriteria) async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      print("get user products service....!");
-      print(productCriteria.toJson());
-       print(productCriteria);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("get user products service....!");
+    print(productCriteria.toJson());
+    print(productCriteria);
     return await http
         .post(
       '${Constants.envUrl}$apiUrl/products/productSearch/criteria',
-      headers: {HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}" , 'Content-type': 'application/json; charset=UTF-8'},
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
       body: jsonEncode(<String, Object>{
         'productCriteria': productCriteria.toJson(),
-        
       }),
-    ).then((data) {
+    )
+        .then((data) {
       if (data.statusCode == 200) {
         var res = json.decode(data.body);
         print("products by getUserProducts....");
@@ -157,16 +160,18 @@ class CatalogServiceImpl extends CatalogServices {
     });
   }
 
-  @override 
-  Future getSavedCategories(String companyId) async{
-     SharedPreferences prefs = await SharedPreferences.getInstance();
-      print("getSavedCategories service....!");
-      print(companyId);
-       print('${Constants.envUrl}$apiUrl/categories/$companyId/savedCategory');
-    return await http
-        .get(
+  @override
+  Future getSavedCategories(String companyId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getSavedCategories service....!");
+    print(companyId);
+    print('${Constants.envUrl}$apiUrl/categories/$companyId/savedCategory');
+    return await http.get(
       '${Constants.envUrl}$apiUrl/categories/$companyId/savedCategory',
-      headers: {HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}" , 'Content-type': 'application/json; charset=UTF-8'},
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
     ).then((data) {
       if (data.statusCode == 200) {
         var res = json.decode(data.body);
@@ -180,19 +185,23 @@ class CatalogServiceImpl extends CatalogServices {
   }
 
   @override
-  Future getLeafCategories(CategoryDetailsLobDTO categoryDetailsLobDTO) async{
-   SharedPreferences prefs = await SharedPreferences.getInstance();
-      print("getLeafCategories service....!");
-      print(categoryDetailsLobDTO.toJson());
-      print('${Constants.envUrl}$apiUrl/categories/leafCategories/lob');
+  Future getLeafCategories(CategoryDetailsLobDTO categoryDetailsLobDTO) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getLeafCategories service....!");
+    print(categoryDetailsLobDTO.toJson());
+    print('${Constants.envUrl}$apiUrl/categories/leafCategories/lob');
     return await http
         .post(
       '${Constants.envUrl}$apiUrl/categories/leafCategories/lob',
-      headers: {HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}" , 'Content-type': 'application/json; charset=UTF-8'},
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
       body: jsonEncode(<String, Object>{
         'categoryDetailsLobDTO': categoryDetailsLobDTO.toJson(),
       }),
-    ).then((data) {
+    )
+        .then((data) {
       if (data.statusCode == 200) {
         var res = json.decode(data.body);
         print("getLeafCategories resp....");
@@ -205,18 +214,23 @@ class CatalogServiceImpl extends CatalogServices {
   }
 
   @override
-  Future getProductAttributesByLob(ListCatProdAttrLoBDTO listCatProdAttrLoBDTO) async{
+  Future getProductAttributesByLob(
+      ListCatProdAttrLoBDTO listCatProdAttrLoBDTO) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-      print("getProductAttributesByLob service....!");
-      print(listCatProdAttrLoBDTO.toJson());
+    print("getProductAttributesByLob service....!");
+    print(listCatProdAttrLoBDTO.toJson());
     return await http
         .post(
       '${Constants.envUrl}$apiUrl/categoryprodattr/fetchProdAttributes/byLob',
-      headers: {HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}" , 'Content-type': 'application/json; charset=UTF-8'},
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
       body: jsonEncode(<String, Object>{
         'listCatProdAttrLoBDTO': listCatProdAttrLoBDTO.toJson(),
       }),
-    ).then((data) {
+    )
+        .then((data) {
       if (data.statusCode == 200) {
         var res = json.decode(data.body);
         print("getProductAttributesByLob resp....");
@@ -229,19 +243,23 @@ class CatalogServiceImpl extends CatalogServices {
   }
 
   @override
-  Future saveProduct(ProductDTO productDTO) async{
+  Future saveProduct(ProductDTO productDTO) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-      print("saveProduct service....!");
-      // print(productDTO.toJson());
-      print(jsonEncode(productDTO));
+    print("saveProduct service....!");
+    // print(productDTO.toJson());
+    print(jsonEncode(productDTO));
     return await http
         .post(
       '${Constants.envUrl}$apiUrl/products/saveProduct/byLob',
-      headers: {HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}" , 'Content-type': 'application/json; charset=UTF-8'},
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
       body: jsonEncode(<String, Object>{
         'productDTO': productDTO.toJson(),
       }),
-    ).then((data) {
+    )
+        .then((data) {
       if (data.statusCode == 200) {
         var res = json.decode(data.body);
         print("saveProduct resp....");
@@ -250,10 +268,10 @@ class CatalogServiceImpl extends CatalogServices {
           faq.name = res["productDTO"]["productId"];
           faq.active = true;
         }
-        if(productDTO.faqs.length > 0){
-         user.saveFaqs(productDTO.faqs);
+        if (productDTO.faqs.length > 0) {
+          user.saveFaqs(productDTO.faqs);
         }
-       
+
         return res;
       } else {
         return throw Exception('falied to saveProduct ....');
@@ -262,14 +280,16 @@ class CatalogServiceImpl extends CatalogServices {
   }
 
   @override
-  Future getProductById(String productId) async{
-     SharedPreferences prefs = await SharedPreferences.getInstance();
-      print("getProductById service....!");
-      print(productId);
-    return await http
-        .get(
+  Future getProductById(String productId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getProductById service....!");
+    print(productId);
+    return await http.get(
       '${Constants.envUrl}$apiUrl/products/$productId',
-      headers: {HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}" , 'Content-type': 'application/json; charset=UTF-8'},
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
     ).then((data) {
       if (data.statusCode == 200) {
         var res = json.decode(data.body);
@@ -281,4 +301,122 @@ class CatalogServiceImpl extends CatalogServices {
       }
     });
   }
+
+  @override
+  Future getFavourites(
+      ProductSearchCriteriaDTO productSearchCriteriaDTO) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getFavourites service....!");
+    print(jsonEncode(productSearchCriteriaDTO));
+    return await http
+        .post(
+      '${Constants.envUrl}$apiUrl/products/getFavouriteProducts/byPartyId',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+      body: jsonEncode(<String, Object>{
+        'productSearchCriteriaDTO': productSearchCriteriaDTO.toJson(),
+      }),
+    )
+        .then((data) {
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getFavourites resp....");
+        print(res);
+
+        return res;
+      } else {
+        return throw Exception('falied to getFavourites ....');
+      }
+    });
+  }
+
+  @override
+  Future handleFavorites(FavouriteProductsDTO favouriteProductsDTO) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("handleFavorites service....!");
+    print(jsonEncode(favouriteProductsDTO));
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/products/${favouriteProductsDTO.productId}/getfavouriteProduct',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("handleFavorites resp....");
+        print(res);
+        if (res["favouriteId"] != null) {
+          http.delete(
+            '${Constants.envUrl}$apiUrl/products/${res["favouriteId"]}/favouriteById',
+            headers: {
+              HttpHeaders.authorizationHeader:
+                  "Bearer ${prefs.getString('token')}",
+              'Content-type': 'application/json; charset=UTF-8'
+            },
+          ).then((data) {
+            if (data.statusCode == 200) {
+              var resp = json.decode(data.body);
+              print("fav deleted....");
+              print(resp);
+              return resp;
+            } else {
+              return throw Exception('falied to getFavourites ....');
+            }
+          });
+        } else {
+          http
+              .post(
+            '${Constants.envUrl}$apiUrl/products/favourite/product',
+            headers: {
+              HttpHeaders.authorizationHeader:
+                  "Bearer ${prefs.getString('token')}",
+              'Content-type': 'application/json; charset=UTF-8'
+            },
+            body: jsonEncode(<String, Object>{
+              'favouriteProductsDTO': favouriteProductsDTO.toJson(),
+            }),
+          ).then((data) {
+            if (data.statusCode == 200) {
+              var res = json.decode(data.body);
+              print("save fav resp....");
+              print(res);
+              return res;
+            } else {
+              return throw Exception(
+                  'falied to save fav ....');
+            }
+          });
+        }
+        return res;
+      } else {
+        return throw Exception('falied to handleFavorites ....');
+      }
+    });
+  }
+
+  @override
+  Future getFavoriteSuppliers() async{
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getFavoriteSuppliers service....!");
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/products/getFavourite/supplier',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getFavoriteSuppliers resp....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to getFavoriteSuppliers ....');
+      }
+    });
+  }
+  
 }

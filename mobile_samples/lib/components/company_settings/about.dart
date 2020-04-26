@@ -294,7 +294,7 @@ class _AboutState extends State<About> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return companyRegisterResp != null ? ListView(
       children: <Widget>[
         Container(
           margin: EdgeInsets.all(15),
@@ -810,6 +810,8 @@ class _AboutState extends State<About> {
           ),
         )
       ],
+    ):Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

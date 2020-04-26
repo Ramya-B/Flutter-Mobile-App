@@ -14,5 +14,8 @@ abstract class CatalogServices {
   Future getProductAttributesByLob(ListCatProdAttrLoBDTO listCatProdAttrLoBDTO);   
   Future saveProduct(ProductDTO productDTO);
   Future getProductById(String productId);
+  Future getFavourites(ProductSearchCriteriaDTO productSearchCriteriaDTO);
+  Future handleFavorites(FavouriteProductsDTO favouriteProductsDTO);
+  Future getFavoriteSuppliers();
 }
 

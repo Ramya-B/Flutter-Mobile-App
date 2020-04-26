@@ -1,0 +1,51 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'supplierDTO.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+SupplierDTO _$SupplierDTOFromJson(Map<String, dynamic> json) {
+  return SupplierDTO()
+    ..businessType = json['businessType'] as String
+    ..companyType = json['companyType'] as String
+    ..industryType = json['industryType'] as String
+    ..noOfEmployees = json['noOfEmployees'] as num
+    ..rating = json['rating'] as num
+    ..revenueCurrency = json['revenueCurrency'] as String
+    ..searchable = json['searchable'] as String
+    ..supplierCity = json['supplierCity'] as String
+    ..supplierCountry = json['supplierCountry'] as String
+    ..supplierId = json['supplierId'] as String
+    ..supplierName = json['supplierName'] as String
+    ..supplierRevenue = json['supplierRevenue'] as num
+    ..supplierStatus = json['supplierStatus'] as String
+    ..supplierSubscriptionId = json['supplierSubscriptionId'] as String
+    ..supplierSubscriptionType = json['supplierSubscriptionType'] as String
+    ..tlPreferredRating = json['tlPreferredRating'] as String
+    ..userPreferredRating = json['userPreferredRating'] as String
+    ..yearsInBusiness = json['yearsInBusiness'] as num;
+}
+
+Map<String, dynamic> _$SupplierDTOToJson(SupplierDTO instance) =>
+    <String, dynamic>{
+      'businessType': instance.businessType,
+      'companyType': instance.companyType,
+      'industryType': instance.industryType,
+      'noOfEmployees': instance.noOfEmployees,
+      'rating': instance.rating,
+      'revenueCurrency': instance.revenueCurrency,
+      'searchable': instance.searchable,
+      'supplierCity': instance.supplierCity,
+      'supplierCountry': instance.supplierCountry,
+      'supplierId': instance.supplierId,
+      'supplierName': instance.supplierName,
+      'supplierRevenue': instance.supplierRevenue,
+      'supplierStatus': instance.supplierStatus,
+      'supplierSubscriptionId': instance.supplierSubscriptionId,
+      'supplierSubscriptionType': instance.supplierSubscriptionType,
+      'tlPreferredRating': instance.tlPreferredRating,
+      'userPreferredRating': instance.userPreferredRating,
+      'yearsInBusiness': instance.yearsInBusiness
+    };

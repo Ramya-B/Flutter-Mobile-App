@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/inquiries/inquiries.list.dart';
 
@@ -38,8 +37,8 @@ class _InquiriesState extends State<Inquiries> {
         body: TabBarView(
           children: <Widget>[
             MyInquiries(),
-            Text('Proposals'),
-            Text('Approvals')
+            Center(child: Text('Proposals need to implement',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),)),
+            Center(child: Text('Approvals need to implement',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),))
           ],
         ),
       ),

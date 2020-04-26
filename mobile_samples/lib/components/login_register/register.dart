@@ -261,7 +261,7 @@ class _RegisterState extends State<Register> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register Screen'),
+        title: Text('Register'),
         backgroundColor: Colors.green[900],
       ),
       body: Form(
@@ -385,7 +385,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
-        appBar: AppBar(title: Text('OTP Page'),backgroundColor: Constants.toolbarColor,),
+        appBar: AppBar(title: Text('Vefify OTP'),backgroundColor: Constants.toolbarColor,),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

@@ -25,6 +25,7 @@ class ProductDTO {
     List selectedSites;
     String supplierId;
     String productId;
+    bool isFavorited;
     
     factory ProductDTO.fromJson(Map<String,dynamic> json) => _$ProductDTOFromJson(json);
     Map<String, dynamic> toJson() => _$ProductDTOToJson(this);

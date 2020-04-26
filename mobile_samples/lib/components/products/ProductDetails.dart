@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomAppBar.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
+import 'package:tradeleaves/components/contact_supplier/contact_supplier.dart';
+import 'package:tradeleaves/models/index.dart';
+import 'package:tradeleaves/tl-services/catalog/CatalogServiceImpl.dart';
 
 import '../../constants.dart';
+import '../../service_locator.dart';
 
 class ProductDetails extends StatefulWidget {
-  final productDTO;
-  final supplierDTO;
+  final ProductDTO productDTO;
+  final SupplierDTO supplierDTO;
  
 
   ProductDetails({
@@ -19,17 +23,33 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  Map<String, dynamic> prods;
- var prodAttrs =  ["productName","productUniqueId"];
+   CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
+ var prodAttrs =  ["text",'City Type','radio','checkbox'];
   @override
   void initState() {
-    print("inittt....");
-    print(widget.productDTO);
-    print(widget.productDTO.toJson());
-    prods = widget.productDTO.toJson();
-    print(prods);
-    prods.forEach((k, v) => print(k));
     super.initState();
+  }
+   setValues() async{
+      // for (var attr in widget.productDTO.productAttributeDetailDTO) {
+      //     switch (attr.displayType) {
+      //       case "City Type":
+              
+      //         break;
+      //       default:
+      //     }
+        
+      // }
+   }
+   handleFav() async{
+    setState(() {
+      widget.productDTO.isFavorited = !widget.productDTO.isFavorited;
+    });
+    FavouriteProductsDTO favouriteProductsDTO = new FavouriteProductsDTO();
+    favouriteProductsDTO.productId = widget.productDTO.productId;
+    favouriteProductsDTO.productImageUrl = widget.productDTO.primaryImageUrl;
+    favouriteProductsDTO.suppplierName = widget.supplierDTO.supplierName;
+    favouriteProductsDTO.partyId = widget.supplierDTO.supplierId;
+    catalogService.handleFavorites(favouriteProductsDTO);
   }
 
   @override
@@ -65,12 +85,33 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ),
                     ),
-                    new IconButton(
-                        icon: Icon(
-                          Icons.favorite,
-                          color: Colors.green,
-                        ),
-                        onPressed: () => {}),
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      margin: EdgeInsets.all(5),
+                      child: new IconButton(
+                          icon: Icon(
+                            widget.productDTO.isFavorited? Icons.favorite : Icons.favorite_border,
+                            color: Colors.green,
+                          ),
+                          onPressed: ()  {
+                            handleFav();
+                          }),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      margin: EdgeInsets.all(5),
+                      child: new IconButton(
+                          icon: Icon(
+                             Icons.message,
+                            color: Colors.green,
+                          ),
+                          onPressed: ()  {
+                            Navigator.of(context).push(new MaterialPageRoute(
+                              builder: (context) => new ContactSupplier(
+                                      
+                                    )));
+                          }),
+                    ),
                   ]),
                   Row(children: <Widget>[
                     Icon(
@@ -88,7 +129,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           )
                         : Text('${widget.supplierDTO.supplierStatus}'),
                   ]),
-                  widget.supplierDTO.rating != 0
+                  widget.supplierDTO.rating != null && widget.supplierDTO.rating != 0
                       ? Container(
                           padding: EdgeInsets.all(5.0),
                           alignment: Alignment.topLeft,
@@ -120,7 +161,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               )),
           Container(
             padding: EdgeInsets.all(10),
-            constraints: BoxConstraints(minHeight: 250),
+           
             margin: const EdgeInsets.only(
                 left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
             decoration:
@@ -136,24 +177,23 @@ class _ProductDetailsState extends State<ProductDetails> {
                   margin: EdgeInsets.only(bottom: 10),
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.all(5),
-                  child: Text(prods["productName"],style: TextStyle(fontSize: 18,
+                  child: Text(widget.productDTO.productName,style: TextStyle(fontSize: 18,
                   ),),
                 ),
                 Container(
-                  height: 200,
                   child: ListView.builder(
-                   physics: const NeverScrollableScrollPhysics(),
-                    itemCount: this.prods.length,
+                    itemCount: widget.productDTO.productAttributeDetailDTO.length,
+                    physics: new NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
                     itemBuilder: (BuildContext context,int index){
-                      var key = prods.keys.elementAt(index).toString();
-                      return (prodAttrs.contains(key)) ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                       ProductAttributeDetailDTO  prodAttr =    widget.productDTO.productAttributeDetailDTO[index];
+                      return (prodAttr.attributeName!=null && prodAttr.value !=null) ? Row(
                         children: <Widget>[
                           Expanded(child:  Container(
                             padding: EdgeInsets.all(5.0),
                             alignment: Alignment.topCenter,
                             child:  Text(
-                        '$key:',
+                        '${prodAttr.attributeName}:',
                         style: TextStyle(color: Colors.blueGrey)),
                           )
                       ),
@@ -161,15 +201,22 @@ class _ProductDetailsState extends State<ProductDetails> {
                          padding: EdgeInsets.all(5.0),
                         alignment: Alignment.topLeft,
                         child:   Text(
-                          '${prods.values.elementAt(index).toString()}',overflow: TextOverflow.ellipsis,maxLines: 2,)),
+                          '${prodAttr.value}',overflow: TextOverflow.ellipsis,maxLines: 2,)),
                       )
                      
                         ],
 
                       ):Container();
                   }),
-                ),
-               
+                  /* ListView.builder(
+                    itemCount: 4,
+                    physics:new  NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context,int item){
+                    return Text('hii');
+                  }), */
+                )
+                
               ],
             ),
           ),

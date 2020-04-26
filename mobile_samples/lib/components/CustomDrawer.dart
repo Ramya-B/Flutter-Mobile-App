@@ -20,7 +20,7 @@ import 'company_settings/companysettings.dart';
 import 'package:tradeleaves/tl-services/core-npm/UserServiceImpl.dart';
 import 'package:tradeleaves/models/index.dart';
 import 'package:tradeleaves/components/inquiries/inquiries.dart';
-
+import 'favourites/favourite.dart';
 import 'leads/leads.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -137,7 +137,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ),
                     decoration: ShapeDecoration(
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 1.0, style: BorderStyle.solid),
+                        side: BorderSide(color: Colors.grey),
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
                       ),
                     ),
@@ -164,7 +164,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                   decoration: ShapeDecoration(
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(width: 1.0, style: BorderStyle.solid),
+                      side: BorderSide(color: Colors.grey),
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
                   ),
@@ -184,7 +184,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ))),
             child: new ListTile(
               title: Text('Top Results'),
-              leading: Icon(Icons.home),
+              leading: Icon(Icons.home,color: Colors.green,),
             ),
           ),
           (this.emailId != null && this.fullName != null)
@@ -193,7 +193,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       builder: (context) => PersonalProfile())),
                   child: new ListTile(
                     title: Text('Profile'),
-                    leading: Icon(Icons.person),
+                    leading: Icon(Icons.person,color: Colors.green),
                   ),
                 )
               : Container(),
@@ -203,7 +203,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       builder: (context) => new Register())),
                   child: new ListTile(
                     title: Text('Register'),
-                    leading: Icon(Icons.people),
+                    leading: Icon(Icons.people,color: Colors.green),
                   ),
                 )
               : Container(),
@@ -213,29 +213,29 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       new MaterialPageRoute(builder: (context) => Login())),
                   child: new ListTile(
                     title: Text('Login'),
-                    leading: Icon(Icons.person),
+                    leading: Icon(Icons.person,color: Colors.green),
                   ),
                 )
               : Container(),
 //          (user!=null) && (user.personalDetails.profile.company.accountStatus == null) || (user.personalDetails.profile.company.accountStatus != null && user.personalDetails.profile.company.accountStatus.statusId == "CREATED_INCOMPLETED") ?
-          showCompanyRegistration
+          showCompanyRegistration && this.authToken != null
               ? InkWell(
                   onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                       builder: (context) => CompanyRegistration())),
                   child: new ListTile(
                     title: Text('Business Setup'),
-                    leading: Icon(Icons.business),
+                    leading: Icon(Icons.business,color: Colors.green),
                   ),
                 )
               : Container(),
 //          user!=null && (user.personalDetails.profile.company.status == "COMPLETE" )?
-          showCompanySettings
+          showCompanySettings && this.authToken != null
               ? InkWell(
                   onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                       builder: (context) => CompanySettings())),
                   child: new ListTile(
                     title: Text('Company Settings'),
-                    leading: Icon(Icons.business),
+                    leading: Icon(Icons.business,color: Colors.green),
                   ),
                 )
               : Container(),
@@ -245,7 +245,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     selectedUrl: "https://classifieds.tradeleaves.com/"))),
             child: new ListTile(
               title: Text('Classifieds'),
-              leading: Icon(Icons.table_chart),
+              leading: Icon(Icons.table_chart,color: Colors.green),
             ),
           ),
           InkWell(
@@ -253,47 +253,55 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 new MaterialPageRoute(builder: (context) => new Categories())),
             child: new ListTile(
               title: Text('Categories'),
-              leading: Icon(Icons.dashboard),
+              leading: Icon(Icons.dashboard,color: Colors.green),
             ),
           ),
-          InkWell(
+          this.authToken != null ?InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => new UserProducts())),
             child: new ListTile(
               title: Text('My Products'),
-              leading: Icon(Icons.view_list),
+              leading: Icon(Icons.view_list,color: Colors.green),
             ),
+          ):Container(),
+          this.authToken != null?InkWell(
+          onTap: () => Navigator.of(context).push(
+              new MaterialPageRoute(builder: (context) => new Favourite())),
+          child: new ListTile(
+            title: Text('Favorites'),
+            leading: Icon(Icons.favorite,color: Colors.green),
           ),
-          InkWell(
+          ):Container(),
+        this.authToken != null?InkWell(
             onTap: () => Navigator.of(context).push(
                 new MaterialPageRoute(builder: (context) => new Inquiries())),
             child: new ListTile(
               title: Text('Inquiries'),
-              leading: Icon(Icons.email),
+              leading: Icon(Icons.email,color: Colors.green),
             ),
-          ),
-          InkWell(
+          ):Container(),
+          this.authToken != null?InkWell(
             onTap: () => Navigator.of(context).push(
                 new MaterialPageRoute(builder: (context) => new Leads())),
             child: new ListTile(
               title: Text('Leads'),
-              leading: Icon(Icons.email),
+              leading: Icon(Icons.email,color: Colors.green),
             ),
-          ),
-          InkWell(
+          ):Container(),
+          this.authToken != null?InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => new AlertNotifications())),
             child: new ListTile(
               title: Text('Notifications'),
-              leading: Icon(Icons.notifications),
+              leading: Icon(Icons.notifications,color: Colors.green),
             ),
-          ),
+          ):Container(),
           InkWell(
             onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => new SettingsPage())),
             child: new ListTile(
               title: Text('Settings'),
-              leading: Icon(Icons.settings),
+              leading: Icon(Icons.settings,color: Colors.green),
             ),
           ),
           InkWell(
@@ -301,7 +309,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 new MaterialPageRoute(builder: (context) => new AboutPage())),
             child: new ListTile(
               title: Text('About'),
-              leading: Icon(Icons.info),
+              leading: Icon(Icons.info,color: Colors.green),
             ),
           ),
           (this.authToken != null)
@@ -310,7 +318,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       builder: (context) => new LogOut())),
                   child: new ListTile(
                     title: Text('Logout'),
-                    leading: Icon(Icons.exit_to_app),
+                    leading: Icon(Icons.exit_to_app,color: Colors.green),
                   ))
               : Container(),
         ],

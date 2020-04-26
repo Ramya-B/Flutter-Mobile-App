@@ -35,13 +35,14 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
+    profileResp =null;
     getUserDetails();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      body: profileResp!= null ? ListView(
         children: <Widget>[
           Container(
             margin: EdgeInsets.all(20),
@@ -221,6 +222,8 @@ class _ProfileState extends State<Profile> {
             ),
           ),
         ],
+      ):Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }

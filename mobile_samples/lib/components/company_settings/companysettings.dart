@@ -55,12 +55,12 @@ class _CompanySettingsState extends State<CompanySettings> {
           children: <Widget>[
             About(),
             Contact(),
-            Text('data'),
-            Text('data'),
-            Text('data'),
-            Text('data'),
-            Text('data'),
-            Text('data')
+            Text('Need to implement'),
+            Text('Need to implement'),
+            Text('Need to implement'),
+            Text('Need to implement'),
+            Text('Need to implement'),
+            Text('Need to implement')
           ],
         ),
       ),

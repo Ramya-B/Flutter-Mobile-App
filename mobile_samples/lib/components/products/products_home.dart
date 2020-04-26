@@ -29,7 +29,7 @@ class _HomeProductsState extends State<HomeProducts> {
           alignment: Alignment.topLeft,
         ),
         Container(
-          height: 200,
+          height: 260,
           child: HomePageCategories(),
         ),
         //  Container(
@@ -104,14 +104,14 @@ class _HomePageCategoriesState extends State<HomePageCategories> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
+    return categoryList.length>0? GridView.builder(
         itemCount: this.categoryList.length,
         scrollDirection: Axis.horizontal,
         gridDelegate:
             new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
           return  CategoryCard(    categoryDTO: this.categoryList[index],);
-        });
+        }):Center(child: CircularProgressIndicator(),);
   }
 }
 
@@ -139,7 +139,8 @@ class _CategoryCardState extends State<CategoryCard> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(5.0),
-      height: 50,
+      height: 140,
+      width: 140,
       child:  InkWell(
           onTap: () => Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => SubCategoryDeatils(
@@ -147,10 +148,21 @@ class _CategoryCardState extends State<CategoryCard> {
                      categoryImage:this.categoryImage 
                     ))),
               child: Card(
-              child: this.categoryImage!=null ? Image.network(
-                  '${this.categoryImage}',
-    
-                ):Container()
+              child: Container(
+                height: 120,
+                width: 120,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    this.categoryImage!=null ? Image.network(
+                    '${this.categoryImage}',
+                    width: 90,
+                    height: 70,
+                  ):Container(),
+                  Container(child:Text(widget.categoryDTO.name,style: TextStyle(color: Colors.grey),), padding: EdgeInsets.all(5),)
+                  ],
+                ),
+              )
             ),
       ),
     );

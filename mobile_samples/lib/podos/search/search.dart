@@ -1,5 +1,4 @@
 import 'package:tradeleaves/models/index.dart';
-import 'package:tradeleaves/podos/suppliers/supplier.dart';
 
 class SearchResults {
   SupplierDTO supplierSearchDTO;

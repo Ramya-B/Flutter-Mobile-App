@@ -1,0 +1,31 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'favouriteProductsListDTO.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+FavouriteProductsListDTO _$FavouriteProductsListDTOFromJson(
+    Map<String, dynamic> json) {
+  return FavouriteProductsListDTO()
+    ..favouriteProductsDTO = json['favouriteProductsDTO'] == null
+        ? null
+        : FavouriteProductsDTO.fromJson(
+            json['favouriteProductsDTO'] as Map<String, dynamic>)
+    ..productDTO = json['productDTO'] == null
+        ? null
+        : ProductDTO.fromJson(json['productDTO'] as Map<String, dynamic>)
+    ..supplierSearchDTO = json['supplierSearchDTO'] == null
+        ? null
+        : SupplierDTO.fromJson(
+            json['supplierSearchDTO'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$FavouriteProductsListDTOToJson(
+        FavouriteProductsListDTO instance) =>
+    <String, dynamic>{
+      'favouriteProductsDTO': instance.favouriteProductsDTO,
+      'productDTO': instance.productDTO,
+      'supplierSearchDTO': instance.supplierSearchDTO
+    };
