@@ -59,9 +59,7 @@ class _FavouriteState extends State<Favourite> {
              favSuppliers!=null && favSuppliers.length > 0 ? Container(
                child: FavouritePage(favProds: favouriteList.favouriteProductsListDTO,
                favSuppliers: favSuppliers,),
-             ):Center(
-                  child: CircularProgressIndicator(),
-                );
+             ):Container();
            
   }
 }

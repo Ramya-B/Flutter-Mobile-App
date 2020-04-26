@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tradeleaves/components/landing_pages/tl_landing_pages.dart';
 import 'package:tradeleaves/components/products/products_home.dart';
 import '../CustomAppBar.dart';
 import '../CustomBottomNavigationBar.dart';
+import 'landing_page.dart';
 
 class LogOut extends StatefulWidget {
   @override
@@ -27,13 +29,6 @@ class _LogOutState extends State<LogOut> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: CustomToolBar(),
-      body: Container(
-        child: HomeProducts(),
-      ),
-      bottomNavigationBar: CustomNavBar(selectedIndex: 0),
-      // drawer: CustomDrawer(),
-    );
+    return TradeleavesLandingPage();
   }
 }

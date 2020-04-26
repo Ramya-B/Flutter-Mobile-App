@@ -34,6 +34,18 @@ class _FavouritePageState extends State<FavouritePage> {
   var suppliers;
   var products;
 
+   handleFav(ProductDTO productDTO,SupplierDTO supplierDTO) async{
+    setState(() {
+      productDTO.isFavorited = !productDTO.isFavorited;
+    });
+    FavouriteProductsDTO favouriteProductsDTO = new FavouriteProductsDTO();
+    favouriteProductsDTO.productId = productDTO.productId;
+    favouriteProductsDTO.productImageUrl = productDTO.primaryImageUrl;
+    favouriteProductsDTO.suppplierName = supplierDTO.supplierName;
+    favouriteProductsDTO.partyId = supplierDTO.supplierId;
+    catalogService.handleFavorites(favouriteProductsDTO);
+  }
+
   CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
 
   @override
@@ -78,33 +90,33 @@ class _FavouritePageState extends State<FavouritePage> {
                     children: <Widget>[
                       Column(
                         children: <Widget>[
-                          CheckboxListTile(
-                            title: Text(
-                              'Select All',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            value: selectProducts,
-                            activeColor: Colors.green,
-                            checkColor: Colors.white,
-                            onChanged: (bool value) {
-                              setState(() {
-                                this.selectProducts = value;
-                                this.product1 = value;
-                                this.product2 = value;
-                                this.product3 = value;
-                                this.product4 = value;
-                              });
-                            },
-                            controlAffinity: ListTileControlAffinity.leading,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    top: BorderSide(color: Colors.grey))),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
+                          // CheckboxListTile(
+                          //   title: Text(
+                          //     'Select All',
+                          //     style: TextStyle(color: Colors.black),
+                          //   ),
+                          //   value: selectProducts,
+                          //   activeColor: Colors.green,
+                          //   checkColor: Colors.white,
+                          //   onChanged: (bool value) {
+                          //     setState(() {
+                          //       this.selectProducts = value;
+                          //       this.product1 = value;
+                          //       this.product2 = value;
+                          //       this.product3 = value;
+                          //       this.product4 = value;
+                          //     });
+                          //   },
+                          //   controlAffinity: ListTileControlAffinity.leading,
+                          // ),
+                          // Container(
+                          //   decoration: BoxDecoration(
+                          //       border: Border(
+                          //           top: BorderSide(color: Colors.grey))),
+                          // ),
+                          // SizedBox(
+                          //   height: 10,
+                          // ),
                           Container(
                             child: ListView.builder(
                               itemCount: widget.favProds.length,
@@ -120,8 +132,9 @@ class _FavouritePageState extends State<FavouritePage> {
                                       )));
                                 },
                                 child: Container(
-                            height: 290,
-                            width: 400,
+                                  margin: EdgeInsets.all(10),
+                                height: 140,
+                                width: 400,
                             decoration: BoxDecoration(
                                 border: Border.all(
                                   color: Colors.grey,
@@ -131,18 +144,18 @@ class _FavouritePageState extends State<FavouritePage> {
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  CheckboxListTile(
-                                    value: product1,
-                                    activeColor: Colors.green,
-                                    checkColor: Colors.white,
-                                    onChanged: (bool value) {
-                                      setState(() {
-                                        this.product1 = value;
-                                      });
-                                    },
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                  ),
+                                  // CheckboxListTile(
+                                  //   value: product1,
+                                  //   activeColor: Colors.green,
+                                  //   checkColor: Colors.white,
+                                  //   onChanged: (bool value) {
+                                  //     setState(() {
+                                  //       this.product1 = value;
+                                  //     });
+                                  //   },
+                                  //   controlAffinity:
+                                  //       ListTileControlAffinity.leading,
+                                  // ),
                                   Container(
                                     padding: EdgeInsets.all(10),
                                     child: Row(
@@ -156,15 +169,17 @@ class _FavouritePageState extends State<FavouritePage> {
                                           height: 100.0,
                                           fit: BoxFit.cover,
                                         ):Container(),
-                                        SizedBox(
-                                          width: 30,
-                                        ),
+                                        
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Container(
-                                              width: 200,
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                 Container(
+                                                   padding: EdgeInsets.all(10),
+                                              width: 220,
                                               child: InkWell(
                                                 child: Text(
                                                   '${widget.favProds[index].productDTO.productName}',
@@ -175,10 +190,28 @@ class _FavouritePageState extends State<FavouritePage> {
                                                 onTap: () {},
                                               ),
                                             ),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Container(
+                                              child: IconButton(icon: Icon(widget.favProds[index].productDTO.isFavorited ? Icons.favorite_border:Icons.favorite ),color:Colors.green ,onPressed: (){
+                                                handleFav(widget.favProds[index].productDTO,widget.favProds[index].supplierSearchDTO);
+                                              },),
+                                              
+                                            ),
+                                             Container(
+                                              child: IconButton(icon: Icon(Icons.message),color:Colors.green,onPressed: (){
+                                                Navigator.of(context).push(new MaterialPageRoute(
+                                              builder: (context) => new ContactSupplier()));
+                                              },))
+                                              ],
+                                            )
+                                              ],
+                                            ),
                                             SizedBox(
                                               height: 5,
                                             ),
-                                            Text('Min. Order : 100 Piece(s)')
+                                            // Text('Min. Order : 100 Piece(s)')
                                           ],
                                         ),
                                       ],
@@ -267,57 +300,57 @@ class _FavouritePageState extends State<FavouritePage> {
                                       ],
                                     ),
                                   ), */
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      SizedBox(
-                                        height: 25,
-                                        child: OutlineButton(
-                                          shape: new RoundedRectangleBorder(
-                                              borderRadius:
-                                                  new BorderRadius.circular(
-                                                      30.0)),
-                                          highlightColor: Colors.green[900],
-                                          child: Text(
-                                            'Contact Supplier',
-                                            style: TextStyle(color: Colors.green),
-                                          ),
-                                          onPressed: () {},
-                                          borderSide: BorderSide(
-                                            color: Colors.green,
-                                            style: BorderStyle.solid,
-                                            width: 0.8,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 25,
-                                        width: 150,
-                                        child: OutlineButton(
-                                          shape: new RoundedRectangleBorder(
-                                              borderRadius:
-                                                  new BorderRadius.circular(
-                                                      30.0)),
-                                          highlightColor: Colors.green[900],
-                                          child: Text(
-                                            'Chat Now',
-                                            style: TextStyle(color: Colors.green),
-                                          ),
-                                          onPressed: () {},
-                                          borderSide: BorderSide(
-                                            color: Colors.green,
-                                            style: BorderStyle.solid,
-                                            width: 0.8,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  )
+                                  // SizedBox(
+                                  //   height: 10,
+                                  // ),
+                                  // Row(
+                                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                                  //   mainAxisAlignment:
+                                  //       MainAxisAlignment.spaceAround,
+                                  //   children: <Widget>[
+                                  //     SizedBox(
+                                  //       height: 25,
+                                  //       child: OutlineButton(
+                                  //         shape: new RoundedRectangleBorder(
+                                  //             borderRadius:
+                                  //                 new BorderRadius.circular(
+                                  //                     30.0)),
+                                  //         highlightColor: Colors.green[900],
+                                  //         child: Text(
+                                  //           'Contact Supplier',
+                                  //           style: TextStyle(color: Colors.green),
+                                  //         ),
+                                  //         onPressed: () {},
+                                  //         borderSide: BorderSide(
+                                  //           color: Colors.green,
+                                  //           style: BorderStyle.solid,
+                                  //           width: 0.8,
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //     SizedBox(
+                                  //       height: 25,
+                                  //       width: 150,
+                                  //       child: OutlineButton(
+                                  //         shape: new RoundedRectangleBorder(
+                                  //             borderRadius:
+                                  //                 new BorderRadius.circular(
+                                  //                     30.0)),
+                                  //         highlightColor: Colors.green[900],
+                                  //         child: Text(
+                                  //           'Chat Now',
+                                  //           style: TextStyle(color: Colors.green),
+                                  //         ),
+                                  //         onPressed: () {},
+                                  //         borderSide: BorderSide(
+                                  //           color: Colors.green,
+                                  //           style: BorderStyle.solid,
+                                  //           width: 0.8,
+                                  //         ),
+                                  //       ),
+                                  //     )
+                                  //   ],
+                                  // )
                                 ],
                             ),
                           ),
@@ -339,25 +372,25 @@ class _FavouritePageState extends State<FavouritePage> {
                     children: <Widget>[
                       Column(
                         children: <Widget>[
-                          CheckboxListTile(
-                            title: Text(
-                              'Select All',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            value: selectSuppliers,
-                            activeColor: Colors.green,
-                            checkColor: Colors.white,
-                            onChanged: (bool value) {
-                              setState(() {
-                                this.selectSuppliers = value;
-                                this.supplier1 = value;
-                                this.supplier2 = value;
-                                this.supplier3 = value;
-                                this.supplier4 = value;
-                              });
-                            },
-                            controlAffinity: ListTileControlAffinity.leading,
-                          ),
+                          // CheckboxListTile(
+                          //   title: Text(
+                          //     'Select All',
+                          //     style: TextStyle(color: Colors.black),
+                          //   ),
+                          //   value: selectSuppliers,
+                          //   activeColor: Colors.green,
+                          //   checkColor: Colors.white,
+                          //   onChanged: (bool value) {
+                          //     setState(() {
+                          //       this.selectSuppliers = value;
+                          //       this.supplier1 = value;
+                          //       this.supplier2 = value;
+                          //       this.supplier3 = value;
+                          //       this.supplier4 = value;
+                          //     });
+                          //   },
+                          //   controlAffinity: ListTileControlAffinity.leading,
+                          // ),
                           Container(
                             decoration: BoxDecoration(
                                 border: Border(
@@ -374,6 +407,7 @@ class _FavouritePageState extends State<FavouritePage> {
                              itemBuilder: (BuildContext context,int sup){
                              return  Container(
                             padding: EdgeInsets.all(5),
+                            margin: EdgeInsets.all(10),
                             height: 110,
                             width: 200,
                             decoration: BoxDecoration(
