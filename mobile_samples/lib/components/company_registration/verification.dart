@@ -856,8 +856,9 @@ class _VerficationPageState extends State<VerficationPage> {
         ),
 //    Container(
         identificationDocuments!=null && identificationDocuments.length>0 ? DataTable(
-            // dataRowHeight: 30,
-            // headingRowHeight: 30,
+            dataRowHeight: 30,
+            headingRowHeight: 30,
+            columnSpacing: 20,
         columns: [
     DataColumn(label: Expanded(child: Text('File Name'))),
     DataColumn(label: Expanded(child: Text('Verification Type'))),

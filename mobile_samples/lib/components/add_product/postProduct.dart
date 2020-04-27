@@ -936,6 +936,7 @@ class _AddProduct1State extends State<AddProduct1> {
                                                 .toString(),
                                       ),
                                       onChanged: (DateTime val) {
+                                        FocusScope.of(context).requestFocus(FocusNode());
                                         setState(() {
                                            createCategoryProductAttributeDTO[index]
                                             .productAttributeDetailDTO
@@ -988,6 +989,7 @@ class _AddProduct1State extends State<AddProduct1> {
                                                   .productAttributeDTO
                                                   .name,
                                           onChanged: (value) {
+                                            FocusScope.of(context).requestFocus(FocusNode());
                                             setState(() {
                                               print("city on changed");
                                               print(value);
@@ -1121,6 +1123,7 @@ class _AddProduct1State extends State<AddProduct1> {
                                                       isExpanded: true,
                                                       onChanged: (val) {
                                                         setState(() {
+                                                          FocusScope.of(context).requestFocus(FocusNode());
                                                           print(val);
                                                           print(val.value);
                                                           createCategoryProductAttributeDTO[
@@ -1166,6 +1169,7 @@ class _AddProduct1State extends State<AddProduct1> {
                                                           searchHint:
                                                               "Select one",
                                                           onChanged: (value) {
+                                                            FocusScope.of(context).requestFocus(FocusNode());
                                                             print(
                                                                 "search and select");
                                                             print(value);
@@ -1228,6 +1232,7 @@ class _AddProduct1State extends State<AddProduct1> {
                                                               onChanged:
                                                                   (year) {
                                                                 setState(() {
+                                                                  FocusScope.of(context).requestFocus(FocusNode());
                                                                   print(year);
                                                                   createCategoryProductAttributeDTO[
                                                                           index]
@@ -1386,6 +1391,8 @@ class _AddProduct1State extends State<AddProduct1> {
                                                                                   onChanged: (val) {
                                                                                     setState(
                                                                                       () {
+                                                                                      FocusScope.of(context).requestFocus(FocusNode());
+
                                                                                         createCategoryProductAttributeDTO[index].productAttributeDetailDTO.uom = val;
                                                                                         createCategoryProductAttributeDTO[index].productAttributeDetailDTO.unitType = new UnitType();
                                                                                         createCategoryProductAttributeDTO[index].productAttributeDetailDTO.unitType.unit = val.unit.toString();
@@ -1415,6 +1422,7 @@ class _AddProduct1State extends State<AddProduct1> {
                                                                                   onChanged: (val) {
                                                                                     setState(
                                                                                       () {
+                                                                                        FocusScope.of(context).requestFocus(FocusNode());
                                                                                         print(val);
                                                                                         createCategoryProductAttributeDTO[index].productAttributeDetailDTO.currency = val.currency;
                                                                                         createCategoryProductAttributeDTO[index].productAttributeDetailDTO.country = val;
@@ -1500,6 +1508,7 @@ class _AddProduct1State extends State<AddProduct1> {
                                                                                                         },
                                                                                                       ).toList(),
                                                                                                       onChanged: (val) {
+                                                                                                        FocusScope.of(context).requestFocus(FocusNode());
                                                                                                         setState(() {
                                                                                                           if (val.incoterm != null) {
                                                                                                             createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price.priceList[priceList].priceType = val.incoterm;
@@ -1685,6 +1694,7 @@ class _AddProduct1State extends State<AddProduct1> {
                                                                                                       }).toList(),
                                                                                                       isExpanded: true,
                                                                                                       onChanged: (period) {
+                                                                                                        
                                                                                                         print(period);
                                                                                                          FocusScope.of(context).requestFocus(FocusNode());
                                                                                                         setState(() {
@@ -1759,6 +1769,7 @@ class _AddProduct1State extends State<AddProduct1> {
                                                                                               onChanged: (val) {
                                                                                                 setState(
                                                                                                   () {
+                                                                                                    FocusScope.of(context).requestFocus(FocusNode());
                                                                                                     print(val);
                                                                                                     // createCategoryProductAttributeDTO[index].productAttributeDetailDTO.currency = val.currency;
                                                                                                     // createCategoryProductAttributeDTO[index].productAttributeDetailDTO.country = val;
@@ -1818,6 +1829,7 @@ class _AddProduct1State extends State<AddProduct1> {
                                                                                               onChanged: (val) {
                                                                                                 setState(
                                                                                                   () {
+                                                                                                    FocusScope.of(context).requestFocus(FocusNode());
                                                                                                     print(val);
                                                                                                     // createCategoryProductAttributeDTO[index].productAttributeDetailDTO.currency = val.currency;
                                                                                                     // createCategoryProductAttributeDTO[index].productAttributeDetailDTO.country = val;
