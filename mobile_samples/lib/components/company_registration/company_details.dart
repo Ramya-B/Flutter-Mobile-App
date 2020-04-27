@@ -13,8 +13,6 @@ import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import 'package:tradeleaves/tl-services/customs/customServiceImpl.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
 import '../../service_locator.dart';
-import "package:eventify/eventify.dart";
-
 class CompanyDetails extends StatefulWidget {
   @override
   _CompanyDetailsState createState() => _CompanyDetailsState();
@@ -341,14 +339,6 @@ class _CompanyDetailsState extends State<CompanyDetails> {
     var response = await crmService.saveCompanyDetails(company);
     print("RESPONSE PRINTED");
     print(response);
-    setState(() {
-      EventEmitter emitter = new EventEmitter();
-      emitter.on("test", null, (ev, context) {
-        print("${ev.eventName} - ${ev.eventData}");
-      });
-
-      emitter.emit("test", null, "Test data");
-    });
   }
 
   @override

@@ -176,12 +176,6 @@
       "languageVersion": "2.6"
     },
     {
-      "name": "eventify",
-      "rootUri": "file:///D:/tl-softwares/flutter/.pub-cache/hosted/pub.dartlang.org/eventify-0.1.4",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
       "name": "expression_language",
       "rootUri": "file:///D:/tl-softwares/flutter/.pub-cache/hosted/pub.dartlang.org/expression_language-0.2.1",
       "packageUri": "lib/",
@@ -692,7 +686,7 @@
       "languageVersion": "2.2"
     }
   ],
-  "generated": "2020-04-27T12:04:33.919914Z",
+  "generated": "2020-04-27T12:12:18.971401Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }
