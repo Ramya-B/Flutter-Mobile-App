@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -356,7 +357,10 @@ class _AddProduct1State extends State<AddProduct1> {
 
       createCategoryProductAttributeDTO.productAttributeDetailDTO.valueType =
           "VARCHAR";
-
+      if(createCategoryProductAttributeDTO.productAttributeDetailDTO.attributeName == 'Product Name'){
+            productDTO.productName = createCategoryProductAttributeDTO
+                .productAttributeDetailDTO.value;
+      }
       switch (createCategoryProductAttributeDTO
           .productAttributeDetailDTO.displayType) {
         case "name":
@@ -737,12 +741,23 @@ class _AddProduct1State extends State<AddProduct1> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text(createCategoryProductAttributeDTO[index]
-                          .productAttributeDTO
-                          .name),
+                    Row( 
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                          child: Text(createCategoryProductAttributeDTO[index]
+                            .productAttributeDTO
+                            .name,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400),),
+                            ),
+                        ),
+                          createCategoryProductAttributeDTO[index]
+                          .catgryProductAttributeDTO.required ?  Container(
+                            child: Text('required',style: TextStyle(color: Colors.grey),),
+                          ):Container()
+                      ],
                     ),
+
                     (createCategoryProductAttributeDTO[index].catgryProductAttributeDTO.displayType == "text" ||
                             createCategoryProductAttributeDTO[index]
                                     .catgryProductAttributeDTO
@@ -1297,6 +1312,7 @@ class _AddProduct1State extends State<AddProduct1> {
                                                                                 value: createCategoryProductAttributeDTO[index].productAttributeDetailDTO.selectedPeriod,
                                                                                 isExpanded: true,
                                                                                 onChanged: (period) {
+                                                                                   FocusScope.of(context).requestFocus(FocusNode());
                                                                                   setState(() {
                                                                                     print(period);
                                                                                     createCategoryProductAttributeDTO[index].productAttributeDetailDTO.selectedPeriod = period;
@@ -1670,6 +1686,7 @@ class _AddProduct1State extends State<AddProduct1> {
                                                                                                       isExpanded: true,
                                                                                                       onChanged: (period) {
                                                                                                         print(period);
+                                                                                                         FocusScope.of(context).requestFocus(FocusNode());
                                                                                                         setState(() {
                                                                                                           if (period != null) createCategoryProductAttributeDTO[index].productAttributeDetailDTO.price.priceList[priceList].edcSelectedTime = period;
                                                                                                         });

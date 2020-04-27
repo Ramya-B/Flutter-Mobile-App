@@ -23,14 +23,16 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  ProductDTO productDTO;
    CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
  var prodAttrs =  ["text",'City Type','radio','checkbox'];
   @override
   void initState() {
+    // this.productDTO = widget.productDTO;
     super.initState();
   }
    setValues() async{
-      // for (var attr in widget.productDTO.productAttributeDetailDTO) {
+      // for (var attr in this.productDTO.productAttributeDetailDTO) {
       //     switch (attr.displayType) {
       //       case "City Type":
               
@@ -40,13 +42,21 @@ class _ProductDetailsState extends State<ProductDetails> {
         
       // }
    }
+   Future getProductDetails() async {
+    print("get Product called...!");
+    var product =  await catalogService
+        .getProductById("fee01ff6-3ea6-413a-8471-739fb405f656");
+    print("product details is...!");
+    print(product);
+  }
+
    handleFav() async{
     setState(() {
-      widget.productDTO.isFavorited = !widget.productDTO.isFavorited;
+      this.productDTO.isFavorited = !this.productDTO.isFavorited;
     });
     FavouriteProductsDTO favouriteProductsDTO = new FavouriteProductsDTO();
-    favouriteProductsDTO.productId = widget.productDTO.productId;
-    favouriteProductsDTO.productImageUrl = widget.productDTO.primaryImageUrl;
+    favouriteProductsDTO.productId = this.productDTO.productId;
+    favouriteProductsDTO.productImageUrl = this.productDTO.primaryImageUrl;
     favouriteProductsDTO.suppplierName = widget.supplierDTO.supplierName;
     favouriteProductsDTO.partyId = widget.supplierDTO.supplierId;
     catalogService.handleFavorites(favouriteProductsDTO);
@@ -65,7 +75,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               height: 250,
               width: 250,
               child: Image.network(
-                  '${Constants.envUrl}${Constants.mongoImageUrl}/${widget.productDTO.primaryImageUrl}'),
+                  '${Constants.envUrl}${Constants.mongoImageUrl}/${this.productDTO.primaryImageUrl}'),
             ),
           ),
 
@@ -90,7 +100,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       margin: EdgeInsets.all(5),
                       child: new IconButton(
                           icon: Icon(
-                            widget.productDTO.isFavorited? Icons.favorite : Icons.favorite_border,
+                            this.productDTO.isFavorited? Icons.favorite : Icons.favorite_border,
                             color: Colors.green,
                           ),
                           onPressed: ()  {
@@ -177,16 +187,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                   margin: EdgeInsets.only(bottom: 10),
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.all(5),
-                  child: Text(widget.productDTO.productName,style: TextStyle(fontSize: 18,
+                  child: Text(this.productDTO.productName,style: TextStyle(fontSize: 18,
                   ),),
                 ),
                 Container(
                   child: ListView.builder(
-                    itemCount: widget.productDTO.productAttributeDetailDTO.length,
+                    itemCount: this.productDTO.productAttributeDetailDTO.length,
                     physics: new NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context,int index){
-                       ProductAttributeDetailDTO  prodAttr =    widget.productDTO.productAttributeDetailDTO[index];
+                       ProductAttributeDetailDTO  prodAttr =    this.productDTO.productAttributeDetailDTO[index];
                       return (prodAttr.attributeName!=null && prodAttr.value !=null) ? Row(
                         children: <Widget>[
                           Expanded(child:  Container(

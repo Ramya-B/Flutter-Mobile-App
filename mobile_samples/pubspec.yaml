@@ -36,7 +36,7 @@ dependencies:
   image_picker: ^0.6.3+4
   dio: ^3.0.9
   mime: ^0.9.6+3
-  multi_image_picker: ^4.6.5+rc.1
+  multi_image_picker: ^4.6.4
   flutter_absolute_path: ^1.0.6
   # image_crop: ^0.3.2
   image_cropper: ^1.2.1

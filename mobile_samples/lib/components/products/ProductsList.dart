@@ -148,6 +148,12 @@ class _SingleProductState extends State<SingleProduct> {
   CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
   bool isFavorited = false;
 
+  @override
+  void initState() {
+     widget.productDTO.isFavorited =false;
+    super.initState();
+  }
+
   handleFav() async{
     setState(() {
       widget.productDTO.isFavorited = !widget.productDTO.isFavorited;
