@@ -41,7 +41,7 @@ ProductDTO _$ProductDTOFromJson(Map<String, dynamic> json) {
     ..selectedSites = json['selectedSites'] as List
     ..supplierId = json['supplierId'] as String
     ..productId = json['productId'] as String
-    ..isFavorited = false;
+    ..isFavorited = json['isFavorited'] as bool;
 }
 
 Map<String, dynamic> _$ProductDTOToJson(ProductDTO instance) =>
