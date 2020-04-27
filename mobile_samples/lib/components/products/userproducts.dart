@@ -128,7 +128,9 @@ class _UserProductsState extends State<UserProducts> {
                       supplierDTO: this.supplierDTO,
                     );
                   }))
-          : Center(
+          : this.userProducts != null && this.userProducts.totalProducts ==0? Center(
+              child:Text('No Products are added.')
+          ):Center(
             child: CircularProgressIndicator(),
           ),
     );

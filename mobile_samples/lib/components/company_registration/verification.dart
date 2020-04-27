@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as mime;
+import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:tradeleaves/components/company_settings/companysettings.dart';
 import 'package:tradeleaves/constants.dart';
 import 'package:tradeleaves/models/identificationAttributesList.dart';
@@ -189,10 +191,14 @@ class _VerficationPageState extends State<VerficationPage> {
 
   setAuthorizationFile() async{
     print("setAuthorizationFile called");
-    var resultList = await FilePicker.getMultiFile(
+    var resultList = await MultiImagePicker.pickImages(
+      maxImages: 1,
+      enableCamera: true,
+    );
+    /* await FilePicker.getMultiFile(
       type: FileType.custom,
       allowedExtensions: ['jpg', 'pdf', 'doc', 'png'],
-    );
+    ); */
     for (var imageFile in resultList) {
       uploadImage(imageFile, resultList.length).then((fileResp) {
         // Get the download URL
@@ -220,10 +226,14 @@ class _VerficationPageState extends State<VerficationPage> {
 
   _uploadFileList() async{
     print("_uploadFileList called");
-    var resultList = await FilePicker.getMultiFile(
+    var resultList = await MultiImagePicker.pickImages(
+      maxImages: 1,
+      enableCamera: true,
+    );
+    /* await FilePicker.getMultiFile(
       type: FileType.custom,
       allowedExtensions: ['jpg', 'pdf', 'doc', 'png'],
-    );
+    ); */
     print("printing the uploaded images");
     print(resultList);
     for (var imageFile in resultList) {
@@ -289,9 +299,9 @@ class _VerficationPageState extends State<VerficationPage> {
 
       }
   }
-  Future<dynamic> uploadImage(imageFile, int length) async {
+  Future<dynamic> uploadImage(Asset imageFile, int length) async {
     print("image file");
-    print(imageFile);
+    print(jsonEncode(imageFile.identifier));  var path = await FlutterAbsolutePath.getAbsolutePath(imageFile.identifier);
       var request = http.MultipartRequest(
           'POST',
           Uri.parse(
@@ -300,7 +310,7 @@ class _VerficationPageState extends State<VerficationPage> {
       print(request);
       request.files.add(await http.MultipartFile.fromPath(
         'attachments',
-        imageFile.path,
+        path,
         contentType: mime.MediaType('image', 'jpg'),
       ));
 
@@ -846,9 +856,11 @@ class _VerficationPageState extends State<VerficationPage> {
         ),
 //    Container(
         identificationDocuments!=null && identificationDocuments.length>0 ? DataTable(
+            // dataRowHeight: 30,
+            // headingRowHeight: 30,
         columns: [
-    DataColumn(label: Text('File Name')),
-    DataColumn(label: Text('Verification Type')),
+    DataColumn(label: Expanded(child: Text('File Name'))),
+    DataColumn(label: Expanded(child: Text('Verification Type'))),
     DataColumn(label: Text('Action')),
     ],
     rows:

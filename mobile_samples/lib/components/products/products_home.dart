@@ -29,7 +29,7 @@ class _HomeProductsState extends State<HomeProducts> {
           alignment: Alignment.topLeft,
         ),
         Container(
-          height: 260,
+          height: 280,
           child: HomePageCategories(),
         ),
         //  Container(

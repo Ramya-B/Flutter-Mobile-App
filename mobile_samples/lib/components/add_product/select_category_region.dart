@@ -344,7 +344,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
                                                                               .categoryTreePathDto
                                                                               .childCategoryDto[index2]
                                                                               .leafCategoryListDto[index3]
-                                                                              .categoryId ? Colors.red:Colors.white,
+                                                                              .categoryId ? Colors.green[700]:Colors.white,
                                                                             ) ,
                                                                         bottom: BorderSide(
                                                                             color:

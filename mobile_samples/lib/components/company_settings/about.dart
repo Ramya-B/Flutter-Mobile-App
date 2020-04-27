@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import 'package:tradeleaves/models/index.dart';
@@ -69,10 +70,14 @@ class _AboutState extends State<About> {
 
   setIdentificationFile() async {
     print("setIdentificationFile called");
-    var resultList = await FilePicker.getMultiFile(
+    var resultList = await MultiImagePicker.pickImages(
+      maxImages: 1,
+      enableCamera: true,
+    );
+     /* await FilePicker.getMultiFile(
       type: FileType.custom,
       allowedExtensions: ['jpg', 'pdf', 'doc', 'png'],
-    );
+    ); */
     print("printing the uploaded images");
     print(resultList);
     for (var imageFile in resultList) {
@@ -508,38 +513,42 @@ class _AboutState extends State<About> {
                     height: 8,
                   ),
                   Container(
-                    height: 70,
+                    height: 80,
                     child: GridView.builder(
                         itemCount: employees.length,
                         scrollDirection: Axis.horizontal,
                         gridDelegate:
                         new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
                         itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                          return Wrap(
                             children: <Widget>[
-                              SizedBox(
-                                height: 30,
-                                width: 120,
-                                child: RaisedButton(
-                                  color: index==empIndex ? Colors.green[700] : Colors.grey[200],
-                                  onPressed: () {
-                                    setState(() {
-                                      employee.value = employees[index].attributeDescription;
-                                      empIndex=index;
-                                      print(empIndex == index);
-                                      updateIndex(index);
-                                    });
+                              Container(
+                                margin: EdgeInsets.only(right:10),
+                                width: 140,
+                                height: 50,
+                                child: SizedBox(
+                                  height: 30,
+                                  width: 140,
+                                  child: RaisedButton(
+                                    color: index==empIndex ? Colors.green[700] : Colors.grey[200],
+                                    onPressed: () {
+                                      setState(() {
+                                        employee.value = employees[index].attributeDescription;
+                                        empIndex=index;
+                                        print(empIndex == index);
+                                        updateIndex(index);
+                                      });
 
-                                  },
-                                  child: Text(
-                                    employees[index].attributeDescription.toString(),
-                                    style:
-                                    TextStyle(color: index==empIndex ? Colors.white : Colors.green[700]),
+                                    },
+                                    child: Text(
+                                      employees[index].attributeDescription.toString(),
+                                      style:
+                                      TextStyle(color: index==empIndex ? Colors.white : Colors.green[700]),
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(20)),
                                   ),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(20)),
                                 ),
                               )
                             ],
