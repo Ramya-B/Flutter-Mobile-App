@@ -9,6 +9,7 @@ class SupplierReceiveCustRequestDTO {
     num startIndex;
     num size;
     String lobId;
+    String supplierStatus;
     
     factory SupplierReceiveCustRequestDTO.fromJson(Map<String,dynamic> json) => _$SupplierReceiveCustRequestDTOFromJson(json);
     Map<String, dynamic> toJson() => _$SupplierReceiveCustRequestDTOToJson(this);

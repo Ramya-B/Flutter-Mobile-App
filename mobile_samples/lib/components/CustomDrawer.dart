@@ -285,7 +285,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 new MaterialPageRoute(builder: (context) => new Leads())),
             child: new ListTile(
               title: Text('Leads'),
-              leading: Icon(Icons.email,color: Colors.green),
+              leading: Icon(Icons.trending_up,color: Colors.green),
             ),
           ):Container(),
           this.authToken != null?InkWell(
