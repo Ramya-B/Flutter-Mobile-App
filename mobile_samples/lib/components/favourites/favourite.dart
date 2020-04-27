@@ -14,9 +14,8 @@ class Favourite extends StatefulWidget {
 
 class _FavouriteState extends State<Favourite> {
   CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
-   UserFavorites favouriteList;
    List<FavouriteSuppliersDto> favSuppliers;
-
+   UserFavorites favouriteList;
    getFavRecords() async {
     ProductSearchCriteriaDTO productSearchCriteriaDTO =
         ProductSearchCriteriaDTO();

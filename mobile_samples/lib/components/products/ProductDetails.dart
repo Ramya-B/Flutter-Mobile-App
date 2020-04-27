@@ -26,9 +26,11 @@ class _ProductDetailsState extends State<ProductDetails> {
   ProductDTO productDTO;
    CatalogServiceImpl get catalogService => locator<CatalogServiceImpl>();
  var prodAttrs =  ["text",'City Type','radio','checkbox'];
+
   @override
   void initState() {
-    // this.productDTO = widget.productDTO;
+     this.productDTO = widget.productDTO;
+     this.productDTO.isFavorited =false;
     super.initState();
   }
    setValues() async{
@@ -49,6 +51,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     print("product details is...!");
     print(product);
   }
+  
 
    handleFav() async{
     setState(() {

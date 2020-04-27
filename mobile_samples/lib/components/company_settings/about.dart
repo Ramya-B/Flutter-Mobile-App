@@ -435,6 +435,7 @@ class _AboutState extends State<About> {
                             },
                           ).toList(),
                           onChanged: (val) {
+                            FocusScope.of(context).requestFocus(FocusNode());
                             setState(
                               () {
                                 companyType = val;
@@ -611,6 +612,7 @@ class _AboutState extends State<About> {
                       },
                     ).toList(),
                     onChanged: (val) {
+                      FocusScope.of(context).requestFocus(FocusNode());
                       setState(
                         () {
                           print("industry type");
