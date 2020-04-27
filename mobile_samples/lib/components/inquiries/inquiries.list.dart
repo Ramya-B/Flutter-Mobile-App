@@ -231,7 +231,7 @@ class _MyInquiriesState extends State<MyInquiries> {
                           ),
                           child: Column(
                             children: <Widget>[
-                              Row(
+                              Wrap(
                                 children: <Widget>[
                                   Text(
                                     selectedInquiries[index]
