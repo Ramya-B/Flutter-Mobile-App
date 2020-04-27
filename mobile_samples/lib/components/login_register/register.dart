@@ -246,7 +246,7 @@ class _RegisterState extends State<Register> {
       child: Material(
           elevation: 2,
           borderRadius: BorderRadius.circular(30),
-          color: Colors.green[700],
+          color: Constants.toolbarColor,
           child: MaterialButton(
               minWidth: MediaQuery.of(context).size.width / 3,
               onPressed: () {
