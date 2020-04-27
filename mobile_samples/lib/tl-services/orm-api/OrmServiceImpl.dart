@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tradeleaves/constants.dart';
 import 'package:tradeleaves/models/customerRequestDTO.dart';
+import 'package:tradeleaves/models/supplierReceiveCustRequestDTO.dart';
 import 'package:tradeleaves/tl-services/orm-api/OrmServices.dart';
 
 class OrmServiceImpl extends OrmServices {
@@ -87,6 +88,34 @@ class OrmServiceImpl extends OrmServices {
         return res;
       } else {
         return throw Exception('falied to getSupplierReceiveCustRequest');
+      }
+    });
+  }
+
+  @override
+  Future getSupplierExpiredCustRequest(SupplierReceiveCustRequestDTO supplierReceiveCustRequestDTO) async{
+    // TODO: implement getSupplierExpiredCustRequest
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getSupplierExpiredCustRequest called");
+    print(jsonEncode(supplierReceiveCustRequestDTO));
+    return await http
+        .post('${Constants.envUrl}$apiUrl/requests/expired/supplierRequest',
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+        body: jsonEncode({
+          'supplierReceiveCustRequestDTO': supplierReceiveCustRequestDTO.toJson()
+        })).then((data) {
+      print("response getSupplierExpiredCustRequest ...!");
+      print(data);
+      if (data?.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getSupplierExpiredCustRequest successfully....");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to getSupplierExpiredCustRequest');
       }
     });
   }

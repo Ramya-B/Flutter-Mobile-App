@@ -11,7 +11,8 @@ SupplierReceiveCustRequestDTO _$SupplierReceiveCustRequestDTOFromJson(
   return SupplierReceiveCustRequestDTO()
     ..startIndex = json['startIndex'] as num
     ..size = json['size'] as num
-    ..lobId = json['lobId'] as String;
+    ..lobId = json['lobId'] as String
+    ..supplierStatus = json['supplierStatus'] as String;
 }
 
 Map<String, dynamic> _$SupplierReceiveCustRequestDTOToJson(
@@ -19,5 +20,6 @@ Map<String, dynamic> _$SupplierReceiveCustRequestDTOToJson(
     <String, dynamic>{
       'startIndex': instance.startIndex,
       'size': instance.size,
-      'lobId': instance.lobId
+      'lobId': instance.lobId,
+      'supplierStatus': instance.supplierStatus
     };

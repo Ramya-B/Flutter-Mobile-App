@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/leads/leads.list.dart';
+import 'package:tradeleaves/components/leads/expiredleads.list.dart';
+import 'package:tradeleaves/components/leads/discardedLeads.list.dart';
 
 import '../../constants.dart';
 class Leads extends StatefulWidget {
@@ -38,8 +40,8 @@ class _LeadsState extends State<Leads> {
         body: TabBarView(
           children: <Widget>[
             MyLeads(),
-            Text('Expired Leads'),
-            Text('Discarded Leads')
+            MyExpiredLeads(),
+            MyDiscardedLeads(),
           ],
         ),
       ),
