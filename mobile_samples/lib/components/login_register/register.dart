@@ -38,9 +38,9 @@ class _RegisterState extends State<Register> {
   var password;
   var confirmPassword;
   var companyName;
-  bool optIn = false;
   bool autoValidate = false;
   String countryCode;
+  bool agreeForSms = false;
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 15.0);
 
   @override
@@ -58,7 +58,7 @@ class _RegisterState extends State<Register> {
     Details details = new Details();
     details.firstName = this.name;
     details.domainName = "tradeleaves.in";
-    details.optIn = this.optIn;
+    details.optIn = this.agreeForSms;
     person.details = details;
     Mobile mobile = new Mobile();
     mobile.contactNumber = this.mobile;
@@ -259,6 +259,21 @@ class _RegisterState extends State<Register> {
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.white)))),
     );
+        var agreeToRecieveSms = Container(
+          child:CheckboxListTile(
+          title: Text("I agree to receive SMS."),
+          value: agreeForSms,
+          checkColor: Colors.white,
+          activeColor: Colors.green,
+          onChanged: (newValue) { 
+            setState(() {
+              agreeForSms = !agreeForSms;
+            });
+          },
+          controlAffinity: ListTileControlAffinity.leading,  
+        )
+        );
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('Register'),
@@ -282,7 +297,9 @@ class _RegisterState extends State<Register> {
                   passwordField,
                   SizedBox(height: 15),
                   confirmPasswordField,
-                  SizedBox(height: 15),
+                  SizedBox(height: 10),
+                  agreeToRecieveSms,
+                  SizedBox(height: 10),
                   registerButton,
                   SizedBox(height: 15),
                   Text("Already have an account?"),
