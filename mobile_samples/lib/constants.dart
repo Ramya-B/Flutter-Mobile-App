@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 class Constants{
-  static const  envUrl ="http://tlrogers.westus2.cloudapp.azure.com:9800/";  
-  static const  envDomainUrl ="http://tlrogers.westus2.cloudapp.azure.com:9800/";
+  static const  envUrl ="http://tlrogers.westus2.cloudapp.azure.com:9800";  
+  static const  envDomainUrl ="http://demo.tradeleaves.com";
   static const  mongoImageUrl ="/tl/public/assest/get"; 
   static Color toolbarColor = Colors.green[700];
   static List lobs = [

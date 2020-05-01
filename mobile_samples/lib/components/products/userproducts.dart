@@ -186,14 +186,14 @@ class _SingleUserProductState extends State<SingleUserProduct> {
                       style: TextStyle(fontSize: 16),
                     )),
               ),
-              Expanded(
-                child: IconButton(icon: Icon(Icons.edit), onPressed: (){
-                  Navigator.of(context).push(new MaterialPageRoute(builder: (context) => SelectCategoryRegion(
-                    isEdit: true,
-                    productDTO: widget.productDTO,
-                  )));
-                })
-              ),
+              // Expanded(
+              //   child: IconButton(icon: Icon(Icons.edit), onPressed: (){
+              //     Navigator.of(context).push(new MaterialPageRoute(builder: (context) => SelectCategoryRegion(
+              //       isEdit: true,
+              //       productDTO: widget.productDTO,
+              //     )));
+              //   })
+              // ),
             ],
           ),
         ),
