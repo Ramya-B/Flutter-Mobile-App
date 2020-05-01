@@ -6,7 +6,7 @@ import 'package:multiselect_formfield/multiselect_formfield.dart';
 import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import 'package:tradeleaves/models/index.dart';
 import '../../service_locator.dart';
-import 'package:file_picker/file_picker.dart';
+// import 'package:file_picker/file_picker.dart';
 import 'package:tradeleaves/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as mime;
@@ -74,7 +74,8 @@ class _AboutState extends State<About> {
       maxImages: 1,
       enableCamera: true,
     );
-     /* await FilePicker.getMultiFile(
+     /* await 
+     .getMultiFile(
       type: FileType.custom,
       allowedExtensions: ['jpg', 'pdf', 'doc', 'png'],
     ); */

@@ -182,12 +182,6 @@
       "languageVersion": "2.6"
     },
     {
-      "name": "file_picker",
-      "rootUri": "file:///Users/tradeleaves/TLFlutterdev/flutter/.pub-cache/hosted/pub.dartlang.org/file_picker-1.7.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
       "name": "fixnum",
       "rootUri": "file:///Users/tradeleaves/TLFlutterdev/flutter/.pub-cache/hosted/pub.dartlang.org/fixnum-0.10.11",
       "packageUri": "lib/",
@@ -663,7 +657,7 @@
     },
     {
       "name": "webview_flutter",
-      "rootUri": "file:///Users/tradeleaves/TLFlutterdev/flutter/.pub-cache/hosted/pub.dartlang.org/webview_flutter-0.3.20+2",
+      "rootUri": "file:///Users/tradeleaves/TLFlutterdev/flutter/.pub-cache/hosted/pub.dartlang.org/webview_flutter-0.3.21",
       "packageUri": "lib/",
       "languageVersion": "2.7"
     },
@@ -686,7 +680,7 @@
       "languageVersion": "2.2"
     }
   ],
-  "generated": "2020-04-27T12:34:03.594624Z",
+  "generated": "2020-04-28T13:25:14.948345Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }

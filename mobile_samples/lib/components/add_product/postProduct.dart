@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:file_picker/file_picker.dart';
+// import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -67,7 +67,6 @@ class _AddProduct1State extends State<AddProduct1> {
   ProductDTO product;
   @override
   void initState() {
-    //  var prod =  getProductDetails();
     faqs = [];
     customList = [];
     setCustomAttr();
@@ -89,13 +88,7 @@ class _AddProduct1State extends State<AddProduct1> {
     super.initState();
   }
 
-  Future getProductDetails() async {
-    print("get Product called...!");
-     await catalogService
-        .getProductById("fee01ff6-3ea6-413a-8471-739fb405f656");
-    print("product details is...!");
-    print(product);
-  }
+ 
 
   handleEditProduct(ProductDTO product) async {
     print("handleEditProduct");
@@ -138,44 +131,44 @@ class _AddProduct1State extends State<AddProduct1> {
   getFilePickers(
       CreateCategoryProductAttributeDTO
           createCategoryProductAttributeDTO) async {
-    print("file pickers are called..!");
-    List<File> files = await FilePicker.getMultiFile(
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'pdf', 'doc'],
-    );
-    print(files);
+    // print("file pickers are called..!");
+    // // List<File> files = await FilePicker.getMultiFile(
+    // //   type: FileType.custom,
+    // //   allowedExtensions: ['jpg', 'pdf', 'doc'],
+    // // );
+    // print(files);
 
-    for (var fileItem in files) {
-      switch (fileItem.path.toString().substring(
-          fileItem.path.toString().lastIndexOf('.'),
-          fileItem.path.toString().length)) {
-        case 'jpg':
-        case 'jpeg':
-        case 'JPG':
-        case 'JPEG':
-          mime.MediaType('image', 'jpeg');
-          break;
-      }
-      print(fileItem.path);
-      var request = http.MultipartRequest(
-          'POST',
-          Uri.parse(
-              "${Constants.envUrl}/mongoupload/attachments/?Override=false"));
-      request.files.add(await http.MultipartFile.fromPath(
-        'attachments',
-        fileItem.path,
-        contentType: null,
-      ));
+    // for (var fileItem in files) {
+    //   switch (fileItem.path.toString().substring(
+    //       fileItem.path.toString().lastIndexOf('.'),
+    //       fileItem.path.toString().length)) {
+    //     case 'jpg':
+    //     case 'jpeg':
+    //     case 'JPG':
+    //     case 'JPEG':
+    //       mime.MediaType('image', 'jpeg');
+    //       break;
+    //   }
+    //   print(fileItem.path);
+    //   var request = http.MultipartRequest(
+    //       'POST',
+    //       Uri.parse(
+    //           "${Constants.envUrl}/mongoupload/attachments/?Override=false"));
+    //   request.files.add(await http.MultipartFile.fromPath(
+    //     'attachments',
+    //     fileItem.path,
+    //     contentType: null,
+    //   ));
 
-      print("request is...!");
-      print(request);
-      var res = await request.send();
-      final respStr = await res.stream.bytesToString();
-      print("image upload ...");
-      print(respStr);
-      var imageInfo = json.decode(respStr)["fileName"];
-      setProductAttribute(createCategoryProductAttributeDTO, imageInfo);
-    }
+    //   print("request is...!");
+    //   print(request);
+    //   var res = await request.send();
+    //   final respStr = await res.stream.bytesToString();
+    //   print("image upload ...");
+    //   print(respStr);
+    //   var imageInfo = json.decode(respStr)["fileName"];
+    //   setProductAttribute(createCategoryProductAttributeDTO, imageInfo);
+    // }
   }
 
   _saveForm() async {
@@ -698,6 +691,7 @@ class _AddProduct1State extends State<AddProduct1> {
       List<CreateCategoryProductAttributeDTO> createCategoryProductAttributeDTO,
       BuildContext context,
       lobId) {
+       
     return new Container(
        margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -738,6 +732,8 @@ class _AddProduct1State extends State<AddProduct1> {
               shrinkWrap: true,
               itemCount: createCategoryProductAttributeDTO.length,
               itemBuilder: (context, int index) {
+                print('2@@@@@@@@@@@@@@@@@@@@@@');
+                 print(jsonEncode(createCategoryProductAttributeDTO[index].productAttributeDetailDTO));
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

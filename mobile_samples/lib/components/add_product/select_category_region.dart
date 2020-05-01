@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
@@ -12,6 +14,9 @@ import 'package:tradeleaves/tl-services/crm/CrmServiceImpl.dart';
 import '../../service_locator.dart';
 
 class SelectCategoryRegion extends StatefulWidget {
+  final ProductDTO productDTO;
+  final bool isEdit;
+  SelectCategoryRegion({this.isEdit,this.productDTO});
   @override
   _SelectCategoryRegionState createState() => _SelectCategoryRegionState();
 }
@@ -35,6 +40,8 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
   ProductAttributesResp listCatProdAttrLoBRespDTO;
   ListCatProdAttrLoBDTO listCatProdAttrLoBDTO = new ListCatProdAttrLoBDTO();
   List lobs = Constants.lobs;
+  ProductDTO product;
+
   getCompanyRegions() async {
     regions = await crmService.companyRegions();
     companyRegions = CompanyRegionsResp.fromJson(regions);
@@ -107,8 +114,19 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
 
   setProductAttributeDetailDto(List<CreateCategoryProductAttributeDTO> createCategoryProductAttributeDTO) async{
  for (var createCategoryProductAttributeDTO in createCategoryProductAttributeDTO ) {
-     ProductAttributeDetailDTO productAttributeDetailDTO =
+   print(this.product.productAttributeDetailDTO.length);
+    ProductAttributeDetailDTO productAttributeDetailDTO =
           ProductAttributeDetailDTO();
+    productAttributeDetailDTO.value = null;
+   if(widget.productDTO !=null && widget.isEdit && this.product !=null&& this.product.productAttributeDetailDTO.length >0){
+     for (var item in this.product.productAttributeDetailDTO) {
+       print("enteed into loop");
+       if(item.attributeName == createCategoryProductAttributeDTO.productAttributeDTO.name){
+         print("value setted ...${item.value}");
+       productAttributeDetailDTO.value = item.value;
+       }
+     }
+   }
       productAttributeDetailDTO.attributeName =
           createCategoryProductAttributeDTO.productAttributeDTO.name;
       productAttributeDetailDTO.required =
@@ -129,7 +147,7 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
           createCategoryProductAttributeDTO.catgryProductAttributeDTO.variant;
       productAttributeDetailDTO.sortable =
           createCategoryProductAttributeDTO.catgryProductAttributeDTO.sortable;
-      productAttributeDetailDTO.value = null;
+     
       productAttributeDetailDTO.valuesList = null;
       productAttributeDetailDTO.lobId =
           createCategoryProductAttributeDTO.catgryProductAttributeDTO.lobId;
@@ -184,15 +202,26 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
       });
     }
   }
+   Future getProductDetails() async {
+    print("get Product called...!");
+     var pr = await catalogService.getProductById(widget.productDTO.productId);
+    this.product =ProductDTO.fromJson(pr);
+    print("product details is...!");
+    print(jsonEncode(product));
+  }
 
   @override
   void initState() {
+    if(widget.productDTO != null && widget.isEdit){
+      getProductDetails();
+    }
     savedCats = [];
     selectedLobs = [];
     selectedRegions = [];
     response = false;
     prepareDataForAttr();
     getCompanyRegions();
+    
     super.initState();
   }
   
