@@ -120,7 +120,7 @@ class _MyLeadsState extends State<MyLeads> {
                       ),
                       child: Column(
                         children: <Widget>[
-                          Row(
+                          Wrap(
                             children: <Widget>[
                               Text(
                                 selectedLeads[index]

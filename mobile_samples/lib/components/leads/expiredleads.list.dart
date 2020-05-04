@@ -89,6 +89,7 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
     // TODO: implement initState
     List<SupplierResponseListDto> selectedLeads = [];
     _controller = ScrollController();
+    print("add listner called");
     _controller.addListener(_scrollListener);
     this.selectedLeads = [];
     print("init calling....expired leads");
@@ -159,8 +160,10 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
                       ),
                       child: Column(
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
+//                          Row(
+//                            children: <Widget>[
+                      Wrap(
+                      children: <Widget>[
                               Text(
                                 selectedLeads[index]
                                     .requestDto
@@ -174,8 +177,9 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500),
                               )
-                            ],
-                          ),
+                      ]),
+//                            ],
+//                          ),
                           Row(
                             children: <Widget>[
                               Container(

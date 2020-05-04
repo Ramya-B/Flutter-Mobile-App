@@ -121,7 +121,7 @@ class _MyDiscardedLeadsState extends State<MyDiscardedLeads> {
                       ),
                       child: Column(
                         children: <Widget>[
-                          Row(
+                          Wrap(
                             children: <Widget>[
                               Text(
                                 selectedLeads[index]
