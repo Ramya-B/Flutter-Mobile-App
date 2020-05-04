@@ -1,3 +1,4 @@
 {
-  "supplierResponseListDto": "$[]supplierResponseListDto"
+  "supplierResponseListDto": "$[]supplierResponseListDto",
+  "totalCount": 45
 }
