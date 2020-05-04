@@ -12,11 +12,13 @@ SupplierResponseDto _$SupplierResponseDtoFromJson(Map<String, dynamic> json) {
         ?.map((e) => e == null
             ? null
             : SupplierResponseListDto.fromJson(e as Map<String, dynamic>))
-        ?.toList();
+        ?.toList()
+    ..totalCount = json['totalCount'] as num;
 }
 
 Map<String, dynamic> _$SupplierResponseDtoToJson(
         SupplierResponseDto instance) =>
     <String, dynamic>{
-      'supplierResponseListDto': instance.supplierResponseListDto
+      'supplierResponseListDto': instance.supplierResponseListDto,
+      'totalCount': instance.totalCount
     };

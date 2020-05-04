@@ -15,18 +15,34 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
   new SupplierReceiveCustRequestDTO();
   ExpiredLeadsResponseDto leads;
   List<SupplierResponseListDto>selectedLeads;
+  ScrollController _controller;
+  var totalLeads;
+  var counter = 1;
+  var pageStart = 0;
   List lobs = [
     {"lobId": "34343e34-7601-40de-878d-01b3bd1f0640", "lobName": "All"},
     {"lobId": "34343e34-7601-40de-878d-01b3bd1f0641", "lobName": "Marketplace"},
     {"lobId": "34343e34-7601-40de-878d-01b3bd1f0642", "lobName": "Bliss"}
   ];
-  getExpiredLeadsForParty(supplierReceiveCustRequestDTO) async{
+  getExpiredLeadsForParty() async{
     print("getExpiredLeadsForParty caled");
+    supplierReceiveCustRequestDTO.lobId = "34343e34-7601-40de-878d-01b3bd1f0640";
+    supplierReceiveCustRequestDTO.size = 10;
+    supplierReceiveCustRequestDTO.startIndex = this.pageStart;
     var res = await ormService.getSupplierExpiredCustRequest(supplierReceiveCustRequestDTO);
     print("getExpiredLeadsForParty response");
     setState(() {
       this.leads = ExpiredLeadsResponseDto.fromJson(res);
-      this.selectedLeads = leads.supplierResponseDto.supplierResponseListDto;
+//      this.selectedLeads = leads.supplierResponseDto.supplierResponseListDto;
+      this.totalLeads = leads.supplierResponseDto.totalCount;
+      if (this.leads.supplierResponseDto.supplierResponseListDto.length > 0) {
+        setState(() {
+          for (var item = 0; item < this.leads.supplierResponseDto.supplierResponseListDto.length; item++) {
+            this.counter++;
+            this.selectedLeads.add(this.leads.supplierResponseDto.supplierResponseListDto[item]);
+          }
+        });
+      }
       if (selectedLeads != null &&
           selectedLeads.length > 0 &&
           lobs != null &&
@@ -48,16 +64,36 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
       }
     });
   }
+  _scrollListener() {
+    print("_scrollListener called");
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {
+        if (this.totalLeads > this.counter) {
+          this.pageStart++;
+          print("scrolling is over.so fetching --${this.pageStart}");
+          getExpiredLeadsForParty();
+        }
+      });
+    }
+    if (_controller.offset <= _controller.position.minScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {
+        print("scroll reached the top...!");
+      });
+    }
+  }
 
   @override
   void initState() {
     // TODO: implement initState
-    supplierReceiveCustRequestDTO.lobId = "34343e34-7601-40de-878d-01b3bd1f0640";
-    supplierReceiveCustRequestDTO.size = 10;
-    supplierReceiveCustRequestDTO.startIndex = 0;
     List<SupplierResponseListDto> selectedLeads = [];
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
+    this.selectedLeads = [];
+    print("init calling....expired leads");
     setState(() {
-      getExpiredLeadsForParty(supplierReceiveCustRequestDTO);
+      getExpiredLeadsForParty();
     });
     super.initState();
   }
@@ -73,6 +109,7 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
             child: (selectedLeads != null && selectedLeads.length > 0)
                 ? ListView.builder(
                 padding: const EdgeInsets.all(8),
+                controller: _controller,
                 itemCount: selectedLeads.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
