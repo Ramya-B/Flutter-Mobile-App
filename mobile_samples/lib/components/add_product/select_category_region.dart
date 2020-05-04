@@ -114,19 +114,9 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
 
   setProductAttributeDetailDto(List<CreateCategoryProductAttributeDTO> createCategoryProductAttributeDTO) async{
  for (var createCategoryProductAttributeDTO in createCategoryProductAttributeDTO ) {
-   print(this.product.productAttributeDetailDTO.length);
     ProductAttributeDetailDTO productAttributeDetailDTO =
           ProductAttributeDetailDTO();
     productAttributeDetailDTO.value = null;
-   if(widget.productDTO !=null && widget.isEdit && this.product !=null&& this.product.productAttributeDetailDTO.length >0){
-     for (var item in this.product.productAttributeDetailDTO) {
-       print("enteed into loop");
-       if(item.attributeName == createCategoryProductAttributeDTO.productAttributeDTO.name){
-         print("value setted ...${item.value}");
-       productAttributeDetailDTO.value = item.value;
-       }
-     }
-   }
       productAttributeDetailDTO.attributeName =
           createCategoryProductAttributeDTO.productAttributeDTO.name;
       productAttributeDetailDTO.required =

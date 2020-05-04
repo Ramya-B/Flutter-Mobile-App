@@ -732,8 +732,6 @@ class _AddProduct1State extends State<AddProduct1> {
               shrinkWrap: true,
               itemCount: createCategoryProductAttributeDTO.length,
               itemBuilder: (context, int index) {
-                print('2@@@@@@@@@@@@@@@@@@@@@@');
-                 print(jsonEncode(createCategoryProductAttributeDTO[index].productAttributeDetailDTO));
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

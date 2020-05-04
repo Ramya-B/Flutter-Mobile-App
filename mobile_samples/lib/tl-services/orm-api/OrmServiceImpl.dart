@@ -66,7 +66,6 @@ class OrmServiceImpl extends OrmServices {
 
   @override
   Future getSupplierReceiveCustRequest(supplierReceiveCustRequestDTO) async{
-    // TODO: implement getSupplierReceiveCustRequest
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("getSupplierReceiveCustRequest called");
     print(jsonEncode(supplierReceiveCustRequestDTO));
@@ -94,7 +93,6 @@ class OrmServiceImpl extends OrmServices {
 
   @override
   Future getSupplierExpiredCustRequest(SupplierReceiveCustRequestDTO supplierReceiveCustRequestDTO) async{
-    // TODO: implement getSupplierExpiredCustRequest
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("getSupplierExpiredCustRequest called");
     print(jsonEncode(supplierReceiveCustRequestDTO));

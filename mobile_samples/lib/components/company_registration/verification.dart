@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-// import 'package:file_picker/file_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart' as mime;
@@ -191,13 +191,14 @@ class _VerficationPageState extends State<VerficationPage> {
 
   setAuthorizationFile() async{
     print("setAuthorizationFile called");
-    var resultList = await MultiImagePicker.pickImages(
-      maxImages: 1,
-      enableCamera: true,
-    );
-    /* await FilePicker.getMultiFile(
+    var resultList = 
+     await FilePicker.getMultiFile(
       type: FileType.custom,
       allowedExtensions: ['jpg', 'pdf', 'doc', 'png'],
+    ); 
+    /* await MultiImagePicker.pickImages(
+      maxImages: 1,
+      enableCamera: true,
     ); */
     for (var imageFile in resultList) {
       uploadImage(imageFile, resultList.length).then((fileResp) {
@@ -226,13 +227,14 @@ class _VerficationPageState extends State<VerficationPage> {
 
   _uploadFileList() async{
     print("_uploadFileList called");
-    var resultList = await MultiImagePicker.pickImages(
-      maxImages: 1,
-      enableCamera: true,
-    );
-    /* await FilePicker.getMultiFile(
+    var resultList = 
+    await FilePicker.getMultiFile(
       type: FileType.custom,
       allowedExtensions: ['jpg', 'pdf', 'doc', 'png'],
+    );
+    /* await MultiImagePicker.pickImages(
+      maxImages: 1,
+      enableCamera: true,
     ); */
     print("printing the uploaded images");
     print(resultList);
@@ -299,7 +301,7 @@ class _VerficationPageState extends State<VerficationPage> {
 
       }
   }
-  Future<dynamic> uploadImage(Asset imageFile, int length) async {
+  Future<dynamic> uploadImage( imageFile, int length) async {
     print("image file");
     print(jsonEncode(imageFile.identifier));  var path = await FlutterAbsolutePath.getAbsolutePath(imageFile.identifier);
       var request = http.MultipartRequest(
