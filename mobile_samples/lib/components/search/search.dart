@@ -26,7 +26,7 @@ class _SearchItemsState extends State<SearchItems> {
   List res = [];
   String selectedLob;
   String countryId;
-  ScrollController _controller;
+  ScrollController _controllerScroll;
   var totalProducts;
   var counter = 1;
   var productSearchCriteriaDTODup;
@@ -78,8 +78,9 @@ class _SearchItemsState extends State<SearchItems> {
   }
 
   _scrollListener() {
-    if (_controller.offset >= _controller.position.maxScrollExtent &&
-        !_controller.position.outOfRange) {
+    if (_controllerScroll.offset >= _controllerScroll.position.maxScrollExtent &&
+        !_controllerScroll.position.outOfRange) {
+          print("scrolling down");
       setState(() {
         if (this.totalProducts > this.counter) {
           this.pageStart++;
@@ -88,8 +89,8 @@ class _SearchItemsState extends State<SearchItems> {
         }
       });
     }
-    if (_controller.offset <= _controller.position.minScrollExtent &&
-        !_controller.position.outOfRange) {
+    if (_controllerScroll.offset <= _controllerScroll.position.minScrollExtent &&
+        !_controllerScroll.position.outOfRange) {
       setState(() {
         print("scroll reached the top...!");
       });
@@ -147,8 +148,8 @@ class _SearchItemsState extends State<SearchItems> {
       getProductsByCategory(widget.categoryId);
     }
    
-    _controller = ScrollController();
-    _controller.addListener(_scrollListener);
+    _controllerScroll = ScrollController();
+    _controllerScroll.addListener(_scrollListener);
     this.prodList = [];
     print("init calling....searchProducts");
     super.initState();
@@ -187,9 +188,9 @@ class _SearchItemsState extends State<SearchItems> {
       body: ListView(
         children: <Widget>[
           Container(
-             height: 800,
+            constraints: BoxConstraints(minHeight: 100, maxHeight: 800),
             child: GridView.builder(
-                controller: _controller,
+                controller: _controllerScroll,
                 itemCount: this.prodList.length,
                 gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2),

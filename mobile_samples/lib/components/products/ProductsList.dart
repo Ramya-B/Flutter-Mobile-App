@@ -150,7 +150,7 @@ class _SingleProductState extends State<SingleProduct> {
 
   @override
   void initState() {
-     widget.productDTO.isFavorited =false;
+    isFavorited = widget.productDTO.isFavorited != null ? widget.productDTO.isFavorited :false;
     super.initState();
   }
 
@@ -200,7 +200,7 @@ class _SingleProductState extends State<SingleProduct> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                      Expanded(child: IconButton(icon: Icon(widget.productDTO.isFavorited ? Icons.favorite : Icons.favorite_border),color:Colors.green, onPressed: (){
+                      Expanded(child: IconButton(icon: Icon(isFavorited ? Icons.favorite : Icons.favorite_border),color:Colors.green, onPressed: (){
                        handleFav();
                       })),
                       Expanded(child: IconButton(icon: Icon(Icons.message), color: Colors.green,onPressed: (){
