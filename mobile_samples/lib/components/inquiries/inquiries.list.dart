@@ -579,7 +579,9 @@ class _MyInquiriesState extends State<MyInquiries> {
                         ) : Container()
                       ],
                     ))
-            : Container(),
+            : Center(
+                child: Text('No inquiries found.',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),)
+            ),
       )
     ]));
   }

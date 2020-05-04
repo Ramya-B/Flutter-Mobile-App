@@ -64,7 +64,6 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
       }
     });
   }
-  
   _scrollListener() {
     print("_scrollListener called");
     if (_controller.offset >= _controller.position.maxScrollExtent &&
@@ -87,12 +86,16 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
 
   @override
   void initState() {
+    // TODO: implement initState
     List<SupplierResponseListDto> selectedLeads = [];
     _controller = ScrollController();
+    print("add listner called");
     _controller.addListener(_scrollListener);
     this.selectedLeads = [];
     print("init calling....expired leads");
+    setState(() {
       getExpiredLeadsForParty();
+    });
     super.initState();
   }
 
@@ -102,15 +105,15 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
         child: ListView(scrollDirection: Axis.vertical, children: <Widget>[
           Container(
             constraints: new BoxConstraints(
-              minHeight: 400.0,
+              minHeight: 200.0,
             ),
             child: (selectedLeads != null && selectedLeads.length > 0)
                 ? ListView.builder(
                 padding: const EdgeInsets.all(8),
                 controller: _controller,
                 itemCount: selectedLeads.length,
-                 shrinkWrap: true,
-                // physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) => Column(
                   children: <Widget>[
                     Container(
@@ -157,27 +160,26 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
                       ),
                       child: Column(
                         children: <Widget>[
-                          Wrap(
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.only(bottom:10),
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  selectedLeads[index]
-                                      .requestDto
-                                      .customerRequestName !=
-                                      null
-                                      ? selectedLeads[index]
-                                      .requestDto
-                                      .customerRequestName
-                                      : '-',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500),
-                                ),
+//                          Row(
+//                            children: <Widget>[
+                      Wrap(
+                      children: <Widget>[
+                              Text(
+                                selectedLeads[index]
+                                    .requestDto
+                                    .customerRequestName !=
+                                    null
+                                    ? selectedLeads[index]
+                                    .requestDto
+                                    .customerRequestName
+                                    : '-',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
                               )
-                            ],
-                          ),
+                      ]),
+//                            ],
+//                          ),
                           Row(
                             children: <Widget>[
                               Container(
@@ -375,7 +377,9 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
                     ),
                   ],
                 ))
-                : Container(),
+                : Center(
+                child: Text('No expired leads found.',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),)
+            ),
           )
         ]));
 
