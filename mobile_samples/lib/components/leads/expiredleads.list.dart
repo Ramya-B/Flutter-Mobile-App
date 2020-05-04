@@ -64,6 +64,7 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
       }
     });
   }
+  
   _scrollListener() {
     print("_scrollListener called");
     if (_controller.offset >= _controller.position.maxScrollExtent &&
@@ -86,15 +87,12 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
 
   @override
   void initState() {
-    // TODO: implement initState
     List<SupplierResponseListDto> selectedLeads = [];
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
     this.selectedLeads = [];
     print("init calling....expired leads");
-    setState(() {
       getExpiredLeadsForParty();
-    });
     super.initState();
   }
 
@@ -104,15 +102,15 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
         child: ListView(scrollDirection: Axis.vertical, children: <Widget>[
           Container(
             constraints: new BoxConstraints(
-              minHeight: 200.0,
+              minHeight: 400.0,
             ),
             child: (selectedLeads != null && selectedLeads.length > 0)
                 ? ListView.builder(
                 padding: const EdgeInsets.all(8),
                 controller: _controller,
                 itemCount: selectedLeads.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+                 shrinkWrap: true,
+                // physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) => Column(
                   children: <Widget>[
                     Container(
@@ -159,20 +157,24 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
                       ),
                       child: Column(
                         children: <Widget>[
-                          Row(
+                          Wrap(
                             children: <Widget>[
-                              Text(
-                                selectedLeads[index]
-                                    .requestDto
-                                    .customerRequestName !=
-                                    null
-                                    ? selectedLeads[index]
-                                    .requestDto
-                                    .customerRequestName
-                                    : '-',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500),
+                              Container(
+                                padding: EdgeInsets.only(bottom:10),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  selectedLeads[index]
+                                      .requestDto
+                                      .customerRequestName !=
+                                      null
+                                      ? selectedLeads[index]
+                                      .requestDto
+                                      .customerRequestName
+                                      : '-',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                ),
                               )
                             ],
                           ),
