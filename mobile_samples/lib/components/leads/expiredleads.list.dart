@@ -377,7 +377,9 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
                     ),
                   ],
                 ))
-                : Container(),
+                : Center(
+                child: Text('No expired leads found.',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),)
+            ),
           )
         ]));
 

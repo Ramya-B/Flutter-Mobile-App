@@ -335,7 +335,9 @@ class _MyDiscardedLeadsState extends State<MyDiscardedLeads> {
                     ),
                   ],
                 ))
-                : Container(),
+                : Center(
+                child: Text('No discarded leads found.',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),)
+            ),
           )
         ]));
 

@@ -334,7 +334,10 @@ class _MyLeadsState extends State<MyLeads> {
                     ),
                   ],
                 ))
-                : Container(),
+                :
+                  Center(
+                child: Text('No leads found.',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),)
+            ),
           )
         ]));
 
