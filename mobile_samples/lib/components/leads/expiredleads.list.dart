@@ -15,7 +15,7 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
   new SupplierReceiveCustRequestDTO();
   ExpiredLeadsResponseDto leads;
   List<SupplierResponseListDto>selectedLeads;
-  ScrollController _controller;
+  ScrollController _controller = new ScrollController();
   var totalLeads;
   var counter = 1;
   var pageStart = 0;
@@ -65,7 +65,7 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
     });
   }
   _scrollListener() {
-    print("_scrollListener called");
+    print('scroll listener called');
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
       setState(() {
@@ -88,14 +88,12 @@ class _MyExpiredLeadsState extends State<MyExpiredLeads> {
   void initState() {
     // TODO: implement initState
     List<SupplierResponseListDto> selectedLeads = [];
-    _controller = ScrollController();
-    print("add listner called");
-    _controller.addListener(_scrollListener);
     this.selectedLeads = [];
-    print("init calling....expired leads");
     setState(() {
       getExpiredLeadsForParty();
     });
+    _controller.addListener(_scrollListener);
+    print("init state called");
     super.initState();
   }
 
