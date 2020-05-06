@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tradeleaves/models/index.dart';
+import 'package:tradeleaves/tl-services/orm-api/OrmServiceImpl.dart';
+import '../../service_locator.dart';
+import 'leads.list.dart';
 class LeadsDetailPage extends StatefulWidget {
   final int customerRequestId;
   LeadsDetailPage({
@@ -10,17 +14,28 @@ class LeadsDetailPage extends StatefulWidget {
 
 class _LeadsDetailPageState extends State<LeadsDetailPage> {
   int customerRequestId;
+  LeadDetailResponseDto leadDetails;
+  bool showAttributes = false;
+  OrmServiceImpl get ormService => locator<OrmServiceImpl>();
+  getBuyRequestDetails() async{
+    var res = await ormService
+        .getBuyRequestDetails(customerRequestId);
+    print("getBuyRequestDetails response");
+//    setState(() {
+//      leadDetails = LeadDetailResponseDto.fromJson(res);
+//    });
+    print(LeadDetailResponseDto.fromJson(res));
+  }
   @override
   void initState() {
     this.customerRequestId = widget.customerRequestId;
     print("printing the customer request id");
     print(this.customerRequestId);
+    getBuyRequestDetails();
     super.initState();
   }
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    bool showAttributes = false;
-
     return Scaffold(
      body: SingleChildScrollView(
       child: ListBody(
@@ -29,7 +44,11 @@ class _LeadsDetailPageState extends State<LeadsDetailPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               FlatButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+
+                    Navigator.of(context).push(
+                        new MaterialPageRoute(builder: (context) => new MyLeads()));
+                  },
                   icon: Icon(
                     Icons.arrow_back_ios,
                     size: 20,
@@ -163,7 +182,7 @@ class _LeadsDetailPageState extends State<LeadsDetailPage> {
                         FlatButton.icon(
                             onPressed: () {
                               setState(() {
-                                showAttributes = true;
+                                this.showAttributes = !showAttributes;
                               });
                             },
                             icon: Icon(
@@ -172,13 +191,13 @@ class _LeadsDetailPageState extends State<LeadsDetailPage> {
                               color: Colors.green[700],
                             ),
                             label: Text(
-                              'Show Attributes',
+                              !showAttributes ? 'Show Attributes' :  'Show Chat',
                               style: TextStyle(
                                   color: Colors.green[700], fontSize: 14),
                             )),
                       ],
                     ),
-                    Table(
+                    !showAttributes ? Table(
                       border: TableBorder.all(),
                       children: [
                         TableRow(children: [
@@ -306,11 +325,11 @@ class _LeadsDetailPageState extends State<LeadsDetailPage> {
                           ),
                         ]),
                       ],
-                    ),
+                    ): Container(),
                     SizedBox(
                       height: 20,
                     ),
-                    Container(
+                   this.showAttributes!=null && this.showAttributes ? Container(
                       width: size.width,
                       decoration: BoxDecoration(border: Border.all(width: 0.5)),
                       child: Column(
@@ -550,7 +569,8 @@ class _LeadsDetailPageState extends State<LeadsDetailPage> {
                           )
                         ],
                       ),
-                    ),
+                    )
+                    : Container(),
                   ],
                 ),
               )
