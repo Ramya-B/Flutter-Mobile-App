@@ -5,4 +5,5 @@ Future createBuyrequest(CustomerRequestDTO customerRequestDTO);
 Future getBuyRequestById(ActiveBuyRequestInputDTO activeBuyRequestInputDTO);
 Future getSupplierReceiveCustRequest(SupplierReceiveCustRequestDTO supplierReceiveCustRequestDTO);
 Future getSupplierExpiredCustRequest(SupplierReceiveCustRequestDTO supplierReceiveCustRequestDTO);
+Future getBuyRequestDetails(int custRequestId);
 }

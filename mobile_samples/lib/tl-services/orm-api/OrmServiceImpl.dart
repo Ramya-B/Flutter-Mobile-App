@@ -118,6 +118,31 @@ class OrmServiceImpl extends OrmServices {
     });
   }
 
+  @override
+  Future getBuyRequestDetails(int custRequestId) async{
+    // TODO: implement getBuyRequestDetails
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("getBuyRequestDetails service...");
+    return await http.get(
+      '${Constants.envUrl}$apiUrl/buyrequests/$custRequestId/customerrequest',
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer ${prefs.getString('token')}",
+        'Content-type': 'application/json; charset=UTF-8'
+      },
+    ).then((data) {
+      print("getBuyRequestDetails response...!");
+      print(data);
+      if (data.statusCode == 200) {
+        var res = json.decode(data.body);
+        print("getBuyRequestDetails get successfully......");
+        print(res);
+        return res;
+      } else {
+        return throw Exception('falied to get getBuyRequestDetails..........');
+      }
+    });
+  }
+
 
 
 }

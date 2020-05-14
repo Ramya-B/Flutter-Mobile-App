@@ -1,0 +1,12 @@
+{
+  "custRequestMessageId": "5c44d422-77c7-4923-854f-c01229cdb8f9",
+  "custRequestId": 13553,
+  "custResponseId": null,
+  "fromPartyId": "fef29c46-2214-41f6-884a-39806ce71a41",
+  "toPartyId": "5649399a-d3a9-4764-a9eb-145ee8d5db88",
+  "message": "Sent Quote as per the request",
+  "readStatus": "N",
+  "createdDate": "2019-10-03T13:16:16.829Z",
+  "supplierFlag": false,
+  "messageAttachment": null
+}
