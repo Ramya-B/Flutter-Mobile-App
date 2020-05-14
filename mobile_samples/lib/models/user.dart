@@ -28,7 +28,7 @@ class User {
     String appsite;
     String modified;
     String created;
-    List allowedlob;
+    List<String> allowedlob;
     bool hasOrderFeature;
     num consumedBulkUploadBucket;
     String allotedBulkUploadBucketUnit;

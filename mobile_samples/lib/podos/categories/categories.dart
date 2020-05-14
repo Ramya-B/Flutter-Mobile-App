@@ -6,9 +6,10 @@ class CategoryDetailsLobDTO {
   String categoryId;
   bool restrictFetchImage;
   bool active;
+  bool fromAllowedlobs;
 
   CategoryDetailsLobDTO(
-      {this.lobId, this.systemRootCategoryFlag, this.categoryId,this.restrictFetchImage,this.active});
+      {this.lobId, this.systemRootCategoryFlag, this.categoryId,this.restrictFetchImage,this.active,this.fromAllowedlobs});
 
   factory CategoryDetailsLobDTO.fromJson(Map<String, dynamic> json) {
     return CategoryDetailsLobDTO(
@@ -16,7 +17,8 @@ class CategoryDetailsLobDTO {
         systemRootCategoryFlag: json['systemRootCategoryFlag'],
         restrictFetchImage: json['restrictFetchImage'],
         categoryId: json['categoryId'],
-        active: json['active']
+        active: json['active'],
+        fromAllowedlobs: json['fromAllowedlobs']
         );
          
   }
@@ -26,7 +28,7 @@ class CategoryDetailsLobDTO {
       'systemRootCategoryFlag': systemRootCategoryFlag,
       'categoryId': categoryId,
       'active': active,
-      'active': active
+      'fromAllowedlobs': fromAllowedlobs
     };
   }
 }

@@ -39,7 +39,8 @@ User _$UserFromJson(Map<String, dynamic> json) {
     ..appsite = json['appsite'] as String
     ..modified = json['modified'] as String
     ..created = json['created'] as String
-    ..allowedlob = json['allowedlob'] as List
+    ..allowedlob =
+        (json['allowedlob'] as List)?.map((e) => e as String)?.toList()
     ..hasOrderFeature = json['hasOrderFeature'] as bool
     ..consumedBulkUploadBucket = json['consumedBulkUploadBucket'] as num
     ..allotedBulkUploadBucketUnit =

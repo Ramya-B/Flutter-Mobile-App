@@ -19,12 +19,7 @@
 	"appsite" : "IN",
 	"modified" : "2020-03-12T15:31:51.923+05:30",
 	"created" : "2020-03-12T15:31:51.923+05:30",
-	"allowedlob" : [
-		"34343e34-7601-40de-878d-01b3bd1f0641",
-		"34343e34-7601-40de-878d-01b3bd1f0642",
-		"34343e34-7601-40de-878d-01b3bd1f0643",
-		"34343e34-7601-40de-878d-01b3bd1f0644"
-	],
+	"allowedlob" : "$[]String",
 	"hasOrderFeature" : true,
 	"consumedBulkUploadBucket" : 0,
 	"allotedBulkUploadBucketUnit" : "KB",

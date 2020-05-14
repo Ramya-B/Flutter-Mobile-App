@@ -17,5 +17,6 @@ abstract class CatalogServices {
   Future getFavourites(ProductSearchCriteriaDTO productSearchCriteriaDTO);
   Future handleFavorites(FavouriteProductsDTO favouriteProductsDTO);
   Future getFavoriteSuppliers();
+  Future saveCategories(List<CategoryDTO> categories);
 }
 

@@ -277,7 +277,7 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Register'),
-        backgroundColor: Colors.green[900],
+        backgroundColor: Constants.toolbarColor,
       ),
       body: Form(
         key: _formKey,

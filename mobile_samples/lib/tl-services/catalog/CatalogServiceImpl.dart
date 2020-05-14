@@ -418,5 +418,32 @@ class CatalogServiceImpl extends CatalogServices {
       }
     });
   }
+
+  @override
+  Future saveCategories(List<CategoryDTO> categories) async{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("saveCategories service....!");
+    return http.post(
+            '${Constants.envUrl}$apiUrl/categories/supplier/subscribedCategory?removedAllCategory=false',
+            headers: {
+              HttpHeaders.authorizationHeader:
+                  "Bearer ${prefs.getString('token')}",
+              'Content-type': 'application/json; charset=UTF-8'
+            },
+            body: jsonEncode(<String, List>{
+              'supplierCatgeories': categories
+            }),
+          ).then((data) {
+            if (data.statusCode == 200) {
+              var res = json.decode(data.body);
+              print("save saveCategories resp....");
+              print(res);
+              return res;
+            } else {
+              return throw Exception(
+                  'falied to save saveCategories ....');
+            }
+          });
+  }
   
 }
