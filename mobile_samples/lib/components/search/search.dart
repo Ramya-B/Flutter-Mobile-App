@@ -75,7 +75,7 @@ class _SearchItemsState extends State<SearchItems> {
     print(jsonEncode(productSearchCriteriaDTO));
 
     var data = await catalogService.search(productSearchCriteriaDTO);
-    this.totalProducts = data["productDTO"]["totalRecords"];
+    this.totalProducts = data["productDTO"]["totalProducts"];
     this.res = [];
     this.res = data["productDTO"]["getAllActiveProductsSupplierResponseDTO"];
     print("result is...");
@@ -221,7 +221,10 @@ class _SearchItemsState extends State<SearchItems> {
                     isSearchResults: true,
                   );
                 }),
-          )
+          ),
+          this.res.length == 0  ? Center(
+            child:CircularProgressIndicator(),
+          ):Container()
         ],
       ),
       // bottomNavigationBar: CustomNavBar(

@@ -21,7 +21,7 @@ class CatalogServiceImpl extends CatalogServices {
   Future search(ProductSearchCriteriaDTO productSearchCriteriaDTO) async {
     return await http
         .post(
-      '${Constants.envUrl}$apiUrl/products/getAllActiveProducts/WithRelatedProducts',
+      '${Constants.envUrl}$apiUrl/products/activeProductSearch/criteria',
       headers: headers,
       body: jsonEncode(<String, Object>{
         'productCriteria': productSearchCriteriaDTO,
@@ -42,6 +42,7 @@ class CatalogServiceImpl extends CatalogServices {
   @override
   Future<List> getCategories(
       CategoryDetailsLobDTO categoryDetailsLobDTO) async {
+        print(jsonEncode(categoryDetailsLobDTO));
     return await http
         .post(
       "${Constants.envUrl}$apiUrl/categories/rootCategories/withimagesByLob",

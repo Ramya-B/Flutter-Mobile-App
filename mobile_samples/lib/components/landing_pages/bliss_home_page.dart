@@ -20,7 +20,7 @@ class _BLISSHomePageState extends State<BLISSHomePage> {
   getCategories() async {
     print("getCategories called...");
     CategoryDetailsLobDTO categoryDetailsLobDTO = new CategoryDetailsLobDTO();
-    categoryDetailsLobDTO.lobId = ["34343e34-7601-40de-878d-01b3bd1f0641"];
+    categoryDetailsLobDTO.lobId = ["34343e34-7601-40de-878d-01b3bd1f0642"];
     categoryDetailsLobDTO.systemRootCategoryFlag = false;
     categoryDetailsLobDTO.restrictFetchImage = false;
     categoryDetailsLobDTO.active = true;

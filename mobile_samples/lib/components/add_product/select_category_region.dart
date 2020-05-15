@@ -45,6 +45,10 @@ class _SelectCategoryRegionState extends State<SelectCategoryRegion> {
 
   getCompanyRegions() async {
     regions = await crmService.companyRegions();
+    if(regions["partyCountryRegionListDTO"]["partyCountryRegionDTO"] == null){
+      regions = {"partyCountryRegionListDTO":{"partyCountryRegionDTO":[{"partyCountryRegionId":"1bca163e-788b-4561-b8da-a173f8f21a8c","countryId":"US","countryName":"US","regionId":"ASIA"},{"partyCountryRegionId":"28f7fb13-bebe-4809-8def-cad0d8dbbb5d","countryId":"IN","countryName":"IN","regionId":"ASIA"},{"partyCountryRegionId":"479782c2-895b-4f30-83ce-e03475de8c1a","countryId":"SG","countryName":"SG","regionId":"ASIA"},{"partyCountryRegionId":"7263a058-1c1f-4369-a307-57011dd8718e","countryId":"AU","countryName":"AU","regionId":"ASIA"}],"partyId":"bf22e74d-e21f-4549-a3ef-a52e22350ffc"},"protocolVersion":1};
+    }
+                                  
     companyRegions = CompanyRegionsResp.fromJson(regions);
     print("company regions...");
     print(companyRegions);
