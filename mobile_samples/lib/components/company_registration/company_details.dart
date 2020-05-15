@@ -513,6 +513,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                   },
                                 ).toList(),
                                 onChanged: (val) {
+                                   FocusScope.of(context).requestFocus(FocusNode());
                                   setState(
                                     () {
                                       states = val;
@@ -587,6 +588,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                       },
                     ).toList(),
                     onChanged: (val) {
+                       FocusScope.of(context).requestFocus(FocusNode());
                       setState(
                         () {
                           this.companyType = val;
@@ -633,6 +635,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                 },
               ).toList(),
               onChanged: (val) {
+                 FocusScope.of(context).requestFocus(FocusNode());
                 setState(
                   () {
                     print("industry type");
@@ -794,6 +797,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                 },
               ).toList(),
               onChanged: (val) {
+                 FocusScope.of(context).requestFocus(FocusNode());
                 setState(
                       () {
                    print("selection of identity type");

@@ -114,7 +114,7 @@ class _UserProductsState extends State<UserProducts> {
         child: Icon(Icons.add),
         backgroundColor: Colors.green,
       ),
-      body: (this.userProducts != null)
+      body: (this.userProducts != null && this.userProducts.totalProducts !=0)
           ? Container(
               // height: 400,
               constraints: BoxConstraints(minHeight: 100, maxHeight: 800),

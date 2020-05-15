@@ -87,9 +87,6 @@ class _AddProduct1State extends State<AddProduct1> {
     // handleEditProduct( this.product);
     super.initState();
   }
-
- 
-
   handleEditProduct(ProductDTO product) async {
     print("handleEditProduct");
     print(jsonEncode(product.productAttributeDetailDTO));

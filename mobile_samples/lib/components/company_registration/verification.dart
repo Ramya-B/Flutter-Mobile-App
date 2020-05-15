@@ -544,6 +544,7 @@ class _VerficationPageState extends State<VerficationPage> {
                                   },
                                 ).toList(),
                                 onChanged: (val) {
+                                   FocusScope.of(context).requestFocus(FocusNode());
                                   setState(
                                     () {
                                       print("öwner identity file name");
@@ -730,6 +731,7 @@ class _VerficationPageState extends State<VerficationPage> {
                                           },
                                         ).toList(),
                                         onChanged: (val) {
+                                           FocusScope.of(context).requestFocus(FocusNode());
                                           setState(
                                             () {
                                               identyType = val;
@@ -802,6 +804,7 @@ class _VerficationPageState extends State<VerficationPage> {
                                           },
                                         ).toList(),
                                         onChanged: (val) {
+                                           FocusScope.of(context).requestFocus(FocusNode());
                                           setState(
                                             () {
                                               type = val;
