@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tradeleaves/components/CustomBottomNavigationBar.dart';
@@ -28,7 +30,7 @@ class _SearchItemsState extends State<SearchItems> {
   String countryId;
   ScrollController _controllerScroll;
   var totalProducts;
-  var counter = 1;
+  var counter = 0;
   var productSearchCriteriaDTODup;
   var pageStart = 0;
   var key;
@@ -44,9 +46,24 @@ class _SearchItemsState extends State<SearchItems> {
     productSearchCriteriaDTO.countryId = "IN";
     productSearchCriteriaDTO.region = "IN";
     productSearchCriteriaDTO.channel = "B2BInternational";
+    productSearchCriteriaDTO.suppliercriteriaWeights = [];
+    productSearchCriteriaDTO.suppliertlcriteriaWeights = [];
+    productSearchCriteriaDTO.tlcriteriaWeights = [];
+    ProductFilters productFilters = ProductFilters();
+    productFilters.keyValueFacets =[];
+    KeyValueFacets keyValFacets = KeyValueFacets();
+    keyValFacets.name = "isService";
+    keyValFacets.productOption = false;
+    keyValFacets.type = "VARCHAR";
+    keyValFacets.value = false;
+    productFilters.keyValueFacets.add(keyValFacets);
+    productSearchCriteriaDTO.productFilters = productFilters;
     ProductPrimarySearchCondition productPrimarySearchCondition =
         new ProductPrimarySearchCondition();
     productPrimarySearchCondition.condition = this.keyword;
+    Location loc =new Location();
+    loc.countryId = "IN";
+    productSearchCriteriaDTO.location = loc;
     productSearchCriteriaDTO.productPrimarySearchCondition =
         productPrimarySearchCondition;
     SiteCriteria siteCriteria = new SiteCriteria();
@@ -55,10 +72,11 @@ class _SearchItemsState extends State<SearchItems> {
     siteCriteria.status = "Approved";
     productSearchCriteriaDTO.siteCriteria = siteCriteria;
     print("productSearchCriteriaDTO1");
-    print(productSearchCriteriaDTO);
+    print(jsonEncode(productSearchCriteriaDTO));
 
     var data = await catalogService.search(productSearchCriteriaDTO);
-    this.totalProducts = data["productDTO"]["totalProducts"];
+    this.totalProducts = data["productDTO"]["totalRecords"];
+    this.res = [];
     this.res = data["productDTO"]["getAllActiveProductsSupplierResponseDTO"];
     print("result is...");
     print(this.res);
@@ -66,6 +84,8 @@ class _SearchItemsState extends State<SearchItems> {
       setState(() {
         if (this.key != this.keyword) {
           this.prodList = [];
+          this.counter = 0;
+           this.pageStart = 0;
         }
         for (var item = 0; item < this.res.length; item++) {
           print(SearchResults.fromJson(this.res[item]));
@@ -80,7 +100,7 @@ class _SearchItemsState extends State<SearchItems> {
   _scrollListener() {
     if (_controllerScroll.offset >= _controllerScroll.position.maxScrollExtent &&
         !_controllerScroll.position.outOfRange) {
-          print("scrolling down");
+          print("scrolling down --${this.totalProducts} -- ${this.counter}");
       setState(() {
         if (this.totalProducts > this.counter) {
           this.pageStart++;
@@ -204,9 +224,9 @@ class _SearchItemsState extends State<SearchItems> {
           )
         ],
       ),
-      bottomNavigationBar: CustomNavBar(
-        selectedIndex: 0,
-      ),
+      // bottomNavigationBar: CustomNavBar(
+      //   selectedIndex: 0,
+      // ),
     );
   }
 }

@@ -21,7 +21,7 @@ class _UserProductsState extends State<UserProducts> {
   UserListedProducts userProducts;
   List<ProductDTO> userProductsList = [];
   ScrollController _controller;
-  var counter = 1;
+  var counter = 0;
   var pageStart = 0;
   SupplierDTO supplierDTO;
   @override
@@ -78,6 +78,7 @@ class _UserProductsState extends State<UserProducts> {
     setState(() {
       this.userProducts = UserListedProducts.fromJson(getUserProducts);
       this.userProductsList.addAll(this.userProducts.productSearchDTO);
+      this.counter  = this.userProductsList.length;
     });
   }
 

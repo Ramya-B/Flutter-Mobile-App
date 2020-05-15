@@ -43,7 +43,7 @@ class CrmServiceImpl extends CrmServices {
   @override
   Future verifyUser(UserCheck info) async {
     print("verify user....");
-    var uri = Uri.http('${Constants.envDomainUrl}',
+    var uri = Uri.http('${Constants.envUrl.substring(Constants.envUrl.indexOf("//")+2)}',
         '$apiUrl/register/verification/verify', {'login': false.toString()});
     print(uri);
     return await http

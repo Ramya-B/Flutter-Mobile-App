@@ -9,10 +9,12 @@ part of 'location.dart';
 Location _$LocationFromJson(Map<String, dynamic> json) {
   return Location()
     ..coordinates = json['coordinates'] as List
-    ..type = json['type'] as String;
+    ..type = json['type'] as String
+    ..countryId = json['countryId'] as String;
 }
 
 Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
       'coordinates': instance.coordinates,
-      'type': instance.type
+      'type': instance.type,
+      'countryId': instance.countryId
     };

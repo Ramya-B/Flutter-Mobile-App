@@ -21,10 +21,10 @@ class CatalogServiceImpl extends CatalogServices {
   Future search(ProductSearchCriteriaDTO productSearchCriteriaDTO) async {
     return await http
         .post(
-      '${Constants.envUrl}$apiUrl/products/activeProductSearch/criteria',
+      '${Constants.envUrl}$apiUrl/products/getAllActiveProducts/WithRelatedProducts',
       headers: headers,
       body: jsonEncode(<String, Object>{
-        'productCriteria': productSearchCriteriaDTO.toJson(),
+        'productCriteria': productSearchCriteriaDTO,
       }),
     )
         .then((data) {

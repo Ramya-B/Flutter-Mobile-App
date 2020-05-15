@@ -124,6 +124,7 @@ class ProductSearchCriteriaDTO {
   Pagination pagination;
   ProductPrimarySearchCondition productPrimarySearchCondition;
   ProductFilters productFilters;
+  Location location;
   var sortBy;
   var lobSelection;
   var countryId;
@@ -147,7 +148,8 @@ class ProductSearchCriteriaDTO {
     this.tlcriteriaWeights,
     this.suppliertlcriteriaWeights,
     this.suppliercriteriaWeights,
-    this.criteriaWeights
+    this.criteriaWeights,
+    this.location
   });
 
   factory ProductSearchCriteriaDTO.fromJson(Map<String, dynamic> json) {
